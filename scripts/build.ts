@@ -15,12 +15,14 @@ import {
   MetadataLicenseTypeSchema,
   TextOnlySchema,
 } from '../src/index.js';
+import { ThreeDMetadataSchema } from '../src/publication/3D.js';
 
 const outputDir = 'jsonschemas';
 
 await fs.ensureDir(outputDir);
 
 const schemas = new Map<string, z.ZodSchema<unknown>>([
+  ['3D/1-0-0.json', ThreeDMetadataSchema],
   ['image/1-0-0.json', ImageSchema],
   ['text-only/1-0-0.json', TextOnlySchema],
 ]);
