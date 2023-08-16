@@ -20,6 +20,7 @@ export const CheckingInSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.CHECKING_IN),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

@@ -16,6 +16,7 @@ export * from './SpaceSchema.js';
 export * from './StorySchema.js';
 export * from './TextOnlySchema.js';
 export * from './TransactionSchema.js';
+export * from './VideoSchema.js';
 
 import { ThreeDMetadataSchema } from './3D.js';
 import { ArticleSchema } from './ArticleSchema.js';
@@ -31,6 +32,7 @@ import { SpaceSchema } from './SpaceSchema.js';
 import { StorySchema } from './StorySchema.js';
 import { TextOnlySchema } from './TextOnlySchema.js';
 import { TransactionSchema } from './TransactionSchema.js';
+import { VideoSchema } from './VideoSchema.js';
 
 export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
   ArticleSchema,
@@ -47,5 +49,6 @@ export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
   StorySchema,
   TransactionSchema,
   ThreeDMetadataSchema,
+  VideoSchema,
 ]);
 export type PublicationMetadata = z.infer<typeof PublicationMetadataSchema>;

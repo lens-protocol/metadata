@@ -37,6 +37,7 @@ export const LivestreamSchema = publicationWith({
     ).optional(),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

@@ -4,8 +4,8 @@ import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
-  MediaAudioSchema,
   mainContentFocus,
+  MediaAudioSchema,
   metadataDetailsWith,
   publicationWith,
 } from './common';
@@ -18,6 +18,7 @@ export const AudioSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

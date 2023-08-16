@@ -92,8 +92,15 @@ export function unixTimestamp(description: string): z.Schema<UnixTimestamp, z.Zo
     .transform((value) => value as UnixTimestamp);
 }
 
-export function mainContentFocus(focus: PublicationMainFocus) {
-  return z.literal(focus, {
-    description: 'The main focus of the publication.',
-  });
+export function mainContentFocus(...focuses: [PublicationMainFocus, ...PublicationMainFocus[]]) {
+  const description = 'The main focus of the publication.';
+  if (focuses.length > 1) {
+    const literals = focuses.map((value) => z.literal(value)) as [
+      z.ZodLiteral<PublicationMainFocus>,
+      z.ZodLiteral<PublicationMainFocus>,
+      ...z.ZodLiteral<PublicationMainFocus>[],
+    ];
+    return z.union(literals, { description });
+  }
+  return z.literal(focuses[0], { description });
 }

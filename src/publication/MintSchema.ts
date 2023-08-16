@@ -24,6 +24,7 @@ export const MintSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.MINT),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

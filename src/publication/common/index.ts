@@ -2,8 +2,7 @@ import { z } from 'zod';
 
 import { MetadataCommonSchema } from './lens.js';
 import { MarketplaceMetadataSchema } from './marketplace.js';
-import { SignatureSchema } from './primitives.js';
-import { PublicationMainFocus } from '../PublicationMainFocus.js';
+import { SignatureSchema, mainContentFocus } from './primitives.js';
 
 export * from './lens.js';
 export * from './license.js';
@@ -12,7 +11,7 @@ export * from './media.js';
 export * from './primitives.js';
 
 export function metadataDetailsWith<
-  Augmentation extends { mainContentFocus: z.ZodLiteral<PublicationMainFocus> },
+  Augmentation extends { mainContentFocus: ReturnType<typeof mainContentFocus> },
 >(augmentation: Augmentation) {
   return MetadataCommonSchema.extend(augmentation);
 }

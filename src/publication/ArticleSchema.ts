@@ -21,6 +21,7 @@ export const ArticleSchema = publicationWith({
     title: z.string().optional(),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('Any attachment you want to include with it.'),
   }),

@@ -38,6 +38,7 @@ export const ThreeDMetadataSchema = publicationWith({
     threeDAssets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

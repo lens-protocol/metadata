@@ -4,18 +4,21 @@ import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
-  MediaImageSchema,
+  MediaVideoSchema,
   mainContentFocus,
   metadataDetailsWith,
   publicationWith,
 } from './common';
 
-export const ImageSchema = publicationWith({
-  $schema: z.literal(SchemaId.IMAGE),
+export const VideoSchema = publicationWith({
+  $schema: z.literal(SchemaId.VIDEO),
   lens: metadataDetailsWith({
-    image: MediaImageSchema,
+    video: MediaVideoSchema,
 
-    mainContentFocus: mainContentFocus(PublicationMainFocus.IMAGE),
+    mainContentFocus: mainContentFocus(
+      PublicationMainFocus.SHORT_VIDEO,
+      PublicationMainFocus.VIDEO,
+    ),
 
     attachments: AnyMediaSchema.array()
       .min(1)
@@ -23,4 +26,4 @@ export const ImageSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Image = z.infer<typeof ImageSchema>;
+export type Video = z.infer<typeof VideoSchema>;

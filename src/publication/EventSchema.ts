@@ -30,6 +30,7 @@ export const EventSchema = publicationWith({
     links: uri().array().min(1).optional().describe('The links you want to include with it'),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

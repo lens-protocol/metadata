@@ -19,6 +19,7 @@ export const LinkSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LINK),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

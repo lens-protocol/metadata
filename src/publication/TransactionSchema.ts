@@ -2,12 +2,7 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  publicationWith,
-} from './common/index.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
 
 export const TransactionSchema = publicationWith({
   $schema: z.literal(SchemaId.TRANSACTION),
@@ -19,6 +14,7 @@ export const TransactionSchema = publicationWith({
     chainId: z.number().positive().describe('The chain Id.'),
 
     attachments: AnyMediaSchema.array()
+      .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),

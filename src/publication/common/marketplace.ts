@@ -20,7 +20,7 @@ export const MarketplaceMetadataSchema = z.object({
 
   external_url: uri(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-      'and will allow users to leave OpenSea and view the item on the site',
+      'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
 
   name: z.string({ description: 'Name of the NFT item.' }).optional(),
