@@ -80,3 +80,12 @@ export function uri(
  * The textual content of a publication.
  */
 export const ContentSchema = MarkdownSchema.describe('The textual content of a publication.');
+
+/**
+ * A geographic location.
+ */
+export const GeoLocationSchema = z.object({
+  latitude: z.number({ description: 'Latitude in decimal coordinates (e.g. 41.40338)' }),
+  longitude: z.number({ description: 'Longitude in decimal coordinates (e.g. 2.17403)' }),
+});
+export type GeoLocation = z.infer<typeof GeoLocationSchema>;

@@ -6,8 +6,10 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   AnyMediaSchema,
-  AudioSchema,
   ArticleSchema,
+  AudioSchema,
+  CheckingInSchema,
+  GeoLocationSchema,
   ImageSchema,
   MarketplaceMetadataAttributeSchema,
   MediaAudioSchema,
@@ -27,6 +29,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['3D/1-0-0.json', ThreeDMetadataSchema],
   ['article/1-0-0.json', ArticleSchema],
   ['audio/1-0-0.json', AudioSchema],
+  ['checking-in/1-0-0.json', CheckingInSchema],
   ['image/1-0-0.json', ImageSchema],
   ['text-only/1-0-0.json', TextOnlySchema],
 ]);
@@ -41,6 +44,7 @@ for (const [path, Schema] of schemas) {
     definitionPath: '$defs',
     definitions: {
       AnyMedia: AnyMediaSchema,
+      GeoLocation: GeoLocationSchema,
       MarketplaceMetadataAttribute: MarketplaceMetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,
