@@ -1,6 +1,6 @@
 # Lens Protocol Metadata Standards
 
-This repository contains the utilities and TS types for Lens Protocol Metadata Standards.
+Schema vaidation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs/pull/5/) Lens Protocol Metadata Standards.
 
 ## Features
 
@@ -12,17 +12,17 @@ This repository contains the utilities and TS types for Lens Protocol Metadata S
 
 ```bash
 # npm:
-npm install zod @lens-protocol/metadata
+npm install @lens-protocol/metadata zod
 
 # yarn:
-yarn add zod @lens-protocol/metadata
+yarn add @lens-protocol/metadata zod
 
 # pnpm:
-pnpm add zod @lens-protocol/metadata
+pnpm add @lens-protocol/metadata zod
 ```
 
 > [!NOTE]  
-> `zod` is marked as optional peer dependency, so if you all you need is the JSON schema definitions, you can install `@lens-protocol/metadata` without `zod`.
+> `zod` is marked as optional peer dependency, so if you all you need is the JSON Schema definitions, you can install `@lens-protocol/metadata` without `zod`.
 
 ## Usage
 
@@ -135,7 +135,7 @@ git push origin release/<version> --follow-tags
 
 ## License
 
-Lens Protocol Metadata Standard is [MIT licensed](./LICENSE)
+Lens Protocol Metadata Standards is [MIT licensed](./LICENSE)
 
 ## Support
 
