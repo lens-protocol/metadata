@@ -2,14 +2,19 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import { AnyMediaSchema, MediaImageSchema, metadataDetailsWith, publicationWith } from './common';
+import {
+  AnyMediaSchema,
+  MediaAudioSchema,
+  metadataDetailsWith,
+  publicationWith,
+} from './common/index.js';
 
-export const ImageSchema = publicationWith({
-  $schema: z.literal(SchemaId.IMAGE),
+export const AudioSchema = publicationWith({
+  $schema: z.literal(SchemaId.AUDIO),
   lens: metadataDetailsWith({
-    image: MediaImageSchema,
+    audio: MediaAudioSchema,
 
-    mainContentFocus: z.literal(PublicationMainFocus.IMAGE, {
+    mainContentFocus: z.literal(PublicationMainFocus.AUDIO, {
       description: 'The main focus of the publication',
     }),
 
@@ -18,4 +23,4 @@ export const ImageSchema = publicationWith({
       .describe('The other attachments you want to include with it'),
   }),
 });
-export type Image = z.infer<typeof ImageSchema>;
+export type Audio = z.infer<typeof AudioSchema>;
