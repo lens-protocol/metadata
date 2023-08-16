@@ -12,7 +12,7 @@ export const ImageSchema = publicationWith({
     image: MediaImageSchema,
 
     mainContentFocus: z.literal(PublicationMainFocus.IMAGE, {
-      description: 'The main focus of the image',
+      description: 'The main focus of the publication',
     }),
 
     attachments: AnyMediaSchema.array()

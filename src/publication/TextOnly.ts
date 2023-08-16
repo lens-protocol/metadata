@@ -11,7 +11,7 @@ export const TextOnlySchema = publicationWith({
     content: ContentSchema.describe('The content for the publication'),
 
     mainContentFocus: z.literal(PublicationMainFocus.TEXT_ONLY, {
-      description: 'The main focus of the image',
+      description: 'The main focus of the publication',
     }),
   }),
 });
