@@ -1,4 +1,4 @@
-const location = 'https://lens-protocol.github.io/jsonschemas';
+const location = 'https://json-schemas.lens.dev/publications';
 
 export enum SchemaId {
   THREE_D = `${location}/3d/1-0.0.json`,
