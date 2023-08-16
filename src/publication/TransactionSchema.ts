@@ -20,7 +20,7 @@ export const TransactionSchema = publicationWith({
 
     txHash: notEmptyString('The transaction hash.'),
 
-    chainId: z.number().positive().describe('The Chain Id.'),
+    chainId: z.number().positive().int().describe('The Chain Id.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

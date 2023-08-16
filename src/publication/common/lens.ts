@@ -16,19 +16,50 @@ export enum MetadataAttributeType {
   JSON = 'JSON',
 }
 
-export const MetadataAttributeSchema = z.object(
-  {
-    type: z.nativeEnum(MetadataAttributeType, { description: 'The type of the attribute.' }),
+const BooleanAttributeSchema = z.object({
+  type: z.literal(MetadataAttributeType.Boolean),
+  key: notEmptyString("The attribute's unique identifier."),
+  value: z
+    .enum(['true', 'false'])
+    .describe("A boolean value serialized as string.  It's consumer responsibility to parse it."),
+});
 
-    key: notEmptyString("The attribute's unique identifier."),
+const DateAttributeSchema = z.object({
+  type: z.literal(MetadataAttributeType.Date),
+  key: notEmptyString("The attribute's unique identifier."),
+  value: z
+    .string()
+    .datetime()
+    .describe("A valid ISO 8601 date string.  It's consumer responsibility to parse it."),
+});
 
-    value: notEmptyString(
-      "The attribute'a serialized value. " +
-        "It's consumer responsibility to deserialize it based on the `type` field.",
-    ),
-  },
-  { description: 'An arbitrary attribute.' },
-);
+const NumberAttributeSchema = z.object({
+  type: z.literal(MetadataAttributeType.Number),
+  key: notEmptyString("The attribute's unique identifier."),
+  value: notEmptyString(
+    "A valid JS number serialized as string. It's consumer responsibility to parse it.",
+  ),
+});
+
+const StringAttributeSchema = z.object({
+  type: z.literal(MetadataAttributeType.String),
+  key: notEmptyString("The attribute's unique identifier."),
+  value: notEmptyString('A string value.'),
+});
+
+const JSONAttributeSchema = z.object({
+  type: z.literal(MetadataAttributeType.JSON),
+  key: notEmptyString("The attribute's unique identifier."),
+  value: notEmptyString("A valid JSON string. It's consumer responsibility to parse it."),
+});
+
+export const MetadataAttributeSchema = z.discriminatedUnion('type', [
+  BooleanAttributeSchema,
+  DateAttributeSchema,
+  NumberAttributeSchema,
+  StringAttributeSchema,
+  JSONAttributeSchema,
+]);
 export type MetadataAttribute = z.infer<typeof MetadataAttributeSchema>;
 
 export const MetadataCommonSchema = z.object(
