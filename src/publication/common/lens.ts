@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { AppIdSchema, ContentSchema, LocaleSchema } from './primitives.js';
+import { AppIdSchema, LocaleSchema, markdown } from './primitives.js';
 
 export enum PublicationContentWarning {
   NSFW = 'NSFW',
@@ -18,9 +18,9 @@ export enum MetadataAttributeType {
 
 export const MetadataAttributeSchema = z.object(
   {
-    type: z.nativeEnum(MetadataAttributeType, { description: 'The type of the attribute' }),
+    type: z.nativeEnum(MetadataAttributeType, { description: 'The type of the attribute.' }),
 
-    key: z.string({ description: "The attribute's unique identifier" }),
+    key: z.string({ description: "The attribute's unique identifier." }),
 
     value: z.string({
       description:
@@ -28,7 +28,7 @@ export const MetadataAttributeSchema = z.object(
         "It's consumer responsibility to deserialize it based on the `type` field.",
     }),
   },
-  { description: 'An arbitrary attribute' },
+  { description: 'An arbitrary attribute.' },
 );
 export type MetadataAttribute = z.infer<typeof MetadataAttributeSchema>;
 
@@ -39,7 +39,7 @@ export const MetadataCommonSchema = z.object(
         'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     }),
 
-    content: ContentSchema.optional(),
+    content: markdown('Optional markdown content.').optional(),
 
     attributes: MetadataAttributeSchema.array()
       .optional()
@@ -70,11 +70,11 @@ export const MetadataCommonSchema = z.object(
       .boolean({
         description:
           'Ability to only show when you filter on your App Id. ' +
-          'This is useful for apps that want to show only their content on their apps',
+          'This is useful for apps that want to show only their content on their apps.',
       })
       .optional(),
 
     appId: AppIdSchema.optional(),
   },
-  { description: 'The Lens specific metadata details' },
+  { description: 'The Lens specific metadata details.' },
 );

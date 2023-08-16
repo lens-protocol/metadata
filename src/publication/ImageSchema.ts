@@ -10,12 +10,12 @@ export const ImageSchema = publicationWith({
     image: MediaImageSchema,
 
     mainContentFocus: z.literal(PublicationMainFocus.IMAGE, {
-      description: 'The main focus of the publication',
+      description: 'The main focus of the publication.',
     }),
 
     attachments: AnyMediaSchema.array()
       .optional()
-      .describe('The other attachments you want to include with it'),
+      .describe('The other attachments you want to include with it.'),
   }),
 });
 export type Image = z.infer<typeof ImageSchema>;

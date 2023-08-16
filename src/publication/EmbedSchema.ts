@@ -8,15 +8,15 @@ export const EmbedSchema = publicationWith({
   $schema: z.literal(SchemaId.EMBED),
 
   lens: metadataDetailsWith({
-    embed: uri('The embed URL'),
+    embed: uri('The embed URL.'),
 
     mainContentFocus: z.literal(PublicationMainFocus.EMBED, {
-      description: 'The main focus of the publication',
+      description: 'The main focus of the publication.',
     }),
 
     attachments: AnyMediaSchema.array()
       .optional()
-      .describe('The other attachments you want to include with it'),
+      .describe('The other attachments you want to include with it.'),
   }),
 });
 export type Embed = z.infer<typeof EmbedSchema>;

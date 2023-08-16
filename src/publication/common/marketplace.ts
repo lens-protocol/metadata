@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MarkdownSchema, uri } from './primitives.js';
+import { markdown, uri } from './primitives.js';
 
 export enum MarketplaceMetadataAttributeDisplayType {
   number = 'number',
@@ -16,7 +16,7 @@ export const MarketplaceMetadataAttributeSchema = z.object({
 export type MarketplaceMetadataAttribute = z.infer<typeof MarketplaceMetadataAttributeSchema>;
 
 export const MarketplaceMetadataSchema = z.object({
-  description: MarkdownSchema.describe('A human-readable description of the item.'),
+  description: markdown('A human-readable description of the item.'),
 
   external_url: uri(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +

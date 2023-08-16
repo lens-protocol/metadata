@@ -43,12 +43,15 @@ export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = z
   })
   .transform((value) => value as Signature);
 
+/**
+ * A markdown text.
+ */
 export type Markdown = Brand<string, 'Markdown'>;
-export const MarkdownSchema: z.Schema<Markdown, z.ZodTypeDef, string> = z
-  .string({
-    description: 'A Markdown text.',
-  })
-  .transform((value) => value as Markdown);
+export function markdown(
+  description: string = 'A Markdown text. ',
+): z.Schema<Markdown, z.ZodTypeDef, string> {
+  return z.string({ description }).transform((value) => value as Markdown);
+}
 
 /**
  * A Uniform Resource Identifier.
@@ -60,19 +63,28 @@ export type URI = Brand<string, 'URI'>;
 export function uri(
   description: string = 'A Uniform Resource Identifier. ',
 ): z.Schema<URI, z.ZodTypeDef, string> {
-  return z.string({ description }).transform((value) => value as URI);
+  return (
+    z
+      .string({ description })
+      // .url() // reads url() but uses format: 'uri' in the JSON schema TODO fix
+      .transform((value) => value as URI)
+  );
 }
 
-/**
- * The textual content of a publication.
- */
-export const ContentSchema = MarkdownSchema.describe('The textual content of a publication.');
-
+export const GeoLocationSchema = z.object({
+  latitude: z.number({ description: 'Latitude in decimal coordinates (e.g. 41.40338).' }),
+  longitude: z.number({ description: 'Longitude in decimal coordinates (e.g. 2.17403).' }),
+});
 /**
  * A geographic location.
  */
-export const GeoLocationSchema = z.object({
-  latitude: z.number({ description: 'Latitude in decimal coordinates (e.g. 41.40338)' }),
-  longitude: z.number({ description: 'Longitude in decimal coordinates (e.g. 2.17403)' }),
-});
 export type GeoLocation = z.infer<typeof GeoLocationSchema>;
+
+/**
+ * A unix timestamp.
+ */
+export type UnixTimestamp = Brand<number, 'UnixTimestamp'>;
+export const UnixTimestampSchema: z.Schema<UnixTimestamp, z.ZodTypeDef, number> = z
+  .number()
+  .positive()
+  .transform((value) => value as UnixTimestamp);

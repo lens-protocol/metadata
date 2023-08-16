@@ -15,12 +15,12 @@ export const AudioSchema = publicationWith({
     audio: MediaAudioSchema,
 
     mainContentFocus: z.literal(PublicationMainFocus.AUDIO, {
-      description: 'The main focus of the publication',
+      description: 'The main focus of the publication.',
     }),
 
     attachments: AnyMediaSchema.array()
       .optional()
-      .describe('The other attachments you want to include with it'),
+      .describe('The other attachments you want to include with it.'),
   }),
 });
 export type Audio = z.infer<typeof AudioSchema>;

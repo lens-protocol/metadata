@@ -17,12 +17,12 @@ export const CheckingInSchema = publicationWith({
     geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so'),
 
     mainContentFocus: z.literal(PublicationMainFocus.CHECKING_IN, {
-      description: 'The main focus of the publication',
+      description: 'The main focus of the publication.',
     }),
 
     attachments: AnyMediaSchema.array()
       .optional()
-      .describe('The other attachments you want to include with it'),
+      .describe('The other attachments you want to include with it.'),
   }),
 });
 export type CheckingIn = z.infer<typeof CheckingInSchema>;

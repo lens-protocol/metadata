@@ -39,7 +39,7 @@ export const ThreeDMetadataSchema = publicationWith({
 
     attachments: AnyMediaSchema.array()
       .optional()
-      .describe('The other attachments you want to include with it'),
+      .describe('The other attachments you want to include with it.'),
   }),
 });
 export type ThreeDMetadata = z.infer<typeof ThreeDMetadataSchema>;
