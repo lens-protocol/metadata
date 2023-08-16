@@ -1,15 +1,20 @@
 {
   "name": "@lens-protocol/metadata",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.0",
   "description": "Lens Protocol Metadata Standards",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "pnpm build:jsonschemas && pnpm build:dist",
     "build:dist": "tsup",
     "build:jsonschemas": "ts-node-esm --experimental-specifier-resolution=node scripts/build.ts",
+    "lint": "pnpm lint:prettier && pnpm lint:eslint && pnpm lint:typecheck",
+    "lint:eslint": "pnpm eslint",
+    "lint:typecheck": "tsc --noEmit",
+    "lint:prettier": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
