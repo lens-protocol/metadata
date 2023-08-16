@@ -34,19 +34,6 @@ export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = z
   .transform((value) => value as AppId);
 
 /**
- * A Uniform Resource Locator.
- */
-export type URL = Brand<string, 'URL'>;
-export function url(
-  description: string = 'A Uniform Resource Identifier. ',
-): z.Schema<URL, z.ZodTypeDef, string> {
-  return z
-    .string({ description })
-    .url()
-    .transform((value) => value as URL);
-}
-
-/**
  * A cryptographic signature.
  */
 export type Signature = Brand<string, 'Signature'>;

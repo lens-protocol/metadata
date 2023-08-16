@@ -8,7 +8,6 @@ import {
   MetadataLicenseTypeSchema,
   publicationWith,
   uri,
-  url,
 } from './common';
 
 export enum ThreeDFormat {
@@ -24,7 +23,7 @@ export const ThreeDAssetSchema = z.object({
     .string()
     .optional()
     .describe('path in extracted zip. Relative. 3D start point, must be 3D file type'),
-  playerUrl: url('Link to web based 3D player'),
+  playerUrl: uri('Link to web based 3D player'),
   format: z.nativeEnum(ThreeDFormat).describe('format of the 3D object. gLTF/GLB, FBX, VRM or OBJ'),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the 3D asset'),
 });

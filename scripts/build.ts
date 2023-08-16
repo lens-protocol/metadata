@@ -9,6 +9,7 @@ import {
   ArticleSchema,
   AudioSchema,
   CheckingInSchema,
+  EmbedSchema,
   GeoLocationSchema,
   ImageSchema,
   MarketplaceMetadataAttributeSchema,
@@ -30,6 +31,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['article/1-0-0.json', ArticleSchema],
   ['audio/1-0-0.json', AudioSchema],
   ['checking-in/1-0-0.json', CheckingInSchema],
+  ['embed/1-0-0.json', EmbedSchema],
   ['image/1-0-0.json', ImageSchema],
   ['text-only/1-0-0.json', TextOnlySchema],
 ]);

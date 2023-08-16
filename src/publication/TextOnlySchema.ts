@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import { ContentSchema, metadataDetailsWith, publicationWith } from './common';
+import { ContentSchema, metadataDetailsWith, publicationWith } from './common/index.js';
 
 export const TextOnlySchema = publicationWith({
   $schema: z.literal(SchemaId.TEXT_ONLY),
