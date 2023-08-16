@@ -84,7 +84,9 @@ export type GeoLocation = z.infer<typeof GeoLocationSchema>;
  * A unix timestamp.
  */
 export type UnixTimestamp = Brand<number, 'UnixTimestamp'>;
-export const UnixTimestampSchema: z.Schema<UnixTimestamp, z.ZodTypeDef, number> = z
-  .number()
-  .positive()
-  .transform((value) => value as UnixTimestamp);
+export function unixTimestamp(description: string): z.Schema<UnixTimestamp, z.ZodTypeDef, number> {
+  return z
+    .number({ description })
+    .positive()
+    .transform((value) => value as UnixTimestamp);
+}

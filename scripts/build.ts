@@ -14,6 +14,7 @@ import {
   GeoLocationSchema,
   ImageSchema,
   LinkSchema,
+  LivestreamSchema,
   MarketplaceMetadataAttributeSchema,
   MediaAudioSchema,
   MediaImageSchema,
@@ -37,6 +38,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['event/1-0-0.json', EventSchema],
   ['image/1-0-0.json', ImageSchema],
   ['link/1-0-0.json', LinkSchema],
+  ['livestream/1-0-0.json', LivestreamSchema],
   ['text-only/1-0-0.json', TextOnlySchema],
 ]);
 

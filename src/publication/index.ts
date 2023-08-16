@@ -9,6 +9,7 @@ export * from './EmbedSchema.js';
 export * from './EventSchema.js';
 export * from './ImageSchema.js';
 export * from './LinkSchema.js';
+export * from './LivestreamSchema.js';
 export * from './SchemaId.js';
 export * from './TextOnlySchema.js';
 
@@ -20,6 +21,7 @@ import { EmbedSchema } from './EmbedSchema';
 import { EventSchema } from './EventSchema.js';
 import { ImageSchema } from './ImageSchema.js';
 import { LinkSchema } from './LinkSchema.js';
+import { LivestreamSchema } from './LivestreamSchema.js';
 import { TextOnlySchema } from './TextOnlySchema.js';
 
 export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
@@ -30,6 +32,7 @@ export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
   EventSchema,
   ImageSchema,
   LinkSchema,
+  LivestreamSchema,
   TextOnlySchema,
   ThreeDMetadataSchema,
 ]);

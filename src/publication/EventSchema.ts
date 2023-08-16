@@ -5,9 +5,9 @@ import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
   GeoLocationSchema,
-  UnixTimestampSchema,
   metadataDetailsWith,
   publicationWith,
+  unixTimestamp,
   uri,
 } from './common/index.js';
 
@@ -24,9 +24,9 @@ export const EventSchema = publicationWith({
       description: 'The main focus of the publication.',
     }),
 
-    startsAt: UnixTimestampSchema.describe('The start time of the event'),
+    startsAt: unixTimestamp('The start timestamp of the event.'),
 
-    endsAt: UnixTimestampSchema.describe('The end time of the event'),
+    endsAt: unixTimestamp('The end timestamp of the event.'),
 
     links: uri().array().min(1).optional().describe('The links you want to include with it'),
 
