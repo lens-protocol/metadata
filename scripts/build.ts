@@ -26,6 +26,7 @@ import {
   StorySchema,
   TextOnlySchema,
   ThreeDMetadataSchema,
+  TransactionSchema,
 } from '../src/index.js';
 
 const outputDir = 'jsonschemas';
@@ -46,6 +47,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['space/1-0-0.json', SpaceSchema],
   ['story/1-0-0.json', StorySchema],
   ['text-only/1-0-0.json', TextOnlySchema],
+  ['transaction/1-0-0.json', TransactionSchema],
 ]);
 
 for (const [path, Schema] of schemas) {

@@ -13,5 +13,6 @@ export enum SchemaId {
   MINT = `${location}/mint/1-0.0.json`,
   SPACE = `${location}/space/1-0.0.json`,
   STORY = `${location}/story/1-0.0.json`,
+  TRANSACTION = `${location}/transaction/1-0.0.json`,
   TEXT_ONLY = `${location}/text-only/1-0-0.json`,
 }
