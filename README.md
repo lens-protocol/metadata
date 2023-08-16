@@ -72,6 +72,14 @@ switch (publicationMetadata.$schema) {
 }
 ```
 
+Importing JSON schema:
+
+```typescript
+import audio from '@lens-protocol/metadata/jsonschemas/audio/1-0-0.json' assert { type: 'json' };
+
+import embed from '@lens-protocol/metadata/jsonschemas/embed/1-0-0.json' assert { type: 'json' };
+```
+
 ## Contributing
 
 To contribute to the Lens Protocol Metadata Standards, please fork this repository and submit a pull request with your changes.
