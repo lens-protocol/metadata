@@ -7,6 +7,7 @@ export enum SchemaId {
   CHECKING_IN = `${location}/checking-in/1-0.0.json`,
   EMBED = `${location}/embed/1-0.0.json`,
   EVENT = `${location}/event/1-0.0.json`,
+  LINK = `${location}/link/1-0.0.json`,
   IMAGE = `${location}/image/1-0.0.json`,
   TEXT_ONLY = `${location}/text-only/1-0-0.json`,
 }

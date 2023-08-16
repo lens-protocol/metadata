@@ -13,6 +13,7 @@ import {
   EventSchema,
   GeoLocationSchema,
   ImageSchema,
+  LinkSchema,
   MarketplaceMetadataAttributeSchema,
   MediaAudioSchema,
   MediaImageSchema,
@@ -35,6 +36,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['embed/1-0-0.json', EmbedSchema],
   ['event/1-0-0.json', EventSchema],
   ['image/1-0-0.json', ImageSchema],
+  ['link/1-0-0.json', LinkSchema],
   ['text-only/1-0-0.json', TextOnlySchema],
 ]);
 
