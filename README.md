@@ -90,7 +90,13 @@ To build the project, run:
 pnpm build
 ```
 
-Add change
+Add changeset with:
+
+```bash
+pnpm changeset add
+```
+
+Use [keepachangelog](https://keepachangelog.com/en/1.0.0/) format for the changeset message.
 
 ## Releasing
 
