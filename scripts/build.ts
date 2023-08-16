@@ -22,6 +22,7 @@ import {
   MetadataAttributeSchema,
   MetadataLicenseTypeSchema,
   MintSchema,
+  SpaceSchema,
   TextOnlySchema,
   ThreeDMetadataSchema,
 } from '../src/index.js';
@@ -41,6 +42,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['link/1-0-0.json', LinkSchema],
   ['livestream/1-0-0.json', LivestreamSchema],
   ['mint/1-0-0.json', MintSchema],
+  ['space/1-0-0.json', SpaceSchema],
   ['text-only/1-0-0.json', TextOnlySchema],
 ]);
 

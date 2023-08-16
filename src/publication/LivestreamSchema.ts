@@ -4,24 +4,23 @@ import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
+  mainContentFocus,
   metadataDetailsWith,
   publicationWith,
   unixTimestamp,
   uri,
-} from './common/index.js';
+} from './common';
 
 export const LivestreamSchema = publicationWith({
   $schema: z.literal(SchemaId.LIVESTREAM),
   lens: metadataDetailsWith({
-    mainContentFocus: z.literal(PublicationMainFocus.LIVESTREAM, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.LIVESTREAM),
 
     title: z.string().optional().describe('The livestream title.'),
 
-    startsAt: unixTimestamp('The start timestamp of the stream.'),
+    startsAt: unixTimestamp('The stream start time (unit timestamp).'),
 
-    endsAt: unixTimestamp('The optional end timestamp of the stream').optional(),
+    endsAt: unixTimestamp('The optional stream end time (unit timestamp)').optional(),
 
     playbackUrl: uri(
       'Some livestream platforms have the playback url as a separate url. ' +

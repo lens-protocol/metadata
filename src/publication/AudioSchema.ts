@@ -5,18 +5,17 @@ import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
   MediaAudioSchema,
+  mainContentFocus,
   metadataDetailsWith,
   publicationWith,
-} from './common/index.js';
+} from './common';
 
 export const AudioSchema = publicationWith({
   $schema: z.literal(SchemaId.AUDIO),
   lens: metadataDetailsWith({
     audio: MediaAudioSchema,
 
-    mainContentFocus: z.literal(PublicationMainFocus.AUDIO, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
 
     attachments: AnyMediaSchema.array()
       .optional()

@@ -2,7 +2,13 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import { AnyMediaSchema, markdown, metadataDetailsWith, publicationWith } from './common';
+import {
+  AnyMediaSchema,
+  mainContentFocus,
+  markdown,
+  metadataDetailsWith,
+  publicationWith,
+} from './common';
 
 export const ArticleSchema = publicationWith({
   $schema: z.literal(SchemaId.ARTICLE),
@@ -10,9 +16,7 @@ export const ArticleSchema = publicationWith({
   lens: metadataDetailsWith({
     content: markdown('The content for the publication.'),
 
-    mainContentFocus: z.literal(PublicationMainFocus.ARTICLE, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),
 
     title: z.string().optional(),
 

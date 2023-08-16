@@ -5,11 +5,12 @@ import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
   GeoLocationSchema,
+  mainContentFocus,
   metadataDetailsWith,
   publicationWith,
   unixTimestamp,
   uri,
-} from './common/index.js';
+} from './common';
 
 export const EventSchema = publicationWith({
   $schema: z.literal(SchemaId.EVENT),
@@ -20,13 +21,11 @@ export const EventSchema = publicationWith({
 
     geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so'),
 
-    mainContentFocus: z.literal(PublicationMainFocus.EVENT, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 
-    startsAt: unixTimestamp('The start timestamp of the event.'),
+    startsAt: unixTimestamp('The event start time (unit timestamp).'),
 
-    endsAt: unixTimestamp('The end timestamp of the event.'),
+    endsAt: unixTimestamp('The event end time (unit timestamp).'),
 
     links: uri().array().min(1).optional().describe('The links you want to include with it'),
 

@@ -7,20 +7,23 @@ import {
   mainContentFocus,
   metadataDetailsWith,
   publicationWith,
+  unixTimestamp,
   uri,
 } from './common';
 
-export const EmbedSchema = publicationWith({
-  $schema: z.literal(SchemaId.EMBED),
+export const SpaceSchema = publicationWith({
+  $schema: z.literal(SchemaId.SPACE),
 
   lens: metadataDetailsWith({
-    embed: uri('The embed URL.'),
+    link: uri('The space join link.'),
 
-    mainContentFocus: mainContentFocus(PublicationMainFocus.EMBED),
+    startsAt: unixTimestamp('The space start time (unix timestamp).'),
+
+    mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
 
     attachments: AnyMediaSchema.array()
       .optional()
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Embed = z.infer<typeof EmbedSchema>;
+export type Space = z.infer<typeof SpaceSchema>;

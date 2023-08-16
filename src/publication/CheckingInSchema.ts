@@ -5,9 +5,10 @@ import { SchemaId } from './SchemaId.js';
 import {
   AnyMediaSchema,
   GeoLocationSchema,
+  mainContentFocus,
   metadataDetailsWith,
   publicationWith,
-} from './common/index.js';
+} from './common';
 
 export const CheckingInSchema = publicationWith({
   $schema: z.literal(SchemaId.CHECKING_IN),
@@ -16,9 +17,7 @@ export const CheckingInSchema = publicationWith({
 
     geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so'),
 
-    mainContentFocus: z.literal(PublicationMainFocus.CHECKING_IN, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.CHECKING_IN),
 
     attachments: AnyMediaSchema.array()
       .optional()

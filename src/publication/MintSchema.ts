@@ -2,7 +2,13 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import { AnyMediaSchema, metadataDetailsWith, publicationWith, uri } from './common/index.js';
+import {
+  AnyMediaSchema,
+  mainContentFocus,
+  metadataDetailsWith,
+  publicationWith,
+  uri,
+} from './common';
 
 export const MintSchema = publicationWith({
   $schema: z.literal(SchemaId.MINT),
@@ -15,9 +21,7 @@ export const MintSchema = publicationWith({
         'The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata',
     ),
 
-    mainContentFocus: z.literal(PublicationMainFocus.MINT, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.MINT),
 
     attachments: AnyMediaSchema.array()
       .optional()

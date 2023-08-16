@@ -2,7 +2,13 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import { AnyMediaSchema, metadataDetailsWith, publicationWith, uri } from './common/index.js';
+import {
+  AnyMediaSchema,
+  mainContentFocus,
+  metadataDetailsWith,
+  publicationWith,
+  uri,
+} from './common';
 
 export const LinkSchema = publicationWith({
   $schema: z.literal(SchemaId.LINK),
@@ -10,9 +16,7 @@ export const LinkSchema = publicationWith({
   lens: metadataDetailsWith({
     sharingLink: uri('The sharing link url.'),
 
-    mainContentFocus: z.literal(PublicationMainFocus.LINK, {
-      description: 'The main focus of the publication.',
-    }),
+    mainContentFocus: mainContentFocus(PublicationMainFocus.LINK),
 
     attachments: AnyMediaSchema.array()
       .optional()

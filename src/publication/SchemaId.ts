@@ -11,5 +11,6 @@ export enum SchemaId {
   LINK = `${location}/link/1-0.0.json`,
   LIVESTREAM = `${location}/livestream/1-0.0.json`,
   MINT = `${location}/mint/1-0.0.json`,
+  SPACE = `${location}/space/1-0.0.json`,
   TEXT_ONLY = `${location}/text-only/1-0-0.json`,
 }

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { Brand } from '../../utils.js';
+import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
 /**
  * A locale identifier.
@@ -89,4 +90,10 @@ export function unixTimestamp(description: string): z.Schema<UnixTimestamp, z.Zo
     .number({ description })
     .positive()
     .transform((value) => value as UnixTimestamp);
+}
+
+export function mainContentFocus(focus: PublicationMainFocus) {
+  return z.literal(focus, {
+    description: 'The main focus of the publication.',
+  });
 }
