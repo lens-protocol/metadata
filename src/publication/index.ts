@@ -34,6 +34,27 @@ import { TextOnlySchema } from './TextOnlySchema.js';
 import { TransactionSchema } from './TransactionSchema.js';
 import { VideoSchema } from './VideoSchema.js';
 
+/**
+ * A union of all publication metadata schemas.
+ *
+ * @example
+ * with `parse`:
+ * ```typescript
+ * PublicationMetadataSchema.parse(valid); // => PublicationMetadata
+ *
+ * PublicationMetadataSchema.parse(invalid); // => throws ZodError
+ * ```
+ *
+ * @example
+ * with `safeParse`:
+ * ```typescript
+ * PublicationMetadataSchema.safeParse(valid);
+ * // => { success: true, data: PublicationMetadata }
+ *
+ * PublicationMetadataSchema.safeParse(invalid);
+ * // => { success: false, error: ZodError }
+ * ```
+ */
 export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
   ArticleSchema,
   AudioSchema,
@@ -51,4 +72,8 @@ export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
   ThreeDMetadataSchema,
   VideoSchema,
 ]);
-export type PublicationMetadata = z.infer<typeof PublicationMetadataSchema>;
+
+/**
+ * The type of a publication metadata object.
+ */
+export type PublicationMetadataMetadata = z.infer<typeof PublicationMetadataSchema>;

@@ -10,6 +10,9 @@ import {
   publicationWith,
 } from './common';
 
+/**
+ * @internal
+ */
 export const AudioSchema = publicationWith({
   $schema: z.literal(SchemaId.AUDIO),
   lens: metadataDetailsWith({
@@ -23,4 +26,4 @@ export const AudioSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Audio = z.infer<typeof AudioSchema>;
+export type AudioMetadata = z.infer<typeof AudioSchema>;

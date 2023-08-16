@@ -10,6 +10,9 @@ import {
   publicationWith,
 } from './common';
 
+/**
+ * @internal
+ */
 export const VideoSchema = publicationWith({
   $schema: z.literal(SchemaId.VIDEO),
   lens: metadataDetailsWith({
@@ -26,4 +29,4 @@ export const VideoSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Video = z.infer<typeof VideoSchema>;
+export type VideoMetadata = z.infer<typeof VideoSchema>;

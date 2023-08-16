@@ -10,6 +10,9 @@ import {
   uri,
 } from './common';
 
+/**
+ * @internal
+ */
 export const LinkSchema = publicationWith({
   $schema: z.literal(SchemaId.LINK),
 
@@ -24,4 +27,4 @@ export const LinkSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Link = z.infer<typeof LinkSchema>;
+export type LinkMetadata = z.infer<typeof LinkSchema>;

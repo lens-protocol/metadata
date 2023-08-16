@@ -11,6 +11,9 @@ import {
   uri,
 } from './common';
 
+/**
+ * @internal
+ */
 export const LivestreamSchema = publicationWith({
   $schema: z.literal(SchemaId.LIVESTREAM),
   lens: metadataDetailsWith({
@@ -42,4 +45,4 @@ export const LivestreamSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Livestream = z.infer<typeof LivestreamSchema>;
+export type LivestreamMetadata = z.infer<typeof LivestreamSchema>;

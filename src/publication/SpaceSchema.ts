@@ -11,6 +11,9 @@ import {
   uri,
 } from './common';
 
+/**
+ * @internal
+ */
 export const SpaceSchema = publicationWith({
   $schema: z.literal(SchemaId.SPACE),
 
@@ -27,4 +30,4 @@ export const SpaceSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Space = z.infer<typeof SpaceSchema>;
+export type SpaceMetadata = z.infer<typeof SpaceSchema>;

@@ -10,6 +10,9 @@ import {
   uri,
 } from './common';
 
+/**
+ * @internal
+ */
 export const MintSchema = publicationWith({
   $schema: z.literal(SchemaId.MINT),
 
@@ -29,4 +32,4 @@ export const MintSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Mint = z.infer<typeof MintSchema>;
+export type MintMetadata = z.infer<typeof MintSchema>;

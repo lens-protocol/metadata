@@ -4,6 +4,9 @@ import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
 
+/**
+ * @internal
+ */
 export const TransactionSchema = publicationWith({
   $schema: z.literal(SchemaId.TRANSACTION),
   lens: metadataDetailsWith({
@@ -19,4 +22,4 @@ export const TransactionSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Transaction = z.infer<typeof TransactionSchema>;
+export type TransactionMetadata = z.infer<typeof TransactionSchema>;

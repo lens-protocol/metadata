@@ -10,6 +10,9 @@ import {
   publicationWith,
 } from './common';
 
+/**
+ * @internal
+ */
 export const CheckingInSchema = publicationWith({
   $schema: z.literal(SchemaId.CHECKING_IN),
   lens: metadataDetailsWith({
@@ -25,4 +28,4 @@ export const CheckingInSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type CheckingIn = z.infer<typeof CheckingInSchema>;
+export type CheckingInMetadata = z.infer<typeof CheckingInSchema>;

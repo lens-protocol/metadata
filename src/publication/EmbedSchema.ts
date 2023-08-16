@@ -10,6 +10,9 @@ import {
   uri,
 } from './common';
 
+/**
+ * @internal
+ */
 export const EmbedSchema = publicationWith({
   $schema: z.literal(SchemaId.EMBED),
 
@@ -24,4 +27,4 @@ export const EmbedSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Embed = z.infer<typeof EmbedSchema>;
+export type EmbedMetadata = z.infer<typeof EmbedSchema>;

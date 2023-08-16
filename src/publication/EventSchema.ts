@@ -12,6 +12,9 @@ import {
   uri,
 } from './common';
 
+/**
+ * @internal
+ */
 export const EventSchema = publicationWith({
   $schema: z.literal(SchemaId.EVENT),
   lens: metadataDetailsWith({
@@ -35,4 +38,4 @@ export const EventSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Event = z.infer<typeof EventSchema>;
+export type EventMetadata = z.infer<typeof EventSchema>;

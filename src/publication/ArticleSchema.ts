@@ -10,6 +10,9 @@ import {
   publicationWith,
 } from './common';
 
+/**
+ * @internal
+ */
 export const ArticleSchema = publicationWith({
   $schema: z.literal(SchemaId.ARTICLE),
 
@@ -26,4 +29,4 @@ export const ArticleSchema = publicationWith({
       .describe('Any attachment you want to include with it.'),
   }),
 });
-export type Article = z.infer<typeof ArticleSchema>;
+export type ArticleMetadata = z.infer<typeof ArticleSchema>;

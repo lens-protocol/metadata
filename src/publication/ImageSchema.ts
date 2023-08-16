@@ -10,6 +10,9 @@ import {
   publicationWith,
 } from './common';
 
+/**
+ * @internal
+ */
 export const ImageSchema = publicationWith({
   $schema: z.literal(SchemaId.IMAGE),
   lens: metadataDetailsWith({
@@ -23,4 +26,4 @@ export const ImageSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type Image = z.infer<typeof ImageSchema>;
+export type ImageMetadata = z.infer<typeof ImageSchema>;
