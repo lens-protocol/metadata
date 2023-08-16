@@ -6,6 +6,7 @@ import {
   AnyMediaSchema,
   metadataDetailsWith,
   MetadataLicenseTypeSchema,
+  notEmptyString,
   publicationWith,
   uri,
 } from './common';
@@ -17,10 +18,12 @@ export enum ThreeDFormat {
   obj = 'OBJ',
 }
 
+/**
+ * @internal
+ */
 export const ThreeDAssetSchema = z.object({
   url: uri('The 3D asset url or zip'),
-  zipPath: z
-    .string()
+  zipPath: notEmptyString()
     .optional()
     .describe('path in extracted zip. Relative. 3D start point, must be 3D file type'),
   playerUrl: uri('Link to web based 3D player'),

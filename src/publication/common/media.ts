@@ -2,14 +2,15 @@ import { z } from 'zod';
 
 import { MetadataAttributeSchema } from './lens';
 import { MetadataLicenseTypeSchema } from './license';
-import { uri } from './primitives';
+import { notEmptyString, uri } from './primitives';
 
 function mediaWith(augmentation: z.ZodRawShape) {
   return z
     .object({
       item: uri('The item is the url to the media'),
-      altTag: z.string({ description: 'The alt tag for accessibility' }).optional(),
+      altTag: notEmptyString('The alt tag for accessibility').optional(),
       attributes: MetadataAttributeSchema.array()
+        .min(1)
         .optional()
         .describe(
           'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
@@ -43,10 +44,10 @@ export const MediaAudioSchema = mediaWith({
   cover: uri('The cover image for the audio').optional(),
   duration: z.number({ description: 'How long the the audio is in seconds' }).positive().optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the audio'),
-  credits: z.string({ description: 'The credits for the audio' }).optional(),
-  artist: z.string({ description: 'The artist for the audio' }).optional(),
-  genre: z.string({ description: 'The genre of the audio' }).optional(),
-  recordLabel: z.string({ description: 'The record label for the audio' }).optional(),
+  credits: notEmptyString('The credits for the audio').optional(),
+  artist: notEmptyString('The artist for the audio').optional(),
+  genre: notEmptyString('The genre of the audio').optional(),
+  recordLabel: notEmptyString('The record label for the audio').optional(),
   audioType: z.nativeEnum(MediaMetadataAudioType, { description: 'The type of audio' }).optional(),
   lyrics: uri('The lyrics for the audio').optional(),
 });

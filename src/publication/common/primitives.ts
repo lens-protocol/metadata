@@ -3,6 +3,10 @@ import { z } from 'zod';
 import { Brand } from '../../utils.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
+export function notEmptyString(description?: string) {
+  return z.string({ description }).min(1);
+}
+
 /**
  * A locale identifier.
  *
@@ -22,36 +26,34 @@ export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
   .string({
     description: 'A locale identifier.',
   })
+  .min(2)
+  .max(5)
   .transform((value) => value as Locale);
 
 /**
  * A Lens App identifier.
  */
 export type AppId = Brand<string, 'AppId'>;
-export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = z
-  .string({
-    description: 'A Lens App identifier.',
-  })
-  .transform((value) => value as AppId);
+export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = notEmptyString(
+  'A Lens App identifier.',
+).transform((value) => value as AppId);
 
 /**
  * A cryptographic signature.
  */
 export type Signature = Brand<string, 'Signature'>;
-export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = z
-  .string({
-    description: 'A cryptographic signature of the Lens metadata.',
-  })
-  .transform((value) => value as Signature);
+export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = notEmptyString(
+  'A cryptographic signature of the Lens metadata.',
+).transform((value) => value as Signature);
 
 /**
  * A markdown text.
  */
 export type Markdown = Brand<string, 'Markdown'>;
 export function markdown(
-  description: string = 'A Markdown text. ',
+  description: string = 'A Markdown text.',
 ): z.Schema<Markdown, z.ZodTypeDef, string> {
-  return z.string({ description }).transform((value) => value as Markdown);
+  return notEmptyString(description).transform((value) => value as Markdown);
 }
 
 /**
@@ -64,12 +66,11 @@ export type URI = Brand<string, 'URI'>;
 export function uri(
   description: string = 'A Uniform Resource Identifier. ',
 ): z.Schema<URI, z.ZodTypeDef, string> {
-  return (
-    z
-      .string({ description })
-      // .url() // reads url() but uses format: 'uri' in the JSON schema TODO fix
-      .transform((value) => value as URI)
-  );
+  return z
+    .string({ description })
+    .min(6) // [ar://.]
+    .url() // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
+    .transform((value) => value as URI);
 }
 
 export const GeoLocationSchema = z.object({

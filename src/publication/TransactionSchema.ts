@@ -2,7 +2,13 @@ import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { SchemaId } from './SchemaId.js';
-import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import {
+  AnyMediaSchema,
+  mainContentFocus,
+  metadataDetailsWith,
+  notEmptyString,
+  publicationWith,
+} from './common';
 
 /**
  * @internal
@@ -12,9 +18,9 @@ export const TransactionSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TRANSACTION),
 
-    txHash: z.string().describe('The transaction hash.'),
+    txHash: notEmptyString('The transaction hash.'),
 
-    chainId: z.number().positive().describe('The chain Id.'),
+    chainId: z.number().positive().describe('The Chain Id.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

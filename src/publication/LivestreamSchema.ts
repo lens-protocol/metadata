@@ -6,6 +6,7 @@ import {
   AnyMediaSchema,
   mainContentFocus,
   metadataDetailsWith,
+  notEmptyString,
   publicationWith,
   unixTimestamp,
   uri,
@@ -19,7 +20,7 @@ export const LivestreamSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LIVESTREAM),
 
-    title: z.string().optional().describe('The livestream title.'),
+    title: notEmptyString().optional().describe('The livestream title.'),
 
     startsAt: unixTimestamp('The stream start time (unit timestamp).'),
 

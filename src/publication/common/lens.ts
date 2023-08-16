@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { AppIdSchema, LocaleSchema, markdown } from './primitives.js';
+import { AppIdSchema, LocaleSchema, markdown, notEmptyString } from './primitives.js';
 
 export enum PublicationContentWarning {
   NSFW = 'NSFW',
@@ -20,13 +20,12 @@ export const MetadataAttributeSchema = z.object(
   {
     type: z.nativeEnum(MetadataAttributeType, { description: 'The type of the attribute.' }),
 
-    key: z.string({ description: "The attribute's unique identifier." }),
+    key: notEmptyString("The attribute's unique identifier."),
 
-    value: z.string({
-      description:
-        "The attribute'a serialized value. " +
+    value: notEmptyString(
+      "The attribute'a serialized value. " +
         "It's consumer responsibility to deserialize it based on the `type` field.",
-    }),
+    ),
   },
   { description: 'An arbitrary attribute.' },
 );
@@ -34,14 +33,14 @@ export type MetadataAttribute = z.infer<typeof MetadataAttributeSchema>;
 
 export const MetadataCommonSchema = z.object(
   {
-    metadata_id: z.string({
-      description:
-        'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
-    }),
+    metadata_id: notEmptyString(
+      'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
+    ),
 
     content: markdown('Optional markdown content.').optional(),
 
     attributes: MetadataAttributeSchema.array()
+      .min(1)
       .optional()
       .describe(
         'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
@@ -50,7 +49,7 @@ export const MetadataCommonSchema = z.object(
 
     locale: LocaleSchema,
 
-    tags: z.string().array().describe('An arbitrary list of tags.').optional(),
+    tags: notEmptyString().array().optional().describe('An arbitrary list of tags.'),
 
     contentWarning: z
       .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })

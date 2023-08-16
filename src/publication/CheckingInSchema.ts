@@ -7,6 +7,7 @@ import {
   GeoLocationSchema,
   mainContentFocus,
   metadataDetailsWith,
+  notEmptyString,
   publicationWith,
 } from './common';
 
@@ -16,7 +17,7 @@ import {
 export const CheckingInSchema = publicationWith({
   $schema: z.literal(SchemaId.CHECKING_IN),
   lens: metadataDetailsWith({
-    location: z.string({ description: 'Where you checking in from' }),
+    location: notEmptyString('Where you checking in from (free form text).'),
 
     geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so'),
 

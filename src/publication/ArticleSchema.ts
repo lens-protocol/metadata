@@ -7,6 +7,7 @@ import {
   mainContentFocus,
   markdown,
   metadataDetailsWith,
+  notEmptyString,
   publicationWith,
 } from './common';
 
@@ -21,7 +22,7 @@ export const ArticleSchema = publicationWith({
 
     mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),
 
-    title: z.string().optional(),
+    title: notEmptyString('The optional article title.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

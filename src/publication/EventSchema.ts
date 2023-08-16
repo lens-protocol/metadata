@@ -7,6 +7,7 @@ import {
   GeoLocationSchema,
   mainContentFocus,
   metadataDetailsWith,
+  notEmptyString,
   publicationWith,
   unixTimestamp,
   uri,
@@ -19,10 +20,10 @@ export const EventSchema = publicationWith({
   $schema: z.literal(SchemaId.EVENT),
   lens: metadataDetailsWith({
     location: z
-      .union([z.string({ description: 'A free-text location' }), uri('A virtual location')])
-      .describe('The location of the event'),
+      .union([uri('A virtual location.'), notEmptyString('The event location (free form text).')])
+      .describe('The location of the event.'),
 
-    geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so'),
+    geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so.'),
 
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 
@@ -30,7 +31,7 @@ export const EventSchema = publicationWith({
 
     endsAt: unixTimestamp('The event end time (unit timestamp).'),
 
-    links: uri().array().min(1).optional().describe('The links you want to include with it'),
+    links: uri().array().min(1).optional().describe('The links you want to include with it.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

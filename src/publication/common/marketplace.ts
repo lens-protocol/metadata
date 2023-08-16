@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdown, uri } from './primitives.js';
+import { markdown, notEmptyString, uri } from './primitives.js';
 
 export enum MarketplaceMetadataAttributeDisplayType {
   number = 'number',
@@ -10,8 +10,8 @@ export enum MarketplaceMetadataAttributeDisplayType {
 
 export const MarketplaceMetadataAttributeSchema = z.object({
   displayType: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
-  traitType: z.string({ description: 'The name of the trait.' }).optional(),
-  value: z.string({ description: 'The value of the trait' }),
+  traitType: notEmptyString('The name of the trait.').optional(),
+  value: notEmptyString('The value of the trait'),
 });
 export type MarketplaceMetadataAttribute = z.infer<typeof MarketplaceMetadataAttributeSchema>;
 
@@ -23,9 +23,10 @@ export const MarketplaceMetadataSchema = z.object({
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
 
-  name: z.string({ description: 'Name of the NFT item.' }).optional(),
+  name: notEmptyString('Name of the NFT item.').optional(),
 
   attributes: MarketplaceMetadataAttributeSchema.array()
+    .min(1)
     .optional()
     .describe(
       'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
