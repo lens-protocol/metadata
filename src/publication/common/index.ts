@@ -9,6 +9,7 @@ export * from './license.js';
 export * from './marketplace.js';
 export * from './media.js';
 export * from './primitives.js';
+export * from './timezones.js';
 
 export function metadataDetailsWith<
   Augmentation extends { mainContentFocus: ReturnType<typeof mainContentFocus> },

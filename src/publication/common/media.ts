@@ -15,7 +15,7 @@ const MediaCommonSchema = z.object({
     ),
 });
 
-export enum MediaMetadataAudioType {
+export enum MediaAudioKind {
   MUSIC = 'MUSIC',
   PODCAST = 'PODCAST',
   AUDIOBOOK = 'AUDIOBOOK',
@@ -48,7 +48,7 @@ export const MediaAudioSchema = MediaCommonSchema.extend({
   artist: notEmptyString('The artist for the audio').optional(),
   genre: notEmptyString('The genre of the audio').optional(),
   recordLabel: notEmptyString('The record label for the audio').optional(),
-  audioType: z.nativeEnum(MediaMetadataAudioType, { description: 'The type of audio' }).optional(),
+  kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio' }).optional(),
   lyrics: uri('The lyrics for the audio').optional(),
 });
 export type MediaAudio = z.infer<typeof MediaAudioSchema>;

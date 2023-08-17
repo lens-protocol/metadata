@@ -83,14 +83,14 @@ export const GeoLocationSchema = z.object({
 export type GeoLocation = z.infer<typeof GeoLocationSchema>;
 
 /**
- * A unix timestamp.
+ * An ISO 8601 in the JS simplified format: `YYYY-MM-DDTHH:mm:ss.sssZ`.
  */
-export type UnixTimestamp = Brand<number, 'UnixTimestamp'>;
-export function unixTimestamp(description: string): z.Schema<UnixTimestamp, z.ZodTypeDef, number> {
+export type Datetime = Brand<string, 'Datetime'>;
+export function datetime(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
   return z
-    .number({ description })
-    .positive()
-    .transform((value) => value as UnixTimestamp);
+    .string({ description })
+    .datetime()
+    .transform((value) => value as Datetime);
 }
 
 export function mainContentFocus(...focuses: [PublicationMainFocus, ...PublicationMainFocus[]]) {

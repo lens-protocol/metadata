@@ -8,7 +8,7 @@ import {
   metadataDetailsWith,
   notEmptyString,
   publicationWith,
-  unixTimestamp,
+  datetime,
   uri,
 } from './common';
 
@@ -22,9 +22,11 @@ export const LivestreamSchema = publicationWith({
 
     title: notEmptyString().optional().describe('The livestream title.'),
 
-    startsAt: unixTimestamp('The stream start time (unit timestamp).'),
+    startsAt: datetime('The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
-    endsAt: unixTimestamp('The optional stream end time (unit timestamp)').optional(),
+    endsAt: datetime(
+      'The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)',
+    ).optional(),
 
     playbackUrl: uri(
       'Some livestream platforms have the playback url as a separate url. ' +

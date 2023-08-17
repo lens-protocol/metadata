@@ -7,7 +7,7 @@ import {
   mainContentFocus,
   metadataDetailsWith,
   publicationWith,
-  unixTimestamp,
+  datetime,
   uri,
 } from './common';
 
@@ -20,7 +20,7 @@ export const SpaceSchema = publicationWith({
   lens: metadataDetailsWith({
     link: uri('The space join link.'),
 
-    startsAt: unixTimestamp('The space start time (unix timestamp).'),
+    startsAt: datetime('The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
 
