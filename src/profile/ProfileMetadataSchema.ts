@@ -13,7 +13,9 @@ export const ProfileMetadataDetailsSchema = z.object(
 
     bio: markdown('The profile bio as markdown.').optional(),
 
-    coverPicture: uri('The profile cover picture').optional(),
+    picture: uri('The profile picture.').optional(),
+
+    coverPicture: uri('The profile cover picture.').optional(),
 
     attributes: MetadataAttributeSchema.array()
       .min(1)
