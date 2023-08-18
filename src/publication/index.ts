@@ -11,6 +11,7 @@ export * from './ImageSchema.js';
 export * from './LinkSchema.js';
 export * from './LivestreamSchema.js';
 export * from './MintSchema.js';
+export * from './PublicationMainFocus.js';
 export * from './PublicationSchemaId.js';
 export * from './SpaceSchema.js';
 export * from './StorySchema.js';
