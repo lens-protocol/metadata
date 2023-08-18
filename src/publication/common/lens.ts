@@ -64,7 +64,7 @@ export type MetadataAttribute = z.infer<typeof MetadataAttributeSchema>;
 
 export const MetadataCommonSchema = z.object(
   {
-    metadata_id: notEmptyString(
+    id: notEmptyString(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
 
