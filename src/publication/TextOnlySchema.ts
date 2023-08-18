@@ -1,14 +1,15 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import { mainContentFocus, markdown, metadataDetailsWith, publicationWith } from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { markdown } from '../primitives.js';
 
 /**
  * @internal
  */
 export const TextOnlySchema = publicationWith({
-  $schema: z.literal(SchemaId.TEXT_ONLY),
+  $schema: z.literal(PublicationSchemaId.TEXT_ONLY),
 
   lens: metadataDetailsWith({
     content: markdown('The content for the publication.'),

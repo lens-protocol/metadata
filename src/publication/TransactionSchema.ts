@@ -1,20 +1,15 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  notEmptyString,
-  publicationWith,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { notEmptyString } from '../primitives.js';
 
 /**
  * @internal
  */
 export const TransactionSchema = publicationWith({
-  $schema: z.literal(SchemaId.TRANSACTION),
+  $schema: z.literal(PublicationSchemaId.TRANSACTION),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TRANSACTION),
 

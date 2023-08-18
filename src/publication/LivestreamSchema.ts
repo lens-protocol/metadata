@@ -1,22 +1,15 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  notEmptyString,
-  publicationWith,
-  datetime,
-  uri,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { datetime, notEmptyString, uri } from '../primitives.js';
 
 /**
  * @internal
  */
 export const LivestreamSchema = publicationWith({
-  $schema: z.literal(SchemaId.LIVESTREAM),
+  $schema: z.literal(PublicationSchemaId.LIVESTREAM),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LIVESTREAM),
 

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMediaSchema,
   mainContentFocus,
@@ -14,11 +14,11 @@ import {
  * @internal
  */
 export const AudioSchema = publicationWith({
-  $schema: z.literal(SchemaId.AUDIO),
+  $schema: z.literal(PublicationSchemaId.AUDIO),
   lens: metadataDetailsWith({
-    audio: MediaAudioSchema,
-
     mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
+
+    audio: MediaAudioSchema,
 
     attachments: AnyMediaSchema.array()
       .min(1)

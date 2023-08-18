@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
 
 /**
  * @internal
  */
 export const StorySchema = publicationWith({
-  $schema: z.literal(SchemaId.STORY),
+  $schema: z.literal(PublicationSchemaId.STORY),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.STORY),
 

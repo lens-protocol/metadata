@@ -1,18 +1,15 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMediaSchema,
-  GeoLocationSchema,
   TimezoneIdSchema,
   mainContentFocus,
   metadataDetailsWith,
-  notEmptyString,
   publicationWith,
-  datetime,
-  uri,
 } from './common';
+import { GeoLocationSchema, datetime, notEmptyString, uri } from '../primitives.js';
 
 /**
  * @internal
@@ -36,7 +33,7 @@ export type SchedulingAdjustments = z.infer<typeof SchedulingAdjustmentsSchema>;
  * @internal
  */
 export const EventSchema = publicationWith({
-  $schema: z.literal(SchemaId.EVENT),
+  $schema: z.literal(PublicationSchemaId.EVENT),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 

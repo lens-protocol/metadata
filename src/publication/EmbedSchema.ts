@@ -1,25 +1,20 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  publicationWith,
-  uri,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { uri } from '../primitives.js';
 
 /**
  * @internal
  */
 export const EmbedSchema = publicationWith({
-  $schema: z.literal(SchemaId.EMBED),
+  $schema: z.literal(PublicationSchemaId.EMBED),
 
   lens: metadataDetailsWith({
-    embed: uri('The embed URL.'),
-
     mainContentFocus: mainContentFocus(PublicationMainFocus.EMBED),
+
+    embed: uri('The embed URL.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -1,26 +1,20 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  markdown,
-  metadataDetailsWith,
-  notEmptyString,
-  publicationWith,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { markdown, notEmptyString } from '../primitives.js';
 
 /**
  * @internal
  */
 export const ArticleSchema = publicationWith({
-  $schema: z.literal(SchemaId.ARTICLE),
+  $schema: z.literal(PublicationSchemaId.ARTICLE),
 
   lens: metadataDetailsWith({
-    content: markdown('The content for the publication.'),
-
     mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),
+
+    content: markdown('The content for the publication.'),
 
     title: notEmptyString('The optional article title.').optional(),
 

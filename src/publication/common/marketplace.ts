@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdown, notEmptyString, uri } from './primitives.js';
+import { markdown, notEmptyString, uri } from '../../primitives';
 
 export enum MarketplaceMetadataAttributeDisplayType {
   number = 'number',

@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-import { Brand } from '../../utils.js';
-import { PublicationMainFocus } from '../PublicationMainFocus.js';
+import { Brand } from './utils.js';
 
 export function notEmptyString(description?: string) {
   return z.string({ description }).min(1);
@@ -91,17 +90,4 @@ export function datetime(description: string): z.Schema<Datetime, z.ZodTypeDef, 
     .string({ description })
     .datetime()
     .transform((value) => value as Datetime);
-}
-
-export function mainContentFocus(...focuses: [PublicationMainFocus, ...PublicationMainFocus[]]) {
-  const description = 'The main focus of the publication.';
-  if (focuses.length > 1) {
-    const literals = focuses.map((value) => z.literal(value)) as [
-      z.ZodLiteral<PublicationMainFocus>,
-      z.ZodLiteral<PublicationMainFocus>,
-      ...z.ZodLiteral<PublicationMainFocus>[],
-    ];
-    return z.union(literals, { description });
-  }
-  return z.literal(focuses[0], { description });
 }
