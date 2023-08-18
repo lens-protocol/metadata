@@ -32,6 +32,10 @@
     "schema",
     "nft"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lens-protocol/metadata.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
