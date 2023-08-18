@@ -1,30 +1,25 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  notEmptyString,
-  publicationWith,
-  unixTimestamp,
-  uri,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { datetime, notEmptyString, uri } from '../primitives.js';
 
 /**
  * @internal
  */
 export const LivestreamSchema = publicationWith({
-  $schema: z.literal(SchemaId.LIVESTREAM),
+  $schema: z.literal(PublicationSchemaId.LIVESTREAM),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LIVESTREAM),
 
     title: notEmptyString().optional().describe('The livestream title.'),
 
-    startsAt: unixTimestamp('The stream start time (unit timestamp).'),
+    startsAt: datetime('The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
-    endsAt: unixTimestamp('The optional stream end time (unit timestamp)').optional(),
+    endsAt: datetime(
+      'The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)',
+    ).optional(),
 
     playbackUrl: uri(
       'Some livestream platforms have the playback url as a separate url. ' +

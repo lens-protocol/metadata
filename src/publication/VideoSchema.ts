@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMediaSchema,
   MediaVideoSchema,
@@ -14,14 +14,14 @@ import {
  * @internal
  */
 export const VideoSchema = publicationWith({
-  $schema: z.literal(SchemaId.VIDEO),
+  $schema: z.literal(PublicationSchemaId.VIDEO),
   lens: metadataDetailsWith({
-    video: MediaVideoSchema,
-
     mainContentFocus: mainContentFocus(
       PublicationMainFocus.SHORT_VIDEO,
       PublicationMainFocus.VIDEO,
     ),
+
+    video: MediaVideoSchema,
 
     attachments: AnyMediaSchema.array()
       .min(1)

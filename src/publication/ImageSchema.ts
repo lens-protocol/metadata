@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMediaSchema,
   MediaImageSchema,
@@ -14,11 +14,11 @@ import {
  * @internal
  */
 export const ImageSchema = publicationWith({
-  $schema: z.literal(SchemaId.IMAGE),
+  $schema: z.literal(PublicationSchemaId.IMAGE),
   lens: metadataDetailsWith({
-    image: MediaImageSchema,
-
     mainContentFocus: mainContentFocus(PublicationMainFocus.IMAGE),
+
+    image: MediaImageSchema,
 
     attachments: AnyMediaSchema.array()
       .min(1)

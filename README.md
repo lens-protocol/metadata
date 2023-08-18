@@ -26,6 +26,8 @@ pnpm add @lens-protocol/metadata zod
 
 ## Usage
 
+## Parsing and validating metadata
+
 ```typescript
 import { PublicationMetadataSchema } from '@lens-protocol/metadata';
 
@@ -47,7 +49,21 @@ PublicationMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
-Narrowing types:
+### Format validation error
+
+`ZodError` contains all the information needed to inform you about the validation error, but it's not very user friendly. You can use `formatZodError` to get a more readable error message.
+
+```typescript
+import { PublicationMetadataSchema, formatZodError } from '@lens-protocol/metadata';
+
+const result = PublicationMetadataSchema.safeParse(invalid);
+
+if (!result.success) {
+  console.log(formatZodError(result.error));
+}
+```
+
+### Narrowing types
 
 ```typescript
 import { PublicationMetadata, PublicationMetadataSchema, SchemaId } from '@lens-protocol/metadata';
@@ -72,13 +88,17 @@ switch (publicationMetadata.$schema) {
 }
 ```
 
-Importing JSON schema:
+## JSON schemas
+
+Importing JSON schema in TypeScript is a simple as:
 
 ```typescript
 import audio from '@lens-protocol/metadata/jsonschemas/audio/1-0-0.json' assert { type: 'json' };
 
 import embed from '@lens-protocol/metadata/jsonschemas/embed/1-0-0.json' assert { type: 'json' };
 ```
+
+You can the use them in your JSON Schema validator of choice, for example [ajv](https://ajv.js.org/).
 
 ## Contributing
 

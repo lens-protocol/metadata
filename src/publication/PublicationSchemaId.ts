@@ -1,6 +1,6 @@
 const location = 'https://json-schemas.lens.dev/publications';
 
-export enum SchemaId {
+export enum PublicationSchemaId {
   THREE_D = `${location}/3d/1-0.0.json`,
   ARTICLE = `${location}/article/1-0.0.json`,
   AUDIO = `${location}/audio/1-0.0.json`,

@@ -1,15 +1,14 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus';
-import { SchemaId } from './SchemaId';
+import { PublicationSchemaId } from './PublicationSchemaId';
 import {
   AnyMediaSchema,
   metadataDetailsWith,
   MetadataLicenseTypeSchema,
-  notEmptyString,
   publicationWith,
-  uri,
 } from './common';
+import { notEmptyString, uri } from '../primitives';
 
 export enum ThreeDFormat {
   gLTF = 'gLTF/GLB',
@@ -33,7 +32,7 @@ export const ThreeDAssetSchema = z.object({
 export type ThreeDAsset = z.infer<typeof ThreeDAssetSchema>;
 
 export const ThreeDMetadataSchema = publicationWith({
-  $schema: z.literal(SchemaId.THREE_D),
+  $schema: z.literal(PublicationSchemaId.THREE_D),
 
   lens: metadataDetailsWith({
     mainContentFocus: z.literal(PublicationMainFocus.THREE_D),

@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-import { Brand } from '../../utils.js';
-import { PublicationMainFocus } from '../PublicationMainFocus.js';
+import { Brand } from './utils.js';
 
 export function notEmptyString(description?: string) {
   return z.string({ description }).min(1);
@@ -83,25 +82,12 @@ export const GeoLocationSchema = z.object({
 export type GeoLocation = z.infer<typeof GeoLocationSchema>;
 
 /**
- * A unix timestamp.
+ * An ISO 8601 in the JS simplified format: `YYYY-MM-DDTHH:mm:ss.sssZ`.
  */
-export type UnixTimestamp = Brand<number, 'UnixTimestamp'>;
-export function unixTimestamp(description: string): z.Schema<UnixTimestamp, z.ZodTypeDef, number> {
+export type Datetime = Brand<string, 'Datetime'>;
+export function datetime(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
   return z
-    .number({ description })
-    .positive()
-    .transform((value) => value as UnixTimestamp);
-}
-
-export function mainContentFocus(...focuses: [PublicationMainFocus, ...PublicationMainFocus[]]) {
-  const description = 'The main focus of the publication.';
-  if (focuses.length > 1) {
-    const literals = focuses.map((value) => z.literal(value)) as [
-      z.ZodLiteral<PublicationMainFocus>,
-      z.ZodLiteral<PublicationMainFocus>,
-      ...z.ZodLiteral<PublicationMainFocus>[],
-    ];
-    return z.union(literals, { description });
-  }
-  return z.literal(focuses[0], { description });
+    .string({ description })
+    .datetime()
+    .transform((value) => value as Datetime);
 }

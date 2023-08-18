@@ -1,28 +1,22 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  publicationWith,
-  unixTimestamp,
-  uri,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { datetime, uri } from '../primitives.js';
 
 /**
  * @internal
  */
 export const SpaceSchema = publicationWith({
-  $schema: z.literal(SchemaId.SPACE),
+  $schema: z.literal(PublicationSchemaId.SPACE),
 
   lens: metadataDetailsWith({
+    mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
+
     link: uri('The space join link.'),
 
-    startsAt: unixTimestamp('The space start time (unix timestamp).'),
-
-    mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
+    startsAt: datetime('The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

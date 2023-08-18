@@ -1,25 +1,20 @@
 import { z } from 'zod';
 
 import { PublicationMainFocus } from './PublicationMainFocus.js';
-import { SchemaId } from './SchemaId.js';
-import {
-  AnyMediaSchema,
-  mainContentFocus,
-  metadataDetailsWith,
-  publicationWith,
-  uri,
-} from './common';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
+import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
+import { uri } from '../primitives.js';
 
 /**
  * @internal
  */
 export const LinkSchema = publicationWith({
-  $schema: z.literal(SchemaId.LINK),
+  $schema: z.literal(PublicationSchemaId.LINK),
 
   lens: metadataDetailsWith({
-    sharingLink: uri('The sharing link url.'),
-
     mainContentFocus: mainContentFocus(PublicationMainFocus.LINK),
+
+    sharingLink: uri('The sharing link url.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)
