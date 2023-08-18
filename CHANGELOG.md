@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.3
+
+### Patch Changes
+
+- 5e152b0: **Fixes** tsconfig so to not need tslib
+
 ## 0.1.0-alpha.2
 
 ### Patch Changes
