@@ -26,7 +26,7 @@ pnpm add @lens-protocol/metadata zod
 
 ## Usage
 
-## Parsing and validating metadata
+### Parsing and validating metadata
 
 ```typescript
 import { PublicationMetadataSchema } from '@lens-protocol/metadata';
@@ -66,21 +66,25 @@ if (!result.success) {
 ### Narrowing types
 
 ```typescript
-import { PublicationMetadata, PublicationMetadataSchema, SchemaId } from '@lens-protocol/metadata';
+import {
+  PublicationMetadata,
+  PublicationMetadataSchema,
+  PublicationSchemaId,
+} from '@lens-protocol/metadata';
 
 const publicationMetadata = PublicationMetadataSchema.parse(valid);
 
 switch (publicationMetadata.$schema) {
-  case SchemaId.ARTICLE:
+  case PublicationSchemaId.ARTICLE:
     // publicationMetadata is ArticleMetadata
     break;
-  case SchemaId.AUDIO:
+  case PublicationSchemaId.AUDIO:
     // publicationMetadata is AudioMetadata
     break;
-  case SchemaId.IMAGE:
+  case PublicationSchemaId.IMAGE:
     // publicationMetadata is ImageMetadata
     break;
-  case SchemaId.TEXT_ONLY:
+  case PublicationSchemaId.TEXT_ONLY:
     // publicationMetadata is TextOnlyMetadata
     break;
 
