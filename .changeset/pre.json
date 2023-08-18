@@ -4,5 +4,8 @@
   "initialVersions": {
     "@lens-protocol/metadata": "0.0.1"
   },
-  "changesets": ["light-ligers-exist"]
+  "changesets": [
+    "grumpy-hairs-carry",
+    "light-ligers-exist"
+  ]
 }
