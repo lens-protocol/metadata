@@ -26,17 +26,21 @@ pnpm add @lens-protocol/metadata zod
 
 ## Usage
 
-### Parsing and validating metadata
+Assuming we have 2 JS objects:
+
+```typescript
+const valid = {
+  /** example of valid metadata **/
+};
+const invalid = {
+  /** example of invalid metadata **/
+};
+```
+
+### Publication metadata
 
 ```typescript
 import { PublicationMetadataSchema } from '@lens-protocol/metadata';
-
-const valid = {
-  /** example of valid publication metadata **/
-};
-const invalid = {
-  /** example of invalid publication metadata **/
-};
 
 PublicationMetadataSchema.parse(valid); // => PublicationMetadata
 PublicationMetadataSchema.parse(invalid); // => throws ZodError
@@ -46,6 +50,22 @@ PublicationMetadataSchema.parse(invalid); // => throws ZodError
 PublicationMetadataSchema.safeParse(valid);
 // => { success: true, data: PublicationMetadata }
 PublicationMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
+### Profile metadata
+
+```typescript
+import { ProfileMetadataSchema } from '@lens-protocol/metadata';
+
+ProfileMetadataSchema.parse(valid); // => ProfileMetadata
+ProfileMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+ProfileMetadataSchema.safeParse(valid);
+// => { success: true, data: ProfileMetadata }
+ProfileMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
@@ -90,6 +110,65 @@ switch (publicationMetadata.$schema) {
 
   // ...
 }
+```
+
+### Useful types
+
+The package also exports all enums and types that you might need to work with the metadata.
+
+Some examples:
+
+```typescript
+import {
+  // enums
+  MediaAudioKind,
+  MediaAudioMimeType,
+  MediaImageMimeType,
+  MediaVideoMimeType,
+  MetadataAttributeType
+  PublicationMainFocus,
+  ThreeDFormat,
+
+  // main types
+  ArticleMetadata,
+  AudioMetadata,
+  CheckingInMetadata,
+  EmbedMetadata,
+  EventMetadata,
+  ImageMetadata,
+  LinkMetadata,
+  LivestreamMetadata,
+  MintMetadata,
+  ProfileMetadata,
+  PublicationMetadata,
+  SpaceMetadata,
+  StoryMetadata,
+  TextOnlyMetadata,
+  ThreeDMetadata,
+  TransactionMetadata,
+  VideoMetadata,
+
+  // others
+  MetadataAttribute,
+  MediaAudio,
+  MediaImage,
+  MediaVideo,
+  AnyMedia,
+  GeoLocation,
+  BooleanAttribute,
+  DateAttribute,
+  NumberAttribute,
+  StringAttribute,
+  JSONAttribute,
+
+  // branded aliases
+  Locale,
+  Markdown,
+  Signature,
+  URI,
+  AppId,
+  Datetime,
+} from '@lens-protocol/metadata';
 ```
 
 ## JSON schemas
