@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.2
+
+### Patch Changes
+
+- 406238b: **Added** `ProfileMetadataSchema` and several other improvements
+
 ## 0.1.0-alpha.1
 
 ### Patch Changes
