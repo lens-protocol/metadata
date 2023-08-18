@@ -116,6 +116,8 @@ switch (publicationMetadata.$schema) {
 
 The package also exports all enums and types that you might need to work with the metadata.
 
+Use your IDE's autocomplete to explore the available types.
+
 Some examples:
 
 ```typescript
