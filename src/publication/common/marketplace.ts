@@ -16,7 +16,9 @@ export const MarketplaceMetadataAttributeSchema = z.object({
 export type MarketplaceMetadataAttribute = z.infer<typeof MarketplaceMetadataAttributeSchema>;
 
 export const MarketplaceMetadataSchema = z.object({
-  description: markdown('A human-readable description of the item.'),
+  description: markdown(
+    'A human-readable description of the item. It could be plain text or markdown.',
+  ),
 
   external_url: uri(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +

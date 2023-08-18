@@ -49,9 +49,7 @@ export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = notEmp
  * A markdown text.
  */
 export type Markdown = Brand<string, 'Markdown'>;
-export function markdown(
-  description: string = 'A Markdown text.',
-): z.Schema<Markdown, z.ZodTypeDef, string> {
+export function markdown(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
   return notEmptyString(description).transform((value) => value as Markdown);
 }
 

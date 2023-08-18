@@ -14,7 +14,7 @@ export const ArticleSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),
 
-    content: markdown('The content for the publication.'),
+    content: markdown('The content for the publication as markdown.'),
 
     title: notEmptyString('The optional article title.').optional(),
 
