@@ -211,9 +211,11 @@ import {
 Importing JSON schema in TypeScript is a simple as:
 
 ```typescript
-import audio from '@lens-protocol/metadata/jsonschemas/audio/1-0-0.json' assert { type: 'json' };
+import audio from '@lens-protocol/metadata/jsonschemas/publications/audio/1.0.0.json' assert { type: 'json' };
 
-import embed from '@lens-protocol/metadata/jsonschemas/embed/1-0-0.json' assert { type: 'json' };
+import audio from '@lens-protocol/metadata/jsonschemas/publications/article/1.0.0.json' assert { type: 'json' };
+
+import embed from '@lens-protocol/metadata/jsonschemas/profile/1.0.0.json' assert { type: 'json' };
 ```
 
 You can the use them in your JSON Schema validator of choice, for example [ajv](https://ajv.js.org/).
