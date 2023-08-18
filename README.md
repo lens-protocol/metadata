@@ -85,6 +85,10 @@ if (!result.success) {
 
 ### Narrowing types
 
+Every time you have a discriminated union, you can use the discriminant to narrow the type. See few examples below.
+
+**PublicationMetadata**
+
 ```typescript
 import {
   PublicationMetadata,
@@ -109,6 +113,35 @@ switch (publicationMetadata.$schema) {
     break;
 
   // ...
+}
+```
+
+**MetadataAttribute**
+
+````typescript
+import { MetadataAttribute, MetadataAttributeType } from '@lens-protocol/metadata';
+
+switch (attribute.type) {
+  case MetadataAttributeType.BOOLEAN:
+    // attribute is BooleanAttribute
+    // value is a string "true" or "false"
+    break;
+  case MetadataAttributeType.DATE:
+    // attribute is DateAttribute
+    // value is a string in ISO 8601 format
+    break;
+  case MetadataAttributeType.NUMBER:
+    // attribute is NumberAttribute
+    // value is a string containing a valid JS number
+    break;
+  case MetadataAttributeType.STRING:
+    // attribute is StringAttribute
+    // value is a string
+    break;
+  case MetadataAttributeType.JSON:
+    // attribute is JSONAttribute
+    // value is a string allegedly containing a valid JSON, consumers should validate it
+    break;
 }
 ```
 
@@ -171,7 +204,7 @@ import {
   AppId,
   Datetime,
 } from '@lens-protocol/metadata';
-```
+````
 
 ## JSON schemas
 

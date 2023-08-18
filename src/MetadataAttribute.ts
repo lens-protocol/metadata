@@ -3,15 +3,15 @@ import { z } from 'zod';
 import { notEmptyString } from './primitives';
 
 export enum MetadataAttributeType {
-  Boolean = 'Boolean',
-  Date = 'Date',
-  Number = 'Number',
-  String = 'String',
+  BOOLEAN = 'Boolean',
+  DATE = 'Date',
+  NUMBER = 'Number',
+  STRING = 'String',
   JSON = 'JSON',
 }
 
 export const BooleanAttributeSchema = z.object({
-  type: z.literal(MetadataAttributeType.Boolean),
+  type: z.literal(MetadataAttributeType.BOOLEAN),
   key: notEmptyString("The attribute's unique identifier."),
   value: z
     .enum(['true', 'false'])
@@ -20,7 +20,7 @@ export const BooleanAttributeSchema = z.object({
 export type BooleanAttribute = z.infer<typeof BooleanAttributeSchema>;
 
 export const DateAttributeSchema = z.object({
-  type: z.literal(MetadataAttributeType.Date),
+  type: z.literal(MetadataAttributeType.DATE),
   key: notEmptyString("The attribute's unique identifier."),
   value: z
     .string()
@@ -30,8 +30,8 @@ export const DateAttributeSchema = z.object({
 export type DateAttribute = z.infer<typeof DateAttributeSchema>;
 
 export const NumberAttributeSchema = z.object({
-  type: z.literal(MetadataAttributeType.Number),
-  key: notEmptyString("The attribute's unique identifier."),
+  type: z.literal(MetadataAttributeType.NUMBER),
+  key: notEmptyString("The attribute's unique identifier."), // TODO
   value: notEmptyString(
     "A valid JS number serialized as string. It's consumer responsibility to parse it.",
   ),
@@ -39,7 +39,7 @@ export const NumberAttributeSchema = z.object({
 export type NumberAttribute = z.infer<typeof NumberAttributeSchema>;
 
 export const StringAttributeSchema = z.object({
-  type: z.literal(MetadataAttributeType.String),
+  type: z.literal(MetadataAttributeType.STRING),
   key: notEmptyString("The attribute's unique identifier."),
   value: notEmptyString('A string value.'),
 });

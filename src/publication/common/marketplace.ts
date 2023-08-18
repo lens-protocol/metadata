@@ -3,9 +3,9 @@ import { z } from 'zod';
 import { markdown, notEmptyString, uri } from '../../primitives';
 
 export enum MarketplaceMetadataAttributeDisplayType {
-  number = 'number',
-  string = 'string',
-  date = 'date',
+  NUMBER = 'number',
+  STRING = 'string',
+  DATE = 'date',
 }
 
 export const MarketplaceMetadataAttributeSchema = z.object({
