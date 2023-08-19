@@ -33,7 +33,7 @@ export type SchedulingAdjustments = z.infer<typeof SchedulingAdjustmentsSchema>;
  * @internal
  */
 export const EventSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.EVENT),
+  $schema: z.literal(PublicationSchemaId.EVENT_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 

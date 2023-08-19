@@ -9,7 +9,7 @@ import { GeoLocationSchema, notEmptyString } from '../primitives.js';
  * @internal
  */
 export const CheckingInSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.CHECKING_IN),
+  $schema: z.literal(PublicationSchemaId.CHECKING_IN_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.CHECKING_IN),
 

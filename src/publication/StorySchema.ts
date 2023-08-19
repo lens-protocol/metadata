@@ -8,7 +8,7 @@ import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith 
  * @internal
  */
 export const StorySchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.STORY),
+  $schema: z.literal(PublicationSchemaId.STORY_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.STORY),
 

@@ -9,7 +9,7 @@ import { markdown } from '../primitives.js';
  * @internal
  */
 export const TextOnlySchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.TEXT_ONLY),
+  $schema: z.literal(PublicationSchemaId.TEXT_ONLY_LATEST),
 
   lens: metadataDetailsWith({
     content: markdown('The content for the publication as markdown.'),

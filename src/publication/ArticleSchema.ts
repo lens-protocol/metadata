@@ -9,7 +9,7 @@ import { markdown, notEmptyString } from '../primitives.js';
  * @internal
  */
 export const ArticleSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.ARTICLE),
+  $schema: z.literal(PublicationSchemaId.ARTICLE_LATEST),
 
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),

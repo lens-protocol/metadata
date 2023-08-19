@@ -9,7 +9,7 @@ import { notEmptyString } from '../primitives.js';
  * @internal
  */
 export const TransactionSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.TRANSACTION),
+  $schema: z.literal(PublicationSchemaId.TRANSACTION_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TRANSACTION),
 

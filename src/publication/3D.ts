@@ -32,7 +32,7 @@ export const ThreeDAssetSchema = z.object({
 export type ThreeDAsset = z.infer<typeof ThreeDAssetSchema>;
 
 export const ThreeDMetadataSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.THREE_D),
+  $schema: z.literal(PublicationSchemaId.THREE_D_LATEST),
 
   lens: metadataDetailsWith({
     mainContentFocus: z.literal(PublicationMainFocus.THREE_D),

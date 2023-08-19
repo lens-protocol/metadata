@@ -14,7 +14,7 @@ import {
  * @internal
  */
 export const AudioSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.AUDIO),
+  $schema: z.literal(PublicationSchemaId.AUDIO_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
 

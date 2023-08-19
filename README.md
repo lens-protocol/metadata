@@ -99,16 +99,16 @@ import {
 const publicationMetadata = PublicationMetadataSchema.parse(valid);
 
 switch (publicationMetadata.$schema) {
-  case PublicationSchemaId.ARTICLE:
+  case PublicationSchemaId.ARTICLE_LATEST:
     // publicationMetadata is ArticleMetadata
     break;
-  case PublicationSchemaId.AUDIO:
+  case PublicationSchemaId.AUDIO_LATEST:
     // publicationMetadata is AudioMetadata
     break;
-  case PublicationSchemaId.IMAGE:
+  case PublicationSchemaId.IMAGE_LATEST:
     // publicationMetadata is ImageMetadata
     break;
-  case PublicationSchemaId.TEXT_ONLY:
+  case PublicationSchemaId.TEXT_ONLY_LATEST:
     // publicationMetadata is TextOnlyMetadata
     break;
 
@@ -118,7 +118,7 @@ switch (publicationMetadata.$schema) {
 
 **MetadataAttribute**
 
-````typescript
+```typescript
 import { MetadataAttribute, MetadataAttributeType } from '@lens-protocol/metadata';
 
 switch (attribute.type) {
@@ -204,7 +204,7 @@ import {
   AppId,
   Datetime,
 } from '@lens-protocol/metadata';
-````
+```
 
 ## JSON schemas
 
@@ -219,6 +219,43 @@ import embed from '@lens-protocol/metadata/jsonschemas/profile/1.0.0.json' asser
 ```
 
 You can the use them in your JSON Schema validator of choice, for example [ajv](https://ajv.js.org/).
+
+## Versioning schemas
+
+The Lens Protocol Metadata Standards use a **self-describing JSON format**. All metadata files that adopt this standard MUST have a `$schema` property that identifies the schema the file conforms to.
+
+```json
+{
+  "$schema": "https://json-schemas.lens.dev/publications/article/1.0.0.json",
+
+  "lens": {
+    /* ... */
+  }
+}
+```
+
+The `$schema` property is a URI that identify the scheme type and its version.
+
+> [!NOTE]  
+> Even though schemas are identified by URIs, those identifiers are not necessarily network-addressable. They are just identifiers.
+> Generally, JSON schema validators don’t make HTTP requests (`https://`) to fetch schemas. Instead, they provide a way to load schemas into an internal schema database. When a schema is referenced by it’s URI identifier, the schema is retrieved from the internal schema database.
+
+**Schemas are versioned using [Semantic Versioning](https://semver.org/)**.
+
+Future changes should aim to be backwards compatible as much as possible.
+
+In case of minor or patch changes amend the implementation of the affected schema and update its version number accordingly.
+
+In case of breaking changes, a new major version should be implemented. The previous version should be kept for a reasonable amount of time to allow consumers to migrate and to support existing publications.
+
+In the case of a major version is needed proceed as follows:
+
+- rename the current schema adding a `V<number` suffix (e.g. `AudioSchema` into `AudioSchemaV1`)
+- rename the current Schema Id into something like `PublicationSchemaId.AUDIO_V1`
+- create a new `PublicationSchemaId.AUDIO_LATEST` with the new version
+- create a new `AudioSchema` with the new schema definition and the new schema id
+- amend the JSON Schema `scripts/build.ts` script to generate old and new schema files
+- release a new major version of this package
 
 ## Contributing
 

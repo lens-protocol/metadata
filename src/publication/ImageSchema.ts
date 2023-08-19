@@ -14,7 +14,7 @@ import {
  * @internal
  */
 export const ImageSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.IMAGE),
+  $schema: z.literal(PublicationSchemaId.IMAGE_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.IMAGE),
 

@@ -9,7 +9,7 @@ import { uri } from '../primitives.js';
  * @internal
  */
 export const MintSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.MINT),
+  $schema: z.literal(PublicationSchemaId.MINT_LATEST),
 
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.MINT),
