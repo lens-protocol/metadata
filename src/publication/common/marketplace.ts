@@ -18,7 +18,7 @@ export type MarketplaceMetadataAttribute = z.infer<typeof MarketplaceMetadataAtt
 export const MarketplaceMetadataSchema = z.object({
   description: markdown(
     'A human-readable description of the item. It could be plain text or markdown.',
-  ),
+  ).optional(),
 
   external_url: uri(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
@@ -34,7 +34,7 @@ export const MarketplaceMetadataSchema = z.object({
       'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
     ),
 
-  image: uri('Marketplaces will store any NFT image here.'),
+  image: uri('Marketplaces will store any NFT image here.').optional(),
 
   animation_url: uri(
     'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
