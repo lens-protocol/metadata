@@ -220,7 +220,7 @@ import embed from '@lens-protocol/metadata/jsonschemas/profile/1.0.0.json' asser
 
 You can the use them in your JSON Schema validator of choice, for example [ajv](https://ajv.js.org/).
 
-## Versioning schemas
+## Versioning
 
 The Lens Protocol Metadata Standards use a **self-describing JSON format**. All metadata files that adopt this standard MUST have a `$schema` property that identifies the schema the file conforms to.
 
@@ -229,12 +229,14 @@ The Lens Protocol Metadata Standards use a **self-describing JSON format**. All 
   "$schema": "https://json-schemas.lens.dev/publications/article/1.0.0.json",
 
   "lens": {
-    /* ... */
+    "id": "b3d7f1a0-1f75-11ec-9621-0242ac130002",
+    "content": "The content of the article",
+    "locale": "en"
   }
 }
 ```
 
-The `$schema` property is a URI that identify the scheme type and its version.
+The `$schema` property is a URI that identify the schema type and its version.
 
 > [!NOTE]  
 > Even though schemas are identified by URIs, those identifiers are not necessarily network-addressable. They are just identifiers.
