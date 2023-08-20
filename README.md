@@ -238,26 +238,68 @@ The Lens Protocol Metadata Standards use a **self-describing JSON format**. All 
 
 The `$schema` property is a URI that identify the schema type and its version.
 
+**Schemas are versioned using [Semantic Versioning](https://semver.org/)**.
+
 > [!NOTE]  
 > Even though schemas are identified by URIs, those identifiers are not necessarily network-addressable. They are just identifiers.
-> Generally, JSON schema validators don’t make HTTP requests (`https://`) to fetch schemas. Instead, they provide a way to load schemas into an internal schema database. When a schema is referenced by it’s URI identifier, the schema is retrieved from the internal schema database.
-
-**Schemas are versioned using [Semantic Versioning](https://semver.org/)**.
+> Generally, JSON schema validators don’t make HTTP requests (`https://`) to fetch schemas. Instead, they provide a way to load schemas into an internal schema database. When a schema is referenced by its URI identifier, the schema is retrieved from the internal schema database.
 
 Future changes should aim to be backwards compatible as much as possible.
 
-In case of minor or patch changes amend the implementation of the affected schema and update its version number accordingly.
+When adding a new version of a schema, the previous version should be kept for a reasonable amount of time to allow consumers to migrate and to support existing publications.
 
-In case of breaking changes, a new major version should be implemented. The previous version should be kept for a reasonable amount of time to allow consumers to migrate and to support existing publications.
+### Adding a new schema
 
-In the case of a major version is needed proceed as follows:
+In this example we will add a new version of the `AudioSchema` schema, but the same process applies to all the other schemas.
 
-- rename the current schema adding a `V<number` suffix (e.g. `AudioSchema` into `AudioSchemaV1`)
-- rename the current Schema Id into something like `PublicationSchemaId.AUDIO_V1`
-- create a new `PublicationSchemaId.AUDIO_LATEST` with the new version
-- create a new `AudioSchema` with the new schema definition and the new schema id
-- amend the JSON Schema `scripts/build.ts` script to generate old and new schema files
-- release a new major version of this package
+- create a new `PublicationSchemaId` enum entry with value of `PublicationSchemaId.AUDIO_LATEST`. Name it after the current schema version (e.g. `AUDIO_V1_0_0`).
+- rename the existing `AudioSchema` into `AudioV1_0_0Schema` and update the `$schema` value to `PublicationSchemaId.AUDIO_V1_0_0`
+- increase the version number of the `PublicationSchemaId.AUDIO_LATEST` based on the nature of your changes. **Remember to follow semver rules.**
+- create a new `AudioSchema` with the new schema definition and use the `PublicationSchemaId.AUDIO_LATEST` as `$schema` value
+- update the `scripts/build.ts` script to include the new schema and old schema files under the correct version file name in the `jsonschemas/publications/audio` folder
+- release a new version of this package according to the nature of the changes (new major version of a schema = new major version of the package, etc.)
+
+In case the changes are backwards compatible, you could create a single `AudioMetadataDetailsSchema` definition and just declare 2 schemas out of it, one for the old version and one for the new version. For example:
+
+```typescript
+export const AudioMetadataDetailsSchema = metadataDetailsWith({
+  mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
+
+  audio: MediaAudioSchema,
+
+  attachments: AnyMediaSchema.array()
+    .min(1)
+    .optional()
+    .describe('The other attachments you want to include with it.'),
+
+  /** e.g. new optional fields */
+});
+export type AudioMetadataDetails = z.infer<typeof AudioMetadataDetailsSchema>;
+
+export const AudioSchema = publicationWith({
+  $schema: z.literal(PublicationSchemaId.AUDIO_LATEST),
+  lens: AudioMetadataDetailsSchema,
+});
+export type AudioMetadata = z.infer<typeof AudioSchema>;
+
+export const AudioV1Schema = publicationWith({
+  $schema: z.literal(PublicationSchemaId.AUDIO_V1_0_0),
+  lens: AudioMetadataDetailsSchema,
+});
+export type AudioV1Metadata = z.infer<typeof AudioV1Schema>;
+```
+
+In this case consumers of this package can take advantage of the structural likeness and just do the following:
+
+```typescript
+switch (publicationMetadata.$schema) {
+  case PublicationSchemaId.AUDIO_V1_0_0:
+  case PublicationSchemaId.AUDIO_LATEST:
+    // publicationMetadata.lens is AudioMetadataDetails
+    break;
+  // ...
+}
+```
 
 ## Contributing
 
