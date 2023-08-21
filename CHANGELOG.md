@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.4
+
+### Patch Changes
+
+- 3f3c349: **Added** versioning strategy
+- d643054: **Added** support for token-gated publications
+
 ## 0.1.0-alpha.3
 
 ### Patch Changes

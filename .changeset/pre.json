@@ -5,9 +5,11 @@
     "@lens-protocol/metadata": "0.0.1"
   },
   "changesets": [
+    "breezy-ways-peel",
     "grumpy-hairs-carry",
     "grumpy-jokes-drop",
     "light-ligers-exist",
+    "shy-falcons-sip",
     "two-pigs-do"
   ]
 }
