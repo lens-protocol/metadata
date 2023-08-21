@@ -14,7 +14,7 @@ import {
  * @internal
  */
 export const VideoSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.VIDEO),
+  $schema: z.literal(PublicationSchemaId.VIDEO_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(
       PublicationMainFocus.SHORT_VIDEO,

@@ -9,7 +9,7 @@ import { uri } from '../primitives.js';
  * @internal
  */
 export const LinkSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.LINK),
+  $schema: z.literal(PublicationSchemaId.LINK_LATEST),
 
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LINK),

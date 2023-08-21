@@ -9,7 +9,7 @@ import { uri } from '../primitives.js';
  * @internal
  */
 export const EmbedSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.EMBED),
+  $schema: z.literal(PublicationSchemaId.EMBED_LATEST),
 
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.EMBED),

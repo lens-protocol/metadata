@@ -9,7 +9,7 @@ import { datetime, notEmptyString, uri } from '../primitives.js';
  * @internal
  */
 export const LivestreamSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.LIVESTREAM),
+  $schema: z.literal(PublicationSchemaId.LIVESTREAM_LATEST),
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LIVESTREAM),
 

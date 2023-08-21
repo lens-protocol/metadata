@@ -1,11 +1,13 @@
 import { z } from 'zod';
 
+import { PublicationEncryptionStrategySchema } from './encryption.js';
 import { MarketplaceMetadataSchema } from './marketplace.js';
 import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import { AppIdSchema, LocaleSchema, markdown, notEmptyString } from '../../primitives';
 import { SignatureSchema } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
+export * from './encryption.js';
 export * from './license.js';
 export * from './marketplace.js';
 export * from './media.js';
@@ -17,6 +19,9 @@ export enum PublicationContentWarning {
   SPOILER = 'SPOILER',
 }
 
+/**
+ * @internal
+ */
 export const MetadataCommonSchema = z.object(
   {
     id: notEmptyString(
@@ -34,6 +39,8 @@ export const MetadataCommonSchema = z.object(
       ),
 
     locale: LocaleSchema,
+
+    encryptedWith: PublicationEncryptionStrategySchema.optional(),
 
     tags: notEmptyString().array().optional().describe('An arbitrary list of tags.'),
 
@@ -60,12 +67,18 @@ export const MetadataCommonSchema = z.object(
   { description: 'The Lens specific metadata details.' },
 );
 
+/**
+ * @internal
+ */
 export function metadataDetailsWith<
   Augmentation extends { mainContentFocus: ReturnType<typeof mainContentFocus> },
 >(augmentation: Augmentation) {
   return MetadataCommonSchema.extend(augmentation);
 }
 
+/**
+ * @internal
+ */
 export function publicationWith<
   Augmentation extends {
     $schema: z.ZodLiteral<string>;
@@ -78,6 +91,9 @@ export function publicationWith<
   });
 }
 
+/**
+ * @internal
+ */
 export function mainContentFocus(...focuses: [PublicationMainFocus, ...PublicationMainFocus[]]) {
   const description = 'The main focus of the publication.';
   if (focuses.length > 1) {

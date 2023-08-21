@@ -9,7 +9,7 @@ import { datetime, uri } from '../primitives.js';
  * @internal
  */
 export const SpaceSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.SPACE),
+  $schema: z.literal(PublicationSchemaId.SPACE_LATEST),
 
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
