@@ -77,4 +77,4 @@ export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
 /**
  * The type of a publication metadata object.
  */
-export type PublicationMetadataMetadata = z.infer<typeof PublicationMetadataSchema>;
+export type PublicationMetadata = z.infer<typeof PublicationMetadataSchema>;

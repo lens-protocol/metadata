@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.5
+
+### Patch Changes
+
+- ee041cf: **Fixed** `PublicationMetadataMetadata` typo
+
 ## 0.1.0-alpha.4
 
 ### Patch Changes
