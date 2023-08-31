@@ -88,6 +88,22 @@ ProfileMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
+You can also parse legacy Profile Metadata (aka v1) via:
+
+```typescript
+import { legacy } from '@lens-protocol/metadata';
+
+legacy.ProfileMetadataSchema.parse(valid); // => legacy.ProfileMetadata
+legacy.ProfileMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+legacy.ProfileMetadataSchema.safeParse(valid);
+// => { success: true, data: legacy.ProfileMetadata }
+legacy.ProfileMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
 ### Format validation error
 
 `ZodError` contains all the information needed to inform you about the validation error, but it's not very user friendly. You can use `formatZodError` to get a more readable error message.

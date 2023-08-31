@@ -5,7 +5,7 @@ import { ProfileMetadataSchema } from '../ProfileMetadataSchema.js';
 
 describe(`Given the ProfileMetadataSchema`, () => {
   describe(`when parsing an invalid object`, () => {
-    it(`then should flag the missing fields`, () => {
+    it(`then it should flag the missing fields`, () => {
       expectSchema(() =>
         ProfileMetadataSchema.safeParse({
           $schema: 'https://json-schemas.lens.dev/profile/1.0.0.json',

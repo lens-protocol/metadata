@@ -1,3 +1,4 @@
+export * as legacy from './legacy';
 export * from './constants';
 export * from './formatters';
 export * from './MetadataAttribute';

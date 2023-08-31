@@ -8,7 +8,6 @@ export * from './CheckingInSchema.js';
 export * from './EmbedSchema.js';
 export * from './EventSchema.js';
 export * from './ImageSchema.js';
-export * as legacy from './legacy.js';
 export * from './LinkSchema.js';
 export * from './LivestreamSchema.js';
 export * from './MintSchema.js';
