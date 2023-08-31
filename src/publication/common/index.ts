@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PublicationEncryptionStrategySchema } from './encryption.js';
 import { MarketplaceMetadataSchema } from './marketplace.js';
 import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import { AppIdSchema, LocaleSchema, markdown, notEmptyString } from '../../primitives';
+import { AppIdSchema, LocaleSchema, TagSchema, markdown, notEmptyString } from '../../primitives';
 import { SignatureSchema } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -42,7 +42,7 @@ export const MetadataCommonSchema = z.object(
 
     encryptedWith: PublicationEncryptionStrategySchema.optional(),
 
-    tags: notEmptyString().array().optional().describe('An arbitrary list of tags.'),
+    tags: TagSchema.array().max(10).optional().describe('An arbitrary list of tags.'),
 
     contentWarning: z
       .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })

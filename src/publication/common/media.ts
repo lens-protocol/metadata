@@ -54,12 +54,13 @@ export const MediaAudioSchema = MediaCommonSchema.extend({
 export type MediaAudio = z.infer<typeof MediaAudioSchema>;
 
 export enum MediaImageMimeType {
+  BMP = 'image/x-ms-bmp',
   GIF = 'image/gif',
+  HEIC = 'image/heic',
   JPEG = 'image/jpeg',
   PNG = 'image/png',
-  TIFF = 'image/tiff',
-  BMP = 'image/x-ms-bmp',
   SVG = 'image/svg+xml',
+  TIFF = 'image/tiff',
   WEBP = 'image/webp',
 }
 
@@ -72,13 +73,14 @@ export type MediaImage = z.infer<typeof MediaImageSchema>;
 export enum MediaVideoMimeType {
   GLTF = 'model/gltf+json',
   GLTF_BINARY = 'model/gltf-binary',
-  WEBM = 'video/webm',
-  MP4 = 'video/mp4',
   M4V = 'video/x-m4v',
-  OGV = 'video/ogv',
-  OGG = 'video/ogg',
+  MOV = 'video/mov',
+  MP4 = 'video/mp4',
   MPEG = 'video/mpeg',
+  OGG = 'video/ogg',
+  OGV = 'video/ogv',
   QUICKTIME = 'video/quicktime',
+  WEBM = 'video/webm',
 }
 
 export const MediaVideoSchema = MediaCommonSchema.extend({

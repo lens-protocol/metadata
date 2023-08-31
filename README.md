@@ -53,6 +53,25 @@ PublicationMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
+You can also parse legacy Publication Metadata v2 and v1 via:
+
+```typescript
+import { legacy } from '@lens-protocol/metadata';
+
+legacy.PublicationMetadataSchema.parse(valid); // => legacy.PublicationMetadata
+legacy.PublicationMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+legacy.PublicationMetadataSchema.safeParse(valid);
+// => { success: true, data: legacy.PublicationMetadata }
+legacy.PublicationMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
+> [!WARNING]  
+> When working with the `legacy` namespace make sure to use enums from tha same namespace, e.g. `legacy.PublicationMainFocus` instead of `PublicationMainFocus` to avoid confusion.
+
 ### Profile metadata
 
 ```typescript
@@ -87,7 +106,7 @@ if (!result.success) {
 
 Every time you have a discriminated union, you can use the discriminant to narrow the type. See few examples below.
 
-**PublicationMetadata**
+**`PublicationMetadata`**
 
 ```typescript
 import {
@@ -116,7 +135,49 @@ switch (publicationMetadata.$schema) {
 }
 ```
 
-**MetadataAttribute**
+**`legacy.PublicationMetadata`**
+
+`legacy.PublicationMetadata` is a discriminated union of `legacy.PublicationMetadataV1` and `legacy.PublicationMetadataV2` where the `version` property is the discriminant.
+
+In turn `legacy.PublicationMetadataV2` is a discriminated union of:
+
+- `legacy.PublicationMetadataV2Article`
+- `legacy.PublicationMetadataV2Audio`
+- `legacy.PublicationMetadataV2Embed`
+- `legacy.PublicationMetadataV2Image`
+- `legacy.PublicationMetadataV2Link`
+- `legacy.PublicationMetadataV2TextOnly`
+- `legacy.PublicationMetadataV2Video`
+
+where the `mainContentFocus` property is the discriminant.
+
+```typescript
+import { legacy } from '@lens-protocol/metadata';
+
+const publicationMetadata = legacy.PublicationMetadataSchema.parse(valid);
+
+switch (publicationMetadata.version) {
+  case legacy.PublicationMetadataVersion.V1:
+    // publicationMetadata is legacy.PublicationMetadataV1
+    break;
+  case legacy.PublicationMetadataVersion.V2:
+    // publicationMetadata is legacy.PublicationMetadataV2
+
+    switch (publicationMetadata.mainContentFocus) {
+      case legacy.PublicationMainFocus.ARTICLE:
+        // publicationMetadata is legacy.PublicationMetadataV2Article
+        break;
+      case legacy.PublicationMainFocus.VIDEO:
+        // publicationMetadata is legacy.PublicationMetadataV2Video
+        break;
+
+      // ...
+    }
+    break;
+}
+```
+
+**`MetadataAttribute`**
 
 ```typescript
 import { MetadataAttribute, MetadataAttributeType } from '@lens-protocol/metadata';

@@ -33,6 +33,17 @@ export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
   .transform((value) => value as Locale);
 
 /**
+ * An arbitrary tag.
+ */
+export type Tag = Brand<string, 'Tag'>;
+/**
+ * @internal
+ */
+export const TagSchema: z.Schema<Tag, z.ZodTypeDef, string> = notEmptyString('An arbitrary tag.')
+  .max(50)
+  .transform((tag) => tag.toLowerCase() as Tag);
+
+/**
  * A Lens App identifier.
  */
 export type AppId = Brand<string, 'AppId'>;
