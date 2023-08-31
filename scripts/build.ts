@@ -42,6 +42,7 @@ import {
   AccessConditionSchema,
   PublicationIdSchema,
   AmountSchema,
+  TagSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -97,6 +98,7 @@ for (const [path, Schema] of schemas) {
       ProfileOwnershipCondition: ProfileOwnershipConditionSchema,
       PublicationEncryptionStrategy: PublicationEncryptionStrategySchema,
       PublicationId: PublicationIdSchema,
+      Tag: TagSchema,
     },
   });
 

@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.6
+
+### Patch Changes
+
+- cf7bfaa: **Added** support for legacy Publication Metadata v1 and v2
+
 ## 0.1.0-alpha.5
 
 ### Patch Changes
