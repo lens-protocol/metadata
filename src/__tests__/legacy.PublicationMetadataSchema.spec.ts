@@ -1,18 +1,18 @@
 import { describe, it } from '@jest/globals';
 
-import { expectSchema } from '../../__helpers__/assertions.js';
+import { expectSchema } from '../__helpers__/assertions.js';
 import { legacy } from '../index.js';
 
 describe(`Given the legacy.PublicationMetadataSchema`, () => {
   describe(`when parsing an empty object`, () => {
-    it(`then should complain about the missing version`, () => {
+    it(`then it should complain about the missing version`, () => {
       expectSchema(() => legacy.PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Required"
       `);
     });
 
-    it(`then should complain about invalid version`, () => {
+    it(`then it should complain about invalid version`, () => {
       expectSchema(() => legacy.PublicationMetadataSchema.safeParse({ version: '42' }))
         .toMatchInlineSnapshot(`
         "fix the following issues
@@ -22,7 +22,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid v1 object`, () => {
-    it(`then should complain about missing basic mandatory fields`, () => {
+    it(`then it should complain about missing basic mandatory fields`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '1.0.0',
@@ -35,7 +35,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should check at least one between content, image, and media is present`, () => {
+    it(`then it should check at least one between content, image, and media is present`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '1.0.0',
@@ -51,7 +51,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then should complain about empty content', () => {
+    it('then it should complain about empty content', () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '1.0.0',
@@ -68,7 +68,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then should complain about too long content', () => {
+    it('then it should complain about too long content', () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '1.0.0',
@@ -83,7 +83,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then should complain about invalid media items', () => {
+    it('then it should complain about invalid media items', () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '1.0.0',
@@ -107,7 +107,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid v2 object`, () => {
-    it(`then should complain about missing basic mandatory fields`, () => {
+    it(`then it should complain about missing basic mandatory fields`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -123,7 +123,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then should complain about invalid v2 fields', () => {
+    it('then it should complain about invalid v2 fields', () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -146,7 +146,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.ARTICLE} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.ARTICLE} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -162,7 +162,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.AUDIO} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.AUDIO} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -184,7 +184,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.EMBED} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.EMBED} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -200,7 +200,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.IMAGE} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.IMAGE} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -221,7 +221,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.LINK} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.LINK} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -238,7 +238,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.TEXT_ONLY} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.TEXT_ONLY} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -260,7 +260,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then should complain about invalid ${legacy.PublicationMainFocus.VIDEO} metadata`, () => {
+    it(`then it should complain about invalid ${legacy.PublicationMainFocus.VIDEO} metadata`, () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -281,7 +281,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then should complain about invalid encryptionParams', () => {
+    it('then it should complain about invalid encryptionParams', () => {
       expectSchema(() =>
         legacy.PublicationMetadataSchema.safeParse({
           version: '2.0.0',

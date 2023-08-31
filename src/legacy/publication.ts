@@ -1,13 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { z } from 'zod';
 
-import { PublicationMainFocus as ExtendedPublicationMainFocus } from './PublicationMainFocus';
-import {
-  ConditionComparisonOperator,
-  MarketplaceMetadataAttributeSchema,
-  NftContractType,
-  PublicationContentWarning,
-} from './common';
 import {
   AppIdSchema,
   LocaleSchema,
@@ -17,6 +10,13 @@ import {
   notEmptyString,
   uri,
 } from '../primitives';
+import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus';
+import {
+  ConditionComparisonOperator,
+  MarketplaceMetadataAttributeSchema,
+  NftContractType,
+  PublicationContentWarning,
+} from '../publication/common';
 
 export enum PublicationMetadataVersion {
   V1 = '1.0.0',
@@ -80,8 +80,8 @@ const AnimationUrlSchema = uri(
 const OpenSeaSchema = z.object({
   metadata_id: z.string({
     description:
-      'The metadata lens_id can be anything but if your uploading to ipfs ' +
-      'you will want it to be random.. using uuid could be an option!',
+      'The metadata_id can be anything but if your uploading to ipfs ' +
+      'you will want it to be random. Using uuid could be an option!',
   }),
 
   description: markdown(

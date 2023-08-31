@@ -30,7 +30,25 @@ export const ProfileMetadataDetailsSchema = z.object(
 export type ProfileMetadataDetails = z.infer<typeof ProfileMetadataDetailsSchema>;
 
 /**
- * @internal
+ * Profile Metadata schema.
+ *
+ * @example
+ * with `parse`:
+ * ```typescript
+ * ProfileMetadataSchema.parse(valid); // => ProfileMetadata
+ *
+ * ProfileMetadataSchema.parse(invalid); // => throws ZodError
+ * ```
+ *
+ * @example
+ * with `safeParse`:
+ * ```typescript
+ * ProfileMetadataSchema.safeParse(valid);
+ * // => { success: true, data: ProfileMetadata }
+ *
+ * ProfileMetadataSchema.safeParse(invalid);
+ * // => { success: false, error: ZodError }
+ * ```
  */
 export const ProfileMetadataSchema = z.object({
   $schema: z.literal(`${SchemasRoot}/profile/1.0.0.json`),
