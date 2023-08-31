@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.7
+
+### Patch Changes
+
+- a8e465d: **Added** support for Profile metadata v1
+
 ## 0.1.0-alpha.6
 
 ### Patch Changes
