@@ -159,6 +159,9 @@ export type AccessCondition = z.infer<typeof AccessConditionSchema>;
  * A symmetric encryption key.
  */
 export type LitEncryptionKey = Brand<string, 'LitEncryptionKey'>;
+/**
+ * @internal
+ */
 export function litEncryptionKey(value: string): LitEncryptionKey {
   return value as LitEncryptionKey;
 }

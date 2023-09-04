@@ -21,6 +21,9 @@ export function notEmptyString(description?: string) {
  * - `en-GB` English as used in the United Kingdom
  */
 export type Locale = Brand<string, 'Locale'>;
+/**
+ * @internal
+ */
 export function locale(value: string): Locale {
   return value as Locale;
 }
@@ -39,6 +42,9 @@ export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
  * An arbitrary tag.
  */
 export type Tag = Brand<string, 'Tag'>;
+/**
+ * @internal
+ */
 export function tag(value: string): Tag {
   return value as Tag;
 }
@@ -53,6 +59,9 @@ export const TagSchema: z.Schema<Tag, z.ZodTypeDef, string> = notEmptyString('An
  * A Lens App identifier.
  */
 export type AppId = Brand<string, 'AppId'>;
+/**
+ * @internal
+ */
 export function appId(value: string): AppId {
   return value as AppId;
 }
@@ -66,6 +75,9 @@ export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> =
  * A cryptographic signature.
  */
 export type Signature = Brand<string, 'Signature'>;
+/**
+ * @internal
+ */
 export function signature(value: string): Signature {
   return value as Signature;
 }
@@ -80,6 +92,9 @@ export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = notEmp
  * A markdown text.
  */
 export type Markdown = Brand<string, 'Markdown'>;
+/**
+ * @internal
+ */
 export function markdown(value: string): Markdown {
   return value as Markdown;
 }
@@ -97,6 +112,9 @@ export function markdownSchema(description: string): z.Schema<Markdown, z.ZodTyp
  * an IPFS URI (e.g. ipfs://Qm...), or an Arweave URI (e.g. ar://Qm...).
  */
 export type URI = Brand<string, 'URI'>;
+/**
+ * @internal
+ */
 export function uri(value: string): URI {
   return value as URI;
 }
@@ -129,6 +147,9 @@ export type GeoLocation = z.infer<typeof GeoLocationSchema>;
  * An ISO 8601 in the JS simplified format: `YYYY-MM-DDTHH:mm:ss.sssZ`.
  */
 export type Datetime = Brand<string, 'Datetime'>;
+/**
+ * @internal
+ */
 export function datetime(value: string): Datetime {
   return value as Datetime;
 }
@@ -143,6 +164,9 @@ export function datetimeSchema(description: string): z.Schema<Datetime, z.ZodTyp
  * An EVM compatible address.
  */
 export type EvmAddress = Brand<string, 'EvmAddress'>;
+/**
+ * @internal
+ */
 export function evmAddress(value: string): EvmAddress {
   return value as EvmAddress;
 }
@@ -157,6 +181,9 @@ export const EvmAddressSchema: z.Schema<EvmAddress, z.ZodTypeDef, string> = notE
  * An EVM compatible Chain Id.
  */
 export type ChainId = Brand<number, 'ChainId'>;
+/**
+ * @internal
+ */
 export function chainId(value: number): ChainId {
   return value as ChainId;
 }
@@ -189,6 +216,9 @@ export type NetworkAddress = z.infer<typeof NetworkAddressSchema>;
  * An NFT token identifier.
  */
 export type TokenId = Brand<string, 'TokenId'>;
+/**
+ * @internal
+ */
 export function tokenId(value: string): TokenId {
   return value as TokenId;
 }
@@ -219,6 +249,9 @@ export type Amount = z.infer<typeof AmountSchema>;
  * A Profile identifier.
  */
 export type ProfileId = Brand<string, 'ProfileId'>;
+/**
+ * @internal
+ */
 export function profileId(value: string): ProfileId {
   return value as ProfileId;
 }
@@ -232,6 +265,9 @@ export const ProfileIdSchema: z.Schema<ProfileId, z.ZodTypeDef, string> =
  * A publication identifier.
  */
 export type PublicationId = Brand<string, 'PublicationId'>;
+/**
+ * @internal
+ */
 export function publicationId(value: string): PublicationId {
   return value as PublicationId;
 }
