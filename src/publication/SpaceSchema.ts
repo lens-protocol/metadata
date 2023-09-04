@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
-import { datetime, uri } from '../primitives.js';
+import { datetimeSchema, uriSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -14,9 +14,9 @@ export const SpaceSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
 
-    link: uri('The space join link.'),
+    link: uriSchema('The space join link.'),
 
-    startsAt: datetime('The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    startsAt: datetimeSchema('The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -9,7 +9,7 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
-import { GeoLocationSchema, datetime, notEmptyString, uri } from '../primitives.js';
+import { GeoLocationSchema, datetimeSchema, notEmptyString, uriSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -38,21 +38,24 @@ export const EventSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 
     location: z
-      .union([uri('A virtual location.'), notEmptyString('The event location (free form text).')])
+      .union([
+        uriSchema('A virtual location.'),
+        notEmptyString('The event location (free form text).'),
+      ])
       .describe('The location of the event.'),
 
     geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so.'),
 
-    startsAt: datetime('The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    startsAt: datetimeSchema('The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
-    endsAt: datetime('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    endsAt: datetimeSchema('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
         'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: uri().array().min(1).optional().describe('The links you want to include with it.'),
+    links: uriSchema().array().min(1).optional().describe('The links you want to include with it.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -6,9 +6,9 @@ import {
   LocaleSchema,
   Markdown,
   TagSchema,
-  markdown,
+  markdownSchema,
   notEmptyString,
-  uri,
+  uriSchema,
 } from '../primitives';
 import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus';
 import {
@@ -70,7 +70,7 @@ export enum VideoMimeType {
   MOV = 'video/mov',
 }
 
-const AnimationUrlSchema = uri(
+const AnimationUrlSchema = uriSchema(
   'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
     'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
     'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
@@ -85,13 +85,13 @@ const OpenSeaSchema = z.object({
       'you will want it to be random. Using uuid could be an option!',
   }),
 
-  description: markdown(
+  description: markdownSchema(
     'A human-readable description of the item. It could be plain text or markdown.',
   )
     .optional()
     .nullable(),
 
-  external_url: uri(
+  external_url: uriSchema(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
@@ -102,7 +102,7 @@ const OpenSeaSchema = z.object({
     'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
   ),
 
-  image: uri('Marketplaces will store any NFT image here.').optional().nullable(),
+  image: uriSchema('Marketplaces will store any NFT image here.').optional().nullable(),
 
   animation_url: AnimationUrlSchema.optional().nullable(),
 
@@ -110,9 +110,9 @@ const OpenSeaSchema = z.object({
 });
 
 const PublicationMetadataMediaSchema = z.object({
-  item: uri('Marketplaces will store any NFT image here.'),
+  item: uriSchema('Marketplaces will store any NFT image here.'),
   altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
-  cover: uri('The cover for any video or audio media.').optional().nullable(),
+  cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
   type: z.string().optional().nullable().describe('This is the mime type of the media.'),
 });
 export type PublicationMetadataMedia = z.infer<typeof PublicationMetadataMediaSchema>;

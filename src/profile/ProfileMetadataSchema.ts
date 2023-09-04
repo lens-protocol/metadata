@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute';
 import { SchemasRoot } from '../constants';
-import { SignatureSchema, markdown, notEmptyString, uri } from '../primitives';
+import { SignatureSchema, markdownSchema, notEmptyString, uriSchema } from '../primitives';
 
 /**
  * @internal
@@ -11,11 +11,11 @@ export const ProfileMetadataDetailsSchema = z.object(
   {
     name: notEmptyString('The profile display name.').optional(),
 
-    bio: markdown('The profile bio as markdown.').optional(),
+    bio: markdownSchema('The profile bio as markdown.').optional(),
 
-    picture: uri('The profile picture.').optional(),
+    picture: uriSchema('The profile picture.').optional(),
 
-    coverPicture: uri('The profile cover picture.').optional(),
+    coverPicture: uriSchema('The profile cover picture.').optional(),
 
     attributes: MetadataAttributeSchema.array()
       .min(1)

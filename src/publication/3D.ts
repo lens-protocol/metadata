@@ -8,7 +8,7 @@ import {
   MetadataLicenseTypeSchema,
   publicationWith,
 } from './common';
-import { notEmptyString, uri } from '../primitives';
+import { notEmptyString, uriSchema } from '../primitives';
 
 export enum ThreeDFormat {
   gLTF = 'gLTF/GLB',
@@ -21,11 +21,11 @@ export enum ThreeDFormat {
  * @internal
  */
 export const ThreeDAssetSchema = z.object({
-  url: uri('The 3D asset url or zip'),
+  url: uriSchema('The 3D asset url or zip'),
   zipPath: notEmptyString()
     .optional()
     .describe('path in extracted zip. Relative. 3D start point, must be 3D file type'),
-  playerUrl: uri('Link to web based 3D player'),
+  playerUrl: uriSchema('Link to web based 3D player'),
   format: z.nativeEnum(ThreeDFormat).describe('format of the 3D object. gLTF/GLB, FBX, VRM or OBJ'),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the 3D asset'),
 });

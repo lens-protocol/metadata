@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdown, notEmptyString } from '../primitives';
+import { markdownSchema, notEmptyString } from '../primitives';
 
 export enum ProfileMetadataAttributeDisplayType {
   number = 'number',
@@ -64,7 +64,7 @@ export const ProfileMetadataSchema = z.object({
 
   name: notEmptyString('The display name for the profile.').nullable(),
 
-  bio: markdown('The bio for the profile.').nullable(),
+  bio: markdownSchema('The bio for the profile.').nullable(),
 
   cover_picture: z.string({ description: 'Cover picture.' }).nullable(),
 

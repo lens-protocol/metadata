@@ -72,7 +72,7 @@ export type Markdown = Brand<string, 'Markdown'>;
 /**
  * @internal
  */
-export function markdown(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
+export function markdownSchema(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
   return notEmptyString(description).transform((value) => value as Markdown);
 }
 
@@ -86,7 +86,7 @@ export type URI = Brand<string, 'URI'>;
 /**
  * @internal
  */
-export function uri(
+export function uriSchema(
   description: string = 'A Uniform Resource Identifier. ',
 ): z.Schema<URI, z.ZodTypeDef, string> {
   return z
@@ -94,6 +94,10 @@ export function uri(
     .min(6) // [ar://.]
     .url() // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
     .transform((value) => value as URI);
+}
+
+export function uri(value: string): URI {
+  return value as URI;
 }
 
 /**
@@ -115,7 +119,7 @@ export type Datetime = Brand<string, 'Datetime'>;
 /**
  * @internal
  */
-export function datetime(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
+export function datetimeSchema(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
   return z
     .string({ description })
     .datetime()

@@ -3,7 +3,13 @@ import { z } from 'zod';
 import { PublicationEncryptionStrategySchema } from './encryption.js';
 import { MarketplaceMetadataSchema } from './marketplace.js';
 import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import { AppIdSchema, LocaleSchema, TagSchema, markdown, notEmptyString } from '../../primitives';
+import {
+  AppIdSchema,
+  LocaleSchema,
+  TagSchema,
+  markdownSchema,
+  notEmptyString,
+} from '../../primitives';
 import { SignatureSchema } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -28,7 +34,7 @@ export const MetadataCommonSchema = z.object(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
 
-    content: markdown('Optional markdown content.').optional(),
+    content: markdownSchema('Optional markdown content.').optional(),
 
     attributes: MetadataAttributeSchema.array()
       .min(1)
