@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdownSchema, notEmptyString } from '../primitives';
+import { markdownSchema, notEmptyString } from '../primitives.js';
 
 export enum ProfileMetadataAttributeDisplayType {
   number = 'number',

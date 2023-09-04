@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdownSchema, notEmptyString, uriSchema } from '../../primitives';
+import { markdownSchema, notEmptyString, uriSchema } from '../../primitives.js';
 
 export enum MarketplaceMetadataAttributeDisplayType {
   NUMBER = 'number',

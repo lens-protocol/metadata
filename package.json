@@ -39,6 +39,7 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
+    "@faker-js/faker": "^8.0.2",
     "@jest/globals": "^29.6.2",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^20.5.0",

@@ -9,15 +9,15 @@ import {
   markdownSchema,
   notEmptyString,
   uriSchema,
-} from '../primitives';
-import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus';
+} from '../primitives.js';
+import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus.js';
 import {
   ConditionComparisonOperator,
   MarketplaceMetadataAttributeSchema,
   NftContractType,
   PublicationContentWarning,
 } from '../publication/common';
-import { hasTwoOrMore } from '../utils';
+import { hasTwoOrMore } from '../utils.js';
 
 export enum PublicationMetadataVersion {
   V1 = '1.0.0',

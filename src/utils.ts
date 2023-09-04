@@ -1,3 +1,6 @@
+import { ProfileMetadata } from './profile';
+import { PublicationMetadata } from './publication';
+
 /**
  * Branding helper type.
  *
@@ -56,4 +59,14 @@ export type TwoAtLeastArray<T> = [T, T, ...T[]];
  */
 export function hasTwoOrMore<T>(items: ReadonlyArray<T>): items is TwoAtLeastArray<T> {
   return items.length >= 2;
+}
+
+const schemaVersionRegex = /(\d+\.\d+\.\d+)/;
+
+export function extractVersion(metadata: ProfileMetadata | PublicationMetadata): string {
+  const result = schemaVersionRegex.exec(metadata.$schema);
+
+  invariant(result !== null, `Invalid schema id: ${metadata.$schema}`);
+
+  return result[0];
 }

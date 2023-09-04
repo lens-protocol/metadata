@@ -9,8 +9,8 @@ import {
   TagSchema,
   markdownSchema,
   notEmptyString,
-} from '../../primitives';
-import { SignatureSchema } from '../../primitives.js';
+  SignatureSchema,
+} from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
 export * from './encryption.js';

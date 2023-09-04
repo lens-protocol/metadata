@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { MetadataLicenseTypeSchema } from './license';
-import { MetadataAttributeSchema } from '../../MetadataAttribute';
-import { notEmptyString, uriSchema } from '../../primitives';
+import { MetadataLicenseTypeSchema } from './license.js';
+import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { notEmptyString, uriSchema } from '../../primitives.js';
 
 const MediaCommonSchema = z.object({
   item: uriSchema('The item is the url to the media'),

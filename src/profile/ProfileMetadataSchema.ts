@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { MetadataAttributeSchema } from '../MetadataAttribute';
-import { SchemasRoot } from '../constants';
-import { SignatureSchema, markdownSchema, notEmptyString, uriSchema } from '../primitives';
+import { MetadataAttributeSchema } from '../MetadataAttribute.js';
+import { SchemasRoot } from '../constants.js';
+import { SignatureSchema, markdownSchema, notEmptyString, uriSchema } from '../primitives.js';
 
 /**
  * @internal

@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
-import { PublicationMainFocus } from './PublicationMainFocus';
-import { PublicationSchemaId } from './PublicationSchemaId';
+import { PublicationMainFocus } from './PublicationMainFocus.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMediaSchema,
   metadataDetailsWith,
   MetadataLicenseTypeSchema,
   publicationWith,
 } from './common';
-import { notEmptyString, uriSchema } from '../primitives';
+import { notEmptyString, uriSchema } from '../primitives.js';
 
 export enum ThreeDFormat {
   gLTF = 'gLTF/GLB',

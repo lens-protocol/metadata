@@ -8,8 +8,8 @@ import {
   PublicationIdSchema,
   TokenIdSchema,
   notEmptyString,
-} from '../../primitives';
-import { hasTwoOrMore, Brand } from '../../utils';
+} from '../../primitives.js';
+import { hasTwoOrMore, Brand } from '../../utils.js';
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
