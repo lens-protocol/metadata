@@ -159,11 +159,16 @@ export type AccessCondition = z.infer<typeof AccessConditionSchema>;
  * A symmetric encryption key.
  */
 export type LitEncryptionKey = Brand<string, 'LitEncryptionKey'>;
+export function litEncryptionKey(value: string): LitEncryptionKey {
+  return value as LitEncryptionKey;
+}
 /**
  * @internal
  */
 export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, string> =
-  notEmptyString('A symmetric encryption key.').transform((value) => value as LitEncryptionKey);
+  notEmptyString('A symmetric encryption key.')
+    .length(368, 'Encryption key should be 368 characters long.')
+    .transform(litEncryptionKey);
 
 /**
  * @internal
