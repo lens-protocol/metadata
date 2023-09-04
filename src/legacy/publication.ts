@@ -17,6 +17,7 @@ import {
   NftContractType,
   PublicationContentWarning,
 } from '../publication/common';
+import { hasTwoOrMore } from '../utils';
 
 export enum PublicationMetadataVersion {
   V1 = '1.0.0',
@@ -239,29 +240,45 @@ const Erc20OwnershipSchema = z
   .strict();
 export type Erc20Ownership = z.infer<typeof Erc20OwnershipSchema>;
 
-function andCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+export type AndCondition<T> = {
+  and: {
+    criteria: [T, T, ...T[]];
+  };
+};
+
+function andCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<AndCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z
     .object({
       and: z.object({
         criteria: z
           .union(options)
           .array()
-          .min(2, 'Invalid AND condition: should have at least 2 conditions')
-          .max(5, 'Invalid AND condition: should have at most 5 conditions'),
+          .max(5, 'Invalid AND condition: should have at most 5 conditions')
+          .refine(hasTwoOrMore, 'Invalid AND condition: should have at least 2 conditions'),
       }),
     })
     .strict();
 }
 
-function orCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+export type OrCondition<T> = {
+  or: {
+    criteria: [T, T, ...T[]];
+  };
+};
+
+function orCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<OrCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z
     .object({
       or: z.object({
         criteria: z
           .union(options)
           .array()
-          .min(2, 'Invalid OR condition: should have at least 2 conditions')
-          .max(5, 'Invalid OR condition: should have at most 5 conditions'),
+          .max(5, 'Invalid OR condition: should have at most 5 conditions')
+          .refine(hasTwoOrMore, 'Invalid OR condition: should have at least 2 conditions'),
       }),
     })
     .strict();

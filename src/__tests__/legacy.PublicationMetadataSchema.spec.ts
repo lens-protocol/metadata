@@ -314,8 +314,8 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
-        · "encryptionParams.accessCondition.or.criteria": Invalid OR condition: should have at least 2 conditions
         · "encryptionParams.accessCondition.or.criteria[0]": Unrecognized key(s) in object: 'collect'
+        · "encryptionParams.accessCondition.or.criteria": Invalid OR condition: should have at least 2 conditions
         · "encryptionParams.accessCondition": Unrecognized key(s) in object: 'and'
         · "encryptionParams.encryptionKey": Encryption key should be 368 characters long."
       `);

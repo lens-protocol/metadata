@@ -16,6 +16,7 @@ export class InvariantError extends Error {
 
 /**
  * Asserts that the given condition is truthy
+ * @internal
  *
  * @param condition - Either truthy or falsy value
  * @param message - An error message
@@ -26,15 +27,33 @@ export function invariant(condition: unknown, message: string): asserts conditio
   }
 }
 
-export type NotEmptyArray<T> = [T, ...T[]];
+export type NonEmptyArray<T> = [T, ...T[]];
 
-export function hasAtLeastOne<T>(items: ReadonlyArray<T>): items is NotEmptyArray<T> {
+/**
+ * @internal
+ */
+export function hasAtLeastOne<T>(items: ReadonlyArray<T>): items is NonEmptyArray<T> {
   return items.length > 0;
 }
 
-export function assertNotEmptyArray<T>(items: ReadonlyArray<T>): asserts items is NotEmptyArray<T> {
+/**
+ * @internal
+ */
+export function assertNonEmptyArray<T>(items: ReadonlyArray<T>): asserts items is NonEmptyArray<T> {
   invariant(
     hasAtLeastOne(items),
     `Expected array of to have at least one item, but received 0 items`,
   );
+}
+
+/**
+ * Declares an array of at least two elements of the specified type.
+ */
+export type TwoAtLeastArray<T> = [T, T, ...T[]];
+
+/**
+ * @internal
+ */
+export function hasTwoOrMore<T>(items: ReadonlyArray<T>): items is TwoAtLeastArray<T> {
+  return items.length >= 2;
 }

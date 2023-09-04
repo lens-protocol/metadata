@@ -9,7 +9,7 @@ import {
   TokenIdSchema,
   notEmptyString,
 } from '../../primitives';
-import { Brand } from '../../utils';
+import { hasTwoOrMore, Brand } from '../../utils';
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -94,33 +94,35 @@ export const SimpleConditionSchema = z.union([
 ]);
 export type SimpleCondition = z.infer<typeof SimpleConditionSchema>;
 
-/**
- * @internal
- */
-export const CompoundConditionSchema = z.union([
-  NftOwnershipConditionSchema,
-  Erc20OwnershipConditionSchema,
-  EoaOwnershipConditionSchema,
-  ProfileOwnershipConditionSchema,
-  FollowConditionSchema,
-  CollectConditionSchema,
-]);
+export type AndCondition<T> = {
+  and: [T, T, ...T[]];
+};
 
-/**
- * @internal
- */
-export function andCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+function andCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<AndCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z.object({
-    and: z.union(options).array().min(2),
+    and: z
+      .union(options)
+      .array()
+      .max(5, 'Invalid AND condition: should have at most 5 conditions')
+      .refine(hasTwoOrMore, 'Invalid AND condition: should have at least 2 conditions'),
   });
 }
 
-/**
- * @internal
- */
-export function orCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+export type OrCondition<T> = {
+  or: [T, T, ...T[]];
+};
+
+function orCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<OrCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z.object({
-    or: z.union(options).array().min(2),
+    or: z
+      .union(options)
+      .array()
+      .max(5, 'Invalid OR condition: should have at most 5 conditions')
+      .refine(hasTwoOrMore, 'Invalid OR condition: should have at least 2 conditions'),
   });
 }
 
