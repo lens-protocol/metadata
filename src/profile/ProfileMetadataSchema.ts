@@ -51,7 +51,7 @@ export type ProfileMetadataDetails = z.infer<typeof ProfileMetadataDetailsSchema
  * ```
  */
 export const ProfileMetadataSchema = z.object({
-  $schema: z.literal(`${SchemasRoot}/profile/1.0.0.json`),
+  $schema: z.literal(`${SchemasRoot}/profile/2.0.0.json`),
 
   lens: ProfileMetadataDetailsSchema,
 

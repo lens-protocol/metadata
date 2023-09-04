@@ -8,7 +8,7 @@ describe(`Given the ProfileMetadataSchema`, () => {
     it(`then it should flag the missing fields`, () => {
       expectSchema(() =>
         ProfileMetadataSchema.safeParse({
-          $schema: 'https://json-schemas.lens.dev/profile/1.0.0.json',
+          $schema: 'https://json-schemas.lens.dev/profile/2.0.0.json',
           lens: {
             name: 42,
 
