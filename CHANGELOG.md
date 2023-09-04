@@ -1,5 +1,14 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.8
+
+### Patch Changes
+
+- 6cab78d: **Added** `extractVersion` convenience helper
+- 3480452: **Fixed** Publication Metadata v3 strict rule around non-empty Marketplace attributes
+- cb70c63: **Fixed** `AccessCondition` and `legacy.AccessCondition` inference
+- d1fc6d4: **Fixed** all pub metadata schema to start from 3.0.0 and profile metadata schema from 2.0.0
+
 ## 0.1.0-alpha.7
 
 ### Patch Changes
