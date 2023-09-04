@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-import { MetadataLicenseTypeSchema } from './license';
-import { MetadataAttributeSchema } from '../../MetadataAttribute';
-import { notEmptyString, uri } from '../../primitives';
+import { MetadataLicenseTypeSchema } from './license.js';
+import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { notEmptyString, uriSchema } from '../../primitives.js';
 
 const MediaCommonSchema = z.object({
-  item: uri('The item is the url to the media'),
+  item: uriSchema('The item is the url to the media'),
   altTag: notEmptyString('The alt tag for accessibility').optional(),
   attributes: MetadataAttributeSchema.array()
     .min(1)
@@ -37,7 +37,7 @@ export enum MediaAudioMimeType {
 
 export const MediaAudioSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio' }),
-  cover: uri('The cover image for the audio').optional(),
+  cover: uriSchema('The cover image for the audio').optional(),
   duration: z
     .number({ description: 'How long the the audio is in seconds' })
     .positive()
@@ -49,7 +49,7 @@ export const MediaAudioSchema = MediaCommonSchema.extend({
   genre: notEmptyString('The genre of the audio').optional(),
   recordLabel: notEmptyString('The record label for the audio').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio' }).optional(),
-  lyrics: uri('The lyrics for the audio').optional(),
+  lyrics: uriSchema('The lyrics for the audio').optional(),
 });
 export type MediaAudio = z.infer<typeof MediaAudioSchema>;
 
@@ -85,7 +85,7 @@ export enum MediaVideoMimeType {
 
 export const MediaVideoSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
-  cover: uri('The cover image for the video').optional(),
+  cover: uriSchema('The cover image for the video').optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })
     .positive()

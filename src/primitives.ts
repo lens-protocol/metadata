@@ -24,13 +24,19 @@ export type Locale = Brand<string, 'Locale'>;
 /**
  * @internal
  */
+export function locale(value: string): Locale {
+  return value as Locale;
+}
+/**
+ * @internal
+ */
 export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
   .string({
     description: 'A locale identifier.',
   })
   .min(2)
   .max(5)
-  .transform((value) => value as Locale);
+  .transform(locale);
 
 /**
  * An arbitrary tag.
@@ -39,9 +45,15 @@ export type Tag = Brand<string, 'Tag'>;
 /**
  * @internal
  */
+export function tag(value: string): Tag {
+  return value as Tag;
+}
+/**
+ * @internal
+ */
 export const TagSchema: z.Schema<Tag, z.ZodTypeDef, string> = notEmptyString('An arbitrary tag.')
   .max(50)
-  .transform((tag) => tag.toLowerCase() as Tag);
+  .transform((value) => tag(value.toLowerCase()));
 
 /**
  * A Lens App identifier.
@@ -50,9 +62,14 @@ export type AppId = Brand<string, 'AppId'>;
 /**
  * @internal
  */
-export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = notEmptyString(
-  'A Lens App identifier.',
-).transform((value) => value as AppId);
+export function appId(value: string): AppId {
+  return value as AppId;
+}
+/**
+ * @internal
+ */
+export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> =
+  notEmptyString('A Lens App identifier.').transform(appId);
 
 /**
  * A cryptographic signature.
@@ -61,9 +78,15 @@ export type Signature = Brand<string, 'Signature'>;
 /**
  * @internal
  */
+export function signature(value: string): Signature {
+  return value as Signature;
+}
+/**
+ * @internal
+ */
 export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = notEmptyString(
   'A cryptographic signature of the Lens metadata.',
-).transform((value) => value as Signature);
+).transform(signature);
 
 /**
  * A markdown text.
@@ -72,8 +95,14 @@ export type Markdown = Brand<string, 'Markdown'>;
 /**
  * @internal
  */
-export function markdown(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
-  return notEmptyString(description).transform((value) => value as Markdown);
+export function markdown(value: string): Markdown {
+  return value as Markdown;
+}
+/**
+ * @internal
+ */
+export function markdownSchema(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
+  return notEmptyString(description).transform(markdown);
 }
 
 /**
@@ -86,14 +115,20 @@ export type URI = Brand<string, 'URI'>;
 /**
  * @internal
  */
-export function uri(
+export function uri(value: string): URI {
+  return value as URI;
+}
+/**
+ * @internal
+ */
+export function uriSchema(
   description: string = 'A Uniform Resource Identifier. ',
 ): z.Schema<URI, z.ZodTypeDef, string> {
   return z
     .string({ description })
     .min(6) // [ar://.]
     .url() // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
-    .transform((value) => value as URI);
+    .transform(uri);
 }
 
 /**
@@ -115,11 +150,14 @@ export type Datetime = Brand<string, 'Datetime'>;
 /**
  * @internal
  */
-export function datetime(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
-  return z
-    .string({ description })
-    .datetime()
-    .transform((value) => value as Datetime);
+export function datetime(value: string): Datetime {
+  return value as Datetime;
+}
+/**
+ * @internal
+ */
+export function datetimeSchema(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
+  return z.string({ description }).datetime().transform(datetime);
 }
 
 /**
@@ -129,9 +167,15 @@ export type EvmAddress = Brand<string, 'EvmAddress'>;
 /**
  * @internal
  */
+export function evmAddress(value: string): EvmAddress {
+  return value as EvmAddress;
+}
+/**
+ * @internal
+ */
 export const EvmAddressSchema: z.Schema<EvmAddress, z.ZodTypeDef, string> = notEmptyString(
   'An EVM compatible address.',
-).transform((value) => value as EvmAddress);
+).transform(evmAddress);
 
 /**
  * An EVM compatible Chain Id.
@@ -140,10 +184,16 @@ export type ChainId = Brand<number, 'ChainId'>;
 /**
  * @internal
  */
+export function chainId(value: number): ChainId {
+  return value as ChainId;
+}
+/**
+ * @internal
+ */
 export const ChainIdSchema: z.Schema<ChainId, z.ZodTypeDef, number> = z
   .number()
   .positive()
-  .transform((value) => value as ChainId);
+  .transform(chainId);
 
 /**
  * @internal
@@ -169,9 +219,14 @@ export type TokenId = Brand<string, 'TokenId'>;
 /**
  * @internal
  */
-export const TokenIdSchema: z.Schema<TokenId, z.ZodTypeDef, string> = notEmptyString().transform(
-  (value) => value as TokenId,
-);
+export function tokenId(value: string): TokenId {
+  return value as TokenId;
+}
+/**
+ * @internal
+ */
+export const TokenIdSchema: z.Schema<TokenId, z.ZodTypeDef, string> =
+  notEmptyString().transform(tokenId);
 
 /**
  * @internal
@@ -197,8 +252,14 @@ export type ProfileId = Brand<string, 'ProfileId'>;
 /**
  * @internal
  */
+export function profileId(value: string): ProfileId {
+  return value as ProfileId;
+}
+/**
+ * @internal
+ */
 export const ProfileIdSchema: z.Schema<ProfileId, z.ZodTypeDef, string> =
-  notEmptyString().transform((value) => value as ProfileId);
+  notEmptyString().transform(profileId);
 
 /**
  * A publication identifier.
@@ -207,5 +268,11 @@ export type PublicationId = Brand<string, 'PublicationId'>;
 /**
  * @internal
  */
+export function publicationId(value: string): PublicationId {
+  return value as PublicationId;
+}
+/**
+ * @internal
+ */
 export const PublicationIdSchema: z.Schema<PublicationId, z.ZodTypeDef, string> =
-  notEmptyString().transform((value) => value as PublicationId);
+  notEmptyString().transform(publicationId);

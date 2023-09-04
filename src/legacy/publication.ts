@@ -6,17 +6,18 @@ import {
   LocaleSchema,
   Markdown,
   TagSchema,
-  markdown,
+  markdownSchema,
   notEmptyString,
-  uri,
-} from '../primitives';
-import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus';
+  uriSchema,
+} from '../primitives.js';
+import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus.js';
 import {
   ConditionComparisonOperator,
   MarketplaceMetadataAttributeSchema,
   NftContractType,
   PublicationContentWarning,
 } from '../publication/common';
+import { hasTwoOrMore } from '../utils.js';
 
 export enum PublicationMetadataVersion {
   V1 = '1.0.0',
@@ -69,7 +70,7 @@ export enum VideoMimeType {
   MOV = 'video/mov',
 }
 
-const AnimationUrlSchema = uri(
+const AnimationUrlSchema = uriSchema(
   'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
     'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
     'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
@@ -84,13 +85,13 @@ const OpenSeaSchema = z.object({
       'you will want it to be random. Using uuid could be an option!',
   }),
 
-  description: markdown(
+  description: markdownSchema(
     'A human-readable description of the item. It could be plain text or markdown.',
   )
     .optional()
     .nullable(),
 
-  external_url: uri(
+  external_url: uriSchema(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
@@ -101,7 +102,7 @@ const OpenSeaSchema = z.object({
     'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
   ),
 
-  image: uri('Marketplaces will store any NFT image here.').optional().nullable(),
+  image: uriSchema('Marketplaces will store any NFT image here.').optional().nullable(),
 
   animation_url: AnimationUrlSchema.optional().nullable(),
 
@@ -109,9 +110,9 @@ const OpenSeaSchema = z.object({
 });
 
 const PublicationMetadataMediaSchema = z.object({
-  item: uri('Marketplaces will store any NFT image here.'),
+  item: uriSchema('Marketplaces will store any NFT image here.'),
   altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
-  cover: uri('The cover for any video or audio media.').optional().nullable(),
+  cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
   type: z.string().optional().nullable().describe('This is the mime type of the media.'),
 });
 export type PublicationMetadataMedia = z.infer<typeof PublicationMetadataMediaSchema>;
@@ -239,29 +240,45 @@ const Erc20OwnershipSchema = z
   .strict();
 export type Erc20Ownership = z.infer<typeof Erc20OwnershipSchema>;
 
-function andCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+export type AndCondition<T> = {
+  and: {
+    criteria: [T, T, ...T[]];
+  };
+};
+
+function andCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<AndCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z
     .object({
       and: z.object({
         criteria: z
           .union(options)
           .array()
-          .min(2, 'Invalid AND condition: should have at least 2 conditions')
-          .max(5, 'Invalid AND condition: should have at most 5 conditions'),
+          .max(5, 'Invalid AND condition: should have at most 5 conditions')
+          .refine(hasTwoOrMore, 'Invalid AND condition: should have at least 2 conditions'),
       }),
     })
     .strict();
 }
 
-function orCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+export type OrCondition<T> = {
+  or: {
+    criteria: [T, T, ...T[]];
+  };
+};
+
+function orCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<OrCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z
     .object({
       or: z.object({
         criteria: z
           .union(options)
           .array()
-          .min(2, 'Invalid OR condition: should have at least 2 conditions')
-          .max(5, 'Invalid OR condition: should have at most 5 conditions'),
+          .max(5, 'Invalid OR condition: should have at most 5 conditions')
+          .refine(hasTwoOrMore, 'Invalid OR condition: should have at least 2 conditions'),
       }),
     })
     .strict();

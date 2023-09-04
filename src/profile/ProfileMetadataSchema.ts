@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { MetadataAttributeSchema } from '../MetadataAttribute';
-import { SchemasRoot } from '../constants';
-import { SignatureSchema, markdown, notEmptyString, uri } from '../primitives';
+import { MetadataAttributeSchema } from '../MetadataAttribute.js';
+import { SchemasRoot } from '../constants.js';
+import { SignatureSchema, markdownSchema, notEmptyString, uriSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -11,11 +11,11 @@ export const ProfileMetadataDetailsSchema = z.object(
   {
     name: notEmptyString('The profile display name.').optional(),
 
-    bio: markdown('The profile bio as markdown.').optional(),
+    bio: markdownSchema('The profile bio as markdown.').optional(),
 
-    picture: uri('The profile picture.').optional(),
+    picture: uriSchema('The profile picture.').optional(),
 
-    coverPicture: uri('The profile cover picture.').optional(),
+    coverPicture: uriSchema('The profile cover picture.').optional(),
 
     attributes: MetadataAttributeSchema.array()
       .min(1)
@@ -51,7 +51,7 @@ export type ProfileMetadataDetails = z.infer<typeof ProfileMetadataDetailsSchema
  * ```
  */
 export const ProfileMetadataSchema = z.object({
-  $schema: z.literal(`${SchemasRoot}/profile/1.0.0.json`),
+  $schema: z.literal(`${SchemasRoot}/profile/2.0.0.json`),
 
   lens: ProfileMetadataDetailsSchema,
 

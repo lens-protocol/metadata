@@ -8,8 +8,8 @@ import {
   PublicationIdSchema,
   TokenIdSchema,
   notEmptyString,
-} from '../../primitives';
-import { Brand } from '../../utils';
+} from '../../primitives.js';
+import { hasTwoOrMore, Brand } from '../../utils.js';
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -94,33 +94,35 @@ export const SimpleConditionSchema = z.union([
 ]);
 export type SimpleCondition = z.infer<typeof SimpleConditionSchema>;
 
-/**
- * @internal
- */
-export const CompoundConditionSchema = z.union([
-  NftOwnershipConditionSchema,
-  Erc20OwnershipConditionSchema,
-  EoaOwnershipConditionSchema,
-  ProfileOwnershipConditionSchema,
-  FollowConditionSchema,
-  CollectConditionSchema,
-]);
+export type AndCondition<T> = {
+  and: [T, T, ...T[]];
+};
 
-/**
- * @internal
- */
-export function andCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+function andCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<AndCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z.object({
-    and: z.union(options).array().min(2),
+    and: z
+      .union(options)
+      .array()
+      .max(5, 'Invalid AND condition: should have at most 5 conditions')
+      .refine(hasTwoOrMore, 'Invalid AND condition: should have at least 2 conditions'),
   });
 }
 
-/**
- * @internal
- */
-export function orCondition(options: [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]) {
+export type OrCondition<T> = {
+  or: [T, T, ...T[]];
+};
+
+function orCondition<
+  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
+>(options: Criteria): z.Schema<OrCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
   return z.object({
-    or: z.union(options).array().min(2),
+    or: z
+      .union(options)
+      .array()
+      .max(5, 'Invalid OR condition: should have at most 5 conditions')
+      .refine(hasTwoOrMore, 'Invalid OR condition: should have at least 2 conditions'),
   });
 }
 
@@ -160,8 +162,16 @@ export type LitEncryptionKey = Brand<string, 'LitEncryptionKey'>;
 /**
  * @internal
  */
+export function litEncryptionKey(value: string): LitEncryptionKey {
+  return value as LitEncryptionKey;
+}
+/**
+ * @internal
+ */
 export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, string> =
-  notEmptyString('A symmetric encryption key.').transform((value) => value as LitEncryptionKey);
+  notEmptyString('A symmetric encryption key.')
+    .length(368, 'Encryption key should be 368 characters long.')
+    .transform(litEncryptionKey);
 
 /**
  * @internal

@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
-import { uri } from '../primitives.js';
+import { uriSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -14,7 +14,7 @@ export const LinkSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LINK),
 
-    sharingLink: uri('The sharing link url.'),
+    sharingLink: uriSchema('The sharing link url.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -1,7 +1,7 @@
 // Heavily customized and simplified version of https://www.npmjs.com/package/zod-validation-error
 import { z } from 'zod';
 
-import { NotEmptyArray, assertNotEmptyArray, hasAtLeastOne } from './utils';
+import { NonEmptyArray, assertNonEmptyArray, hasAtLeastOne } from './utils';
 
 const maxIssuesInMessage = 99;
 const issueSeparator = '\n';
@@ -16,7 +16,7 @@ function escapeQuotes(str: string): string {
  */
 const identifierRegex = /[$_\p{ID_Start}][$\u200c\u200d\p{ID_Continue}]*/u;
 
-function formatPath(path: NotEmptyArray<string | number>): string {
+function formatPath(path: NonEmptyArray<string | number>): string {
   if (path.length === 1) {
     return path[0].toString();
   }
@@ -62,7 +62,7 @@ function formatZozInvalidUnionIssue(issue: z.ZodInvalidUnionIssue): string {
   }, []);
 
   const path = Array.isArray(issue.path) ? issue.path : [issue.path];
-  assertNotEmptyArray(path);
+  assertNonEmptyArray(path);
 
   return (
     `${prefix}"${formatPath(path)}" expected to match one of the following groups:\n` +

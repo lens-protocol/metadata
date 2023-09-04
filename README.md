@@ -104,6 +104,26 @@ legacy.ProfileMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
+### Extract version number
+
+A convenience `extractVersion` function is available to extract the version from a parsed `PublicationMetadata` or `ProfileMetadata`.
+
+```typescript
+import {
+  extractVersion,
+  PublicationMetadataSchema,
+  ProfileMetadataSchema,
+} from '@lens-protocol/metadata';
+
+const publicationMetadata = PublicationMetadataSchema.parse(valid);
+
+extractVersion(publicationMetadata); // => '3.0.0'
+
+const profileMetadata = ProfileMetadataSchema.parse(valid);
+
+extractVersion(profileMetadata); // => '2.0.0'
+```
+
 ### Format validation error
 
 `ZodError` contains all the information needed to inform you about the validation error, but it's not very user friendly. You can use `formatZodError` to get a more readable error message.

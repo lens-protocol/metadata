@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdown, notEmptyString, uri } from '../../primitives';
+import { markdownSchema, notEmptyString, uriSchema } from '../../primitives.js';
 
 export enum MarketplaceMetadataAttributeDisplayType {
   NUMBER = 'number',
@@ -16,11 +16,11 @@ export const MarketplaceMetadataAttributeSchema = z.object({
 export type MarketplaceMetadataAttribute = z.infer<typeof MarketplaceMetadataAttributeSchema>;
 
 export const MarketplaceMetadataSchema = z.object({
-  description: markdown(
+  description: markdownSchema(
     'A human-readable description of the item. It could be plain text or markdown.',
   ).optional(),
 
-  external_url: uri(
+  external_url: uriSchema(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
@@ -28,15 +28,14 @@ export const MarketplaceMetadataSchema = z.object({
   name: notEmptyString('Name of the NFT item.').optional(),
 
   attributes: MarketplaceMetadataAttributeSchema.array()
-    .min(1)
     .optional()
     .describe(
       'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
     ),
 
-  image: uri('Marketplaces will store any NFT image here.').optional(),
+  image: uriSchema('Marketplaces will store any NFT image here.').optional(),
 
-  animation_url: uri(
+  animation_url: uriSchema(
     'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
       'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
       'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +

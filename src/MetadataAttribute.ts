@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { notEmptyString } from './primitives';
+import { notEmptyString } from './primitives.js';
 
 export enum MetadataAttributeType {
   BOOLEAN = 'Boolean',
