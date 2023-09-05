@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.9
+
+### Patch Changes
+
+- 5af6230: **Added** `type` to `AccessCondition`(s)
+
 ## 0.1.0-alpha.8
 
 ### Patch Changes
