@@ -231,9 +231,27 @@ export const TokenIdSchema: z.Schema<TokenId, z.ZodTypeDef, string> =
 /**
  * @internal
  */
+export const AssetSchema = z.object({
+  contract: NetworkAddressSchema,
+  decimals: z.number({ description: 'The number of decimals of the asset.' }).nonnegative(),
+});
+/**
+ * A blockchain asset.
+ */
+export type Asset = z.infer<typeof AssetSchema>;
+/**
+ * @internal
+ */
+export function asset(contract: NetworkAddress, decimals: number): Asset {
+  return { contract, decimals };
+}
+
+/**
+ * @internal
+ */
 export const AmountSchema = z.object(
   {
-    currency: NetworkAddressSchema,
+    asset: AssetSchema,
     value: notEmptyString('The amount in the smallest unit of the currency (e.g. wei for ETH).'),
   },
   {

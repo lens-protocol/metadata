@@ -184,6 +184,14 @@ function orConditionSchema<
 /**
  * @internal
  */
+export type AnyCondition =
+  | SimpleCondition
+  | AndCondition<SimpleCondition>
+  | OrCondition<SimpleCondition>;
+
+/**
+ * @internal
+ */
 export const AccessConditionSchema = orConditionSchema([
   NftOwnershipConditionSchema,
   Erc20OwnershipConditionSchema,

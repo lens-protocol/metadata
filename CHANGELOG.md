@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.10
+
+### Patch Changes
+
+- a75cf84: **Fixed** `Amount.currency > Amount.asset`
+
 ## 0.1.0-alpha.9
 
 ### Patch Changes
