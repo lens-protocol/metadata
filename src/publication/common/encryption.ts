@@ -9,7 +9,7 @@ import {
   TokenIdSchema,
   notEmptyString,
 } from '../../primitives.js';
-import { hasTwoOrMore, Brand } from '../../utils.js';
+import { hasTwoOrMore, Brand, assertHasTwoOrMore, TwoAtLeastArray } from '../../utils.js';
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -20,7 +20,19 @@ export enum NftContractType {
   ERC1155 = 'ERC1155',
 }
 
+export enum ConditionType {
+  NFT_OWNERSHIP = 'NFT_OWNERSHIP',
+  ERC20_OWNERSHIP = 'ERC20_OWNERSHIP',
+  EOA_OWNERSHIP = 'EOA_OWNERSHIP',
+  PROFILE_OWNERSHIP = 'PROFILE_OWNERSHIP',
+  FOLLOW = 'FOLLOW',
+  COLLECT = 'COLLECT',
+  AND = 'AND',
+  OR = 'OR',
+}
+
 export const NftOwnershipConditionSchema = z.object({
+  type: z.literal(ConditionType.NFT_OWNERSHIP),
   contract: NetworkAddressSchema,
   contractType: z.nativeEnum(NftContractType),
   tokenIds: TokenIdSchema.array()
@@ -43,6 +55,7 @@ export enum ConditionComparisonOperator {
  * @internal
  */
 export const Erc20OwnershipConditionSchema = z.object({
+  type: z.literal(ConditionType.ERC20_OWNERSHIP),
   amount: AmountSchema,
   condition: z.nativeEnum(ConditionComparisonOperator),
 });
@@ -52,6 +65,7 @@ export type Erc20OwnershipCondition = z.infer<typeof Erc20OwnershipConditionSche
  * @internal
  */
 export const EoaOwnershipConditionSchema = z.object({
+  type: z.literal(ConditionType.EOA_OWNERSHIP),
   address: EvmAddressSchema,
 });
 export type EoaOwnershipCondition = z.infer<typeof EoaOwnershipConditionSchema>;
@@ -60,6 +74,7 @@ export type EoaOwnershipCondition = z.infer<typeof EoaOwnershipConditionSchema>;
  * @internal
  */
 export const ProfileOwnershipConditionSchema = z.object({
+  type: z.literal(ConditionType.PROFILE_OWNERSHIP),
   profileId: ProfileIdSchema,
 });
 export type ProfileOwnershipCondition = z.infer<typeof ProfileOwnershipConditionSchema>;
@@ -68,6 +83,7 @@ export type ProfileOwnershipCondition = z.infer<typeof ProfileOwnershipCondition
  * @internal
  */
 export const FollowConditionSchema = z.object({
+  type: z.literal(ConditionType.FOLLOW),
   follow: ProfileIdSchema,
 });
 export type FollowCondition = z.infer<typeof FollowConditionSchema>;
@@ -76,6 +92,7 @@ export type FollowCondition = z.infer<typeof FollowConditionSchema>;
  * @internal
  */
 export const CollectConditionSchema = z.object({
+  type: z.literal(ConditionType.COLLECT),
   publicationId: PublicationIdSchema,
   thisPublication: z.boolean().optional().default(false),
 });
@@ -94,16 +111,41 @@ export const SimpleConditionSchema = z.union([
 ]);
 export type SimpleCondition = z.infer<typeof SimpleConditionSchema>;
 
-export type AndCondition<T> = {
-  and: [T, T, ...T[]];
+type BaseCondition = {
+  type: ConditionType;
 };
+type ComposableConditionSchema<T extends BaseCondition = BaseCondition> = z.ZodObject<
+  {
+    type: z.ZodTypeAny;
+  } & z.ZodRawShape,
+  z.UnknownKeysParam,
+  z.ZodTypeAny,
+  T
+>;
 
-function andCondition<
-  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
->(options: Criteria): z.Schema<AndCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
+export type AndCondition<T> = {
+  type: ConditionType.AND;
+  criteria: TwoAtLeastArray<T>;
+};
+export function andCondition<T>(options: T[]): AndCondition<T> {
+  assertHasTwoOrMore(options);
+  return {
+    type: ConditionType.AND,
+    criteria: options,
+  };
+}
+
+function andConditionSchema<
+  Criteria extends [
+    ComposableConditionSchema,
+    ComposableConditionSchema,
+    ...ComposableConditionSchema[],
+  ],
+>(options: Criteria): ComposableConditionSchema<AndCondition<z.infer<Criteria[number]>>> {
   return z.object({
-    and: z
-      .union(options)
+    type: z.literal(ConditionType.AND),
+    criteria: z
+      .discriminatedUnion('type', options)
       .array()
       .max(5, 'Invalid AND condition: should have at most 5 conditions')
       .refine(hasTwoOrMore, 'Invalid AND condition: should have at least 2 conditions'),
@@ -111,15 +153,28 @@ function andCondition<
 }
 
 export type OrCondition<T> = {
-  or: [T, T, ...T[]];
+  type: ConditionType.OR;
+  criteria: TwoAtLeastArray<T>;
 };
+export function orCondition<T>(options: T[]): OrCondition<T> {
+  assertHasTwoOrMore(options);
+  return {
+    type: ConditionType.OR,
+    criteria: options,
+  };
+}
 
-function orCondition<
-  Criteria extends [z.ZodType<unknown>, z.ZodType<unknown>, ...z.ZodType<unknown>[]],
->(options: Criteria): z.Schema<OrCondition<z.infer<Criteria[number]>>, z.ZodTypeDef, object> {
+function orConditionSchema<
+  Criteria extends [
+    ComposableConditionSchema,
+    ComposableConditionSchema,
+    ...ComposableConditionSchema[],
+  ],
+>(options: Criteria): ComposableConditionSchema<OrCondition<z.infer<Criteria[number]>>> {
   return z.object({
-    or: z
-      .union(options)
+    type: z.literal(ConditionType.OR),
+    criteria: z
+      .discriminatedUnion('type', options)
       .array()
       .max(5, 'Invalid OR condition: should have at most 5 conditions')
       .refine(hasTwoOrMore, 'Invalid OR condition: should have at least 2 conditions'),
@@ -129,14 +184,14 @@ function orCondition<
 /**
  * @internal
  */
-export const AccessConditionSchema = orCondition([
+export const AccessConditionSchema = orConditionSchema([
   NftOwnershipConditionSchema,
   Erc20OwnershipConditionSchema,
   EoaOwnershipConditionSchema,
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
-  andCondition([
+  andConditionSchema([
     NftOwnershipConditionSchema,
     Erc20OwnershipConditionSchema,
     EoaOwnershipConditionSchema,
@@ -144,7 +199,7 @@ export const AccessConditionSchema = orCondition([
     FollowConditionSchema,
     CollectConditionSchema,
   ]),
-  orCondition([
+  orConditionSchema([
     NftOwnershipConditionSchema,
     Erc20OwnershipConditionSchema,
     EoaOwnershipConditionSchema,

@@ -61,6 +61,18 @@ export function hasTwoOrMore<T>(items: ReadonlyArray<T>): items is TwoAtLeastArr
   return items.length >= 2;
 }
 
+/**
+ * @internal
+ */
+export function assertHasTwoOrMore<T>(
+  items: ReadonlyArray<T>,
+): asserts items is TwoAtLeastArray<T> {
+  invariant(
+    hasTwoOrMore(items),
+    `Expected array of to have at least two items, but received ${items.length} items`,
+  );
+}
+
 const schemaVersionRegex = /(\d+\.\d+\.\d+)/;
 
 export function extractVersion(metadata: ProfileMetadata | PublicationMetadata): string {

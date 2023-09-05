@@ -1,6 +1,6 @@
 # Lens Protocol Metadata Standards
 
-Schema vaidation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs/pull/5/) Lens Protocol Metadata Standards.
+Schema validation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs/pull/5/) Lens Protocol Metadata Standards.
 
 ## Features
 
@@ -210,6 +210,31 @@ switch (publicationMetadata.version) {
       // ...
     }
     break;
+}
+```
+
+**`AccessCondition`**
+
+```typescript
+import { AccessCondition, ConditionType, PublicationMetadataSchema } from '@lens-protocol/metadata';
+
+const publicationMetadata = PublicationMetadataSchema.parse(valid);
+
+switch (publicationMetadata.encryptedWith?.accessCondition.type) {
+  case ConditionType.AND:
+    // accessCondition is AndCondition
+    break;
+  case ConditionType.OR:
+    // accessCondition is OrCondition
+    break;
+  case ConditionType.NFT_OWNERSHIP:
+    // accessCondition is NftOwnershipCondition
+    break;
+  case ConditionType.EOA_OWNERSHIP:
+    // accessCondition is EoaOwnershipCondition
+    break;
+
+  // ...
 }
 ```
 
