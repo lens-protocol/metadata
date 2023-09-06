@@ -225,7 +225,7 @@ export type LitEncryptionKey = Brand<string, 'LitEncryptionKey'>;
 /**
  * @internal
  */
-export function litEncryptionKey(value: string): LitEncryptionKey {
+export function toLitEncryptionKey(value: string): LitEncryptionKey {
   return value as LitEncryptionKey;
 }
 /**
@@ -234,7 +234,7 @@ export function litEncryptionKey(value: string): LitEncryptionKey {
 export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, string> =
   notEmptyString('A symmetric encryption key.')
     .length(368, 'Encryption key should be 368 characters long.')
-    .transform(litEncryptionKey);
+    .transform(toLitEncryptionKey);
 
 /**
  * @internal

@@ -1,5 +1,13 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.11
+
+### Patch Changes
+
+- eec20a1: **Fixed** TS4023 error while using `legacy` namespace by moving content under `@lens-protocol/metadata/legacy` entry point
+- 691847a: **Fixed** missing `EncryptionParams.encryptedFields` rules and typedef
+- b72c6e4: **Fixed** missing properties in `TransactionMetadata` and `SpaceSchema`
+
 ## 0.1.0-alpha.10
 
 ### Patch Changes

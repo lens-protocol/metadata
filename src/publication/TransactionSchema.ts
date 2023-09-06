@@ -5,6 +5,12 @@ import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
 import { notEmptyString } from '../primitives.js';
 
+export enum TransactionMetadataType {
+  ERC721 = 'ERC721',
+  ERC20 = 'ERC20',
+  OTHER = 'OTHER',
+}
+
 /**
  * @internal
  */
@@ -14,6 +20,8 @@ export const TransactionSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TRANSACTION),
 
     txHash: notEmptyString('The transaction hash.'),
+
+    type: z.nativeEnum(TransactionMetadataType).describe('The type of transaction.'),
 
     chainId: z.number().positive().int().describe('The Chain Id.'),
 

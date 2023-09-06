@@ -1,12 +1,12 @@
 import { describe, it } from '@jest/globals';
 
-import { expectSchema } from '../__helpers__/assertions.js';
-import { legacy } from '../index.js';
+import { expectSchema } from '../../__helpers__/assertions.js';
+import { ProfileMetadataSchema } from '../index.js';
 
-describe(`Given the legacy.ProfileMetadataSchema`, () => {
+describe(`Given the ProfileMetadataSchema`, () => {
   describe(`when parsing an invalid object`, () => {
     it(`then it should flag the missing fields`, () => {
-      expectSchema(() => legacy.ProfileMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
+      expectSchema(() => ProfileMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Invalid literal value, expected "1.0.0"
         · "metadata_id": Required
@@ -19,7 +19,7 @@ describe(`Given the legacy.ProfileMetadataSchema`, () => {
 
     it(`then it should handle attributes in a backwards compatible way`, () => {
       expectSchema(() =>
-        legacy.ProfileMetadataSchema.safeParse({
+        ProfileMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: 'foo',
 
