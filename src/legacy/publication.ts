@@ -333,6 +333,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
     .object({
       accessCondition: AccessConditionSchema,
       encryptionKey: z.string().length(368, 'Encryption key should be 368 characters long.'),
+      encryptedFields: z.object({}),
     })
     .optional(),
 });

@@ -163,6 +163,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
         · "lens.id": Required
         · "lens.locale": Required
         · "lens.mainContentFocus": Invalid literal value, expected "SPACE"
+        · "lens.title": Required
         · "lens.link": Required
         · "lens.startsAt": Required"
       `);
@@ -232,6 +233,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
         · "lens.locale": Required
         · "lens.mainContentFocus": Invalid literal value, expected "TRANSACTION"
         · "lens.txHash": Required
+        · "lens.type": Required
         · "lens.chainId": Required"
       `);
     });

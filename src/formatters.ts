@@ -1,7 +1,7 @@
 // Heavily customized and simplified version of https://www.npmjs.com/package/zod-validation-error
 import { z } from 'zod';
 
-import { NonEmptyArray, assertNonEmptyArray, hasAtLeastOne } from './utils';
+import { NonEmptyArray, assertNonEmptyArray, hasAtLeastOne } from './utils.js';
 
 const maxIssuesInMessage = 99;
 const issueSeparator = '\n';
