@@ -281,6 +281,26 @@ describe(`Given the PublicationMetadataSchema`, () => {
       `);
     });
 
+    it('then it should complain about missing encryptionParams', () => {
+      expectSchema(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: '123',
+          name: '123',
+          attributes: [],
+          locale: 'en',
+          mainContentFocus: PublicationMainFocus.TEXT_ONLY,
+          content: 'a',
+          encryptionParams: {},
+        }),
+      ).toMatchInlineSnapshot(`
+        "fix the following issues
+        · "encryptionParams.accessCondition": Required
+        · "encryptionParams.encryptionKey": Required
+        · "encryptionParams.encryptedFields": Required"
+      `);
+    });
+
     it('then it should complain about invalid encryptionParams', () => {
       expectSchema(() =>
         PublicationMetadataSchema.safeParse({
@@ -310,6 +330,9 @@ describe(`Given the PublicationMetadataSchema`, () => {
               },
             },
             encryptionKey: '0x...',
+            encryptedFields: {
+              content: 42,
+            },
           },
         }),
       ).toMatchInlineSnapshot(`
@@ -318,7 +341,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
         · "encryptionParams.accessCondition.or.criteria": Invalid OR condition: should have at least 2 conditions
         · "encryptionParams.accessCondition": Unrecognized key(s) in object: 'and'
         · "encryptionParams.encryptionKey": Encryption key should be 368 characters long.
-        · "encryptionParams.encryptedFields": Required"
+        · "encryptionParams.encryptedFields.content": Expected string, received number"
       `);
     });
   });

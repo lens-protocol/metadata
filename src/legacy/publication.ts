@@ -115,13 +115,20 @@ const OpenSeaSchema = z.object({
   version: z.nativeEnum(PublicationMetadataVersion),
 });
 
-const PublicationMetadataMediaSchema = z.object({
+/**
+ * @internal
+ */
+export const MediaSchema = z.object({
   item: uriSchema('Marketplaces will store any NFT image here.'),
   altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
   cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
   type: z.string().optional().nullable().describe('This is the mime type of the media.'),
 });
-export type PublicationMetadataMedia = z.infer<typeof PublicationMetadataMediaSchema>;
+export type Media = z.infer<typeof MediaSchema>;
+/**
+ * @deprecated Use `Media` instead.
+ */
+export type PublicationMetadataMedia = Media;
 
 const ContentSchema = z
   .string({
@@ -146,7 +153,7 @@ const PublicationCommonSchema = OpenSeaSchema.extend({
     .optional()
     .nullable(),
 
-  media: PublicationMetadataMediaSchema.array()
+  media: MediaSchema.array()
     .optional()
     .nullable()
     .describe('This is lens supported attached media items to the publication.'),
@@ -316,6 +323,36 @@ const AccessConditionSchema = orCondition([
 ]);
 export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 
+/**
+ * @internal
+ */
+export const EncryptedMediaSchema = z.object({
+  item: uriSchema('Marketplaces will store any NFT image here.'),
+  altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
+  cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
+  type: z.string().optional().nullable().describe('This is the mime type of the media.'),
+});
+export type EncryptedMedia = z.infer<typeof EncryptedMediaSchema>;
+
+const EncryptedFieldsSchema = z.object({
+  content: z.string().optional().nullable(),
+  media: EncryptedMediaSchema.array().optional().nullable(),
+  image: z.string().optional().nullable(),
+  animation_url: z.string().optional().nullable(),
+  external_url: z.string().optional().nullable(),
+});
+export type EncryptedFields = z.infer<typeof EncryptedFieldsSchema>;
+
+/**
+ * @internal
+ */
+export const EncryptionParamsSchema = z.object({
+  accessCondition: AccessConditionSchema,
+  encryptionKey: z.string().length(368, 'Encryption key should be 368 characters long.'),
+  encryptedFields: EncryptedFieldsSchema,
+});
+export type EncryptionParams = z.infer<typeof EncryptionParamsSchema>;
+
 const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   version: z.literal(PublicationMetadataVersion.V2, { description: 'The metadata version.' }),
 
@@ -335,13 +372,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
     .nullable()
     .describe('Ability to tag your publication.'),
 
-  encryptionParams: z
-    .object({
-      accessCondition: AccessConditionSchema,
-      encryptionKey: z.string().length(368, 'Encryption key should be 368 characters long.'),
-      encryptedFields: z.object({}),
-    })
-    .optional(),
+  encryptionParams: EncryptionParamsSchema.optional(),
 });
 
 const PublicationMetadataV2ArticleSchema = PublicationMetadataV2CommonSchema.extend({
@@ -354,7 +385,7 @@ export type PublicationMetadataV2Article = z.infer<typeof PublicationMetadataV2A
 const PublicationMetadataV2AudioSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.AUDIO),
 
-  media: PublicationMetadataMediaSchema.array()
+  media: MediaSchema.array()
     .min(1)
     .refine(
       (value) => value.some((media) => media.type && media.type in AudioMimeType),
@@ -373,7 +404,7 @@ export type PublicationMetadataV2Embed = z.infer<typeof PublicationMetadataV2Emb
 const PublicationMetadataV2ImageSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.IMAGE),
 
-  media: PublicationMetadataMediaSchema.array()
+  media: MediaSchema.array()
     .min(1)
     .refine(
       (value) => value.some((media) => media.type && media.type in ImageMimeType),
@@ -411,7 +442,7 @@ export type PublicationMetadataV2TextOnly = z.infer<typeof PublicationMetadataV2
 const PublicationMetadataV2VideoSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.VIDEO),
 
-  media: PublicationMetadataMediaSchema.array()
+  media: MediaSchema.array()
     .min(1)
     .refine(
       (value) => value.some((media) => media.type && media.type in VideoMimeType),
