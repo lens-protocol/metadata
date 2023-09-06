@@ -1,19 +1,19 @@
 import { describe, it } from '@jest/globals';
 
-import { expectSchema } from '../__helpers__/assertions.js';
-import { legacy } from '../index.js';
+import { expectSchema } from '../../__helpers__/assertions.js';
+import { PublicationMainFocus, PublicationMetadataSchema } from '../index.js';
 
-describe(`Given the legacy.PublicationMetadataSchema`, () => {
+describe(`Given the PublicationMetadataSchema`, () => {
   describe(`when parsing an empty object`, () => {
     it(`then it should complain about the missing version`, () => {
-      expectSchema(() => legacy.PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
+      expectSchema(() => PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Required"
       `);
     });
 
     it(`then it should complain about invalid version`, () => {
-      expectSchema(() => legacy.PublicationMetadataSchema.safeParse({ version: '42' }))
+      expectSchema(() => PublicationMetadataSchema.safeParse({ version: '42' }))
         .toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Invalid enum value. Expected '1.0.0' | '2.0.0', received '42'"
@@ -24,7 +24,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
   describe(`when parsing an invalid v1 object`, () => {
     it(`then it should complain about missing basic mandatory fields`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '1.0.0',
         }),
       ).toMatchInlineSnapshot(`
@@ -37,7 +37,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
 
     it(`then it should check at least one between content, image, and media is present`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
           name: '123',
@@ -53,7 +53,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
 
     it('then it should complain about empty content', () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
           name: '123',
@@ -70,7 +70,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
 
     it('then it should complain about too long content', () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
           name: '123',
@@ -85,7 +85,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
 
     it('then it should complain about invalid media items', () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
           name: '123',
@@ -109,9 +109,9 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
   describe(`when parsing an invalid v2 object`, () => {
     it(`then it should complain about missing basic mandatory fields`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
-          mainContentFocus: legacy.PublicationMainFocus.TEXT_ONLY,
+          mainContentFocus: PublicationMainFocus.TEXT_ONLY,
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
@@ -125,7 +125,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
 
     it('then it should complain about invalid v2 fields', () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
@@ -133,7 +133,7 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
           content: 'a',
           locale: '',
           contentWarning: 'NOVALID',
-          mainContentFocus: legacy.PublicationMainFocus.TEXT_ONLY,
+          mainContentFocus: PublicationMainFocus.TEXT_ONLY,
           tags: ['a'.repeat(51), '', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         }),
       ).toMatchInlineSnapshot(`
@@ -146,15 +146,15 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.ARTICLE} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.ARTICLE} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.ARTICLE,
+          mainContentFocus: PublicationMainFocus.ARTICLE,
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
@@ -162,15 +162,15 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.AUDIO} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.AUDIO} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.AUDIO,
+          mainContentFocus: PublicationMainFocus.AUDIO,
           media: [
             {
               item: 'https://example.com/image.png',
@@ -184,15 +184,15 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.EMBED} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.EMBED} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.EMBED,
+          mainContentFocus: PublicationMainFocus.EMBED,
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
@@ -200,15 +200,15 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.IMAGE} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.IMAGE} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.IMAGE,
+          mainContentFocus: PublicationMainFocus.IMAGE,
           media: [
             {
               item: 'https://example.com/dunno.42',
@@ -221,16 +221,16 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.LINK} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.LINK} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
           content: 'somehting without a URL',
-          mainContentFocus: legacy.PublicationMainFocus.LINK,
+          mainContentFocus: PublicationMainFocus.LINK,
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
@@ -238,15 +238,15 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.TEXT_ONLY} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.TEXT_ONLY} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.TEXT_ONLY,
+          mainContentFocus: PublicationMainFocus.TEXT_ONLY,
           media: [
             {
               item: 'https://example.com/image.png',
@@ -260,15 +260,15 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
       `);
     });
 
-    it(`then it should complain about invalid ${legacy.PublicationMainFocus.VIDEO} metadata`, () => {
+    it(`then it should complain about invalid ${PublicationMainFocus.VIDEO} metadata`, () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.VIDEO,
+          mainContentFocus: PublicationMainFocus.VIDEO,
           media: [
             {
               item: 'https://example.com/dunno.42',
@@ -283,13 +283,13 @@ describe(`Given the legacy.PublicationMetadataSchema`, () => {
 
     it('then it should complain about invalid encryptionParams', () => {
       expectSchema(() =>
-        legacy.PublicationMetadataSchema.safeParse({
+        PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
           name: '123',
           attributes: [],
           locale: 'en',
-          mainContentFocus: legacy.PublicationMainFocus.TEXT_ONLY,
+          mainContentFocus: PublicationMainFocus.TEXT_ONLY,
           content: 'a',
           encryptionParams: {
             accessCondition: {

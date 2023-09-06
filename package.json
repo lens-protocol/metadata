@@ -6,6 +6,27 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "default": "./dist/index.cjs"
+    },
+    "./legacy": {
+      "import": "./dist/legacy/index.js",
+      "default": "./dist/legacy/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ],
+      "legacy": [
+        "dist/legacy/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "scripts": {
     "build": "pnpm build:jsonschemas && pnpm build:dist",

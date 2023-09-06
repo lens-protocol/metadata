@@ -2,6 +2,27 @@
 
 Schema validation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs/pull/5/) Lens Protocol Metadata Standards.
 
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Publication metadata](#publication-metadata)
+  - [Profile metadata](#profile-metadata)
+  - [Extract version number](#extract-version-number)
+  - [Format validation error](#format-validation-error)
+  - [Narrowing types](#narrowing-types)
+    - [`PublicationMetadata`](#publicationmetadata)
+    - [`AccessCondition`](#accesscondition)
+    - [`MetadataAttribute`](#metadataattribute)
+  - [Useful types](#useful-types)
+  - [Legacy metadata formats](#legacy-metadata-formats)
+- [JSON schemas](#json-schemas)
+- [Versioning](#versioning)
+  - [Adding a new schema](#adding-a-new-schema)
+- [Contributing](#contributing)
+- [Releasing](#releasing)
+- [License](#license)
+- [Support](#support)
+
 ## Features
 
 - [Zod](https://zod.dev/) schema definitions
@@ -53,25 +74,6 @@ PublicationMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
-You can also parse legacy Publication Metadata v2 and v1 via:
-
-```typescript
-import { legacy } from '@lens-protocol/metadata';
-
-legacy.PublicationMetadataSchema.parse(valid); // => legacy.PublicationMetadata
-legacy.PublicationMetadataSchema.parse(invalid); // => throws ZodError
-
-// OR
-
-legacy.PublicationMetadataSchema.safeParse(valid);
-// => { success: true, data: legacy.PublicationMetadata }
-legacy.PublicationMetadataSchema.safeParse(invalid);
-// => { success: false, error: ZodError }
-```
-
-> [!WARNING]  
-> When working with the `legacy` namespace make sure to use enums from tha same namespace, e.g. `legacy.PublicationMainFocus` instead of `PublicationMainFocus` to avoid confusion.
-
 ### Profile metadata
 
 ```typescript
@@ -85,22 +87,6 @@ ProfileMetadataSchema.parse(invalid); // => throws ZodError
 ProfileMetadataSchema.safeParse(valid);
 // => { success: true, data: ProfileMetadata }
 ProfileMetadataSchema.safeParse(invalid);
-// => { success: false, error: ZodError }
-```
-
-You can also parse legacy Profile Metadata (aka v1) via:
-
-```typescript
-import { legacy } from '@lens-protocol/metadata';
-
-legacy.ProfileMetadataSchema.parse(valid); // => legacy.ProfileMetadata
-legacy.ProfileMetadataSchema.parse(invalid); // => throws ZodError
-
-// OR
-
-legacy.ProfileMetadataSchema.safeParse(valid);
-// => { success: true, data: legacy.ProfileMetadata }
-legacy.ProfileMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
@@ -142,7 +128,7 @@ if (!result.success) {
 
 Every time you have a discriminated union, you can use the discriminant to narrow the type. See few examples below.
 
-**`PublicationMetadata`**
+#### `PublicationMetadata`
 
 ```typescript
 import {
@@ -171,49 +157,7 @@ switch (publicationMetadata.$schema) {
 }
 ```
 
-**`legacy.PublicationMetadata`**
-
-`legacy.PublicationMetadata` is a discriminated union of `legacy.PublicationMetadataV1` and `legacy.PublicationMetadataV2` where the `version` property is the discriminant.
-
-In turn `legacy.PublicationMetadataV2` is a discriminated union of:
-
-- `legacy.PublicationMetadataV2Article`
-- `legacy.PublicationMetadataV2Audio`
-- `legacy.PublicationMetadataV2Embed`
-- `legacy.PublicationMetadataV2Image`
-- `legacy.PublicationMetadataV2Link`
-- `legacy.PublicationMetadataV2TextOnly`
-- `legacy.PublicationMetadataV2Video`
-
-where the `mainContentFocus` property is the discriminant.
-
-```typescript
-import { legacy } from '@lens-protocol/metadata';
-
-const publicationMetadata = legacy.PublicationMetadataSchema.parse(valid);
-
-switch (publicationMetadata.version) {
-  case legacy.PublicationMetadataVersion.V1:
-    // publicationMetadata is legacy.PublicationMetadataV1
-    break;
-  case legacy.PublicationMetadataVersion.V2:
-    // publicationMetadata is legacy.PublicationMetadataV2
-
-    switch (publicationMetadata.mainContentFocus) {
-      case legacy.PublicationMainFocus.ARTICLE:
-        // publicationMetadata is legacy.PublicationMetadataV2Article
-        break;
-      case legacy.PublicationMainFocus.VIDEO:
-        // publicationMetadata is legacy.PublicationMetadataV2Video
-        break;
-
-      // ...
-    }
-    break;
-}
-```
-
-**`AccessCondition`**
+#### `AccessCondition`
 
 ```typescript
 import { AccessCondition, ConditionType, PublicationMetadataSchema } from '@lens-protocol/metadata';
@@ -238,7 +182,7 @@ switch (publicationMetadata.encryptedWith?.accessCondition.type) {
 }
 ```
 
-**`MetadataAttribute`**
+#### `MetadataAttribute`
 
 ```typescript
 import { MetadataAttribute, MetadataAttributeType } from '@lens-protocol/metadata';
@@ -327,6 +271,142 @@ import {
   Datetime,
 } from '@lens-protocol/metadata';
 ```
+
+### Legacy metadata formats
+
+The package also exports parsers for legacy metadata formats via the `@lens-protocol/metadata/legacy` entrypoint.
+
+> [!WARNING]
+> DO NOT mix and match legacy and new metadata TS types and enums. Although they share some similarities they are not meant to be interoperable.
+> For example if you are checking `mainContentFocus` of `PublicationMetadataV2` use the `PublicationMainFocus` exported from `@lens-protocol/metadata/legacy` and NOT the one from the main `@lens-protocol/metadata` entrypoint.
+
+You can parse legacy Publication Metadata v1 and v2 via:
+
+```typescript
+import { PublicationMetadataSchema } from '@lens-protocol/metadata/legacy';
+
+PublicationMetadataSchema.parse(valid); // => PublicationMetadata
+PublicationMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+PublicationMetadataSchema.safeParse(valid);
+// => { success: true, data: PublicationMetadata }
+PublicationMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
+Legacy `PublicationMetadata` is a discriminated union of `PublicationMetadataV1` and `PublicationMetadataV2` where the `version` property is the discriminant.
+
+In turn `legacy.PublicationMetadataV2` is a discriminated union of:
+
+- `PublicationMetadataV2Article`
+- `PublicationMetadataV2Audio`
+- `PublicationMetadataV2Embed`
+- `PublicationMetadataV2Image`
+- `PublicationMetadataV2Link`
+- `PublicationMetadataV2TextOnly`
+- `PublicationMetadataV2Video`
+
+where the `mainContentFocus` property is the discriminant.
+
+```typescript
+import {
+  PublicationMetadataSchema,
+  PublicationMetadataVersion,
+  PublicationMainFocus,
+} from '@lens-protocol/metadata/legacy';
+
+const publicationMetadata = PublicationMetadataSchema.parse(valid);
+
+switch (publicationMetadata.version) {
+  case PublicationMetadataVersion.V1:
+    // publicationMetadata is PublicationMetadataV1
+    break;
+  case PublicationMetadataVersion.V2:
+    // publicationMetadata is PublicationMetadataV2
+
+    switch (publicationMetadata.mainContentFocus) {
+      case PublicationMainFocus.ARTICLE:
+        // publicationMetadata is PublicationMetadataV2Article
+        break;
+      case PublicationMainFocus.VIDEO:
+        // publicationMetadata is PublicationMetadataV2Video
+        break;
+
+      // ...
+    }
+    break;
+}
+```
+
+You can also parse legacy Profile Metadata (aka v1) via:
+
+```typescript
+import { ProfileMetadataSchema } from '@lens-protocol/metadata/legacy';
+
+ProfileMetadataSchema.parse(valid); // => ProfileMetadata
+ProfileMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+ProfileMetadataSchema.safeParse(valid);
+// => { success: true, data: ProfileMetadata }
+ProfileMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
+Similarly to the main entrypoint the `@lens-protocol/metadata/legacy` entrypoint also exports all the types and enums that you might need to work with the legacy metadata (some examples below).
+
+```typescript
+import {
+  // enums
+  AudioMimeType,
+  ImageMimeType,
+  PublicationMainFocus,
+  PublicationMetadataVersion,
+  VideoMimeType,
+
+  // main types
+  ProfileMetadata,
+  PublicationMetadata,
+  PublicationMetadataV1,
+  PublicationMetadataV2,
+  PublicationMetadataV2Article,
+  PublicationMetadataV2Audio,
+  PublicationMetadataV2Embed,
+  PublicationMetadataV2Image,
+  PublicationMetadataV2Link,
+  PublicationMetadataV2TextOnly,
+  PublicationMetadataV2Video,
+
+  // others
+  AccessCondition,
+  AndCondition,
+  CollectCondition,
+  EoaOwnership,
+  Erc20Ownership,
+  FollowCondition,
+  MarketplaceMetadata,
+  MarketplaceMetadataAttribute,
+  NftOwnership,
+  OrCondition,
+  ProfileMetadataAttribute,
+  ProfileOwnership,
+  PublicationMetadataMedia,
+
+  // branded aliases
+  Locale,
+  Markdown,
+  Signature,
+  URI,
+  AppId,
+  Datetime,
+} from '@lens-protocol/metadata/legacy';
+```
+
+> [!NOTE]
+> If you find yourself in a position of importing from both `@lens-protocol/metadata` and `@lens-protocol/metadata/legacy` entrypoints in the same module. You can you can use ESModule aliasing to avoid conflicts: `import * as legacy from '@lens-protocol/metadata/legacy'` and then use the legacy types, enums, and parsers under `legacy.*`.
 
 ## JSON schemas
 

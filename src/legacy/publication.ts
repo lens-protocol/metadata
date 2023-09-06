@@ -19,6 +19,12 @@ import {
 } from '../publication/common';
 import { hasTwoOrMore } from '../utils.js';
 
+// re-export under legacy namespace
+export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
+export { MarketplaceMetadataAttributeDisplayType } from '../publication/common';
+export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../publication/common';
+export type * from '../primitives.js';
+
 export enum PublicationMetadataVersion {
   V1 = '1.0.0',
   V2 = '2.0.0',
