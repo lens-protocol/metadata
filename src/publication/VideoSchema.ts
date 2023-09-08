@@ -9,6 +9,7 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
+import { notEmptyString } from '../primitives.js';
 
 /**
  * @internal
@@ -22,6 +23,8 @@ export const VideoSchema = publicationWith({
     ),
 
     video: MediaVideoSchema,
+
+    title: notEmptyString('The optional video title.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

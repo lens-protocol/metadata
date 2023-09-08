@@ -6,7 +6,6 @@ import { notEmptyString, uriSchema } from '../../primitives.js';
 
 const MediaCommonSchema = z.object({
   item: uriSchema('The item is the url to the media'),
-  altTag: notEmptyString('The alt tag for accessibility').optional(),
   attributes: MetadataAttributeSchema.array()
     .min(1)
     .optional()
@@ -66,6 +65,7 @@ export enum MediaImageMimeType {
 
 export const MediaImageSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaImageMimeType, { description: 'The mime type of the image' }),
+  altTag: notEmptyString('The alt tag for accessibility').optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the image'),
 });
 export type MediaImage = z.infer<typeof MediaImageSchema>;
@@ -85,6 +85,7 @@ export enum MediaVideoMimeType {
 
 export const MediaVideoSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
+  altTag: notEmptyString('The alt tag for accessibility').optional(),
   cover: uriSchema('The cover image for the video').optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })

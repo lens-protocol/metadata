@@ -239,11 +239,23 @@ export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, st
 /**
  * @internal
  */
+export const EncryptedPaths = notEmptyString(
+  'An encrypted path is a string of keys separated by . that describe ' +
+    'a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content).',
+)
+  .array()
+  .min(1);
+export type EncryptedPaths = z.infer<typeof EncryptedPaths>;
+
+/**
+ * @internal
+ */
 export const LitEncryptionStrategySchema = z.object(
   {
     provider: z.literal(EncryptionProvider.LIT_PROTOCOL),
     encryptionKey: LitEncryptionKeySchema,
     accessCondition: AccessConditionSchema,
+    encryptedPaths: EncryptedPaths,
   },
   {
     description: 'Publication encryption strategy powered by the LIT Protocol.',

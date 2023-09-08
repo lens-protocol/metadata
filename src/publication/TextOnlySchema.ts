@@ -12,9 +12,9 @@ export const TextOnlySchema = publicationWith({
   $schema: z.literal(PublicationSchemaId.TEXT_ONLY_LATEST),
 
   lens: metadataDetailsWith({
-    content: markdownSchema('The content for the publication as markdown.'),
-
     mainContentFocus: mainContentFocus(PublicationMainFocus.TEXT_ONLY),
+
+    content: markdownSchema('The content for the publication as markdown.'),
   }),
 });
 export type TextOnlyMetadata = z.infer<typeof TextOnlySchema>;
