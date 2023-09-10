@@ -43,6 +43,7 @@ import {
   PublicationIdSchema,
   AmountSchema,
   TagSchema,
+  MirrorMetadataSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -61,6 +62,7 @@ const schemas = new Map<string, z.ZodSchema<unknown>>([
   ['publications/link/1.0.0.json', LinkSchema],
   ['publications/livestream/1.0.0.json', LivestreamSchema],
   ['publications/mint/1.0.0.json', MintSchema],
+  ['publications/mirror/1.0.0.json', MirrorMetadataSchema],
   ['publications/space/1.0.0.json', SpaceSchema],
   ['publications/story/1.0.0.json', StorySchema],
   ['publications/text-only/1.0.0.json', TextOnlySchema],

@@ -6,6 +6,7 @@ Schema validation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs
 - [Installation](#installation)
 - [Usage](#usage)
   - [Publication metadata](#publication-metadata)
+  - [Mirror metadata](#mirror-metadata)
   - [Profile metadata](#profile-metadata)
   - [Extract version number](#extract-version-number)
   - [Format validation error](#format-validation-error)
@@ -60,6 +61,10 @@ const invalid = {
 
 ### Publication metadata
 
+Publication metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc. but NOT [`MirrorMetadata`](#mirror-metadata)).
+
+Use it to parse the metadata referenced by `contentURI` of `Comment`, `Mirror`, and `Quote` publications.
+
 ```typescript
 import { PublicationMetadataSchema } from '@lens-protocol/metadata';
 
@@ -71,6 +76,26 @@ PublicationMetadataSchema.parse(invalid); // => throws ZodError
 PublicationMetadataSchema.safeParse(valid);
 // => { success: true, data: PublicationMetadata }
 PublicationMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
+### Mirror metadata
+
+Mirror metadata schema serve the purpose allowing mirrors be associated to a given Lens app (via the `appId`) as well as specify some operational flags (e.g. `hideFromFeed` and `globalReach`).
+
+Use it to parse the metadata referenced by `metadataURI` of `Mirror` publications.
+
+```typescript
+import { MirrorMetadataSchema } from '@lens-protocol/metadata';
+
+MirrorMetadataSchema.parse(valid); // => MirrorMetadata
+MirrorMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+MirrorMetadataSchema.safeParse(valid);
+// => { success: true, data: MirrorMetadata }
+MirrorMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
