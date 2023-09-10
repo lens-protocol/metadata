@@ -2,7 +2,13 @@ import { z } from 'zod';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute.js';
 import { SchemasRoot } from '../constants.js';
-import { SignatureSchema, markdownSchema, notEmptyString, uriSchema } from '../primitives.js';
+import {
+  AppIdSchema,
+  SignatureSchema,
+  markdownSchema,
+  notEmptyString,
+  uriSchema,
+} from '../primitives.js';
 
 /**
  * @internal
@@ -24,6 +30,11 @@ export const ProfileMetadataDetailsSchema = z.object(
         'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
           'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
       ),
+
+    appId: AppIdSchema.optional().describe(
+      'The App Id that this Profile data refers to. ' +
+        'If omitted the data is considered to be the global Profile data.',
+    ),
   },
   { description: 'The Lens specific metadata details.' },
 );
