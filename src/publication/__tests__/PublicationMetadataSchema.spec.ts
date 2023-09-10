@@ -181,7 +181,8 @@ describe(`Given the PublicationMetadataSchema`, () => {
         "fix the following issues
         · "lens.id": Required
         · "lens.locale": Required
-        · "lens.mainContentFocus": Invalid literal value, expected "STORY""
+        · "lens.mainContentFocus": Invalid literal value, expected "STORY"
+        · "lens.asset": Required"
       `);
     });
   });
@@ -215,7 +216,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
         · "lens.id": Required
         · "lens.locale": Required
         · "lens.mainContentFocus": Invalid literal value, expected "3D"
-        · "lens.threeDAssets": Required"
+        · "lens.assets": Required"
       `);
     });
   });
@@ -251,9 +252,9 @@ describe(`Given the PublicationMetadataSchema`, () => {
         · "lens.id": Required
         · "lens.locale": Required
         · "lens.mainContentFocus" expected to match one of the following groups:
-        		· "lens.mainContentFocus": Invalid literal value, expected "SHORT_VIDEO"
+        	· "lens.mainContentFocus": Invalid literal value, expected "SHORT_VIDEO"
         	OR:
-        		· "lens.mainContentFocus": Invalid literal value, expected "VIDEO"
+        	· "lens.mainContentFocus": Invalid literal value, expected "VIDEO"
         · "lens.video": Required"
       `);
     });

@@ -96,5 +96,9 @@ export const MediaVideoSchema = MediaCommonSchema.extend({
 });
 export type MediaVideo = z.infer<typeof MediaVideoSchema>;
 
-export const AnyMediaSchema = z.union([MediaAudioSchema, MediaImageSchema, MediaVideoSchema]);
+export const AnyMediaSchema = z.discriminatedUnion('type', [
+  MediaAudioSchema,
+  MediaImageSchema,
+  MediaVideoSchema,
+]);
 export type AnyMedia = z.infer<typeof AnyMediaSchema>;

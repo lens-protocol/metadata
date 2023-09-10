@@ -48,7 +48,7 @@ function formatZozInvalidUnionIssue(issue: z.ZodInvalidUnionIssue): string {
     const newIssues = zodError.issues
       .map((nested) => {
         if (hasAtLeastOne(nested.path)) {
-          return `\t\t${prefix}"${formatPath(nested.path)}": ${nested.message}`;
+          return `\t${prefix}"${formatPath(nested.path)}": ${nested.message}`;
         }
         return issue.message;
       })

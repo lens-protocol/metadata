@@ -37,7 +37,7 @@ export const ThreeDMetadataSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: z.literal(PublicationMainFocus.THREE_D),
 
-    threeDAssets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
+    assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
 
     attachments: AnyMediaSchema.array()
       .min(1)
