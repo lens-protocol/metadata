@@ -9,6 +9,7 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
+import { notEmptyString } from '../primitives.js';
 
 /**
  * @internal
@@ -19,6 +20,8 @@ export const AudioSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
 
     audio: MediaAudioSchema,
+
+    title: notEmptyString('The optional audio title.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -30,6 +30,14 @@ export function invariant(condition: unknown, message: string): asserts conditio
   }
 }
 
+/**
+ * Specifies an object with unknown keys
+ *
+ * Useful when you don't care about exact props passed to the component.
+ * @privateRemarks Don't use `{}` as a type. `{}` actually means "any non-nullish value".
+ */
+export type UnknownObject = Record<string, unknown>;
+
 export type NonEmptyArray<T> = [T, ...T[]];
 
 /**

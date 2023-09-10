@@ -21,7 +21,7 @@ export enum ThreeDFormat {
  * @internal
  */
 export const ThreeDAssetSchema = z.object({
-  url: uriSchema('The 3D asset url or zip'),
+  uri: uriSchema('The 3D asset url or zip'),
   zipPath: notEmptyString()
     .optional()
     .describe('path in extracted zip. Relative. 3D start point, must be 3D file type'),
@@ -37,7 +37,7 @@ export const ThreeDMetadataSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: z.literal(PublicationMainFocus.THREE_D),
 
-    threeDAssets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
+    assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

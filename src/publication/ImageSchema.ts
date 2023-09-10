@@ -9,6 +9,7 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
+import { notEmptyString } from '../primitives.js';
 
 /**
  * @internal
@@ -19,6 +20,8 @@ export const ImageSchema = publicationWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.IMAGE),
 
     image: MediaImageSchema,
+
+    title: notEmptyString('The optional image title.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

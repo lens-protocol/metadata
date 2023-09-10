@@ -1,5 +1,14 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.12
+
+### Patch Changes
+
+- cb7ed1a: **Added** `ProfileMetadata.lens.appId`
+- e966e85: **Fixed** missing `title`, wrong `altTag`, and adds `EncryptedPaths`
+- f071212: **Fixed** `AnyMediaSchema` union and `ThreeDAsset.assets` name
+- 74242d1: **Added** `MirrorMetadataSchema`
+
 ## 0.1.0-alpha.11
 
 ### Patch Changes

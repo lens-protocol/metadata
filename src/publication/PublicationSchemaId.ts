@@ -13,6 +13,7 @@ export enum PublicationSchemaId {
   LINK_LATEST = `${location}/link/3.0.0.json`,
   LIVESTREAM_LATEST = `${location}/livestream/3.0.0.json`,
   MINT_LATEST = `${location}/mint/3.0.0.json`,
+  MIRROR_LATEST = `${location}/mirror/3.0.0.json`,
   SPACE_LATEST = `${location}/space/3.0.0.json`,
   STORY_LATEST = `${location}/story/3.0.0.json`,
   TRANSACTION_LATEST = `${location}/transaction/3.0.0.json`,

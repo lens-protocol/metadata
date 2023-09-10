@@ -12,6 +12,8 @@ export const StorySchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.STORY),
 
+    asset: AnyMediaSchema.describe('The main asset for the story.'),
+
     attachments: AnyMediaSchema.array()
       .min(1)
       .optional()

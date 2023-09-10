@@ -28,31 +28,11 @@ export enum PublicationContentWarning {
 /**
  * @internal
  */
-export const MetadataCommonSchema = z.object(
+export const MetadataCoreSchema = z.object(
   {
     id: notEmptyString(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
-
-    content: markdownSchema('Optional markdown content.').optional(),
-
-    attributes: MetadataAttributeSchema.array()
-      .min(1)
-      .optional()
-      .describe(
-        'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
-      ),
-
-    locale: LocaleSchema,
-
-    encryptedWith: PublicationEncryptionStrategySchema.optional(),
-
-    tags: TagSchema.array().max(10).optional().describe('An arbitrary list of tags.'),
-
-    contentWarning: z
-      .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
-      .optional(),
 
     hideFromFeed: z
       .boolean({
@@ -70,8 +50,32 @@ export const MetadataCommonSchema = z.object(
 
     appId: AppIdSchema.optional().describe('The App Id that this publication belongs to.'),
   },
-  { description: 'The Lens specific metadata details.' },
+  {
+    description: 'The Lens operational metadata fields.',
+  },
 );
+
+const MetadataCommonSchema = MetadataCoreSchema.extend({
+  content: markdownSchema('Optional markdown content.').optional(),
+
+  attributes: MetadataAttributeSchema.array()
+    .min(1)
+    .optional()
+    .describe(
+      'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
+        'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+    ),
+
+  locale: LocaleSchema,
+
+  encryptedWith: PublicationEncryptionStrategySchema.optional(),
+
+  tags: TagSchema.array().max(10).optional().describe('An arbitrary list of tags.'),
+
+  contentWarning: z
+    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
+    .optional(),
+}).describe('The common Lens specific metadata details.');
 
 /**
  * @internal
