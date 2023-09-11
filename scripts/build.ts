@@ -52,22 +52,21 @@ await fs.ensureDir(outputDir);
 
 // Publication schemas
 const schemas = new Map<string, z.ZodSchema<unknown>>([
-  ['publications/3D/1.0.0.json', ThreeDMetadataSchema],
-  ['publications/article/1.0.0.json', ArticleSchema],
-  ['publications/audio/1.0.0.json', AudioSchema],
-  ['publications/checking-in/1.0.0.json', CheckingInSchema],
-  ['publications/embed/1.0.0.json', EmbedSchema],
-  ['publications/event/1.0.0.json', EventSchema],
-  ['publications/image/1.0.0.json', ImageSchema],
-  ['publications/link/1.0.0.json', LinkSchema],
-  ['publications/livestream/1.0.0.json', LivestreamSchema],
-  ['publications/mint/1.0.0.json', MintSchema],
-  ['publications/mirror/1.0.0.json', MirrorMetadataSchema],
-  ['publications/space/1.0.0.json', SpaceSchema],
-  ['publications/story/1.0.0.json', StorySchema],
-  ['publications/text-only/1.0.0.json', TextOnlySchema],
-  ['publications/transaction/1.0.0.json', TransactionSchema],
-  ['publications/video/1.0.0.json', VideoSchema],
+  ['publications/3D/3.0.0.json', ThreeDMetadataSchema],
+  ['publications/article/3.0.0.json', ArticleSchema],
+  ['publications/audio/3.0.0.json', AudioSchema],
+  ['publications/checking-in/3.0.0.json', CheckingInSchema],
+  ['publications/embed/3.0.0.json', EmbedSchema],
+  ['publications/event/3.0.0.json', EventSchema],
+  ['publications/image/3.0.0.json', ImageSchema],
+  ['publications/link/3.0.0.json', LinkSchema],
+  ['publications/livestream/3.0.0.json', LivestreamSchema],
+  ['publications/mint/3.0.0.json', MintSchema],
+  ['publications/space/3.0.0.json', SpaceSchema],
+  ['publications/story/3.0.0.json', StorySchema],
+  ['publications/text-only/3.0.0.json', TextOnlySchema],
+  ['publications/transaction/3.0.0.json', TransactionSchema],
+  ['publications/video/3.0.0.json', VideoSchema],
 ]);
 
 for (const [path, Schema] of schemas) {
@@ -108,16 +107,23 @@ for (const [path, Schema] of schemas) {
 }
 
 // Profile schema
-const outputFile = join(outputDir, 'profile/1.0.0.json');
+const others = new Map<string, z.ZodSchema<unknown>>([
+  ['profile/2.0.0.json', ProfileMetadataSchema],
+  ['publications/mirror/1.0.0.json', MirrorMetadataSchema],
+]);
 
-await fs.ensureFile(outputFile);
+for (const [path, Schema] of others) {
+  const outputFile = join(outputDir, path);
 
-const jsonSchema = zodToJsonSchema(ProfileMetadataSchema, {
-  target: 'jsonSchema7',
-  definitionPath: '$defs',
-  definitions: {
-    MetadataAttribute: MetadataAttributeSchema,
-  },
-});
+  await fs.ensureFile(outputFile);
 
-await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
+  const jsonSchema = zodToJsonSchema(Schema, {
+    target: 'jsonSchema7',
+    definitionPath: '$defs',
+    definitions: {
+      MetadataAttribute: MetadataAttributeSchema,
+    },
+  });
+
+  await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
+}

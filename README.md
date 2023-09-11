@@ -440,11 +440,13 @@ import {
 Importing JSON schema in TypeScript is a simple as:
 
 ```typescript
-import audio from '@lens-protocol/metadata/jsonschemas/publications/audio/1.0.0.json' assert { type: 'json' };
+import audio from '@lens-protocol/metadata/jsonschemas/publications/audio/3.0.0.json' assert { type: 'json' };
 
-import audio from '@lens-protocol/metadata/jsonschemas/publications/article/1.0.0.json' assert { type: 'json' };
+import audio from '@lens-protocol/metadata/jsonschemas/publications/article/3.0.0.json' assert { type: 'json' };
 
-import embed from '@lens-protocol/metadata/jsonschemas/profile/1.0.0.json' assert { type: 'json' };
+import mirror from '@lens-protocol/metadata/jsonschemas/publications/mirror/1.0.0.json' assert { type: 'json' };
+
+import profile from '@lens-protocol/metadata/jsonschemas/profile/2.0.0.json' assert { type: 'json' };
 ```
 
 You can the use them in your JSON Schema validator of choice, for example [ajv](https://ajv.js.org/).
@@ -455,7 +457,7 @@ The Lens Protocol Metadata Standards use a **self-describing JSON format**. All 
 
 ```json
 {
-  "$schema": "https://json-schemas.lens.dev/publications/article/1.0.0.json",
+  "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
 
   "lens": {
     "id": "b3d7f1a0-1f75-11ec-9621-0242ac130002",

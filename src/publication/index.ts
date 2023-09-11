@@ -11,6 +11,7 @@ export * from './ImageSchema.js';
 export * from './LinkSchema.js';
 export * from './LivestreamSchema.js';
 export * from './MintSchema.js';
+export * from './MirrorSchema.js';
 export * from './PublicationMainFocus.js';
 export * from './PublicationSchemaId.js';
 export * from './SpaceSchema.js';
@@ -29,41 +30,11 @@ import { ImageSchema } from './ImageSchema.js';
 import { LinkSchema } from './LinkSchema.js';
 import { LivestreamSchema } from './LivestreamSchema.js';
 import { MintSchema } from './MintSchema.js';
-import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { SpaceSchema } from './SpaceSchema.js';
 import { StorySchema } from './StorySchema.js';
 import { TextOnlySchema } from './TextOnlySchema.js';
 import { TransactionSchema } from './TransactionSchema.js';
 import { VideoSchema } from './VideoSchema.js';
-import { MetadataCoreSchema, publicationWith } from './common';
-
-/**
- * Mirror metadata schema.
- *
- * @example
- * with `parse`:
- * ```typescript
- * MirrorMetadata.parse(valid); // => MirrorMetadata
- *
- * MirrorMetadata.parse(invalid); // => throws ZodError
- * ```
- *
- * @example
- * with `safeParse`:
- * ```typescript
- * MirrorMetadata.safeParse(valid);
- * // => { success: true, data: MirrorMetadata }
- *
- * MirrorMetadata.safeParse(invalid);
- * // => { success: false, error: ZodError }
- * ```
- */
-export const MirrorMetadataSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.MIRROR_LATEST),
-
-  lens: MetadataCoreSchema,
-});
-export type MirrorMetadata = z.infer<typeof MirrorMetadataSchema>;
 
 /**
  * A union of all publication metadata schemas.
