@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.13
+
+### Patch Changes
+
+- f1ff3a3: **Fixed** `MirrorSchema` id, location, generated JSON schema"
+
 ## 0.1.0-alpha.12
 
 ### Patch Changes
