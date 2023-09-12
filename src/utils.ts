@@ -29,6 +29,14 @@ export function invariant(condition: unknown, message: string): asserts conditio
     throw new InvariantError(message);
   }
 }
+/**
+ * A function that throws when called.
+ *
+ * @param message - An error message
+ */
+export function never(message = 'Unexpected call to never()'): never {
+  throw new InvariantError(message);
+}
 
 /**
  * Specifies an object with unknown keys

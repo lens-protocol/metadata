@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import { Brand } from './utils.js';
+import { formatZodError } from './formatters.js';
+import { Brand, invariant, never } from './utils.js';
 
 export function notEmptyString(description?: string) {
   return z.string({ description }).min(1);
@@ -131,17 +132,116 @@ export function uriSchema(
     .transform(toUri);
 }
 
+const geoUriRegex = /^geo:(-?\d+\.?\d*),(-?\d+\.?\d*)$/;
+
+const LatitudeSchema = z.coerce.number({ description: 'The latitude.' }).min(-90).max(90);
+
+const LongitudeSchema = z.coerce.number({ description: 'The longitude.' }).min(-180).max(180);
+
+/**
+ * A Geographic coordinate as subset of Geo URI (RFC 5870).
+ *
+ * Currently only supports the `geo:lat,lng` format.
+ *
+ * @see https://tools.ietf.org/html/rfc5870
+ */
+export type GeoURI = `geo:${number},${number}`;
 /**
  * @internal
  */
-export const GeoLocationSchema = z.object({
-  latitude: z.number({ description: 'Latitude in decimal coordinates (e.g. 41.40338).' }),
-  longitude: z.number({ description: 'Longitude in decimal coordinates (e.g. 2.17403).' }),
+export const GeoURISchema = notEmptyString(
+  'A Geographic coordinate as subset of Geo URI (RFC 5870). ' +
+    'Currently only supports the `geo:lat,lng` format.',
+)
+  .regex(geoUriRegex, 'Invalid Geo URI format. Expected `geo:lat,lng`.')
+  .superRefine((val, ctx): val is GeoURI => {
+    const match = geoUriRegex.exec(val);
+
+    if (!match) {
+      // should never happen
+      return z.NEVER;
+    }
+
+    const [, latitude = '', longitude = ''] = match;
+
+    const latResult = LatitudeSchema.safeParse(latitude);
+    if (!latResult.success) {
+      latResult.error.issues.forEach((issue) =>
+        ctx.addIssue({
+          ...issue,
+          path: [...ctx.path, 'lat'],
+        }),
+      );
+    }
+
+    const lngResult = LongitudeSchema.safeParse(longitude);
+    if (!lngResult.success) {
+      lngResult.error.issues.forEach((issue) =>
+        ctx.addIssue({
+          ...issue,
+          path: [...ctx.path, 'lng'],
+        }),
+      );
+    }
+
+    return z.NEVER;
+  });
+
+const GeoPointSchema = z.object({
+  lat: LatitudeSchema,
+  lng: LongitudeSchema,
+});
+
+/**
+ * A geographic point.
+ */
+export type GeoPoint = z.infer<typeof GeoPointSchema>;
+/**
+ * Helper to create a Geo URI from a {@link GeoPoint}.
+ */
+export function geoUri(point: GeoPoint): GeoURI {
+  const result = GeoPointSchema.safeParse(point);
+
+  if (result.success) {
+    const { lat, lng } = result.data;
+    return `geo:${lat},${lng}`;
+  }
+
+  never(formatZodError(result.error));
+}
+
+/**
+ * Helper to extract a {@link GeoPoint} from a Geo URI.
+ */
+export function geoPoint(value: GeoURI): GeoPoint {
+  const uri = GeoURISchema.parse(value);
+
+  const match = geoUriRegex.exec(uri);
+
+  invariant(match, 'Invalid Geo URI format. Expected `geo:lat,lng`.');
+
+  const [, lat = '', lng = ''] = match;
+  return GeoPointSchema.parse({ lat, lng });
+}
+
+/**
+ * @internal
+ */
+export const AddressSchema = z.object({
+  formatted: notEmptyString('The full mailing address formatted for display.').optional(),
+  streetAddress: notEmptyString(
+    'The street address including house number, street name, P.O. Box, ' +
+      'apartment or unit number and extended multi-line address information.',
+  ).optional(),
+  locality: notEmptyString('The city or locality.'),
+  region: notEmptyString('The state or region.').optional(),
+  postalCode: notEmptyString('The zip or postal code.').optional(),
+  country: notEmptyString('The country name component.'),
 });
 /**
- * A geographic location.
+ * A physical address.
  */
-export type GeoLocation = z.infer<typeof GeoLocationSchema>;
+export type Address = z.infer<typeof AddressSchema>;
 
 /**
  * An ISO 8601 in the JS simplified format: `YYYY-MM-DDTHH:mm:ss.sssZ`.
