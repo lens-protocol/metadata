@@ -101,7 +101,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "media[0].item": Required
-        · "media[1].cover": Invalid url"
+        · "media[1].cover": Should be a valid URI"
       `);
     });
   });

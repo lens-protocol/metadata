@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
-import { AddressSchema, GeoURISchema, notEmptyString } from '../primitives.js';
+import { AddressSchema, encryptableGeoUriSchema, encryptableStringSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -13,9 +13,11 @@ export const CheckingInSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.CHECKING_IN),
 
-    location: notEmptyString('Where you checking in from (free form text).'),
+    location: encryptableStringSchema('Where you checking in from (free form text).'),
 
-    position: GeoURISchema.optional().describe('The optional geographic position of the location.'),
+    position: encryptableGeoUriSchema(
+      'The optional geographic position of the location.',
+    ).optional(),
 
     address: AddressSchema.optional().describe('The optional address of the location.'),
 

@@ -45,6 +45,8 @@ import {
   MirrorMetadataSchema,
   GeoURISchema,
   AddressSchema,
+  EncryptedStringSchema,
+  MarkdownSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -84,11 +86,13 @@ for (const [path, Schema] of schemas) {
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       CollectCondition: CollectConditionSchema,
+      EncryptedString: EncryptedStringSchema,
       EoaOwnershipCondition: EoaOwnershipConditionSchema,
       Erc20OwnershipCondition: Erc20OwnershipConditionSchema,
       EvmAddress: EvmAddressSchema,
       FollowCondition: FollowConditionSchema,
       GeoURI: GeoURISchema,
+      Markdown: MarkdownSchema,
       MarketplaceMetadataAttribute: MarketplaceMetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,

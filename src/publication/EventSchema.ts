@@ -12,8 +12,9 @@ import {
 import {
   AddressSchema,
   GeoURISchema,
-  datetimeSchema,
-  notEmptyString,
+  encryptableDatetimeSchema,
+  encryptableUriSchema,
+  nonEmptyStringSchema,
   uriSchema,
 } from '../primitives.js';
 
@@ -46,7 +47,7 @@ export const EventSchema = publicationWith({
     location: z
       .union([
         uriSchema('A virtual location.'),
-        notEmptyString('The event location (free form text).'),
+        nonEmptyStringSchema('The event location (free form text).'),
       ])
       .describe('The location of the event.'),
 
@@ -54,16 +55,22 @@ export const EventSchema = publicationWith({
 
     address: AddressSchema.optional().describe('The optional address of the event.'),
 
-    startsAt: datetimeSchema('The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    startsAt: encryptableDatetimeSchema(
+      'The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
+    ),
 
-    endsAt: datetimeSchema('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    endsAt: encryptableDatetimeSchema('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
         'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: uriSchema().array().min(1).optional().describe('The links you want to include with it.'),
+    links: encryptableUriSchema()
+      .array()
+      .min(1)
+      .optional()
+      .describe('The links you want to include with it.'),
 
     attachments: AnyMediaSchema.array()
       .min(1)

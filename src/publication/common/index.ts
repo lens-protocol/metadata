@@ -7,9 +7,9 @@ import {
   AppIdSchema,
   LocaleSchema,
   TagSchema,
-  markdownSchema,
-  notEmptyString,
+  nonEmptyStringSchema,
   SignatureSchema,
+  encryptableMarkdownSchema,
 } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -30,7 +30,7 @@ export enum PublicationContentWarning {
  */
 export const MetadataCoreSchema = z.object(
   {
-    id: notEmptyString(
+    id: nonEmptyStringSchema(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
 
@@ -56,7 +56,7 @@ export const MetadataCoreSchema = z.object(
 );
 
 const MetadataCommonSchema = MetadataCoreSchema.extend({
-  content: markdownSchema('Optional markdown content.').optional(),
+  content: encryptableMarkdownSchema('Optional markdown content.').optional(),
 
   attributes: MetadataAttributeSchema.array()
     .min(1)

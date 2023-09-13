@@ -1,11 +1,11 @@
 // Heavily customized and simplified version of https://www.npmjs.com/package/zod-validation-error
 import { z } from 'zod';
 
-import { NonEmptyArray, assertNonEmptyArray, hasAtLeastOne } from './utils.js';
+import { NonEmptyArray, hasAtLeastOne, hasTwoOrMore } from './utils.js';
 
 const maxIssuesInMessage = 99;
 const issueSeparator = '\n';
-const prefix = '· ';
+const bulletPoint = '· ';
 
 function escapeQuotes(str: string): string {
   return str.replace(/"/g, '\\"');
@@ -43,31 +43,34 @@ function formatPath(path: NonEmptyArray<string | number>): string {
   }, '');
 }
 
+// function multiline(issues: string[][]): string {
+//   if
+//   return
+// }
+
 function formatZozInvalidUnionIssue(issue: z.ZodInvalidUnionIssue): string {
-  const groups = issue.unionErrors.reduce<string[]>((acc, zodError) => {
-    const newIssues = zodError.issues
-      .map((nested) => {
-        if (hasAtLeastOne(nested.path)) {
-          return `\t${prefix}"${formatPath(nested.path)}": ${nested.message}`;
-        }
-        return issue.message;
-      })
-      .join(issueSeparator);
+  const groups = issue.unionErrors.map<string[]>((zodError) =>
+    zodError.issues.map((nested) => {
+      if (hasAtLeastOne(nested.path)) {
+        return `"${formatPath(nested.path)}": ${nested.message}`;
+      }
+      return nested.message;
+    }),
+  );
 
-    if (!acc.includes(newIssues)) {
-      acc.push(newIssues);
-    }
-
-    return acc;
-  }, []);
+  const uniqueGroups = [...new Set(groups.map((group) => group.join('; ')))];
 
   const path = Array.isArray(issue.path) ? issue.path : [issue.path];
-  assertNonEmptyArray(path);
+  const prefix = hasAtLeastOne(path) ? `"${formatPath(path)}": ` : '';
 
-  return (
-    `${prefix}"${formatPath(path)}" expected to match one of the following groups:\n` +
-    `${groups.join(`${issueSeparator}\tOR:${issueSeparator}`)}`
-  );
+  if (hasTwoOrMore(uniqueGroups)) {
+    return (
+      `${bulletPoint}${prefix}expected to match one of the following groups:\n` +
+      `\t\t${uniqueGroups.join(`${issueSeparator}\tOR:${issueSeparator}\t\t`)}`
+    );
+  }
+
+  return `${bulletPoint}${prefix}${uniqueGroups[0]}`;
 }
 
 function formatZodIssue(issue: z.ZodIssue): string {
@@ -76,7 +79,7 @@ function formatZodIssue(issue: z.ZodIssue): string {
   }
 
   if (hasAtLeastOne(issue.path)) {
-    return `${prefix}"${formatPath(issue.path)}": ${issue.message}`;
+    return `${bulletPoint}"${formatPath(issue.path)}": ${issue.message}`;
   }
 
   return issue.message;

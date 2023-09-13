@@ -12,12 +12,7 @@ export const StorySchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.STORY),
 
-    asset: AnyMediaSchema.describe('The main asset for the story.'),
-
-    attachments: AnyMediaSchema.array()
-      .min(1)
-      .optional()
-      .describe('The other attachments you want to include with it.'),
+    asset: AnyMediaSchema.describe('The story asset.'),
   }),
 });
 export type StoryMetadata = z.infer<typeof StorySchema>;

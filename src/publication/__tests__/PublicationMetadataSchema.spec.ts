@@ -139,14 +139,19 @@ describe(`Given the PublicationMetadataSchema`, () => {
       expectSchema(() =>
         PublicationMetadataSchema.safeParse({
           $schema: PublicationSchemaId.MINT_LATEST,
-          lens: {},
+          lens: {
+            mintLink: ' ',
+          },
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "lens.id": Required
         · "lens.locale": Required
         · "lens.mainContentFocus": Invalid literal value, expected "MINT"
-        · "lens.mintLink": Required"
+        · "lens.mintLink": expected to match one of the following groups:
+        		String must contain at least 6 character(s); Should be a valid URI
+        	OR:
+        		Should be encrypted and base64 encoded."
       `);
     });
   });
@@ -251,10 +256,10 @@ describe(`Given the PublicationMetadataSchema`, () => {
         "fix the following issues
         · "lens.id": Required
         · "lens.locale": Required
-        · "lens.mainContentFocus" expected to match one of the following groups:
-        	· "lens.mainContentFocus": Invalid literal value, expected "SHORT_VIDEO"
+        · "lens.mainContentFocus": expected to match one of the following groups:
+        		"lens.mainContentFocus": Invalid literal value, expected "SHORT_VIDEO"
         	OR:
-        	· "lens.mainContentFocus": Invalid literal value, expected "VIDEO"
+        		"lens.mainContentFocus": Invalid literal value, expected "VIDEO"
         · "lens.video": Required"
       `);
     });

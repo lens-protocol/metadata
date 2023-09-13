@@ -6,7 +6,7 @@ import {
   AppIdSchema,
   SignatureSchema,
   markdownSchema,
-  notEmptyString,
+  nonEmptyStringSchema,
   uriSchema,
 } from '../primitives.js';
 
@@ -15,7 +15,7 @@ import {
  */
 export const ProfileMetadataDetailsSchema = z.object(
   {
-    name: notEmptyString('The profile display name.').optional(),
+    name: nonEmptyStringSchema('The profile display name.').optional(),
 
     bio: markdownSchema('The profile bio as markdown.').optional(),
 

@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.15
+
+### Patch Changes
+
+- 809643a: **Added** support for encryptable fields
+- faf84e4: **Fixed** `StoryMetadata.attachments` (removed)
+
 ## 0.1.0-alpha.14
 
 ### Patch Changes
