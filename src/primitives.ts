@@ -3,10 +3,6 @@ import { z } from 'zod';
 import { formatZodError } from './formatters.js';
 import { Brand, invariant, never } from './utils.js';
 
-export function notEmptyString(description?: string) {
-  return z.string({ description }).min(1);
-}
-
 /**
  * A locale identifier.
  *
@@ -40,6 +36,60 @@ export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
   .transform(toLocale);
 
 /**
+ * An encrypted value.
+ */
+export type EncryptedString = Brand<string, 'EncryptedValue'>;
+function toEncryptedString(value: string): EncryptedString {
+  return value as EncryptedString;
+}
+
+function allFailed<Input>(
+  results: z.SafeParseReturnType<Input, unknown>[],
+): results is z.SafeParseError<Input>[] {
+  return results.every((r) => !r.success);
+}
+
+/**
+ * @internal
+ */
+export const EncryptedStringSchema = nonEmptyStringSchema('An encrypted value.')
+  .regex(
+    /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/, // base64 regex
+    'Should be encrypted and base64 encoded.',
+  )
+  .transform(toEncryptedString);
+
+function encryptableSchema<T extends string>(schema: z.ZodType<T>) {
+  const options = [schema, EncryptedStringSchema] as const;
+  return z
+    .union(options)
+    .catch((ctx) => ctx.input as T)
+    .superRefine((val, ctx) => {
+      const results = options.map((s) => s.safeParse(val));
+
+      if (allFailed(results)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.invalid_union,
+          unionErrors: results.map((r) => r.error),
+        });
+      }
+    });
+}
+
+/**
+ * @internal
+ */
+export function nonEmptyStringSchema(description?: string) {
+  return z.string({ description }).min(1);
+}
+/**
+ * @internal
+ */
+export function encryptableStringSchema(description: string) {
+  return encryptableSchema(nonEmptyStringSchema(description));
+}
+
+/**
  * An arbitrary tag.
  */
 export type Tag = Brand<string, 'Tag'>;
@@ -52,7 +102,9 @@ export function toTag(value: string): Tag {
 /**
  * @internal
  */
-export const TagSchema: z.Schema<Tag, z.ZodTypeDef, string> = notEmptyString('An arbitrary tag.')
+export const TagSchema: z.Schema<Tag, z.ZodTypeDef, string> = nonEmptyStringSchema(
+  'An arbitrary tag.',
+)
   .max(50)
   .transform((value) => toTag(value.toLowerCase()));
 
@@ -70,7 +122,7 @@ export function toAppId(value: string): AppId {
  * @internal
  */
 export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> =
-  notEmptyString('A Lens App identifier.').transform(toAppId);
+  nonEmptyStringSchema('A Lens App identifier.').transform(toAppId);
 
 /**
  * A cryptographic signature.
@@ -85,7 +137,7 @@ export function toSignature(value: string): Signature {
 /**
  * @internal
  */
-export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = notEmptyString(
+export const SignatureSchema: z.Schema<Signature, z.ZodTypeDef, string> = nonEmptyStringSchema(
   'A cryptographic signature of the Lens metadata.',
 ).transform(toSignature);
 
@@ -102,8 +154,18 @@ export function toMarkdown(value: string): Markdown {
 /**
  * @internal
  */
+export const MarkdownSchema = nonEmptyStringSchema('A markdown text.').transform(toMarkdown);
+/**
+ * @internal
+ */
 export function markdownSchema(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
-  return notEmptyString(description).transform(toMarkdown);
+  return MarkdownSchema.describe(description);
+}
+/**
+ * @internal
+ */
+export function encryptableMarkdownSchema(description: string) {
+  return encryptableSchema(markdownSchema(description));
 }
 
 /**
@@ -128,8 +190,14 @@ export function uriSchema(
   return z
     .string({ description })
     .min(6) // [ar://.]
-    .url() // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
+    .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
     .transform(toUri);
+}
+/**
+ * @internal
+ */
+export function encryptableUriSchema(description?: string) {
+  return encryptableSchema(uriSchema(description));
 }
 
 const geoUriRegex = /^geo:(-?\d+\.?\d*),(-?\d+\.?\d*)$/;
@@ -149,11 +217,11 @@ export type GeoURI = `geo:${number},${number}`;
 /**
  * @internal
  */
-export const GeoURISchema = notEmptyString(
+export const GeoURISchema = nonEmptyStringSchema(
   'A Geographic coordinate as subset of Geo URI (RFC 5870). ' +
     'Currently only supports the `geo:lat,lng` format.',
 )
-  .regex(geoUriRegex, 'Invalid Geo URI format. Expected `geo:lat,lng`.')
+  .regex(geoUriRegex, 'Should be a Geo URI. Expected `geo:lat,lng`.')
   .superRefine((val, ctx): val is GeoURI => {
     const match = geoUriRegex.exec(val);
 
@@ -223,20 +291,26 @@ export function geoPoint(value: GeoURI): GeoPoint {
   const [, lat = '', lng = ''] = match;
   return GeoPointSchema.parse({ lat, lng });
 }
+/**
+ * @internal
+ */
+export function encryptableGeoUriSchema(description: string) {
+  return encryptableSchema(GeoURISchema.describe(description));
+}
 
 /**
  * @internal
  */
 export const AddressSchema = z.object({
-  formatted: notEmptyString('The full mailing address formatted for display.').optional(),
-  streetAddress: notEmptyString(
+  formatted: encryptableStringSchema('The full mailing address formatted for display.').optional(),
+  streetAddress: encryptableStringSchema(
     'The street address including house number, street name, P.O. Box, ' +
       'apartment or unit number and extended multi-line address information.',
   ).optional(),
-  locality: notEmptyString('The city or locality.'),
-  region: notEmptyString('The state or region.').optional(),
-  postalCode: notEmptyString('The zip or postal code.').optional(),
-  country: notEmptyString('The country name component.'),
+  locality: encryptableStringSchema('The city or locality.'),
+  region: encryptableStringSchema('The state or region.').optional(),
+  postalCode: encryptableStringSchema('The zip or postal code.').optional(),
+  country: encryptableStringSchema('The country name component.'),
 });
 /**
  * A physical address.
@@ -259,6 +333,12 @@ export function toDatetime(value: string): Datetime {
 export function datetimeSchema(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
   return z.string({ description }).datetime().transform(toDatetime);
 }
+/**
+ * @internal
+ */
+export function encryptableDatetimeSchema(description: string) {
+  return encryptableSchema(datetimeSchema(description));
+}
 
 /**
  * An EVM compatible address.
@@ -273,7 +353,7 @@ export function toEvmAddress(value: string): EvmAddress {
 /**
  * @internal
  */
-export const EvmAddressSchema: z.Schema<EvmAddress, z.ZodTypeDef, string> = notEmptyString(
+export const EvmAddressSchema: z.Schema<EvmAddress, z.ZodTypeDef, string> = nonEmptyStringSchema(
   'An EVM compatible address.',
 ).transform(toEvmAddress);
 
@@ -326,7 +406,7 @@ export function toTokenId(value: string): TokenId {
  * @internal
  */
 export const TokenIdSchema: z.Schema<TokenId, z.ZodTypeDef, string> =
-  notEmptyString().transform(toTokenId);
+  nonEmptyStringSchema().transform(toTokenId);
 
 /**
  * @internal
@@ -352,7 +432,9 @@ export function asset(contract: NetworkAddress, decimals: number): Asset {
 export const AmountSchema = z.object(
   {
     asset: AssetSchema,
-    value: notEmptyString('The amount in the smallest unit of the currency (e.g. wei for ETH).'),
+    value: nonEmptyStringSchema(
+      'The amount in the smallest unit of the currency (e.g. wei for ETH).',
+    ),
   },
   {
     description: 'An amount of a specific currency.',
@@ -377,7 +459,7 @@ export function toProfileId(value: string): ProfileId {
  * @internal
  */
 export const ProfileIdSchema: z.Schema<ProfileId, z.ZodTypeDef, string> =
-  notEmptyString().transform(toProfileId);
+  nonEmptyStringSchema().transform(toProfileId);
 
 /**
  * A publication identifier.
@@ -393,4 +475,4 @@ export function toPublicationId(value: string): PublicationId {
  * @internal
  */
 export const PublicationIdSchema: z.Schema<PublicationId, z.ZodTypeDef, string> =
-  notEmptyString().transform(toPublicationId);
+  nonEmptyStringSchema().transform(toPublicationId);

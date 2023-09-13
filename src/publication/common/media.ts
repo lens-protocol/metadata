@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 import { MetadataLicenseTypeSchema } from './license.js';
 import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import { notEmptyString, uriSchema } from '../../primitives.js';
+import { encryptableStringSchema, encryptableUriSchema } from '../../primitives.js';
 
 const MediaCommonSchema = z.object({
-  item: uriSchema('The item is the url to the media'),
+  item: encryptableUriSchema('The item is the url to the media'),
   attributes: MetadataAttributeSchema.array()
     .min(1)
     .optional()
@@ -36,19 +36,19 @@ export enum MediaAudioMimeType {
 
 export const MediaAudioSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio' }),
-  cover: uriSchema('The cover image for the audio').optional(),
+  cover: encryptableUriSchema('The cover image for the audio').optional(),
   duration: z
     .number({ description: 'How long the the audio is in seconds' })
     .positive()
     .int()
     .optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the audio'),
-  credits: notEmptyString('The credits for the audio').optional(),
-  artist: notEmptyString('The artist for the audio').optional(),
-  genre: notEmptyString('The genre of the audio').optional(),
-  recordLabel: notEmptyString('The record label for the audio').optional(),
+  credits: encryptableStringSchema('The credits for the audio').optional(),
+  artist: encryptableStringSchema('The artist for the audio').optional(),
+  genre: encryptableStringSchema('The genre of the audio').optional(),
+  recordLabel: encryptableStringSchema('The record label for the audio').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio' }).optional(),
-  lyrics: uriSchema('The lyrics for the audio').optional(),
+  lyrics: encryptableUriSchema('The lyrics for the audio').optional(),
 });
 export type MediaAudio = z.infer<typeof MediaAudioSchema>;
 
@@ -65,7 +65,7 @@ export enum MediaImageMimeType {
 
 export const MediaImageSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaImageMimeType, { description: 'The mime type of the image' }),
-  altTag: notEmptyString('The alt tag for accessibility').optional(),
+  altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the image'),
 });
 export type MediaImage = z.infer<typeof MediaImageSchema>;
@@ -85,8 +85,8 @@ export enum MediaVideoMimeType {
 
 export const MediaVideoSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
-  altTag: notEmptyString('The alt tag for accessibility').optional(),
-  cover: uriSchema('The cover image for the video').optional(),
+  altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
+  cover: encryptableUriSchema('The cover image for the video').optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })
     .positive()

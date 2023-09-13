@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { markdownSchema, notEmptyString } from '../primitives.js';
+import { markdownSchema, nonEmptyStringSchema } from '../primitives.js';
 
 export enum ProfileMetadataAttributeDisplayType {
   number = 'number',
@@ -62,7 +62,7 @@ export const ProfileMetadataSchema = z.object({
       'you will want it to be random. Using uuid could be an option!',
   }),
 
-  name: notEmptyString('The display name for the profile.').nullable(),
+  name: nonEmptyStringSchema('The display name for the profile.').nullable(),
 
   bio: markdownSchema('The bio for the profile.').nullable(),
 

@@ -9,7 +9,7 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
-import { notEmptyString } from '../primitives.js';
+import { nonEmptyStringSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -21,7 +21,7 @@ export const ImageSchema = publicationWith({
 
     image: MediaImageSchema,
 
-    title: notEmptyString('The optional image title.').optional(),
+    title: nonEmptyStringSchema('The optional image title.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

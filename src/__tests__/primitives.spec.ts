@@ -16,7 +16,7 @@ describe(`Given the primitives schemas`, () => {
     it(`then should ensure it's a Geo URI in the the 'geo:lat,lng' format`, () => {
       expectSchema(() => GeoURISchema.safeParse(' ')).toMatchInlineSnapshot(`
         "fix the following issues
-        Invalid Geo URI format. Expected \`geo:lat,lng\`."
+        Should be a Geo URI. Expected \`geo:lat,lng\`."
       `);
     });
 

@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
-import { notEmptyString } from '../primitives.js';
+import { encryptableStringSchema } from '../primitives.js';
 
 export enum TransactionMetadataType {
   ERC721 = 'ERC721',
@@ -19,7 +19,7 @@ export const TransactionSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TRANSACTION),
 
-    txHash: notEmptyString('The transaction hash.'),
+    txHash: encryptableStringSchema('The transaction hash.'),
 
     type: z.nativeEnum(TransactionMetadataType).describe('The type of transaction.'),
 

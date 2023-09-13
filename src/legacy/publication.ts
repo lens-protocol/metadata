@@ -7,7 +7,7 @@ import {
   Markdown,
   TagSchema,
   markdownSchema,
-  notEmptyString,
+  nonEmptyStringSchema,
   uriSchema,
 } from '../primitives.js';
 import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus.js';
@@ -102,7 +102,7 @@ const OpenSeaSchema = z.object({
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
 
-  name: notEmptyString('Name of the NFT item.'),
+  name: nonEmptyStringSchema('Name of the NFT item.'),
 
   attributes: MarketplaceMetadataAttributeSchema.array().describe(
     'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',

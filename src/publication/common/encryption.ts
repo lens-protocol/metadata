@@ -8,7 +8,7 @@ import {
   ProfileIdSchema,
   PublicationIdSchema,
   TokenIdSchema,
-  notEmptyString,
+  nonEmptyStringSchema,
 } from '../../primitives.js';
 import { hasTwoOrMore, Brand, assertHasTwoOrMore, TwoAtLeastArray } from '../../utils.js';
 
@@ -284,14 +284,14 @@ export function toLitEncryptionKey(value: string): LitEncryptionKey {
  * @internal
  */
 export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, string> =
-  notEmptyString('A symmetric encryption key.')
+  nonEmptyStringSchema('A symmetric encryption key.')
     .length(368, 'Encryption key should be 368 characters long.')
     .transform(toLitEncryptionKey);
 
 /**
  * @internal
  */
-export const EncryptedPaths = notEmptyString(
+export const EncryptedPaths = nonEmptyStringSchema(
   'An encrypted path is a string of keys separated by . that describe ' +
     'a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content).',
 )

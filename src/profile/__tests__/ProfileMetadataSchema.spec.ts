@@ -27,8 +27,8 @@ describe(`Given the ProfileMetadataSchema`, () => {
         "fix the following issues
         · "lens.name": Expected string, received number
         · "lens.bio": Expected string, received boolean
-        · "lens.picture": Invalid url
-        · "lens.coverPicture": Invalid url
+        · "lens.picture": Should be a valid URI
+        · "lens.coverPicture": Should be a valid URI
         · "lens.attributes": Expected array, received object"
       `);
     });

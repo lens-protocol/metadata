@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { AnyMediaSchema, mainContentFocus, metadataDetailsWith, publicationWith } from './common';
-import { uriSchema } from '../primitives.js';
+import { encryptableUriSchema } from '../primitives.js';
 
 /**
  * @internal
@@ -14,7 +14,7 @@ export const MintSchema = publicationWith({
   lens: metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.MINT),
 
-    mintLink: uriSchema(
+    mintLink: encryptableUriSchema(
       'The mint item it can be a URL of the known provider like opensea ' +
         'https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 ' +
         'or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. ' +
