@@ -1,5 +1,13 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.14
+
+### Patch Changes
+
+- 9be5eeb: **Added** `GeoURI` and `Address` for better targeting o `EventMetadata` and `CheckingInMetadata`
+- d0cd540: **Fixed** `NftOwnershipCondition` to include ERC-1155 limitations around token IDs
+- 7191ce1: **Fixed** too strict engines directive"
+
 ## 0.1.0-alpha.13
 
 ### Patch Changes
