@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { z } from 'zod';
 
 import {
@@ -31,16 +32,31 @@ export enum ConditionType {
   OR = 'OR',
 }
 
+/**
+ * @internal
+ */
 export const NftOwnershipConditionSchema = z.object({
+  contractType: z.nativeEnum(NftContractType),
   type: z.literal(ConditionType.NFT_OWNERSHIP),
   contract: NetworkAddressSchema,
-  contractType: z.nativeEnum(NftContractType),
   tokenIds: TokenIdSchema.array()
     .min(1)
     .optional()
-    .describe('An optional list of token IDs you want to check.'),
+    .describe(
+      'A list of token IDs you want to check ownership of. The list is optional for ERC721, ' +
+        'you MUST provide a list of token IDs for ERC1155.',
+    ),
 });
 export type NftOwnershipCondition = z.infer<typeof NftOwnershipConditionSchema>;
+
+export function nftOwnershipCondition(
+  input: Omit<NftOwnershipCondition, 'type'>,
+): NftOwnershipCondition {
+  return NftOwnershipConditionSchema.parse({
+    type: ConditionType.NFT_OWNERSHIP,
+    ...input,
+  });
+}
 
 export enum ConditionComparisonOperator {
   EQUAL = 'EQUAL',
@@ -79,6 +95,13 @@ export const ProfileOwnershipConditionSchema = z.object({
 });
 export type ProfileOwnershipCondition = z.infer<typeof ProfileOwnershipConditionSchema>;
 
+export function profileOwnershipCondition(input: Omit<ProfileOwnershipCondition, 'type'>) {
+  return ProfileOwnershipConditionSchema.parse({
+    type: ConditionType.PROFILE_OWNERSHIP,
+    ...input,
+  });
+}
+
 /**
  * @internal
  */
@@ -87,6 +110,13 @@ export const FollowConditionSchema = z.object({
   follow: ProfileIdSchema,
 });
 export type FollowCondition = z.infer<typeof FollowConditionSchema>;
+
+export function followCondition(input: Omit<FollowCondition, 'type'>) {
+  return FollowConditionSchema.parse({
+    type: ConditionType.FOLLOW,
+    ...input,
+  });
+}
 
 /**
  * @internal
@@ -98,18 +128,13 @@ export const CollectConditionSchema = z.object({
 });
 export type CollectCondition = z.infer<typeof CollectConditionSchema>;
 
-/**
- * @internal
- */
-export const SimpleConditionSchema = z.union([
-  NftOwnershipConditionSchema,
-  Erc20OwnershipConditionSchema,
-  EoaOwnershipConditionSchema,
-  ProfileOwnershipConditionSchema,
-  FollowConditionSchema,
-  CollectConditionSchema,
-]);
-export type SimpleCondition = z.infer<typeof SimpleConditionSchema>;
+export type SimpleCondition =
+  | CollectCondition
+  | EoaOwnershipCondition
+  | Erc20OwnershipCondition
+  | FollowCondition
+  | NftOwnershipCondition
+  | ProfileOwnershipCondition;
 
 type BaseCondition = {
   type: ConditionType;
@@ -189,6 +214,26 @@ export type AnyCondition =
   | AndCondition<SimpleCondition>
   | OrCondition<SimpleCondition>;
 
+function refineAnyCondition(condition: AnyCondition, ctx: z.RefinementCtx) {
+  if (condition.type === ConditionType.AND || condition.type === ConditionType.OR) {
+    condition.criteria.forEach((c, idx) =>
+      refineAnyCondition(c, { ...ctx, path: [...ctx.path, 'criteria', idx] }),
+    );
+  }
+  if (
+    condition.type === ConditionType.NFT_OWNERSHIP &&
+    condition.contractType === NftContractType.ERC1155
+  ) {
+    if (condition.tokenIds === undefined || condition.tokenIds.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'ERC1155 requires at least one token id.',
+        path: [...ctx.path, 'tokenIds'],
+      });
+    }
+  }
+}
+
 /**
  * @internal
  */
@@ -215,7 +260,14 @@ export const AccessConditionSchema = orConditionSchema([
     FollowConditionSchema,
     CollectConditionSchema,
   ]),
-]);
+]).superRefine(({ criteria }, ctx) => {
+  criteria.forEach((condition, idx) => {
+    refineAnyCondition(condition, {
+      ...ctx,
+      path: [...ctx.path, 'criteria', idx],
+    });
+  });
+});
 export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 
 /**

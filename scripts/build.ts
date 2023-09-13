@@ -15,7 +15,6 @@ import {
   Erc20OwnershipConditionSchema,
   EventSchema,
   FollowConditionSchema,
-  GeoLocationSchema,
   ImageSchema,
   LinkSchema,
   LivestreamSchema,
@@ -44,6 +43,8 @@ import {
   AmountSchema,
   TagSchema,
   MirrorMetadataSchema,
+  GeoURISchema,
+  AddressSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -79,6 +80,7 @@ for (const [path, Schema] of schemas) {
     definitionPath: '$defs',
     definitions: {
       AccessCondition: AccessConditionSchema,
+      Address: AddressSchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       CollectCondition: CollectConditionSchema,
@@ -86,7 +88,7 @@ for (const [path, Schema] of schemas) {
       Erc20OwnershipCondition: Erc20OwnershipConditionSchema,
       EvmAddress: EvmAddressSchema,
       FollowCondition: FollowConditionSchema,
-      GeoLocation: GeoLocationSchema,
+      GeoURI: GeoURISchema,
       MarketplaceMetadataAttribute: MarketplaceMetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,

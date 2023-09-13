@@ -9,7 +9,13 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
-import { GeoLocationSchema, datetimeSchema, notEmptyString, uriSchema } from '../primitives.js';
+import {
+  AddressSchema,
+  GeoURISchema,
+  datetimeSchema,
+  notEmptyString,
+  uriSchema,
+} from '../primitives.js';
 
 /**
  * @internal
@@ -44,7 +50,9 @@ export const EventSchema = publicationWith({
       ])
       .describe('The location of the event.'),
 
-    geographic: GeoLocationSchema.optional().describe('The direct location if you wish to do so.'),
+    position: GeoURISchema.optional().describe('The optional geographic position of the event.'),
+
+    address: AddressSchema.optional().describe('The optional address of the event.'),
 
     startsAt: datetimeSchema('The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
