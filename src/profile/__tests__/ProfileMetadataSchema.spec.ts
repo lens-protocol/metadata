@@ -25,6 +25,7 @@ describe(`Given the ProfileMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
+        · "lens.id": Required
         · "lens.name": Expected string, received number
         · "lens.bio": Expected string, received boolean
         · "lens.picture": Should be a valid URI

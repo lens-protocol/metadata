@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the publication metadata builders when using the article builder should return a valid TextOnlyMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
+  "lens": {
+    "content": "GM!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "ARTICLE",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json",
+  "lens": {
+    "content": "GM!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "TEXT_ONLY",
+  },
+}
+`;

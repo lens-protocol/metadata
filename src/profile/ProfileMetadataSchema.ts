@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
+import { ProfileSchemaId } from './ProfileSchemaId.js';
 import { MetadataAttributeSchema } from '../MetadataAttribute.js';
-import { SchemasRoot } from '../constants.js';
 import {
   AppIdSchema,
   SignatureSchema,
@@ -15,6 +15,10 @@ import {
  */
 export const ProfileMetadataDetailsSchema = z.object(
   {
+    id: nonEmptyStringSchema(
+      'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
+    ),
+
     name: nonEmptyStringSchema('The profile display name.').optional(),
 
     bio: markdownSchema('The profile bio as markdown.').optional(),
@@ -62,7 +66,7 @@ export type ProfileMetadataDetails = z.infer<typeof ProfileMetadataDetailsSchema
  * ```
  */
 export const ProfileMetadataSchema = z.object({
-  $schema: z.literal(`${SchemasRoot}/profile/2.0.0.json`),
+  $schema: z.literal(ProfileSchemaId.LATEST),
 
   lens: ProfileMetadataDetailsSchema,
 

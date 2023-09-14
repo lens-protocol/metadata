@@ -11,6 +11,7 @@ export * from './ImageSchema.js';
 export * from './LinkSchema.js';
 export * from './LivestreamSchema.js';
 export * from './MintSchema.js';
+export * from './MirrorSchemaId.js';
 export * from './MirrorSchema.js';
 export * from './PublicationMainFocus.js';
 export * from './PublicationSchemaId.js';
@@ -20,7 +21,7 @@ export * from './TextOnlySchema.js';
 export * from './TransactionSchema.js';
 export * from './VideoSchema.js';
 
-import { ThreeDMetadataSchema } from './3D.js';
+import { ThreeDSchema } from './3D.js';
 import { ArticleSchema } from './ArticleSchema.js';
 import { AudioSchema } from './AudioSchema.js';
 import { CheckingInSchema } from './CheckingInSchema.js';
@@ -71,7 +72,7 @@ export const PublicationMetadataSchema = z.discriminatedUnion('$schema', [
   TextOnlySchema,
   StorySchema,
   TransactionSchema,
-  ThreeDMetadataSchema,
+  ThreeDSchema,
   VideoSchema,
 ]);
 

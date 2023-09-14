@@ -32,7 +32,7 @@ export const ThreeDAssetSchema = z.object({
 });
 export type ThreeDAsset = z.infer<typeof ThreeDAssetSchema>;
 
-export const ThreeDMetadataSchema = publicationWith({
+export const ThreeDSchema = publicationWith({
   $schema: z.literal(PublicationSchemaId.THREE_D_LATEST),
 
   lens: metadataDetailsWith({
@@ -46,4 +46,4 @@ export const ThreeDMetadataSchema = publicationWith({
       .describe('The other attachments you want to include with it.'),
   }),
 });
-export type ThreeDMetadata = z.infer<typeof ThreeDMetadataSchema>;
+export type ThreeDMetadata = z.infer<typeof ThreeDSchema>;

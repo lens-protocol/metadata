@@ -11,6 +11,23 @@ export type Brand<T, TBrand, ReservedName extends string = '__type__'> = T & {
 };
 
 /**
+ * Omits properties from an union type, preserving the union.
+ * @internal
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
+
+/**
+ * Overwrites properties from T1 with one from T2
+ * @internal
+ * @example
+ * ```ts
+ * Overwrite<{ foo: boolean, bar: string }, { foo: number }> // { foo: number, bar: string }
+ * ```
+ */
+export type Overwrite<T1, T2> = DistributiveOmit<T1, keyof T2> & T2;
+
+/**
  * An error that occurs when a task violates a logical condition that is assumed to be true at all times.
  */
 export class InvariantError extends Error {
@@ -98,3 +115,15 @@ export function extractVersion(metadata: ProfileMetadata | PublicationMetadata):
 
   return result[0];
 }
+
+/**
+ * Beautify the  readout of all of the members of that intersection.
+ *
+ * As seen on tv: https://twitter.com/mattpocockuk/status/1622730173446557697
+ *
+ * @internal
+ */
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+  // eslint-disable-next-line @typescript-eslint/ban-types
+} & {};

@@ -79,6 +79,35 @@ PublicationMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
+You can also create compliant `PublicationMetadata` objects via the following builder functions:
+
+```typescript
+import {
+  article,
+  audio,
+  checkingIn,
+  embed,
+  event,
+  image,
+  link,
+  livestream,
+  mint,
+  space,
+  story,
+  textOnly,
+  threeD,
+  transaction,
+  video,
+} from '@lens-protocol/metadata';
+
+const json = article({
+  content: 'The content of the article',
+});
+```
+
+> [!NOTE]
+> Use the type definitions to explore the available properties and their types. The builders will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
+
 ### Mirror metadata
 
 Mirror metadata schema serve the purpose allowing mirrors be associated to a given Lens app (via the `appId`) as well as specify some operational flags (e.g. `hideFromFeed` and `globalReach`).
@@ -99,6 +128,19 @@ MirrorMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
+You can also create compliant `MirrorMetadata` objects via the following builder function:
+
+```typescript
+import { mirror } from '@lens-protocol/metadata';
+
+const json = mirror({
+  appId: 'foobar-app',
+});
+```
+
+> [!NOTE]
+> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
+
 ### Profile metadata
 
 ```typescript
@@ -114,6 +156,21 @@ ProfileMetadataSchema.safeParse(valid);
 ProfileMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
+
+You can also create compliant `ProfileMetadata` objects via the following builder function:
+
+```typescript
+import { profile } from '@lens-protocol/metadata';
+
+const json = profile({
+  name: 'Bob',
+
+  bio: 'I am a Lens user',
+});
+```
+
+> [!NOTE]
+> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
 
 ### Extract version number
 
