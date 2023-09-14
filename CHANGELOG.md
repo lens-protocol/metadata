@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.16
+
+### Patch Changes
+
+- b111da8: **Added** metadata builder functions
+
 ## 0.1.0-alpha.15
 
 ### Patch Changes
