@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
+import { MirrorSchemaId } from './MirrorSchemaId.js';
 import { MetadataCoreSchema } from './common/index.js';
-import { SchemasRoot } from '../constants.js';
 
-export /**
+/**
  * Mirror metadata schema.
  *
  * @example
@@ -24,9 +24,8 @@ export /**
  * // => { success: false, error: ZodError }
  * ```
  */
-
-const MirrorMetadataSchema = z.object({
-  $schema: z.literal(`${SchemasRoot}/publications/mirror/1.0.0.json`),
+export const MirrorMetadataSchema = z.object({
+  $schema: z.literal(MirrorSchemaId.LATEST),
 
   lens: MetadataCoreSchema,
 });
