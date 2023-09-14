@@ -48,19 +48,34 @@ export class ValidationError extends Error {
   name = 'ValidationError' as const;
 }
 
-type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
+/**
+ * @internal
+ */
+export type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
 
-type UnbrandAll<T> = T extends Brand<infer R, BrandOf<T>>
+/**
+ * @internal
+ */
+export type UnbrandAll<T> = T extends Brand<infer R, BrandOf<T>>
   ? R
   : {
       [K in keyof T]: UnbrandAll<T[K]>;
     };
 
-type ExtractLensSpec<T extends { lens: unknown }> = T['lens'];
+/**
+ * @internal
+ */
+export type ExtractLensSpec<T extends { lens: unknown }> = T['lens'];
 
-type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
+/**
+ * @internal
+ */
+export type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
 
-type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> = Overwrite<
+/**
+ * @internal
+ */
+export type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> = Overwrite<
   Details,
   {
     /**
@@ -84,7 +99,10 @@ type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> =
   }
 >;
 
-type PublicationMetadataOptions<
+/**
+ * @internal
+ */
+export type PublicationMetadataOptions<
   Metadata extends PublicationMetadata,
   Details extends ExtractLensSpec<Metadata> = ExtractLensSpec<Metadata>,
 > = Prettify<
@@ -100,11 +118,15 @@ function process<Input, Output>(result: z.SafeParseReturnType<Input, Output>): O
   throw new ValidationError(formatZodError(result.error));
 }
 
+/**
+ * @category Compose
+ */
 export type ArticleOptions = PublicationMetadataOptions<ArticleMetadata>;
 /**
  * Creates a valid ArticleMetadata.
  *
- * @param args - {@link ArticleOptions}
+ * @category Compose
+ * @param input - {@link ArticleOptions}
  */
 export function article({
   marketplace,
@@ -126,11 +148,15 @@ export function article({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type AudioOptions = PublicationMetadataOptions<AudioMetadata>;
 /**
  * Creates a valid AudioMetadata.
  *
- * @param args - {@link AudioOptions}
+ * @category Compose
+ * @param input - {@link AudioOptions}
  */
 export function audio({
   marketplace,
@@ -152,11 +178,15 @@ export function audio({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type CheckingInOptions = PublicationMetadataOptions<CheckingInMetadata>;
 /**
  * Creates a valid CheckingInMetadata.
  *
- * @param args - {@link CheckingInOptions}
+ * @category Compose
+ * @param input - {@link CheckingInOptions}
  */
 export function checkingIn({
   marketplace,
@@ -178,11 +208,15 @@ export function checkingIn({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type EmbedOptions = PublicationMetadataOptions<EmbedMetadata>;
 /**
  * Creates a valid EmbedMetadata.
  *
- * @param args - {@link EmbedOptions}
+ * @category Compose
+ * @param input - {@link EmbedOptions}
  */
 export function embed({
   marketplace,
@@ -204,11 +238,15 @@ export function embed({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type EventOptions = PublicationMetadataOptions<EventMetadata>;
 /**
  * Creates a valid EventMetadata.
  *
- * @param args - {@link EventOptions}
+ * @category Compose
+ * @param input - {@link EventOptions}
  */
 export function event({
   marketplace,
@@ -230,11 +268,15 @@ export function event({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type ImageOptions = PublicationMetadataOptions<ImageMetadata>;
 /**
  * Creates a valid ImageMetadata.
  *
- * @param args - {@link ImageOptions}
+ * @category Compose
+ * @param input - {@link ImageOptions}
  */
 export function image({
   marketplace,
@@ -256,11 +298,15 @@ export function image({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type LinkOptions = PublicationMetadataOptions<LinkMetadata>;
 /**
  * Creates a valid LinkMetadata.
  *
- * @param args - {@link LinkOptions}
+ * @category Compose
+ * @param input - {@link LinkOptions}
  */
 export function link({
   marketplace,
@@ -282,11 +328,15 @@ export function link({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type LivestreamOptions = PublicationMetadataOptions<LivestreamMetadata>;
 /**
  * Creates a valid LivestreamMetadata.
  *
- * @param args - {@link LivestreamOptions}
+ * @category Compose
+ * @param input - {@link LivestreamOptions}
  */
 export function livestream({
   marketplace,
@@ -308,11 +358,15 @@ export function livestream({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type MintOptions = PublicationMetadataOptions<MintMetadata>;
 /**
  * Creates a valid MintMetadata.
  *
- * @param args - {@link MintOptions}
+ * @category Compose
+ * @param input - {@link MintOptions}
  */
 export function mint({
   marketplace,
@@ -334,11 +388,15 @@ export function mint({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type SpaceOptions = PublicationMetadataOptions<SpaceMetadata>;
 /**
  * Creates a valid SpaceMetadata.
  *
- * @param args - {@link SpaceOptions}
+ * @category Compose
+ * @param input - {@link SpaceOptions}
  */
 export function space({
   marketplace,
@@ -360,11 +418,15 @@ export function space({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type StoryOptions = PublicationMetadataOptions<StoryMetadata>;
 /**
  * Creates a valid StoryMetadata.
  *
- * @param args - {@link StoryOptions}
+ * @category Compose
+ * @param input - {@link StoryOptions}
  */
 export function story({
   marketplace,
@@ -386,11 +448,15 @@ export function story({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type TextOnlyOptions = PublicationMetadataOptions<TextOnlyMetadata>;
 /**
  * Creates a valid TextOnlyMetadata.
  *
- * @param args - {@link TextOnlyOptions}
+ * @category Compose
+ * @param input - {@link TextOnlyOptions}
  */
 export function textOnly({
   marketplace,
@@ -412,11 +478,15 @@ export function textOnly({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type ThreeDOptions = PublicationMetadataOptions<ThreeDMetadata>;
 /**
  * Creates a valid ThreeDMetadata.
  *
- * @param args - {@link ThreeDOptions}
+ * @category Compose
+ * @param input - {@link ThreeDOptions}
  */
 export function threeD({
   marketplace,
@@ -438,11 +508,15 @@ export function threeD({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type TransactionOptions = PublicationMetadataOptions<TransactionMetadata>;
 /**
  * Creates a valid TransactionMetadata.
  *
- * @param args - {@link TransactionOptions}
+ * @category Compose
+ * @param input - {@link TransactionOptions}
  */
 export function transaction({
   marketplace,
@@ -464,11 +538,15 @@ export function transaction({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type VideoOptions = PublicationMetadataOptions<VideoMetadata>;
 /**
  * Creates a valid VideoMetadata.
  *
- * @param args - {@link VideoOptions}
+ * @category Compose
+ * @param input - {@link VideoOptions}
  */
 export function video({
   marketplace,
@@ -490,6 +568,9 @@ export function video({
   );
 }
 
+/**
+ * @category Compose
+ */
 export type MirrorOptions = Prettify<
   UnbrandAll<
     Overwrite<
@@ -508,7 +589,8 @@ export type MirrorOptions = Prettify<
 /**
  * Creates a valid MirrorMetadata.
  *
- * @param args - {@link MirrorOptions}
+ * @category Compose
+ * @param input - {@link MirrorOptions}
  */
 export function mirror({ id = v4(), ...others }: MirrorOptions): MirrorMetadata {
   return process(
@@ -522,6 +604,9 @@ export function mirror({ id = v4(), ...others }: MirrorOptions): MirrorMetadata 
   );
 }
 
+/**
+ * @category Compose
+ */
 export type ProfileOptions = Prettify<
   UnbrandAll<
     Overwrite<
@@ -540,7 +625,8 @@ export type ProfileOptions = Prettify<
 /**
  * Creates a valid ProfileMetadata.
  *
- * @param args - {@link ProfileOptions}
+ * @category Compose
+ * @param input - {@link ProfileOptions}
  */
 export function profile({ id = v4(), ...others }: ProfileOptions): ProfileMetadata {
   return process(

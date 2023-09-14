@@ -5,5 +5,5 @@ export * from './MetadataAttribute.js';
 export * from './primitives.js';
 export * from './profile/index.js';
 export * from './publication/index.js';
-export type { Brand, TwoAtLeastArray } from './utils.js';
+export type { Brand, DistributiveOmit, Overwrite, Prettify, TwoAtLeastArray } from './utils.js';
 export { extractVersion } from './utils.js';

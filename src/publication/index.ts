@@ -40,6 +40,8 @@ import { VideoSchema } from './VideoSchema.js';
 /**
  * A union of all publication metadata schemas.
  *
+ * @category Parse
+ *
  * @example
  * with `parse`:
  * ```typescript

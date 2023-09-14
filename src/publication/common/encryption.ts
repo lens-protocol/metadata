@@ -136,10 +136,16 @@ export type SimpleCondition =
   | NftOwnershipCondition
   | ProfileOwnershipCondition;
 
-type BaseCondition = {
+/**
+ * @internal
+ */
+export type BaseCondition = {
   type: ConditionType;
 };
-type ComposableConditionSchema<T extends BaseCondition = BaseCondition> = z.ZodObject<
+/**
+ * @internal
+ */
+export type ComposableConditionSchema<T extends BaseCondition = BaseCondition> = z.ZodObject<
   {
     type: z.ZodTypeAny;
   } & z.ZodRawShape,

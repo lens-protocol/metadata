@@ -47,6 +47,8 @@ export type ProfileMetadataDetails = z.infer<typeof ProfileMetadataDetailsSchema
 /**
  * Profile Metadata schema.
  *
+ * @category Parse
+ *
  * @example
  * with `parse`:
  * ```typescript
