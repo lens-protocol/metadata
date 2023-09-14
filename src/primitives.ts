@@ -255,7 +255,10 @@ export const GeoURISchema = nonEmptyStringSchema(
     return z.NEVER;
   });
 
-const GeoPointSchema = z.object({
+/**
+ * @internal
+ */
+export const GeoPointSchema = z.object({
   lat: LatitudeSchema,
   lng: LongitudeSchema,
 });
@@ -266,6 +269,8 @@ const GeoPointSchema = z.object({
 export type GeoPoint = z.infer<typeof GeoPointSchema>;
 /**
  * Helper to create a Geo URI from a {@link GeoPoint}.
+ *
+ * @category Compose
  */
 export function geoUri(point: GeoPoint): GeoURI {
   const result = GeoPointSchema.safeParse(point);
@@ -279,7 +284,9 @@ export function geoUri(point: GeoPoint): GeoURI {
 }
 
 /**
- * Helper to extract a {@link GeoPoint} from a Geo URI.
+ * Helper to parse a {@link GeoPoint} from a {@link GeoURI}.
+ *
+ * @category Parse
  */
 export function geoPoint(value: GeoURI): GeoPoint {
   const uri = GeoURISchema.parse(value);
@@ -420,7 +427,9 @@ export const AssetSchema = z.object({
  */
 export type Asset = z.infer<typeof AssetSchema>;
 /**
- * @internal
+ * Creates an {@link Asset}.
+ *
+ * @category Compose
  */
 export function asset(contract: NetworkAddress, decimals: number): Asset {
   return { contract, decimals };

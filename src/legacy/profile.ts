@@ -35,6 +35,8 @@ export type ProfileMetadataAttribute = z.infer<typeof ProfileMetadataAttributeSc
 /**
  * Profile Metadata schema.
  *
+ * @category Parse
+ *
  * @example
  * with `parse`:
  * ```typescript

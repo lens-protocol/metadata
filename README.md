@@ -5,17 +5,23 @@ Schema validation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Publication metadata](#publication-metadata)
-  - [Mirror metadata](#mirror-metadata)
-  - [Profile metadata](#profile-metadata)
+  - [Compose](#compose)
+    - [Publication metadata](#publication-metadata)
+    - [Mirror metadata](#mirror-metadata)
+    - [Profile metadata](#profile-metadata)
+  - [Parse](#parse)
+    - [Publication metadata](#publication-metadata-1)
+    - [Mirror metadata](#mirror-metadata-1)
+    - [Profile metadata](#profile-metadata-1)
   - [Extract version number](#extract-version-number)
   - [Format validation error](#format-validation-error)
+- [Types](#types)
   - [Narrowing types](#narrowing-types)
     - [`PublicationMetadata`](#publicationmetadata)
     - [`AccessCondition`](#accesscondition)
     - [`MetadataAttribute`](#metadataattribute)
-  - [Useful types](#useful-types)
-  - [Legacy metadata formats](#legacy-metadata-formats)
+  - [Other useful types](#other-useful-types)
+- [Legacy metadata formats](#legacy-metadata-formats)
 - [JSON schemas](#json-schemas)
 - [Versioning](#versioning)
   - [Adding a new schema](#adding-a-new-schema)
@@ -48,38 +54,11 @@ pnpm add @lens-protocol/metadata zod
 
 ## Usage
 
-Assuming we have 2 JS objects:
+### Compose
 
-```typescript
-const valid = {
-  /** example of valid metadata **/
-};
-const invalid = {
-  /** example of invalid metadata **/
-};
-```
+#### Publication metadata
 
-### Publication metadata
-
-Publication metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc. but NOT [`MirrorMetadata`](#mirror-metadata)).
-
-Use it to parse the metadata referenced by `contentURI` of `Comment`, `Mirror`, and `Quote` publications.
-
-```typescript
-import { PublicationMetadataSchema } from '@lens-protocol/metadata';
-
-PublicationMetadataSchema.parse(valid); // => PublicationMetadata
-PublicationMetadataSchema.parse(invalid); // => throws ZodError
-
-// OR
-
-PublicationMetadataSchema.safeParse(valid);
-// => { success: true, data: PublicationMetadata }
-PublicationMetadataSchema.safeParse(invalid);
-// => { success: false, error: ZodError }
-```
-
-You can also create compliant `PublicationMetadata` objects via the following builder functions:
+You can create compliant `PublicationMetadata` objects via the following builder functions:
 
 ```typescript
 import {
@@ -108,7 +87,83 @@ const json = article({
 > [!NOTE]
 > Use the type definitions to explore the available properties and their types. The builders will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
 
-### Mirror metadata
+We also provided a set of builder function for specific metadata sub-types (list to be expanded):
+
+```typescript
+import { geoUri } from '@lens-protocol/metadata';
+
+const uri = geoUri({
+  lat: 51.5074,
+  lng: 0.1278,
+});
+```
+
+#### Mirror metadata
+
+You can create compliant `MirrorMetadata` objects via the following builder function:
+
+```typescript
+import { mirror } from '@lens-protocol/metadata';
+
+const json = mirror({
+  appId: 'foobar-app',
+});
+```
+
+> [!NOTE]
+> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
+
+#### Profile metadata
+
+You can create compliant `ProfileMetadata` objects via the following builder function:
+
+```typescript
+import { profile } from '@lens-protocol/metadata';
+
+const json = profile({
+  name: 'Bob',
+
+  bio: 'I am a Lens user',
+});
+```
+
+> [!NOTE]
+> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
+
+### Parse
+
+Assuming we have 2 JS objects:
+
+```typescript
+const valid = {
+  /** example of valid metadata **/
+};
+const invalid = {
+  /** example of invalid metadata **/
+};
+```
+
+#### Publication metadata
+
+Publication metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc. but NOT [`MirrorMetadata`](#mirror-metadata)).
+
+Use it to parse the metadata referenced by `contentURI` of `Comment`, `Mirror`, and `Quote` publications.
+
+```typescript
+import { PublicationMetadataSchema } from '@lens-protocol/metadata';
+
+PublicationMetadataSchema.parse(valid); // => PublicationMetadata
+PublicationMetadataSchema.parse(invalid); // => throws ZodError
+
+// OR
+
+PublicationMetadataSchema.safeParse(valid);
+// => { success: true, data: PublicationMetadata }
+PublicationMetadataSchema.safeParse(invalid);
+// => { success: false, error: ZodError }
+```
+
+#### Mirror metadata
 
 Mirror metadata schema serve the purpose allowing mirrors be associated to a given Lens app (via the `appId`) as well as specify some operational flags (e.g. `hideFromFeed` and `globalReach`).
 
@@ -128,20 +183,7 @@ MirrorMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
-You can also create compliant `MirrorMetadata` objects via the following builder function:
-
-```typescript
-import { mirror } from '@lens-protocol/metadata';
-
-const json = mirror({
-  appId: 'foobar-app',
-});
-```
-
-> [!NOTE]
-> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
-
-### Profile metadata
+#### Profile metadata
 
 ```typescript
 import { ProfileMetadataSchema } from '@lens-protocol/metadata';
@@ -156,21 +198,6 @@ ProfileMetadataSchema.safeParse(valid);
 ProfileMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
-
-You can also create compliant `ProfileMetadata` objects via the following builder function:
-
-```typescript
-import { profile } from '@lens-protocol/metadata';
-
-const json = profile({
-  name: 'Bob',
-
-  bio: 'I am a Lens user',
-});
-```
-
-> [!NOTE]
-> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
 
 ### Extract version number
 
@@ -205,6 +232,8 @@ if (!result.success) {
   console.log(formatZodError(result.error));
 }
 ```
+
+## Types
 
 ### Narrowing types
 
@@ -293,7 +322,7 @@ switch (attribute.type) {
 }
 ```
 
-### Useful types
+### Other useful types
 
 The package also exports all enums and types that you might need to work with the metadata.
 
@@ -354,7 +383,7 @@ import {
 } from '@lens-protocol/metadata';
 ```
 
-### Legacy metadata formats
+## Legacy metadata formats
 
 The package also exports parsers for legacy metadata formats via the `@lens-protocol/metadata/legacy` entrypoint.
 

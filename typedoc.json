@@ -1,0 +1,20 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src/index.ts"],
+  "entryPointStrategy": "resolve",
+  "excludeExternals": true,
+  "excludeInternal": true,
+  "excludeNotDocumented": false,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "gitRevision": "main",
+  "hideGenerator": true,
+  "name": "Lens Protocol Metadata Standards",
+  "out": "docs",
+  "readme": "./README.md",
+  "categoryOrder": ["Compose", "Parse", "Other"],
+  "plugin": ["typedoc-plugin-zod"],
+  "disableSources": false,
+  "treatWarningsAsErrors": false,
+  "intentionallyNotExported": []
+}

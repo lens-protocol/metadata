@@ -6,6 +6,8 @@ import { MetadataCoreSchema } from './common/index.js';
 /**
  * Mirror metadata schema.
  *
+ * @category Parse
+ *
  * @example
  * with `parse`:
  * ```typescript
