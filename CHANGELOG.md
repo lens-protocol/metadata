@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.17
+
+### Patch Changes
+
+- 8d1f2b1: **Added** docs generated with typedocs
+
 ## 0.1.0-alpha.16
 
 ### Patch Changes
