@@ -1,6 +1,6 @@
 {
   "name": "@lens-protocol/metadata",
-  "version": "0.1.0-alpha.18",
+  "version": "0.1.0-alpha.19",
   "description": "Lens Protocol Metadata Standards",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -36,7 +36,6 @@
     "clean:jsonschemas": "rimraf jsonschemas",
     "clean:dist": "rimraf dist",
     "clean:docs": "rimraf docs",
-    "docs": "pnpm clean:docs && pnpm typedoc:docs",
     "lint": "pnpm lint:prettier && pnpm lint:eslint && pnpm lint:typecheck",
     "lint:eslint": "pnpm eslint",
     "lint:typecheck": "tsc --noEmit",
