@@ -53,14 +53,15 @@ export const MediaAudioSchema = MediaCommonSchema.extend({
 export type MediaAudio = z.infer<typeof MediaAudioSchema>;
 
 export enum MediaImageMimeType {
-  BMP = 'image/x-ms-bmp',
+  BMP = 'image/bmp',
   GIF = 'image/gif',
   HEIC = 'image/heic',
   JPEG = 'image/jpeg',
   PNG = 'image/png',
-  SVG = 'image/svg+xml',
+  SVG_XML = 'image/svg+xml',
   TIFF = 'image/tiff',
   WEBP = 'image/webp',
+  X_MS_BMP = 'image/x-ms-bmp',
 }
 
 export const MediaImageSchema = MediaCommonSchema.extend({

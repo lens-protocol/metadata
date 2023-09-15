@@ -8,9 +8,10 @@ import {
   TagSchema,
   markdownSchema,
   nonEmptyStringSchema,
+  toMarkdown,
   uriSchema,
 } from '../primitives.js';
-import { PublicationMainFocus as ExtendedPublicationMainFocus } from '../publication/PublicationMainFocus.js';
+import * as latest from '../publication';
 import {
   ConditionComparisonOperator,
   MarketplaceMetadataAttributeSchema,
@@ -31,36 +32,37 @@ export enum PublicationMetadataVersion {
 }
 
 export enum PublicationMainFocus {
-  ARTICLE = ExtendedPublicationMainFocus.ARTICLE,
-  AUDIO = ExtendedPublicationMainFocus.AUDIO,
-  EMBED = ExtendedPublicationMainFocus.EMBED,
-  IMAGE = ExtendedPublicationMainFocus.IMAGE,
-  LINK = ExtendedPublicationMainFocus.LINK,
-  TEXT_ONLY = ExtendedPublicationMainFocus.TEXT_ONLY,
-  VIDEO = ExtendedPublicationMainFocus.VIDEO,
+  ARTICLE = latest.PublicationMainFocus.ARTICLE,
+  AUDIO = latest.PublicationMainFocus.AUDIO,
+  EMBED = latest.PublicationMainFocus.EMBED,
+  IMAGE = latest.PublicationMainFocus.IMAGE,
+  LINK = latest.PublicationMainFocus.LINK,
+  TEXT_ONLY = latest.PublicationMainFocus.TEXT_ONLY,
+  VIDEO = latest.PublicationMainFocus.VIDEO,
 }
 
 export enum AudioMimeType {
+  AAC = 'audio/aac',
+  FLAC = 'audio/flac',
+  MP3 = 'audio/mpeg',
+  MP4_AUDIO = 'audio/mp4',
+  OGG_AUDIO = 'audio/ogg',
   WAV = 'audio/wav',
   WAV_VND = 'audio/vnd.wave',
-  MP3 = 'audio/mpeg',
-  OGG_AUDIO = 'audio/ogg',
-  MP4_AUDIO = 'audio/mp4',
-  AAC = 'audio/aac',
   WEBM_AUDIO = 'audio/webm',
-  FLAC = 'audio/flac',
 }
 
 export enum ImageMimeType {
+  BMP = 'image/bmp',
   GIF = 'image/gif',
+  HEIC = 'image/heic',
   JPEG = 'image/jpeg',
   JPG = 'image/jpg',
   PNG = 'image/png',
-  TIFF = 'image/tiff',
-  X_MS_BMP = 'image/x-ms-bmp',
   SVG_XML = 'image/svg+xml',
+  TIFF = 'image/tiff',
   WEBP = 'image/webp',
-  HEIC = 'image/heic',
+  X_MS_BMP = 'image/x-ms-bmp',
 }
 
 export enum VideoMimeType {
@@ -358,6 +360,8 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
 
   locale: LocaleSchema,
 
+  content: ContentSchema.transform(toMarkdown).optional().nullable(),
+
   contentWarning: z
     .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
     .optional(),
@@ -378,7 +382,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
 const PublicationMetadataV2ArticleSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.ARTICLE),
 
-  content: ContentSchema.min(1).transform((value) => value as Markdown),
+  content: ContentSchema.min(1).transform(toMarkdown),
 });
 export type PublicationMetadataV2Article = z.infer<typeof PublicationMetadataV2ArticleSchema>;
 
