@@ -9,8 +9,8 @@ export enum MarketplaceMetadataAttributeDisplayType {
 }
 
 export const MarketplaceMetadataAttributeSchema = z.object({
-  displayType: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
-  traitType: nonEmptyStringSchema('The name of the trait.').optional(),
+  display_type: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
+  trait_type: nonEmptyStringSchema('The name of the trait.').optional(),
   value: nonEmptyStringSchema('The value of the trait'),
 });
 export type MarketplaceMetadataAttribute = z.infer<typeof MarketplaceMetadataAttributeSchema>;
