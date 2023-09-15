@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.18
+
+### Patch Changes
+
+- 2a6ae84: **Fixed** `MarketplaceMetadataAttribute` property names
+
 ## 0.1.0-alpha.17
 
 ### Patch Changes
