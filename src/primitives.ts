@@ -36,7 +36,7 @@ export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
   .transform(toLocale);
 
 /**
- * An encrypted value.
+ * A base64 encoded encrypted string value.
  */
 export type EncryptedString = Brand<string, 'EncryptedValue'>;
 function toEncryptedString(value: string): EncryptedString {
@@ -48,7 +48,6 @@ function allFailed<Input>(
 ): results is z.SafeParseError<Input>[] {
   return results.every((r) => !r.success);
 }
-
 /**
  * @internal
  */
@@ -59,12 +58,12 @@ export const EncryptedStringSchema = nonEmptyStringSchema('An encrypted value.')
   )
   .transform(toEncryptedString);
 
-function encryptableSchema<T extends string>(schema: z.ZodType<T>) {
+function encryptableSchema<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, string>) {
   const options = [schema, EncryptedStringSchema] as const;
   return z
     .union(options)
     .catch((ctx) => ctx.input as T)
-    .superRefine((val, ctx) => {
+    .superRefine((val, ctx): val is T | EncryptedString => {
       const results = options.map((s) => s.safeParse(val));
 
       if (allFailed(results)) {
@@ -73,6 +72,7 @@ function encryptableSchema<T extends string>(schema: z.ZodType<T>) {
           unionErrors: results.map((r) => r.error),
         });
       }
+      return z.NEVER;
     });
 }
 
@@ -90,7 +90,16 @@ export function encryptableStringSchema(description: string) {
 }
 
 /**
- * An arbitrary tag.
+ * An arbitrary string or its encrypted version.
+ *
+ * For example in the context of a token-gated publication, fields of this type are encrypted.
+ */
+export type EncryptableString = string | EncryptedString;
+
+/**
+ * An arbitrary label.
+ *
+ * All lowercased, 50 characters max.
  */
 export type Tag = Brand<string, 'Tag'>;
 /**
@@ -109,7 +118,7 @@ export const TagSchema: z.Schema<Tag, z.ZodTypeDef, string> = nonEmptyStringSche
   .transform((value) => toTag(value.toLowerCase()));
 
 /**
- * A Lens App identifier.
+ * A unique Lens App identifier.
  */
 export type AppId = Brand<string, 'AppId'>;
 /**
@@ -167,6 +176,12 @@ export function markdownSchema(description: string): z.Schema<Markdown, z.ZodTyp
 export function encryptableMarkdownSchema(description: string) {
   return encryptableSchema(markdownSchema(description));
 }
+/**
+ * A markdown text or its encrypted version.
+ *
+ * For example in the context of a token-gated publication, fields of this type are encrypted.
+ */
+export type EncryptableMarkdown = Markdown | EncryptedString;
 
 /**
  * A Uniform Resource Identifier.
@@ -200,6 +215,13 @@ export function encryptableUriSchema(description?: string) {
   return encryptableSchema(uriSchema(description));
 }
 
+/**
+ * A URI or its encrypted version.
+ *
+ * For example in the context of a token-gated publication, fields of this type are encrypted.
+ */
+export type EncryptableURI = URI | EncryptedString;
+
 const geoUriRegex = /^geo:(-?\d+\.?\d*),(-?\d+\.?\d*)$/;
 
 const LatitudeSchema = z.coerce.number({ description: 'The latitude.' }).min(-90).max(90);
@@ -210,6 +232,15 @@ const LongitudeSchema = z.coerce.number({ description: 'The longitude.' }).min(-
  * A Geographic coordinate as subset of Geo URI (RFC 5870).
  *
  * Currently only supports the `geo:lat,lng` format.
+ *
+ * Use the {@link geoUri} helper to create one, do not attempt to create one manually.
+ *
+ * @example
+ * ```typescript
+ * 'geo:40.689247,-74.044502'
+ *
+ * 'geo:41.890209,12.492231'
+ * ```
  *
  * @see https://tools.ietf.org/html/rfc5870
  */
@@ -256,21 +287,37 @@ export const GeoURISchema = nonEmptyStringSchema(
   });
 
 /**
+ * A geographic point on the Earth.
+ */
+export type GeoPoint = {
+  /**
+   * The latitude in decimal degrees (from -90° to +90°).
+   */
+  lat: number;
+
+  /**
+   * The longitude in decimal degrees (from -180° to +180°).
+   */
+  lng: number;
+};
+/**
  * @internal
  */
-export const GeoPointSchema = z.object({
+export const GeoPointSchema: z.ZodType<GeoPoint, z.ZodTypeDef, object> = z.object({
   lat: LatitudeSchema,
   lng: LongitudeSchema,
 });
 
 /**
- * A geographic point.
- */
-export type GeoPoint = z.infer<typeof GeoPointSchema>;
-/**
  * Helper to create a Geo URI from a {@link GeoPoint}.
  *
- * @category Compose
+ * @category Helpers
+ * @example
+ * ```typescript
+ * geoUri({ lat: 40.689247, lng: -74.044502 }) // 'geo:40.689247,-74.044502'
+ *
+ * geoUri({ lat: 41.890209, lng: 12.492231 }) // 'geo:41.890209,12.492231'
+ * ```
  */
 export function geoUri(point: GeoPoint): GeoURI {
   const result = GeoPointSchema.safeParse(point);
@@ -286,7 +333,7 @@ export function geoUri(point: GeoPoint): GeoURI {
 /**
  * Helper to parse a {@link GeoPoint} from a {@link GeoURI}.
  *
- * @category Parse
+ * @category Helpers
  */
 export function geoPoint(value: GeoURI): GeoPoint {
   const uri = GeoURISchema.parse(value);
@@ -306,9 +353,46 @@ export function encryptableGeoUriSchema(description: string) {
 }
 
 /**
+ * A Geo URI or its encrypted version.
+ *
+ * For example in the context of a token-gated publication, fields of this type are encrypted.
+ */
+export type EncryptableGeoURI = GeoURI | EncryptedString;
+
+/**
+ * The address of a physical location.
+ */
+export type PhysicalAddress = {
+  /**
+   * The full mailing address formatted for display.
+   */
+  formatted?: EncryptableString;
+  /**
+   * The street address including house number, street name, P.O. Box,
+   * apartment or unit number and extended multi-line address information.
+   */
+  streetAddress?: EncryptableString;
+  /**
+   * The city or locality.
+   */
+  locality: EncryptableString;
+  /**
+   * The state or region.
+   */
+  region?: EncryptableString;
+  /**
+   * The zip or postal code.
+   */
+  postalCode?: EncryptableString;
+  /**
+   * The country name component.
+   */
+  country: EncryptableString;
+};
+/**
  * @internal
  */
-export const AddressSchema = z.object({
+export const PhysicalAddressSchema: z.ZodType<PhysicalAddress, z.ZodTypeDef, object> = z.object({
   formatted: encryptableStringSchema('The full mailing address formatted for display.').optional(),
   streetAddress: encryptableStringSchema(
     'The street address including house number, street name, P.O. Box, ' +
@@ -319,33 +403,36 @@ export const AddressSchema = z.object({
   postalCode: encryptableStringSchema('The zip or postal code.').optional(),
   country: encryptableStringSchema('The country name component.'),
 });
-/**
- * A physical address.
- */
-export type Address = z.infer<typeof AddressSchema>;
 
 /**
  * An ISO 8601 in the JS simplified format: `YYYY-MM-DDTHH:mm:ss.sssZ`.
  */
-export type Datetime = Brand<string, 'Datetime'>;
+export type DateTime = Brand<string, 'DateTime'>;
 /**
  * @internal
  */
-export function toDatetime(value: string): Datetime {
-  return value as Datetime;
+export function toDateTime(value: string): DateTime {
+  return value as DateTime;
 }
 /**
  * @internal
  */
-export function datetimeSchema(description: string): z.Schema<Datetime, z.ZodTypeDef, string> {
-  return z.string({ description }).datetime().transform(toDatetime);
+export function datetimeSchema(description: string): z.Schema<DateTime, z.ZodTypeDef, string> {
+  return z.string({ description }).datetime().transform(toDateTime);
 }
 /**
  * @internal
  */
-export function encryptableDatetimeSchema(description: string) {
+export function encryptableDateTimeSchema(description: string) {
   return encryptableSchema(datetimeSchema(description));
 }
+
+/**
+ * A DateTime or its encrypted version.
+ *
+ * For example in the context of a token-gated publication, fields of this type are encrypted.
+ */
+export type EncryptableDateTime = DateTime | EncryptedString;
 
 /**
  * An EVM compatible address.
@@ -383,9 +470,16 @@ export const ChainIdSchema: z.Schema<ChainId, z.ZodTypeDef, number> = z
   .transform(toChainId);
 
 /**
+ * An EVM compatible address on a specific chain.
+ */
+export type NetworkAddress = {
+  chainId: ChainId;
+  address: EvmAddress;
+};
+/**
  * @internal
  */
-export const NetworkAddressSchema = z.object(
+export const NetworkAddressSchema: z.ZodType<NetworkAddress, z.ZodTypeDef, object> = z.object(
   {
     chainId: ChainIdSchema,
     address: EvmAddressSchema,
@@ -394,10 +488,6 @@ export const NetworkAddressSchema = z.object(
     description: 'An EVM compatible address on a specific chain.',
   },
 );
-/**
- * An EVM compatible address on a specific chain.
- */
-export type NetworkAddress = z.infer<typeof NetworkAddressSchema>;
 
 /**
  * An NFT token identifier.
@@ -416,46 +506,71 @@ export const TokenIdSchema: z.Schema<TokenId, z.ZodTypeDef, string> =
   nonEmptyStringSchema().transform(toTokenId);
 
 /**
+ * A Fungible Tokens. Usually an ERC20 token.
+ */
+export type Asset = {
+  /**
+   * The asset contract address.
+   */
+  contract: NetworkAddress;
+  /**
+   * The number of decimals of the asset (e.g. 18 for WETH)
+   */
+  decimals: number;
+};
+/**
  * @internal
  */
-export const AssetSchema = z.object({
+export const AssetSchema: z.Schema<Asset, z.ZodTypeDef, object> = z.object({
   contract: NetworkAddressSchema,
-  decimals: z.number({ description: 'The number of decimals of the asset.' }).nonnegative(),
+  decimals: z.number({ description: 'The number of decimals of the asset.' }).int().nonnegative(),
 });
-/**
- * A blockchain asset.
- */
-export type Asset = z.infer<typeof AssetSchema>;
 /**
  * Creates an {@link Asset}.
  *
- * @category Compose
+ * @category Helpers
  */
 export function asset(contract: NetworkAddress, decimals: number): Asset {
   return { contract, decimals };
 }
 
 /**
+ * An amount of a specific asset.
+ */
+export type Amount = {
+  /**
+   * The asset.
+   *
+   * See {@link asset} helper to create one.
+   */
+  asset: Asset;
+  /**
+   * The amount in the smallest unit of the given asset (e.g. wei for ETH).
+   */
+  value: string;
+};
+/**
  * @internal
  */
-export const AmountSchema = z.object(
+export const AmountSchema: z.Schema<Amount, z.ZodTypeDef, object> = z.object(
   {
     asset: AssetSchema,
     value: nonEmptyStringSchema(
-      'The amount in the smallest unit of the currency (e.g. wei for ETH).',
+      'The amount in the smallest unit of the given asset (e.g. wei for ETH).',
     ),
   },
   {
-    description: 'An amount of a specific currency.',
+    description: 'An amount of a specific asset.',
   },
 );
-/**
- * An amount of a specific currency.
- */
-export type Amount = z.infer<typeof AmountSchema>;
 
 /**
- * A Profile identifier.
+ * A Lens Profile identifier.
+ *
+ * @example
+ * ```
+ * 0x01
+ * ```
  */
 export type ProfileId = Brand<string, 'ProfileId'>;
 /**
@@ -471,7 +586,14 @@ export const ProfileIdSchema: z.Schema<ProfileId, z.ZodTypeDef, string> =
   nonEmptyStringSchema().transform(toProfileId);
 
 /**
- * A publication identifier.
+ * A Lens Publication identifier.
+ *
+ * No Momoka publications for now.
+ *
+ * @example
+ * ```
+ * 0x01-0x01
+ * ```
  */
 export type PublicationId = Brand<string, 'PublicationId'>;
 /**

@@ -431,5 +431,12 @@ export const timezones = [
   'Pacific/Wallis',
 ] as const;
 
+/**
+ * Timezone ID
+ */
+export type TimezoneId = (typeof timezones)[number];
+
+/**
+ * @internal
+ */
 export const TimezoneIdSchema = z.enum(timezones);
-export type TimezoneId = z.infer<typeof TimezoneIdSchema>;

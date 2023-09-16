@@ -646,7 +646,7 @@ To release a new version follow the steps below:
 2. Build the project
 
 ```bash
-pnpm install && pnpm build
+pnpm install && pnpm build && pnpm typedoc:docs
 ```
 
 3. Update relevant `package.json`'s versions and update `CHANGELOG.md` for each package:

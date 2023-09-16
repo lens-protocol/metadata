@@ -1,8 +1,23 @@
 import { z } from 'zod';
 
 import { MirrorSchemaId } from './MirrorSchemaId.js';
-import { MetadataCoreSchema } from './common/index.js';
+import { PublicationMetadataCore, PublicationMetadataCoreSchema } from './common/index.js';
+import { Signature, SignatureSchema } from '../primitives.js';
+import { ShapeCheck } from '../utils.js';
 
+/**
+ * A Mirror metadata object.
+ */
+export type MirrorMetadata = ShapeCheck<{
+  $schema: MirrorSchemaId.LATEST;
+
+  lens: PublicationMetadataCore;
+
+  /**
+   * A cryptographic signature of the `lens` data.
+   */
+  signature?: Signature;
+}>;
 /**
  * Mirror metadata schema.
  *
@@ -26,9 +41,15 @@ import { MetadataCoreSchema } from './common/index.js';
  * // => { success: false, error: ZodError }
  * ```
  */
-export const MirrorMetadataSchema = z.object({
+export const MirrorMetadataSchema: z.ZodType<MirrorMetadata, z.ZodTypeDef, object> = z.object({
+  /**
+   * The schema id.
+   */
   $schema: z.literal(MirrorSchemaId.LATEST),
+  /**
+   * The metadata details.
+   */
+  lens: PublicationMetadataCoreSchema,
 
-  lens: MetadataCoreSchema,
+  signature: SignatureSchema.optional(),
 });
-export type MirrorMetadata = z.infer<typeof MirrorMetadataSchema>;

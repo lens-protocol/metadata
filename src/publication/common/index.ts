@@ -1,15 +1,20 @@
 import { z } from 'zod';
 
-import { PublicationEncryptionStrategySchema } from './encryption.js';
+import {
+  PublicationEncryptionStrategy,
+  PublicationEncryptionStrategySchema,
+} from './encryption.js';
 import { MarketplaceMetadataSchema } from './marketplace.js';
-import { MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import {
   AppIdSchema,
   LocaleSchema,
   TagSchema,
   nonEmptyStringSchema,
   SignatureSchema,
-  encryptableMarkdownSchema,
+  AppId,
+  Locale,
+  Tag,
 } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -26,9 +31,38 @@ export enum PublicationContentWarning {
 }
 
 /**
+ * The operational metadata fields of a Lens publication.
+ */
+export type PublicationMetadataCore = {
+  /**
+   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
+   *
+   * Use a UUID if unsure.
+   */
+  id: string;
+  /**
+   * Determine if the publication should not be shown in any feed.
+   *
+   * @defaultValue false
+   */
+  hideFromFeed?: boolean;
+  /**
+   * Ability to only show when you filter on your App Id.
+   *
+   * This is useful for apps that want to show only their content on their apps.
+   *
+   * @defaultValue false
+   */
+  globalReach?: boolean;
+  /**
+   * The App Id that this publication belongs to.
+   */
+  appId?: AppId;
+};
+/**
  * @internal
  */
-export const MetadataCoreSchema = z.object(
+export const PublicationMetadataCoreSchema = z.object(
   {
     id: nonEmptyStringSchema(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
@@ -55,14 +89,41 @@ export const MetadataCoreSchema = z.object(
   },
 );
 
-const MetadataCommonSchema = MetadataCoreSchema.extend({
-  content: encryptableMarkdownSchema('Optional markdown content.').optional(),
-
+/**
+ * Common fields of a Lens primary publication.
+ */
+export type PublicationMetadataCommon = PublicationMetadataCore & {
+  /**
+   * A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.
+   * Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.
+   */
+  attributes?: MetadataAttribute[];
+  /**
+   * The locale of the metadata.
+   */
+  locale?: Locale;
+  /**
+   * The encryption strategy used to encrypt the publication.
+   *
+   * If not present, the publication is presumed to be unencrypted.
+   */
+  encryptedWith?: PublicationEncryptionStrategy;
+  /**
+   * An arbitrary list of tags.
+   */
+  tags?: Tag[];
+  /**
+   * Specify a content warning.
+   */
+  contentWarning?: PublicationContentWarning;
+};
+const MetadataCommonSchema = PublicationMetadataCoreSchema.extend({
   attributes: MetadataAttributeSchema.array()
     .min(1)
+    .max(20)
     .optional()
     .describe(
-      'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
+      'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
         'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
     ),
 
@@ -78,15 +139,25 @@ const MetadataCommonSchema = MetadataCoreSchema.extend({
 }).describe('The common Lens specific metadata details.');
 
 /**
+ * Ok, ok, don't! It's really not meant to be used outside.
+ * Don't have Kenny say you we told you so.
+ *
  * @internal
  */
 export function metadataDetailsWith<
-  Augmentation extends { mainContentFocus: ReturnType<typeof mainContentFocus> },
+  Augmentation extends {
+    mainContentFocus:
+      | z.ZodLiteral<PublicationMainFocus>
+      | z.ZodUnion<[z.ZodLiteral<PublicationMainFocus>, ...z.ZodLiteral<PublicationMainFocus>[]]>;
+  },
 >(augmentation: Augmentation) {
   return MetadataCommonSchema.extend(augmentation);
 }
 
 /**
+ * Ok, ok, don't! It's really not meant to be used outside.
+ * Don't have Kenny say you we told you so.
+ *
  * @internal
  */
 export function publicationWith<
@@ -102,8 +173,15 @@ export function publicationWith<
 }
 
 /**
+ * Ok, ok, don't! It's really not meant to be used outside.
+ * Don't have Kenny say you we told you so.
+ *
  * @internal
  */
+export function mainContentFocus<T extends PublicationMainFocus>(focus: T): z.ZodLiteral<T>;
+export function mainContentFocus<T extends PublicationMainFocus, O extends PublicationMainFocus>(
+  ...focuses: [T, O]
+): z.ZodUnion<[z.ZodLiteral<T>, z.ZodLiteral<O>]>;
 export function mainContentFocus(...focuses: [PublicationMainFocus, ...PublicationMainFocus[]]) {
   const description = 'The main focus of the publication.';
   if (focuses.length > 1) {

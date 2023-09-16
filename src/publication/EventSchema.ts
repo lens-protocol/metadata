@@ -3,63 +3,133 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
+  AnyMedia,
   AnyMediaSchema,
+  MarketplaceMetadata,
+  PublicationMetadataCommon,
+  TimezoneId,
   TimezoneIdSchema,
   mainContentFocus,
   metadataDetailsWith,
   publicationWith,
 } from './common';
 import {
-  AddressSchema,
-  GeoURISchema,
-  encryptableDatetimeSchema,
+  PhysicalAddressSchema,
+  encryptableDateTimeSchema,
   encryptableUriSchema,
-  nonEmptyStringSchema,
-  uriSchema,
+  encryptableStringSchema,
+  EncryptableURI,
+  EncryptableString,
+  EncryptableGeoURI,
+  PhysicalAddress,
+  EncryptableDateTime,
+  EncryptableMarkdown,
+  encryptableGeoUriSchema,
+  encryptableMarkdownSchema,
+  Signature,
 } from '../primitives.js';
 
 /**
- * @internal
+ * An object intended to help with future events scheduling adjustments.
+ *
+ * @see https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events
  */
-export const SchedulingAdjustmentsSchema = z.object({
-  timezoneId: TimezoneIdSchema.describe(
-    'Indicates a reference timezone for the event start and end times. ' +
-      'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
-  ),
-  timezoneOffset: z
-    .number()
-    .describe(
-      'Indicates the reference timezone offset with respect to UTC timezone a the time of event creation. ' +
-        'The difference in minutes between the reference timezone time and UTC time ' +
-        '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
-    ),
-});
-export type SchedulingAdjustments = z.infer<typeof SchedulingAdjustmentsSchema>;
+export type SchedulingAdjustments = {
+  /**
+   * Indicates a reference timezone for the event start and end times.
+   * If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.
+   */
+  timezoneId: TimezoneId;
+  /**
+   * Indicates the reference timezone offset with respect to UTC timezone a the time of event creation.
+   * The difference in minutes between the reference timezone time and UTC time (e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).
+   */
+  timezoneOffset: number;
+};
 
 /**
  * @internal
  */
-export const EventSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.EVENT_LATEST),
-  lens: metadataDetailsWith({
+export const SchedulingAdjustmentsSchema: z.ZodType<SchedulingAdjustments, z.ZodTypeDef, object> =
+  z.object({
+    timezoneId: TimezoneIdSchema.describe(
+      'Indicates a reference timezone for the event start and end times. ' +
+        'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
+    ),
+    timezoneOffset: z
+      .number()
+      .describe(
+        'Indicates the reference timezone offset with respect to UTC timezone a the time of event creation. ' +
+          'The difference in minutes between the reference timezone time and UTC time ' +
+          '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
+      ),
+  });
+
+export type EventMetadataDetails = PublicationMetadataCommon & {
+  /**
+   * The main focus of the publication.
+   */
+  mainContentFocus: PublicationMainFocus.EVENT;
+  /*
+   * The location of the event.
+   */
+  location: EncryptableURI | EncryptableString;
+  /**
+   * The geographic position of the event.
+   */
+  position?: EncryptableGeoURI;
+  /**
+   * The address of the event.
+   */
+  address?: PhysicalAddress;
+  /**
+   * The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
+   */
+  startsAt: EncryptableDateTime;
+  /**
+   * The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
+   */
+  endsAt: EncryptableDateTime;
+  /**
+   * Captures extra criteria to recompute correctly future start and end times.
+   *
+   * @see https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events
+   */
+  schedulingAdjustments?: SchedulingAdjustments;
+  /**
+   * The links you want to include with it.
+   */
+  links?: EncryptableURI[];
+  /**
+   * Optional markdown content.
+   */
+  content?: EncryptableMarkdown;
+  /**
+   * The other attachments you want to include with it.
+   */
+  attachments?: AnyMedia[];
+};
+
+const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, object> =
+  metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 
     location: z
       .union([
-        uriSchema('A virtual location.'),
-        nonEmptyStringSchema('The event location (free form text).'),
+        encryptableUriSchema('A virtual location.'),
+        encryptableStringSchema('The event location (free form text).'),
       ])
       .describe('The location of the event.'),
 
-    position: GeoURISchema.optional().describe('The optional geographic position of the event.'),
+    position: encryptableGeoUriSchema('The geographic position of the event.').optional(),
 
-    address: AddressSchema.optional().describe('The optional address of the event.'),
+    address: PhysicalAddressSchema.optional().describe('The address of the event.'),
 
-    startsAt: encryptableDatetimeSchema(
+    startsAt: encryptableDateTimeSchema(
       'The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: encryptableDatetimeSchema('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    endsAt: encryptableDateTimeSchema('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
@@ -72,10 +142,36 @@ export const EventSchema = publicationWith({
       .optional()
       .describe('The links you want to include with it.'),
 
+    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+
     attachments: AnyMediaSchema.array()
       .min(1)
       .optional()
       .describe('The other attachments you want to include with it.'),
-  }),
+  });
+
+/**
+ * Use this to create an event, virtual or physical.
+ */
+export type EventMetadata = MarketplaceMetadata & {
+  /**
+   * The schema id.
+   */
+  $schema: PublicationSchemaId.EVENT_LATEST;
+  /**
+   * The metadata details.
+   */
+  lens: EventMetadataDetails;
+  /**
+   * A cryptographic signature of the `lens` data.
+   */
+  signature?: Signature;
+};
+
+/**
+ * @internal
+ */
+export const EventSchema = publicationWith({
+  $schema: z.literal(PublicationSchemaId.EVENT_LATEST),
+  lens: EventMetadataDetailsSchema,
 });
-export type EventMetadata = z.infer<typeof EventSchema>;

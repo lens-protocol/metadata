@@ -2,12 +2,16 @@ import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import { formatZodError } from './formatters';
-import { ProfileMetadata, ProfileMetadataSchema, ProfileSchemaId } from './profile';
+import {
+  ProfileMetadata,
+  ProfileMetadataDetails,
+  ProfileMetadataSchema,
+  ProfileSchemaId,
+} from './profile';
 import {
   ThreeDMetadata,
   ThreeDSchema,
-  ArticleMetadata,
-  ArticleSchema,
+  // ArticleSchema,
   AudioMetadata,
   AudioSchema,
   CheckingInMetadata,
@@ -20,8 +24,8 @@ import {
   ImageSchema,
   LinkMetadata,
   LinkSchema,
-  LivestreamMetadata,
-  LivestreamSchema,
+  LiveStreamMetadata,
+  LiveStreamSchema,
   MintMetadata,
   MintSchema,
   MirrorMetadata,
@@ -41,9 +45,39 @@ import {
   MarketplaceMetadata,
   PublicationMetadata,
   MirrorSchemaId,
+  ArticleMetadataDetails,
+  AudioMetadataDetails,
+  CheckingInMetadataDetails,
+  EmbedMetadataDetails,
+  EventMetadataDetails,
+  ImageMetadataDetails,
+  LinkMetadataDetails,
+  LiveStreamMetadataDetails,
+  MintMetadataDetails,
+  SpaceMetadataDetails,
+  StoryMetadataDetails,
+  TextOnlyMetadataDetails,
+  ThreeDMetadataDetails,
+  TransactionMetadataDetails,
+  VideoMetadataDetails,
+  ArticleMetadata,
+  ArticleSchema,
+  PublicationMetadataCore,
 } from './publication';
 import { Brand, Overwrite, Prettify } from './utils.js';
 
+/**
+ * The default locale used by the builder helpers.
+ *
+ * @category Compose
+ */
+export const DEFAULT_LOCALE = 'en';
+
+/**
+ * An error that occurs when an object does not match the expected shape.
+ *
+ * @category Compose
+ */
 export class ValidationError extends Error {
   name = 'ValidationError' as const;
 }
@@ -51,31 +85,31 @@ export class ValidationError extends Error {
 /**
  * @internal
  */
-export type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
+type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
 
 /**
  * @internal
  */
-export type UnbrandAll<T> = T extends Brand<infer R, BrandOf<T>>
+type RecursiveUnbrand<T> = T extends Brand<infer R, BrandOf<T>>
   ? R
   : {
-      [K in keyof T]: UnbrandAll<T[K]>;
+      [K in keyof T]: RecursiveUnbrand<T[K]>;
     };
 
 /**
  * @internal
  */
-export type ExtractLensSpec<T extends { lens: unknown }> = T['lens'];
+type ExtractLensSpec<T extends { lens: unknown }> = T['lens'];
 
 /**
  * @internal
  */
-export type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
+type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
 
 /**
  * @internal
  */
-export type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> = Overwrite<
+type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> = Overwrite<
   Details,
   {
     /**
@@ -99,16 +133,8 @@ export type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetad
   }
 >;
 
-/**
- * @internal
- */
-export type PublicationMetadataOptions<
-  Metadata extends PublicationMetadata,
-  Details extends ExtractLensSpec<Metadata> = ExtractLensSpec<Metadata>,
-> = Prettify<
-  UnbrandAll<OmitInferredPublicationFields<PublicationDefaults<Details>>> & {
-    marketplace?: MarketplaceMetadata;
-  }
+type InputForPublicationMetadataDetails<T extends PublicationMetadata['lens']> = RecursiveUnbrand<
+  OmitInferredPublicationFields<PublicationDefaults<T>>
 >;
 
 function process<Input, Output>(result: z.SafeParseReturnType<Input, Output>): Output {
@@ -119,21 +145,42 @@ function process<Input, Output>(result: z.SafeParseReturnType<Input, Output>): O
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
+ */
+type MarketplaceDetails = RecursiveUnbrand<MarketplaceMetadata>;
+
+/**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
+ */
+type ArticleDetails = InputForPublicationMetadataDetails<ArticleMetadataDetails>;
+/**
+ * All {@link ArticleMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type ArticleOptions = PublicationMetadataOptions<ArticleMetadata>;
+export type ArticleOptions = ArticleDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
+
 /**
  * Creates a valid ArticleMetadata.
  *
  * @category Compose
- * @param input - {@link ArticleOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function article({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
-}: ArticleOptions): PublicationMetadata {
+}: ArticleOptions): ArticleMetadata {
   return process(
     ArticleSchema.safeParse({
       $schema: PublicationSchemaId.ARTICLE_LATEST,
@@ -149,18 +196,32 @@ export function article({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
+ */
+type AudioDetails = InputForPublicationMetadataDetails<AudioMetadataDetails>;
+/**
+ * All {@link AudioMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type AudioOptions = PublicationMetadataOptions<AudioMetadata>;
+export type AudioOptions = AudioDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid AudioMetadata.
  *
  * @category Compose
- * @param input - {@link AudioOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function audio({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: AudioOptions): AudioMetadata {
@@ -179,18 +240,32 @@ export function audio({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
+ */
+type CheckingInDetails = InputForPublicationMetadataDetails<CheckingInMetadataDetails>;
+/**
+ * All {@link CheckingInMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type CheckingInOptions = PublicationMetadataOptions<CheckingInMetadata>;
+export type CheckingInOptions = CheckingInDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid CheckingInMetadata.
  *
  * @category Compose
- * @param input - {@link CheckingInOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function checkingIn({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: CheckingInOptions): CheckingInMetadata {
@@ -209,18 +284,32 @@ export function checkingIn({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type EmbedDetails = InputForPublicationMetadataDetails<EmbedMetadataDetails>;
+/**
+ * All {@link EmbedMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type EmbedOptions = PublicationMetadataOptions<EmbedMetadata>;
+export type EmbedOptions = EmbedDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid EmbedMetadata.
  *
  * @category Compose
- * @param input - {@link EmbedOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function embed({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: EmbedOptions): EmbedMetadata {
@@ -239,18 +328,32 @@ export function embed({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type EventDetails = InputForPublicationMetadataDetails<EventMetadataDetails>;
+/**
+ * All {@link EventMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type EventOptions = PublicationMetadataOptions<EventMetadata>;
+export type EventOptions = EventDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid EventMetadata.
  *
  * @category Compose
- * @param input - {@link EventOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function event({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: EventOptions): EventMetadata {
@@ -269,18 +372,32 @@ export function event({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type ImageDetails = InputForPublicationMetadataDetails<ImageMetadataDetails>;
+/**
+ * All {@link ImageMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type ImageOptions = PublicationMetadataOptions<ImageMetadata>;
+export type ImageOptions = ImageDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid ImageMetadata.
  *
  * @category Compose
- * @param input - {@link ImageOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function image({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: ImageOptions): ImageMetadata {
@@ -299,18 +416,32 @@ export function image({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type LinkDetails = InputForPublicationMetadataDetails<LinkMetadataDetails>;
+/**
+ * All {@link LinkMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type LinkOptions = PublicationMetadataOptions<LinkMetadata>;
+export type LinkOptions = LinkDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid LinkMetadata.
  *
  * @category Compose
- * @param input - {@link LinkOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function link({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: LinkOptions): LinkMetadata {
@@ -329,23 +460,37 @@ export function link({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type LiveStreamDetails = InputForPublicationMetadataDetails<LiveStreamMetadataDetails>;
+/**
+ * All {@link LiveStreamMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type LivestreamOptions = PublicationMetadataOptions<LivestreamMetadata>;
+export type LiveStreamOptions = LiveStreamDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid LivestreamMetadata.
  *
  * @category Compose
- * @param input - {@link LivestreamOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function livestream({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
-}: LivestreamOptions): LivestreamMetadata {
+}: LiveStreamOptions): LiveStreamMetadata {
   return process(
-    LivestreamSchema.safeParse({
+    LiveStreamSchema.safeParse({
       $schema: PublicationSchemaId.LIVESTREAM_LATEST,
       ...marketplace,
       lens: {
@@ -359,18 +504,32 @@ export function livestream({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type MintDetails = InputForPublicationMetadataDetails<MintMetadataDetails>;
+/**
+ * All {@link MintMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type MintOptions = PublicationMetadataOptions<MintMetadata>;
+export type MintOptions = MintDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid MintMetadata.
  *
  * @category Compose
- * @param input - {@link MintOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function mint({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: MintOptions): MintMetadata {
@@ -389,18 +548,32 @@ export function mint({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type SpaceDetails = InputForPublicationMetadataDetails<SpaceMetadataDetails>;
+/**
+ * All {@link SpaceMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type SpaceOptions = PublicationMetadataOptions<SpaceMetadata>;
+export type SpaceOptions = SpaceDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid SpaceMetadata.
  *
  * @category Compose
- * @param input - {@link SpaceOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function space({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: SpaceOptions): SpaceMetadata {
@@ -419,18 +592,32 @@ export function space({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type StoryDetails = InputForPublicationMetadataDetails<StoryMetadataDetails>;
+/**
+ * All {@link StoryMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type StoryOptions = PublicationMetadataOptions<StoryMetadata>;
+export type StoryOptions = StoryDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid StoryMetadata.
  *
  * @category Compose
- * @param input - {@link StoryOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function story({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: StoryOptions): StoryMetadata {
@@ -449,18 +636,32 @@ export function story({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type TextOnlyDetails = InputForPublicationMetadataDetails<TextOnlyMetadataDetails>;
+/**
+ * All {@link TextOnlyMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type TextOnlyOptions = PublicationMetadataOptions<TextOnlyMetadata>;
+export type TextOnlyOptions = TextOnlyDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid TextOnlyMetadata.
  *
  * @category Compose
- * @param input - {@link TextOnlyOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function textOnly({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: TextOnlyOptions): TextOnlyMetadata {
@@ -479,18 +680,32 @@ export function textOnly({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type ThreeDDetails = InputForPublicationMetadataDetails<ThreeDMetadataDetails>;
+/**
+ * All {@link ThreeDMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type ThreeDOptions = PublicationMetadataOptions<ThreeDMetadata>;
+export type ThreeDOptions = ThreeDDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid ThreeDMetadata.
  *
  * @category Compose
- * @param input - {@link ThreeDOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function threeD({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: ThreeDOptions): ThreeDMetadata {
@@ -509,18 +724,32 @@ export function threeD({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type TransactionDetails = InputForPublicationMetadataDetails<TransactionMetadataDetails>;
+/**
+ * All {@link TransactionMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type TransactionOptions = PublicationMetadataOptions<TransactionMetadata>;
+export type TransactionOptions = TransactionDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid TransactionMetadata.
  *
  * @category Compose
- * @param input - {@link TransactionOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function transaction({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: TransactionOptions): TransactionMetadata {
@@ -539,18 +768,32 @@ export function transaction({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type VideoDetails = InputForPublicationMetadataDetails<VideoMetadataDetails>;
+/**
+ * All {@link VideoMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ *
  * @category Compose
  */
-export type VideoOptions = PublicationMetadataOptions<VideoMetadata>;
+export type VideoOptions = VideoDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
 /**
  * Creates a valid VideoMetadata.
  *
  * @category Compose
- * @param input - {@link VideoOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function video({
   marketplace,
-  locale = 'en',
+  locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
 }: VideoOptions): VideoMetadata {
@@ -569,28 +812,28 @@ export function video({
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type MirrorDetails = Prettify<RecursiveUnbrand<Omit<PublicationMetadataCore, 'id'>>>;
+/**
+ * All {@link PublicationMetadataCore} fields with:
+ *
  * @category Compose
  */
-export type MirrorOptions = Prettify<
-  UnbrandAll<
-    Overwrite<
-      ExtractLensSpec<MirrorMetadata>,
-      {
-        /**
-         * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
-         *
-         * @defaultValue a UUID
-         */
-        id?: string;
-      }
-    >
-  >
->;
+export type MirrorOptions = MirrorDetails & {
+  /**
+   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
+   *
+   * @defaultValue a UUID
+   */
+  id?: string;
+};
 /**
  * Creates a valid MirrorMetadata.
  *
  * @category Compose
- * @param input - {@link MirrorOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function mirror({ id = v4(), ...others }: MirrorOptions): MirrorMetadata {
   return process(
@@ -605,28 +848,28 @@ export function mirror({ id = v4(), ...others }: MirrorOptions): MirrorMetadata 
 }
 
 /**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type ProfileDetails = Prettify<RecursiveUnbrand<Omit<ProfileMetadataDetails, 'id'>>>;
+/**
+ * All {@link ProfileMetadataDetails} fields with:
+ *
  * @category Compose
  */
-export type ProfileOptions = Prettify<
-  UnbrandAll<
-    Overwrite<
-      ExtractLensSpec<ProfileMetadata>,
-      {
-        /**
-         * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
-         *
-         * @defaultValue a UUID
-         */
-        id?: string;
-      }
-    >
-  >
->;
+export type ProfileOptions = ProfileDetails & {
+  /**
+   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
+   *
+   * @defaultValue a UUID
+   */
+  id?: string;
+};
 /**
  * Creates a valid ProfileMetadata.
  *
  * @category Compose
- * @param input - {@link ProfileOptions}
+ * @param input - Use your IDE suggestions for an enhanced development experience
  */
 export function profile({ id = v4(), ...others }: ProfileOptions): ProfileMetadata {
   return process(

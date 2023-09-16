@@ -43,11 +43,6 @@ function formatPath(path: NonEmptyArray<string | number>): string {
   }, '');
 }
 
-// function multiline(issues: string[][]): string {
-//   if
-//   return
-// }
-
 function formatZozInvalidUnionIssue(issue: z.ZodInvalidUnionIssue): string {
   const groups = issue.unionErrors.map<string[]>((zodError) =>
     zodError.issues.map((nested) => {
@@ -85,6 +80,22 @@ function formatZodIssue(issue: z.ZodIssue): string {
   return issue.message;
 }
 
+/**
+ * Formats a Zod parsing error into a human-readable string.
+ *
+ * The formatting is tailored to the Lens Protocol Metadata use case. It may not be suitable for other use cases.
+ *
+ * @category Helpers
+ *
+ * @example
+ * ```typescript
+ * const result = PublicationMetadataSchema.safeParse(invalid);
+ *
+ * if (!result.success) {
+ *   throw new Error(formatZodError(result.error));
+ * }
+ * ```
+ */
 export function formatZodError(zodError: z.ZodError): string {
   const reason = zodError.errors
     // limit max number of issues printed in the reason section
