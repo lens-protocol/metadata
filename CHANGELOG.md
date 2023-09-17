@@ -1,5 +1,13 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.21
+
+### Patch Changes
+
+- 9db94c5: **fix:** simplifies `MirrorMetadata` and removes `globalReach` across the board
+- 645e78d: **fix:** `AnyMedia` discriminated union validation
+- ba502d1: **feat:** adds `shortVideo` builder and small fix
+
 ## 0.1.0-alpha.20
 
 ### Patch Changes
