@@ -66,6 +66,8 @@ export type EmbedMetadata = MarketplaceMetadata & {
   lens: EmbedMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
+   *
+   * @experimental DO NOT use ye
    */
   signature?: Signature;
 };

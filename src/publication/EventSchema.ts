@@ -164,6 +164,8 @@ export type EventMetadata = MarketplaceMetadata & {
   lens: EventMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
+   *
+   * @experimental DO NOT use ye
    */
   signature?: Signature;
 };
