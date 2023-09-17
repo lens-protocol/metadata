@@ -32,6 +32,11 @@
       ],
       "additionalProperties": false,
       "description": "The Lens operational metadata fields."
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic signature of the Lens metadata."
     }
   },
   "required": [
@@ -60,7 +65,7 @@
                 "true",
                 "false"
               ],
-              "description": "A boolean value serialized as string.  It's consumer responsibility to parse it."
+              "description": "A JS boolean value serialized as string. It's consumer responsibility to parse it."
             }
           },
           "required": [
@@ -160,7 +165,7 @@
             "value": {
               "type": "string",
               "minLength": 1,
-              "description": "A valid JSON string. It's consumer responsibility to parse it."
+              "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },
           "required": [

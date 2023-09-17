@@ -11,7 +11,6 @@ import {
 import {
   ThreeDMetadata,
   ThreeDSchema,
-  // ArticleSchema,
   AudioMetadata,
   AudioSchema,
   CheckingInMetadata,
@@ -68,15 +67,11 @@ import { Brand, Overwrite, Prettify } from './utils.js';
 
 /**
  * The default locale used by the builder helpers.
- *
- * @category Compose
  */
 export const DEFAULT_LOCALE = 'en';
 
 /**
  * An error that occurs when an object does not match the expected shape.
- *
- * @category Compose
  */
 export class ValidationError extends Error {
   name = 'ValidationError' as const;
@@ -159,8 +154,6 @@ type ArticleDetails = InputForPublicationMetadataDetails<ArticleMetadataDetails>
  * All {@link ArticleMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type ArticleOptions = ArticleDetails & {
   /**
@@ -204,8 +197,6 @@ type AudioDetails = InputForPublicationMetadataDetails<AudioMetadataDetails>;
  * All {@link AudioMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type AudioOptions = AudioDetails & {
   /**
@@ -248,8 +239,6 @@ type CheckingInDetails = InputForPublicationMetadataDetails<CheckingInMetadataDe
  * All {@link CheckingInMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type CheckingInOptions = CheckingInDetails & {
   /**
@@ -292,8 +281,6 @@ type EmbedDetails = InputForPublicationMetadataDetails<EmbedMetadataDetails>;
  * All {@link EmbedMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type EmbedOptions = EmbedDetails & {
   /**
@@ -336,8 +323,6 @@ type EventDetails = InputForPublicationMetadataDetails<EventMetadataDetails>;
  * All {@link EventMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type EventOptions = EventDetails & {
   /**
@@ -380,8 +365,6 @@ type ImageDetails = InputForPublicationMetadataDetails<ImageMetadataDetails>;
  * All {@link ImageMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type ImageOptions = ImageDetails & {
   /**
@@ -424,8 +407,6 @@ type LinkDetails = InputForPublicationMetadataDetails<LinkMetadataDetails>;
  * All {@link LinkMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type LinkOptions = LinkDetails & {
   /**
@@ -468,8 +449,6 @@ type LiveStreamDetails = InputForPublicationMetadataDetails<LiveStreamMetadataDe
  * All {@link LiveStreamMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type LiveStreamOptions = LiveStreamDetails & {
   /**
@@ -512,8 +491,6 @@ type MintDetails = InputForPublicationMetadataDetails<MintMetadataDetails>;
  * All {@link MintMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type MintOptions = MintDetails & {
   /**
@@ -556,8 +533,6 @@ type SpaceDetails = InputForPublicationMetadataDetails<SpaceMetadataDetails>;
  * All {@link SpaceMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type SpaceOptions = SpaceDetails & {
   /**
@@ -600,8 +575,6 @@ type StoryDetails = InputForPublicationMetadataDetails<StoryMetadataDetails>;
  * All {@link StoryMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type StoryOptions = StoryDetails & {
   /**
@@ -644,8 +617,6 @@ type TextOnlyDetails = InputForPublicationMetadataDetails<TextOnlyMetadataDetail
  * All {@link TextOnlyMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type TextOnlyOptions = TextOnlyDetails & {
   /**
@@ -688,8 +659,6 @@ type ThreeDDetails = InputForPublicationMetadataDetails<ThreeDMetadataDetails>;
  * All {@link ThreeDMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type ThreeDOptions = ThreeDDetails & {
   /**
@@ -732,8 +701,6 @@ type TransactionDetails = InputForPublicationMetadataDetails<TransactionMetadata
  * All {@link TransactionMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type TransactionOptions = TransactionDetails & {
   /**
@@ -776,8 +743,6 @@ type VideoDetails = InputForPublicationMetadataDetails<VideoMetadataDetails>;
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- *
- * @category Compose
  */
 export type VideoOptions = VideoDetails & {
   /**
@@ -818,8 +783,6 @@ export function video({
 type MirrorDetails = Prettify<RecursiveUnbrand<Omit<PublicationMetadataCore, 'id'>>>;
 /**
  * All {@link PublicationMetadataCore} fields with:
- *
- * @category Compose
  */
 export type MirrorOptions = MirrorDetails & {
   /**
@@ -854,8 +817,6 @@ export function mirror({ id = v4(), ...others }: MirrorOptions): MirrorMetadata 
 type ProfileDetails = Prettify<RecursiveUnbrand<Omit<ProfileMetadataDetails, 'id'>>>;
 /**
  * All {@link ProfileMetadataDetails} fields with:
- *
- * @category Compose
  */
 export type ProfileOptions = ProfileDetails & {
   /**
