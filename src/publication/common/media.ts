@@ -233,7 +233,25 @@ export const MediaVideoSchema = MediaCommonSchema.extend({
  */
 export type AnyMedia = MediaAudio | MediaImage | MediaVideo;
 
-function resolveAnyMediaSchma(val: AnyMedia) {
+const AnyMediaImageMimeType = {
+  ...MediaAudioMimeType,
+  ...MediaImageMimeType,
+  ...MediaVideoMimeType,
+};
+type AnyMediaImageMimeType = MediaAudioMimeType | MediaImageMimeType | MediaVideoMimeType;
+
+type AnyMediaShape = Pick<AnyMedia, 'type'>;
+const AnyMediaShapeScheme: z.ZodType<AnyMediaShape, z.ZodTypeDef, unknown> = z.object({
+  type: z.nativeEnum(AnyMediaImageMimeType),
+});
+
+function isAnyMediaShape(val: unknown): val is AnyMediaShape {
+  return AnyMediaShapeScheme.safeParse(val).success;
+}
+
+function resolveAnyMediaSchema(val: unknown) {
+  if (!isAnyMediaShape(val)) return AnyMediaShapeScheme;
+
   switch (val.type) {
     case MediaAudioMimeType.WAV:
     case MediaAudioMimeType.WAV_VND:
@@ -268,9 +286,9 @@ function resolveAnyMediaSchma(val: AnyMedia) {
     case MediaVideoMimeType.WEBM:
       return MediaVideoSchema;
   }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return null;
+
+  // the alleged AnyMedia is not a valid shape
+  return AnyMediaShapeScheme;
 }
 
 /**
@@ -278,9 +296,12 @@ function resolveAnyMediaSchma(val: AnyMedia) {
  */
 export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
   .discriminatedUnion('type', [MediaAudioSchema, MediaImageSchema, MediaVideoSchema])
-  .catch((ctx) => ctx.input as AnyMedia)
-  .superRefine((val, ctx): val is AnyMedia => {
-    const Schema = resolveAnyMediaSchma(val);
+  // the following is necessary cause discriminatedUnion does not properly work when
+  // the discriminant is a union of enums, so we keep the discriminatedUnion for the
+  // correct JSON Schema definition but we manually refine the type for runtime checks
+  .catch((ctx) => ctx.input as AnyMedia) // passthrough even if might not be an AnyMedia type
+  .superRefine((val: unknown, ctx): val is AnyMedia => {
+    const Schema = resolveAnyMediaSchema(val);
 
     if (!Schema) {
       ctx.addIssue({

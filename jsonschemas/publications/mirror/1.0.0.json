@@ -13,14 +13,6 @@
           "minLength": 1,
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
-        "hideFromFeed": {
-          "type": "boolean",
-          "description": "Determine if the publication should not be shown in any feed."
-        },
-        "globalReach": {
-          "type": "boolean",
-          "description": "Ability to only show when you filter on your App Id. This is useful for apps that want to show only their content on their apps."
-        },
         "appId": {
           "type": "string",
           "minLength": 1,
@@ -28,7 +20,8 @@
         }
       },
       "required": [
-        "id"
+        "id",
+        "appId"
       ],
       "additionalProperties": false,
       "description": "The Lens operational metadata fields."
