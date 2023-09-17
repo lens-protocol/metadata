@@ -12,7 +12,7 @@ export * from './LinkSchema.js';
 export * from './LiveStreamSchema.js';
 export * from './MintSchema.js';
 export * from './MirrorSchemaId.js';
-export * from './MirrorSchema.js';
+export * from './MirrorMetadataSchema.js';
 export * from './PublicationMainFocus.js';
 export * from './PublicationSchemaId.js';
 export * from './SpaceSchema.js';

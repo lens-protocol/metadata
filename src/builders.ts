@@ -61,7 +61,7 @@ import {
   VideoMetadataDetails,
   ArticleMetadata,
   ArticleSchema,
-  PublicationMetadataCore,
+  MirrorMetadataDetails,
 } from './publication';
 import { Brand, Overwrite, Prettify } from './utils.js';
 
@@ -832,9 +832,10 @@ export function shortVideo({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type MirrorDetails = Prettify<RecursiveUnbrand<Omit<PublicationMetadataCore, 'id'>>>;
+type MirrorDetails = Prettify<RecursiveUnbrand<Omit<MirrorMetadataDetails, 'id'>>>;
 /**
- * All {@link PublicationMetadataCore} fields with:
+ * All {@link MirrorMetadataDetails} fields with:
+ * - `id` defaults to a UUID
  */
 export type MirrorOptions = MirrorDetails & {
   /**
