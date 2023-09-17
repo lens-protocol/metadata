@@ -1,15 +1,57 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { ValidationError, article, textOnly, profile, audio, checkingIn } from '../builders.js';
+import { MetadataAttributeType } from '../MetadataAttribute.js';
+import {
+  ValidationError,
+  article,
+  textOnly,
+  profile,
+  audio,
+  checkingIn,
+  embed,
+  image,
+  event,
+  link,
+  liveStream,
+  mint,
+  space,
+  story,
+  threeD,
+  transaction,
+  video,
+  shortVideo,
+  mirror,
+} from '../builders.js';
 import { geoUri } from '../primitives.js';
-import { MediaAudioMimeType, MediaImageMimeType } from '../publication/index.js';
+import {
+  MediaAudioMimeType,
+  MediaImageMimeType,
+  MediaVideoMimeType,
+  MetadataLicenseType,
+  MetadataTransactionType,
+  ThreeDFormat,
+} from '../publication/index.js';
 
 describe(`Given the publication metadata builders`, () => {
   describe(`when using the ${article.name} builder`, () => {
     it('should return a valid TextOnlyMetadata', () => {
       const metadata = article({
         title: 'Great Question',
-        content: 'GM!',
+        content: `
+        ## Heading
+
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
+
+        ## Question
+
+        What is the answer to life, the universe and everything?
+
+        ## Answer
+
+        42
+
+        ![The answer](https://example.com/answer.png)
+        `,
         tags: ['question', '42'],
         attachments: [
           {
@@ -39,7 +81,6 @@ describe(`Given the publication metadata builders`, () => {
         audio: {
           item: 'https://example.com/song.mp3',
           type: MediaAudioMimeType.MP3,
-
           artist: 'John Doe',
           cover: 'https://example.com/cover.png',
         },
@@ -102,6 +143,220 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
+  describe(`when using the ${embed.name} builder`, () => {
+    it('should return a valid EmbedMetadata', () => {
+      const metadata = embed({
+        embed: 'https://example.com/embed.html',
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${event.name} builder`, () => {
+    it('should return a valid EventMetadata for Geo URI location', () => {
+      const metadata = event({
+        location: 'The Moon',
+        position: geoUri({
+          lat: 40.6892,
+          lng: -74.0444,
+        }),
+        startsAt: '2028-10-01T00:00:00Z',
+        endsAt: '2028-10-01T01:00:00Z',
+        links: ['https://example.com/tickets.html'],
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+
+    it('should return a valid EventMetadata for PhysicalAddress', () => {
+      const metadata = event({
+        location: 'The Moon',
+        address: {
+          streetAddress: '1st Street',
+          locality: 'New York',
+          region: 'NY',
+          postalCode: '10001',
+          country: 'US',
+        },
+        startsAt: '2028-10-01T00:00:00Z',
+        endsAt: '2028-10-01T01:00:00Z',
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${image.name} builder`, () => {
+    it('should return a valid ImageMetadata', () => {
+      const metadata = image({
+        title: 'Touch grass',
+        image: {
+          item: 'https://example.com/image.png',
+          type: MediaImageMimeType.PNG,
+          altTag: 'Me touching grass',
+          license: MetadataLicenseType.CCO,
+        },
+        attachments: [
+          {
+            item: 'https://example.com/image-1.png',
+            type: MediaImageMimeType.PNG,
+            license: MetadataLicenseType.CC_BY_NC,
+            altTag: 'Me touching a tree',
+          },
+          {
+            item: 'https://example.com/image-2.png',
+            type: MediaImageMimeType.PNG,
+            license: MetadataLicenseType.CC_BY_NC,
+            altTag: 'The tree touching me',
+          },
+        ],
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${link.name} builder`, () => {
+    it('should return a valid LinkMetadata', () => {
+      const metadata = link({
+        sharingLink: 'https://example.com/embed.html',
+        content: 'Check out this cool website!',
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${liveStream.name} builder`, () => {
+    it('should return a valid LiveStreamMetadata', () => {
+      const metadata = liveStream({
+        title: 'Live stream #1',
+        liveUrl: 'https://example.com/live.html',
+        playbackUrl: 'https://example.com/playback.html',
+        startsAt: '2028-10-01T00:00:00Z',
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+
+    describe(`when using the ${mint.name} builder`, () => {
+      it('should return a valid MintMetadata', () => {
+        const metadata = mint({
+          content: 'Check out this NFT!',
+          mintLink:
+            'https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/1234567890',
+        });
+
+        expect(metadata).toMatchSnapshot({
+          lens: {
+            id: expect.any(String),
+          },
+        });
+      });
+    });
+  });
+
+  describe(`when using the ${space.name} builder`, () => {
+    it('should return a valid SpaceMetadata', () => {
+      const metadata = space({
+        title: 'Space #1',
+        link: 'https://example.com/space.html',
+        startsAt: '2028-10-01T00:00:00Z',
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${story.name} builder`, () => {
+    it('should return a valid StoryMetadata', () => {
+      const metadata = story({
+        asset: {
+          item: 'https://example.com/story.mp4',
+          type: MediaVideoMimeType.MP4,
+          cover: 'https://example.com/thumbnail.png',
+          duration: 123,
+          altTag: 'The story of my life',
+        },
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${threeD.name} builder`, () => {
+    it('should return a valid ThreeDMetadata', () => {
+      const metadata = threeD({
+        content: 'Check out this 3D model!',
+        assets: [
+          {
+            format: ThreeDFormat.VRM,
+            playerUrl: 'https://example.com/player.html',
+            uri: 'https://example.com/model.zip',
+            zipPath: 'foo/model.vrm',
+          },
+        ],
+        tags: ['3d', 'vrm'],
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${transaction.name} builder`, () => {
+    it('should return a valid TransactionMetadata', () => {
+      const metadata = transaction({
+        chainId: 1,
+        txHash: '0x1234567890',
+        content: 'Check out this transaction!',
+        type: MetadataTransactionType.ERC20,
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
   describe(`when using the ${textOnly.name} builder`, () => {
     it('should return a valid TextOnlyMetadata', () => {
       const metadata = textOnly({ content: 'GM!' });
@@ -114,14 +369,115 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${profile.name} builder`, () => {
-    it('should return a valid ProfileMetadata', () => {
-      const metadata = profile({ name: 'John Doe' });
+  describe(`when using the ${video.name} builder`, () => {
+    it('should return a valid VideoMetadata', () => {
+      const metadata = video({
+        title: 'Great video!',
+        video: {
+          item: 'https://example.com/video.mp4',
+          type: MediaVideoMimeType.MP4,
+          cover: 'https://example.com/thumbnail.png',
+          duration: 123,
+          altTag: 'The video of my life',
+          license: MetadataLicenseType.CCO,
+        },
+        attachments: [
+          {
+            item: 'https://example.com/soundtrack.mp3',
+            type: MediaAudioMimeType.MP3,
+            license: MetadataLicenseType.CCO,
+          },
+        ],
+      });
 
       expect(metadata).toMatchSnapshot({
         lens: {
           id: expect.any(String),
-          name: 'John Doe',
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${shortVideo.name} builder`, () => {
+    it('should return a valid VideoMetadata', () => {
+      const metadata = shortVideo({
+        title: 'Great video!',
+        video: {
+          item: 'https://example.com/video.mp4',
+          type: MediaVideoMimeType.MP4,
+          cover: 'https://example.com/thumbnail.png',
+          duration: 123,
+          altTag: 'The video of my life',
+          license: MetadataLicenseType.CCO,
+        },
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${mirror.name} builder`, () => {
+    it('should return a valid MirrorMetadata', () => {
+      const metadata = mirror({
+        appId: 'com.example.app',
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${profile.name} builder`, () => {
+    it('should return a valid ProfileMetadata', () => {
+      const metadata = profile({
+        name: 'John Doe',
+        bio: `
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
+
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        - Donec a diam lectus.
+        `,
+        picture: 'https://example.com/picture.png',
+        coverPicture: 'https://example.com/cover.png',
+        attributes: [
+          {
+            key: 'twitter',
+            type: MetadataAttributeType.STRING,
+            value: 'https://twitter.com/johndoe',
+          },
+          {
+            key: 'dob',
+            type: MetadataAttributeType.DATE,
+            value: '1990-01-01T00:00:00Z',
+          },
+          {
+            key: 'enabled',
+            type: MetadataAttributeType.BOOLEAN,
+            value: 'true',
+          },
+          {
+            key: 'height',
+            type: MetadataAttributeType.NUMBER,
+            value: '1.8',
+          },
+          {
+            key: 'settings',
+            type: MetadataAttributeType.JSON,
+            value: '{"theme": "dark"}',
+          },
+        ],
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
         },
       });
     });

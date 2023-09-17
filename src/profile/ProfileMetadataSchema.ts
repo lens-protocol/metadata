@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { ProfileSchemaId } from './ProfileSchemaId.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
 import {
+  AppId,
   AppIdSchema,
   Markdown,
   Signature,
@@ -18,6 +19,12 @@ export type ProfileMetadataDetails = {
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.
    */
   id: string;
+  /**
+   * The App Id that this Profile details are relevant for.
+   *
+   * If omitted the data is considered to be the global Profile data.
+   */
+  appId?: AppId;
   /**
    * The profile display name.
    */
