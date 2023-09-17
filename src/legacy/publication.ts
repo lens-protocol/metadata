@@ -476,7 +476,7 @@ export type PublicationMetadata = PublicationMetadataV1 | PublicationMetadataV2;
  *
  * @example
  * with `parse`:
- * ```typescript
+ * ```ts
  * legacy.PublicationMetadataSchema.parse(valid); // => legacy.PublicationMetadata
  *
  * legacy.PublicationMetadataSchema.parse(invalid); // => throws ZodError
@@ -484,7 +484,7 @@ export type PublicationMetadata = PublicationMetadataV1 | PublicationMetadataV2;
  *
  * @example
  * with `safeParse`:
- * ```typescript
+ * ```ts
  * legacy.PublicationMetadataSchema.safeParse(valid);
  * // => { success: true, data: legacy.PublicationMetadata }
  *

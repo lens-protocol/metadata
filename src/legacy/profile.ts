@@ -39,7 +39,7 @@ export type ProfileMetadataAttribute = z.infer<typeof ProfileMetadataAttributeSc
  *
  * @example
  * with `parse`:
- * ```typescript
+ * ```ts
  * legacy.ProfileMetadataSchema.parse(valid); // => legacy.ProfileMetadata
  *
  * legacy.ProfileMetadataSchema.parse(invalid); // => throws ZodError
@@ -47,7 +47,7 @@ export type ProfileMetadataAttribute = z.infer<typeof ProfileMetadataAttributeSc
  *
  * @example
  * with `safeParse`:
- * ```typescript
+ * ```ts
  * legacy.ProfileMetadataSchema.safeParse(valid);
  * // => { success: true, data: legacy.ProfileMetadata }
  *

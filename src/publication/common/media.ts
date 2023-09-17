@@ -198,7 +198,7 @@ export type MediaVideo = {
   /**
    * The alt tag for accessibility.
    */
-  altTag?: EncryptableString;
+  altTag?: string;
   /**
    * The cover image for the video.
    */
@@ -233,10 +233,101 @@ export const MediaVideoSchema = MediaCommonSchema.extend({
  */
 export type AnyMedia = MediaAudio | MediaImage | MediaVideo;
 
+const AnyMediaImageMimeType = {
+  ...MediaAudioMimeType,
+  ...MediaImageMimeType,
+  ...MediaVideoMimeType,
+};
+type AnyMediaImageMimeType = MediaAudioMimeType | MediaImageMimeType | MediaVideoMimeType;
+
+type AnyMediaShape = Pick<AnyMedia, 'type'>;
+const AnyMediaShapeScheme: z.ZodType<AnyMediaShape, z.ZodTypeDef, unknown> = z.object({
+  type: z.nativeEnum(AnyMediaImageMimeType),
+});
+
+function isAnyMediaShape(val: unknown): val is AnyMediaShape {
+  return AnyMediaShapeScheme.safeParse(val).success;
+}
+
+function resolveAnyMediaSchema(val: unknown) {
+  if (!isAnyMediaShape(val)) return AnyMediaShapeScheme;
+
+  switch (val.type) {
+    case MediaAudioMimeType.WAV:
+    case MediaAudioMimeType.WAV_VND:
+    case MediaAudioMimeType.MP3:
+    case MediaAudioMimeType.OGG_AUDIO:
+    case MediaAudioMimeType.MP4_AUDIO:
+    case MediaAudioMimeType.AAC:
+    case MediaAudioMimeType.WEBM_AUDIO:
+    case MediaAudioMimeType.FLAC:
+      return MediaAudioSchema;
+
+    case MediaImageMimeType.BMP:
+    case MediaImageMimeType.GIF:
+    case MediaImageMimeType.HEIC:
+    case MediaImageMimeType.JPEG:
+    case MediaImageMimeType.PNG:
+    case MediaImageMimeType.SVG_XML:
+    case MediaImageMimeType.TIFF:
+    case MediaImageMimeType.WEBP:
+    case MediaImageMimeType.X_MS_BMP:
+      return MediaImageSchema;
+
+    case MediaVideoMimeType.GLTF:
+    case MediaVideoMimeType.GLTF_BINARY:
+    case MediaVideoMimeType.M4V:
+    case MediaVideoMimeType.MOV:
+    case MediaVideoMimeType.MP4:
+    case MediaVideoMimeType.MPEG:
+    case MediaVideoMimeType.OGG:
+    case MediaVideoMimeType.OGV:
+    case MediaVideoMimeType.QUICKTIME:
+    case MediaVideoMimeType.WEBM:
+      return MediaVideoSchema;
+  }
+
+  // the alleged AnyMedia is not a valid shape
+  return AnyMediaShapeScheme;
+}
+
 /**
  * @internal
  */
-export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, object> = z.discriminatedUnion(
-  'type',
-  [MediaAudioSchema, MediaImageSchema, MediaVideoSchema],
-);
+export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
+  .discriminatedUnion('type', [MediaAudioSchema, MediaImageSchema, MediaVideoSchema])
+  // the following is necessary cause discriminatedUnion does not properly work when
+  // the discriminant is a union of enums, so we keep the discriminatedUnion for the
+  // correct JSON Schema definition but we manually refine the type for runtime checks
+  .catch((ctx) => ctx.input as AnyMedia) // passthrough even if might not be an AnyMedia type
+  .superRefine((val: unknown, ctx): val is AnyMedia => {
+    const Schema = resolveAnyMediaSchema(val);
+
+    if (!Schema) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_union_discriminator,
+        options: [
+          ...new Set(
+            [
+              Object.values(MediaAudioMimeType),
+              Object.values(MediaImageMimeType),
+              Object.values(MediaVideoMimeType),
+            ].flat(),
+          ),
+        ],
+        message:
+          'Invalid discriminator value. Expected one of `MediaAudioMimeType`, `MediaImageMimeType`, `MediaVideoMimeType` values.',
+      });
+      return z.NEVER;
+    }
+
+    const result = Schema.safeParse(val);
+
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        ctx.addIssue(issue);
+      });
+    }
+
+    return z.NEVER;
+  });

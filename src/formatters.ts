@@ -88,7 +88,7 @@ function formatZodIssue(issue: z.ZodIssue): string {
  * @category Helpers
  *
  * @example
- * ```typescript
+ * ```ts
  * const result = PublicationMetadataSchema.safeParse(invalid);
  *
  * if (!result.success) {

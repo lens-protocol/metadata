@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { ProfileSchemaId } from './ProfileSchemaId.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
 import {
+  AppId,
   AppIdSchema,
   Markdown,
   Signature,
@@ -18,6 +19,12 @@ export type ProfileMetadataDetails = {
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.
    */
   id: string;
+  /**
+   * The App Id that this Profile details are relevant for.
+   *
+   * If omitted the data is considered to be the global Profile data.
+   */
+  appId?: AppId;
   /**
    * The profile display name.
    */
@@ -88,6 +95,8 @@ export type ProfileMetadata = {
   lens: ProfileMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
+   *
+   * @experimental DO NOT use ye
    */
   signature?: Signature;
 };
@@ -99,7 +108,7 @@ export type ProfileMetadata = {
  *
  * @example
  * with `parse`:
- * ```typescript
+ * ```ts
  * ProfileMetadataSchema.parse(valid); // => ProfileMetadata
  *
  * ProfileMetadataSchema.parse(invalid); // => throws ZodError
@@ -107,7 +116,7 @@ export type ProfileMetadata = {
  *
  * @example
  * with `safeParse`:
- * ```typescript
+ * ```ts
  * ProfileMetadataSchema.safeParse(valid);
  * // => { success: true, data: ProfileMetadata }
  *

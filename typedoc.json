@@ -13,7 +13,7 @@
   "out": "docs",
   "readme": "none",
   "categoryOrder": ["Compose", "Parse", "Helpers", "Other"],
-  "sort": ["source-order", "enum-value-ascending"],
+  // "sort": ["source-order", "enum-value-ascending"],
   "plugin": ["typedoc-plugin-zod"],
   "disableSources": false,
   "treatWarningsAsErrors": false,

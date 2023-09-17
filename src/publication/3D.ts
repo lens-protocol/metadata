@@ -120,6 +120,8 @@ export type ThreeDMetadata = MarketplaceMetadata & {
   lens: ThreeDMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
+   *
+   * @experimental DO NOT use ye
    */
   signature?: Signature;
 };

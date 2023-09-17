@@ -3,12 +3,233 @@
 exports[`Given the publication metadata builders when using the article builder should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
-  "image": "https://example.com/image.png",
   "lens": {
-    "content": "GM!",
+    "attachments": [
+      {
+        "altTag": "The answer",
+        "item": "https://example.com/answer",
+        "type": "image/png",
+      },
+    ],
+    "content": "
+        ## Heading
+
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
+
+        ## Question
+
+        What is the answer to life, the universe and everything?
+
+        ## Answer
+
+        42
+
+        ![The answer](https://example.com/answer.png)
+        ",
     "id": Any<String>,
     "locale": "en",
     "mainContentFocus": "ARTICLE",
+    "tags": [
+      "question",
+      "42",
+    ],
+    "title": "Great Question",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the audio builder should return a valid AudioMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/audio/3.0.0.json",
+  "lens": {
+    "attachments": [
+      {
+        "duration": 234,
+        "item": "https://example.com/song-1.mp3",
+        "type": "audio/mpeg",
+      },
+      {
+        "duration": 345,
+        "item": "https://example.com/song-2.mp3",
+        "type": "audio/mpeg",
+      },
+    ],
+    "audio": {
+      "artist": "John Doe",
+      "cover": "https://example.com/cover.png",
+      "item": "https://example.com/song.mp3",
+      "type": "audio/mpeg",
+    },
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "AUDIO",
+    "title": "Great song!",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata for Geo URI location 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "CHECKING_IN",
+    "position": "geo:40.6892,-74.0444",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata for PhysicalAddress 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
+  "lens": {
+    "address": {
+      "country": "US",
+      "locality": "New York",
+      "postalCode": "10001",
+      "region": "NY",
+      "streetAddress": "1st Street",
+    },
+    "id": Any<String>,
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "CHECKING_IN",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the embed builder should return a valid EmbedMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/embed/3.0.0.json",
+  "lens": {
+    "embed": "https://example.com/embed.html",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "EMBED",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the event builder should return a valid EventMetadata for Geo URI location 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/event/3.0.0.json",
+  "lens": {
+    "endsAt": "2028-10-01T01:00:00Z",
+    "id": Any<String>,
+    "links": [
+      "https://example.com/tickets.html",
+    ],
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "EVENT",
+    "position": "geo:40.6892,-74.0444",
+    "startsAt": "2028-10-01T00:00:00Z",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the event builder should return a valid EventMetadata for PhysicalAddress 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/event/3.0.0.json",
+  "lens": {
+    "address": {
+      "country": "US",
+      "locality": "New York",
+      "postalCode": "10001",
+      "region": "NY",
+      "streetAddress": "1st Street",
+    },
+    "endsAt": "2028-10-01T01:00:00Z",
+    "id": Any<String>,
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "EVENT",
+    "startsAt": "2028-10-01T00:00:00Z",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the image builder should return a valid ImageMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/image/3.0.0.json",
+  "lens": {
+    "attachments": [
+      {
+        "altTag": "Me touching a tree",
+        "item": "https://example.com/image-1.png",
+        "license": "CC BY-NC",
+        "type": "image/png",
+      },
+      {
+        "altTag": "The tree touching me",
+        "item": "https://example.com/image-2.png",
+        "license": "CC BY-NC",
+        "type": "image/png",
+      },
+    ],
+    "id": Any<String>,
+    "image": {
+      "altTag": "Me touching grass",
+      "item": "https://example.com/image.png",
+      "license": "CCO",
+      "type": "image/png",
+    },
+    "locale": "en",
+    "mainContentFocus": "IMAGE",
+    "title": "Touch grass",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the link builder should return a valid LinkMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/link/3.0.0.json",
+  "lens": {
+    "content": "Check out this cool website!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "LINK",
+    "sharingLink": "https://example.com/embed.html",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the liveStream builder should return a valid LiveStreamMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/livestream/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "liveUrl": "https://example.com/live.html",
+    "locale": "en",
+    "mainContentFocus": "LIVESTREAM",
+    "playbackUrl": "https://example.com/playback.html",
+    "startsAt": "2028-10-01T00:00:00Z",
+    "title": "Live stream #1",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the liveStream builder when using the mint builder should return a valid MintMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/mint/3.0.0.json",
+  "lens": {
+    "content": "Check out this NFT!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "MINT",
+    "mintLink": "https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/1234567890",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the mirror builder should return a valid MirrorMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/mirror/1.0.0.json",
+  "lens": {
+    "appId": "com.example.app",
+    "id": Any<String>,
   },
 }
 `;
@@ -17,8 +238,95 @@ exports[`Given the publication metadata builders when using the profile builder 
 {
   "$schema": "https://json-schemas.lens.dev/profile/2.0.0.json",
   "lens": {
+    "attributes": [
+      {
+        "key": "twitter",
+        "type": "String",
+        "value": "https://twitter.com/johndoe",
+      },
+      {
+        "key": "dob",
+        "type": "Date",
+        "value": "1990-01-01T00:00:00Z",
+      },
+      {
+        "key": "enabled",
+        "type": "Boolean",
+        "value": "true",
+      },
+      {
+        "key": "height",
+        "type": "Number",
+        "value": "1.8",
+      },
+      {
+        "key": "settings",
+        "type": "JSON",
+        "value": "{"theme": "dark"}",
+      },
+    ],
+    "bio": "
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
+
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        - Donec a diam lectus.
+        ",
+    "coverPicture": "https://example.com/cover.png",
     "id": Any<String>,
     "name": "John Doe",
+    "picture": "https://example.com/picture.png",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the shortVideo builder should return a valid VideoMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/video/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "SHORT_VIDEO",
+    "title": "Great video!",
+    "video": {
+      "altTag": "The video of my life",
+      "cover": "https://example.com/thumbnail.png",
+      "duration": 123,
+      "item": "https://example.com/video.mp4",
+      "license": "CCO",
+      "type": "video/mp4",
+    },
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the space builder should return a valid SpaceMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/space/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "link": "https://example.com/space.html",
+    "locale": "en",
+    "mainContentFocus": "SPACE",
+    "startsAt": "2028-10-01T00:00:00Z",
+    "title": "Space #1",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the story builder should return a valid StoryMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/story/3.0.0.json",
+  "lens": {
+    "asset": {
+      "altTag": "The story of my life",
+      "cover": "https://example.com/thumbnail.png",
+      "duration": 123,
+      "item": "https://example.com/story.mp4",
+      "type": "video/mp4",
+    },
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "STORY",
   },
 }
 `;
@@ -31,6 +339,72 @@ exports[`Given the publication metadata builders when using the textOnly builder
     "id": Any<String>,
     "locale": "en",
     "mainContentFocus": "TEXT_ONLY",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the threeD builder should return a valid ThreeDMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/3d/3.0.0.json",
+  "lens": {
+    "assets": [
+      {
+        "format": "VRM",
+        "playerUrl": "https://example.com/player.html",
+        "uri": "https://example.com/model.zip",
+        "zipPath": "foo/model.vrm",
+      },
+    ],
+    "content": "Check out this 3D model!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "3D",
+    "tags": [
+      "3d",
+      "vrm",
+    ],
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the transaction builder should return a valid TransactionMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/transaction/3.0.0.json",
+  "lens": {
+    "chainId": 1,
+    "content": "Check out this transaction!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "TRANSACTION",
+    "txHash": "0x1234567890",
+    "type": "ERC20",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the video builder should return a valid VideoMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/video/3.0.0.json",
+  "lens": {
+    "attachments": [
+      {
+        "item": "https://example.com/soundtrack.mp3",
+        "license": "CCO",
+        "type": "audio/mpeg",
+      },
+    ],
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "VIDEO",
+    "title": "Great video!",
+    "video": {
+      "altTag": "The video of my life",
+      "cover": "https://example.com/thumbnail.png",
+      "duration": 123,
+      "item": "https://example.com/video.mp4",
+      "license": "CCO",
+      "type": "video/mp4",
+    },
   },
 }
 `;

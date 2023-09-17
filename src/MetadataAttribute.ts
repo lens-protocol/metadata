@@ -69,7 +69,7 @@ export type NumberAttribute = {
    * A valid JS number serialized as string. It's consumer responsibility to parse it.
    *
    * @example
-   * ```typescript
+   * ```ts
    * '42'
    *
    * '42n'
