@@ -303,6 +303,34 @@ export type CheckingInOptions = CheckingInDetails & {
  *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * With GPS coordinates:
+ * ```ts
+ * const metadata = checkingIn({
+ *   location: 'The Moon',
+ *   position: geoUri({
+ *     lat: 40.6892,
+ *     lng: -74.0444,
+ *   }),
+ * });
+ * ```
+ * See {@link geoUri} for more details.
+ *
+ * @example
+ * With a physical address:
+ * ```ts
+ * const metadata = checkingIn({
+ *   location: 'The Moon',
+ *   address: {
+ *     streetAddress: '1st Street',
+ *     locality: 'New York',
+ *     region: 'NY',
+ *     postalCode: '10001',
+ *     country: 'US',
+ *   },
+ * });
+ * ```
  */
 export function checkingIn({
   marketplace,

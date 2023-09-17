@@ -24,17 +24,7 @@ exports[`Given the publication metadata builders when using the article builder 
 }
 `;
 
-exports[`Given the publication metadata builders when using the profile builder should return a valid ProfileMetadata 1`] = `
-{
-  "$schema": "https://json-schemas.lens.dev/profile/2.0.0.json",
-  "lens": {
-    "id": Any<String>,
-    "name": "John Doe",
-  },
-}
-`;
-
-exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 1`] = `
+exports[`Given the publication metadata builders when using the audio builder should return a valid AudioMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/audio/3.0.0.json",
   "lens": {
@@ -64,7 +54,56 @@ exports[`Given the publication metadata builders when using the textOnly builder
 }
 `;
 
-exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 2`] = `
+exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "CHECKING_IN",
+    "position": "geo:40.6892,-74.0444",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata for Geo URI location 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "CHECKING_IN",
+    "position": "geo:40.6892,-74.0444",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata for PhysicalAddress 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "locale": "en",
+    "location": "The Moon",
+    "mainContentFocus": "CHECKING_IN",
+    "position": "geo:40.6892,-74.0444",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the profile builder should return a valid ProfileMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/profile/2.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "name": "John Doe",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json",
   "lens": {

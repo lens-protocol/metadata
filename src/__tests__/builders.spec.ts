@@ -1,6 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { ValidationError, article, textOnly, profile, audio } from '../builders.js';
+import { ValidationError, article, textOnly, profile, audio, checkingIn } from '../builders.js';
+import { geoUri } from '../primitives.js';
 import { MediaAudioMimeType, MediaImageMimeType } from '../publication/index.js';
 
 describe(`Given the publication metadata builders`, () => {
@@ -31,8 +32,8 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${textOnly.name} builder`, () => {
-    it('should return a valid TextOnlyMetadata', () => {
+  describe(`when using the ${audio.name} builder`, () => {
+    it('should return a valid AudioMetadata', () => {
       const metadata = audio({
         title: 'Great song!',
         audio: {
@@ -54,6 +55,43 @@ describe(`Given the publication metadata builders`, () => {
             duration: 345,
           },
         ],
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${checkingIn.name} builder`, () => {
+    it('should return a valid CheckingInMetadata for Geo URI location', () => {
+      const metadata = checkingIn({
+        location: 'The Moon',
+        position: geoUri({
+          lat: 40.6892,
+          lng: -74.0444,
+        }),
+      });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+        },
+      });
+    });
+
+    it('should return a valid CheckingInMetadata for PhysicalAddress', () => {
+      const metadata = checkingIn({
+        location: 'The Moon',
+        address: {
+          streetAddress: '1st Street',
+          locality: 'New York',
+          region: 'NY',
+          postalCode: '10001',
+          country: 'US',
+        },
       });
 
       expect(metadata).toMatchSnapshot({
