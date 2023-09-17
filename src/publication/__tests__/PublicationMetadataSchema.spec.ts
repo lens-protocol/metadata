@@ -23,9 +23,9 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "lens.id": Required
-        · "lens.content": Required
         · "lens.locale": Required
-        · "lens.mainContentFocus": Invalid literal value, expected "ARTICLE""
+        · "lens.mainContentFocus": Invalid literal value, expected "ARTICLE"
+        · "lens.content": Required"
       `);
     });
   });
@@ -202,9 +202,9 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "lens.id": Required
-        · "lens.content": Required
         · "lens.locale": Required
-        · "lens.mainContentFocus": Invalid literal value, expected "TEXT_ONLY""
+        · "lens.mainContentFocus": Invalid literal value, expected "TEXT_ONLY"
+        · "lens.content": Required"
       `);
     });
   });

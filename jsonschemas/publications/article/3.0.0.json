@@ -33,7 +33,7 @@
       "type": "string",
       "minLength": 6,
       "format": "uri",
-      "description": "In spec for OpenSea and other providers - also used when using EMBED main publication focusA URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+      "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
     },
     "signature": {
       "type": "string",
@@ -65,24 +65,14 @@
           "minLength": 1,
           "description": "The App Id that this publication belongs to."
         },
-        "content": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Markdown",
-              "description": "The content for the publication as markdown."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
-        },
         "attributes": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/MetadataAttribute"
           },
           "minItems": 1,
-          "description": "An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+          "maxItems": 20,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
         },
         "locale": {
           "type": "string",
@@ -115,6 +105,17 @@
           "const": "ARTICLE",
           "description": "The main focus of the publication."
         },
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Markdown",
+              "description": "The content for the publication as markdown."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
         "title": {
           "type": "string",
           "minLength": 1,
@@ -131,9 +132,9 @@
       },
       "required": [
         "id",
-        "content",
         "locale",
-        "mainContentFocus"
+        "mainContentFocus",
+        "content"
       ],
       "additionalProperties": false,
       "description": "The common Lens specific metadata details."
@@ -265,7 +266,7 @@
       ],
       "additionalProperties": false
     },
-    "Address": {
+    "PhysicalAddress": {
       "type": "object",
       "properties": {
         "formatted": {
@@ -357,7 +358,7 @@
               "$ref": "#/$defs/NetworkAddress"
             },
             "decimals": {
-              "type": "number",
+              "type": "integer",
               "minimum": 0,
               "description": "The number of decimals of the asset."
             }
@@ -371,7 +372,7 @@
         "value": {
           "type": "string",
           "minLength": 1,
-          "description": "The amount in the smallest unit of the currency (e.g. wei for ETH)."
+          "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
         }
       },
       "required": [
@@ -379,7 +380,7 @@
         "value"
       ],
       "additionalProperties": false,
-      "description": "An amount of a specific currency."
+      "description": "An amount of a specific asset."
     },
     "AnyMedia": {
       "anyOf": [
@@ -536,7 +537,7 @@
               "type": "string",
               "minLength": 6,
               "format": "uri",
-              "description": "The item is the url to the media"
+              "description": "The location of the file."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -549,7 +550,7 @@
             "$ref": "#/$defs/MetadataAttribute"
           },
           "minItems": 1,
-          "description": "An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
           "type": "string",
@@ -563,7 +564,7 @@
             "audio/webm",
             "audio/flac"
           ],
-          "description": "The mime type of the audio"
+          "description": "The mime type of the audio file."
         },
         "cover": {
           "anyOf": [
@@ -571,7 +572,7 @@
               "type": "string",
               "minLength": 6,
               "format": "uri",
-              "description": "The cover image for the audio"
+              "description": "The cover image for the audio."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -581,18 +582,18 @@
         "duration": {
           "type": "integer",
           "exclusiveMinimum": 0,
-          "description": "How long the the audio is in seconds"
+          "description": "How long the the audio is in seconds."
         },
         "license": {
           "$ref": "#/$defs/MetadataLicenseType",
-          "description": "The license for the audio"
+          "description": "The license for the audio."
         },
         "credits": {
           "anyOf": [
             {
               "type": "string",
               "minLength": 1,
-              "description": "The credits for the audio"
+              "description": "The credits for the audio."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -604,7 +605,7 @@
             {
               "type": "string",
               "minLength": 1,
-              "description": "The artist for the audio"
+              "description": "The name of the artist."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -628,7 +629,7 @@
             {
               "type": "string",
               "minLength": 1,
-              "description": "The record label for the audio"
+              "description": "The record label for the audio."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -645,7 +646,7 @@
             "SOUND",
             "OTHER"
           ],
-          "description": "The type of audio"
+          "description": "The type of audio."
         },
         "lyrics": {
           "anyOf": [
@@ -653,7 +654,7 @@
               "type": "string",
               "minLength": 6,
               "format": "uri",
-              "description": "The lyrics for the audio"
+              "description": "The lyrics for the audio."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -800,7 +801,7 @@
                 "true",
                 "false"
               ],
-              "description": "A boolean value serialized as string.  It's consumer responsibility to parse it."
+              "description": "A JS boolean value serialized as string. It's consumer responsibility to parse it."
             }
           },
           "required": [
@@ -900,7 +901,7 @@
             "value": {
               "type": "string",
               "minLength": 1,
-              "description": "A valid JSON string. It's consumer responsibility to parse it."
+              "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },
           "required": [
@@ -974,16 +975,16 @@
     "NftOwnershipCondition": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "string",
+          "const": "NFT_OWNERSHIP"
+        },
         "contractType": {
           "type": "string",
           "enum": [
             "ERC721",
             "ERC1155"
           ]
-        },
-        "type": {
-          "type": "string",
-          "const": "NFT_OWNERSHIP"
         },
         "contract": {
           "$ref": "#/$defs/NetworkAddress"
@@ -999,8 +1000,8 @@
         }
       },
       "required": [
-        "contractType",
         "type",
+        "contractType",
         "contract"
       ],
       "additionalProperties": false

@@ -1,5 +1,4 @@
-import { ProfileMetadata } from './profile';
-import { PublicationMetadata } from './publication';
+import { Signature } from './primitives';
 
 /**
  * Branding helper type.
@@ -63,6 +62,9 @@ export function never(message = 'Unexpected call to never()'): never {
  */
 export type UnknownObject = Record<string, unknown>;
 
+/**
+ * Declares an array of at least one element of the specified type.
+ */
 export type NonEmptyArray<T> = [T, ...T[]];
 
 /**
@@ -106,16 +108,6 @@ export function assertHasTwoOrMore<T>(
   );
 }
 
-const schemaVersionRegex = /(\d+\.\d+\.\d+)/;
-
-export function extractVersion(metadata: ProfileMetadata | PublicationMetadata): string {
-  const result = schemaVersionRegex.exec(metadata.$schema);
-
-  invariant(result !== null, `Invalid schema id: ${metadata.$schema}`);
-
-  return result[0];
-}
-
 /**
  * Beautify the  readout of all of the members of that intersection.
  *
@@ -127,3 +119,16 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
   // eslint-disable-next-line @typescript-eslint/ban-types
 } & {};
+
+/**
+ * @internal
+ */
+export type ShapeCheck<T> = T extends {
+  $schema: string;
+
+  lens: unknown;
+
+  signature?: Signature;
+}
+  ? T
+  : never;

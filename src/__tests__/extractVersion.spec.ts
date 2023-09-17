@@ -1,8 +1,8 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { mockProfileMetadata } from '../profile/__helpers__/mocks';
-import { mockTextOnlyMetadata } from '../publication/__helpers__/mocks';
-import { extractVersion } from '../utils';
+import { extractVersion } from '../extractVersion.js';
+import { mockProfileMetadata } from '../profile/__helpers__/mocks.js';
+import { mockTextOnlyMetadata } from '../publication/__helpers__/mocks.js';
 
 describe(`Given the ${extractVersion.name} function`, () => {
   describe('when invoked on PublicationMetadata', () => {

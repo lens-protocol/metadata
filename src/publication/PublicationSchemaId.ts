@@ -2,6 +2,9 @@ import { SchemasRoot } from '../constants';
 
 const location = `${SchemasRoot}/publications`;
 
+/**
+ * A list of all the publication schema ids (past and present).
+ */
 export enum PublicationSchemaId {
   THREE_D_LATEST = `${location}/3d/3.0.0.json`,
   ARTICLE_LATEST = `${location}/article/3.0.0.json`,

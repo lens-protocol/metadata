@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+/**
+ * The supported license types.
+ */
 export enum MetadataLicenseType {
   CCO = 'CCO',
   CC_BY = 'CC BY',
@@ -39,4 +42,7 @@ export enum MetadataLicenseType {
   TBNL_NC_ND_NPL_Ledger = 'TBNL-NC-ND-NPL-Ledger',
 }
 
+/**
+ * @internal
+ */
 export const MetadataLicenseTypeSchema = z.nativeEnum(MetadataLicenseType);

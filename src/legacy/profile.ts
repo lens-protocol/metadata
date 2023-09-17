@@ -71,7 +71,7 @@ export const ProfileMetadataSchema = z.object({
   cover_picture: z.string({ description: 'Cover picture.' }).nullable(),
 
   attributes: ProfileMetadataAttributeSchema.array().describe(
-    'An optional bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
+    'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
   ),
 });
 

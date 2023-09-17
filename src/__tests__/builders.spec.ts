@@ -1,11 +1,16 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { ValidationError, article, textOnly } from '../builders.js';
+import { ValidationError, article, textOnly, profile } from '../builders.js';
 
 describe(`Given the publication metadata builders`, () => {
   describe(`when using the ${article.name} builder`, () => {
     it('should return a valid TextOnlyMetadata', () => {
-      const metadata = article({ content: 'GM!' });
+      const metadata = article({
+        content: 'GM!',
+        marketplace: {
+          image: 'https://example.com/image.png',
+        },
+      });
 
       expect(metadata).toMatchSnapshot({
         lens: {
@@ -26,6 +31,19 @@ describe(`Given the publication metadata builders`, () => {
       expect(metadata).toMatchSnapshot({
         lens: {
           id: expect.any(String),
+        },
+      });
+    });
+  });
+
+  describe(`when using the ${profile.name} builder`, () => {
+    it('should return a valid ProfileMetadata', () => {
+      const metadata = profile({ name: 'John Doe' });
+
+      expect(metadata).toMatchSnapshot({
+        lens: {
+          id: expect.any(String),
+          name: 'John Doe',
         },
       });
     });

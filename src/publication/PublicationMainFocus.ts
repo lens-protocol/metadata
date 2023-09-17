@@ -1,3 +1,6 @@
+/**
+ * The main focus of a publication.
+ */
 export enum PublicationMainFocus {
   VIDEO = 'VIDEO',
   IMAGE = 'IMAGE',

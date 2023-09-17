@@ -3,11 +3,22 @@
 exports[`Given the publication metadata builders when using the article builder should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
+  "image": "https://example.com/image.png",
   "lens": {
     "content": "GM!",
     "id": Any<String>,
     "locale": "en",
     "mainContentFocus": "ARTICLE",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the profile builder should return a valid ProfileMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/profile/2.0.0.json",
+  "lens": {
+    "id": Any<String>,
+    "name": "John Doe",
   },
 }
 `;

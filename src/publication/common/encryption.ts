@@ -2,15 +2,21 @@
 import { z } from 'zod';
 
 import {
+  Amount,
   AmountSchema,
+  EvmAddress,
   EvmAddressSchema,
+  NetworkAddress,
   NetworkAddressSchema,
+  ProfileId,
   ProfileIdSchema,
+  PublicationId,
   PublicationIdSchema,
+  TokenId,
   TokenIdSchema,
   nonEmptyStringSchema,
 } from '../../primitives.js';
-import { hasTwoOrMore, Brand, assertHasTwoOrMore, TwoAtLeastArray } from '../../utils.js';
+import { hasTwoOrMore, Brand, assertHasTwoOrMore, TwoAtLeastArray, Prettify } from '../../utils.js';
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -32,12 +38,18 @@ export enum ConditionType {
   OR = 'OR',
 }
 
+export type NftOwnershipCondition = {
+  type: ConditionType.NFT_OWNERSHIP;
+  contractType: NftContractType;
+  contract: NetworkAddress;
+  tokenIds?: TokenId[];
+};
 /**
  * @internal
  */
 export const NftOwnershipConditionSchema = z.object({
-  contractType: z.nativeEnum(NftContractType),
   type: z.literal(ConditionType.NFT_OWNERSHIP),
+  contractType: z.nativeEnum(NftContractType),
   contract: NetworkAddressSchema,
   tokenIds: TokenIdSchema.array()
     .min(1)
@@ -47,10 +59,14 @@ export const NftOwnershipConditionSchema = z.object({
         'you MUST provide a list of token IDs for ERC1155.',
     ),
 });
-export type NftOwnershipCondition = z.infer<typeof NftOwnershipConditionSchema>;
 
+/**
+ * Creates a NFT ownership condition.
+ *
+ * @category Helpers
+ */
 export function nftOwnershipCondition(
-  input: Omit<NftOwnershipCondition, 'type'>,
+  input: Prettify<Omit<NftOwnershipCondition, 'type'>>,
 ): NftOwnershipCondition {
   return NftOwnershipConditionSchema.parse({
     type: ConditionType.NFT_OWNERSHIP,
@@ -67,6 +83,11 @@ export enum ConditionComparisonOperator {
   LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
 }
 
+export type Erc20OwnershipCondition = {
+  type: ConditionType.ERC20_OWNERSHIP;
+  amount: Amount;
+  condition: ConditionComparisonOperator;
+};
 /**
  * @internal
  */
@@ -75,8 +96,11 @@ export const Erc20OwnershipConditionSchema = z.object({
   amount: AmountSchema,
   condition: z.nativeEnum(ConditionComparisonOperator),
 });
-export type Erc20OwnershipCondition = z.infer<typeof Erc20OwnershipConditionSchema>;
 
+export type EoaOwnershipCondition = {
+  type: ConditionType.EOA_OWNERSHIP;
+  address: EvmAddress;
+};
 /**
  * @internal
  */
@@ -84,8 +108,11 @@ export const EoaOwnershipConditionSchema = z.object({
   type: z.literal(ConditionType.EOA_OWNERSHIP),
   address: EvmAddressSchema,
 });
-export type EoaOwnershipCondition = z.infer<typeof EoaOwnershipConditionSchema>;
 
+export type ProfileOwnershipCondition = {
+  type: ConditionType.PROFILE_OWNERSHIP;
+  profileId: ProfileId;
+};
 /**
  * @internal
  */
@@ -93,15 +120,25 @@ export const ProfileOwnershipConditionSchema = z.object({
   type: z.literal(ConditionType.PROFILE_OWNERSHIP),
   profileId: ProfileIdSchema,
 });
-export type ProfileOwnershipCondition = z.infer<typeof ProfileOwnershipConditionSchema>;
 
-export function profileOwnershipCondition(input: Omit<ProfileOwnershipCondition, 'type'>) {
+/**
+ * Creates a Lens Profile ownership condition.
+ *
+ * @category Helpers
+ */
+export function profileOwnershipCondition(
+  input: Prettify<Omit<ProfileOwnershipCondition, 'type'>>,
+): ProfileOwnershipCondition {
   return ProfileOwnershipConditionSchema.parse({
     type: ConditionType.PROFILE_OWNERSHIP,
     ...input,
   });
 }
 
+export type FollowCondition = {
+  type: ConditionType.FOLLOW;
+  follow: ProfileId;
+};
 /**
  * @internal
  */
@@ -109,15 +146,24 @@ export const FollowConditionSchema = z.object({
   type: z.literal(ConditionType.FOLLOW),
   follow: ProfileIdSchema,
 });
-export type FollowCondition = z.infer<typeof FollowConditionSchema>;
 
-export function followCondition(input: Omit<FollowCondition, 'type'>) {
+/**
+ * Creates a follow Lens Profile condition.
+ *
+ * @category Helpers
+ */
+export function followCondition(input: Prettify<Omit<FollowCondition, 'type'>>): FollowCondition {
   return FollowConditionSchema.parse({
     type: ConditionType.FOLLOW,
     ...input,
   });
 }
 
+export type CollectCondition = {
+  type: ConditionType.COLLECT;
+  publicationId: PublicationId;
+  thisPublication: boolean;
+};
 /**
  * @internal
  */
@@ -126,7 +172,6 @@ export const CollectConditionSchema = z.object({
   publicationId: PublicationIdSchema,
   thisPublication: z.boolean().optional().default(false),
 });
-export type CollectCondition = z.infer<typeof CollectConditionSchema>;
 
 export type SimpleCondition =
   | CollectCondition
@@ -158,6 +203,11 @@ export type AndCondition<T> = {
   type: ConditionType.AND;
   criteria: TwoAtLeastArray<T>;
 };
+/**
+ * Creates an AND condition between two or more conditions.
+ *
+ * @category Helpers
+ */
 export function andCondition<T>(options: T[]): AndCondition<T> {
   assertHasTwoOrMore(options);
   return {
@@ -187,6 +237,11 @@ export type OrCondition<T> = {
   type: ConditionType.OR;
   criteria: TwoAtLeastArray<T>;
 };
+/**
+ * Creates an OR condition between two or more conditions.
+ *
+ * @category Helpers
+ */
 export function orCondition<T>(options: T[]): OrCondition<T> {
   assertHasTwoOrMore(options);
   return {
@@ -212,9 +267,6 @@ function orConditionSchema<
   });
 }
 
-/**
- * @internal
- */
 export type AnyCondition =
   | SimpleCondition
   | AndCondition<SimpleCondition>
@@ -240,24 +292,11 @@ function refineAnyCondition(condition: AnyCondition, ctx: z.RefinementCtx) {
   }
 }
 
+export type AccessCondition = OrCondition<AnyCondition>;
 /**
  * @internal
  */
-export const AccessConditionSchema = orConditionSchema([
-  NftOwnershipConditionSchema,
-  Erc20OwnershipConditionSchema,
-  EoaOwnershipConditionSchema,
-  ProfileOwnershipConditionSchema,
-  FollowConditionSchema,
-  CollectConditionSchema,
-  andConditionSchema([
-    NftOwnershipConditionSchema,
-    Erc20OwnershipConditionSchema,
-    EoaOwnershipConditionSchema,
-    ProfileOwnershipConditionSchema,
-    FollowConditionSchema,
-    CollectConditionSchema,
-  ]),
+export const AccessConditionSchema: z.ZodType<AccessCondition, z.ZodTypeDef, object> =
   orConditionSchema([
     NftOwnershipConditionSchema,
     Erc20OwnershipConditionSchema,
@@ -265,16 +304,31 @@ export const AccessConditionSchema = orConditionSchema([
     ProfileOwnershipConditionSchema,
     FollowConditionSchema,
     CollectConditionSchema,
-  ]),
-]).superRefine(({ criteria }, ctx) => {
-  criteria.forEach((condition, idx) => {
-    refineAnyCondition(condition, {
-      ...ctx,
-      path: [...ctx.path, 'criteria', idx],
+    andConditionSchema([
+      NftOwnershipConditionSchema,
+      Erc20OwnershipConditionSchema,
+      EoaOwnershipConditionSchema,
+      ProfileOwnershipConditionSchema,
+      FollowConditionSchema,
+      CollectConditionSchema,
+    ]),
+    orConditionSchema([
+      NftOwnershipConditionSchema,
+      Erc20OwnershipConditionSchema,
+      EoaOwnershipConditionSchema,
+      ProfileOwnershipConditionSchema,
+      FollowConditionSchema,
+      CollectConditionSchema,
+    ]),
+  ]).superRefine((root, ctx): root is AccessCondition => {
+    root.criteria.forEach((condition, idx) => {
+      refineAnyCondition(condition, {
+        ...ctx,
+        path: [...ctx.path, 'criteria', idx],
+      });
     });
+    return z.NEVER;
   });
-});
-export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 
 /**
  * A symmetric encryption key.
@@ -305,6 +359,12 @@ export const EncryptedPaths = nonEmptyStringSchema(
   .min(1);
 export type EncryptedPaths = z.infer<typeof EncryptedPaths>;
 
+export type LitEncryptionStrategy = {
+  provider: EncryptionProvider;
+  encryptionKey: LitEncryptionKey;
+  accessCondition: AccessCondition;
+  encryptedPaths: string[];
+};
 /**
  * @internal
  */
@@ -319,18 +379,19 @@ export const LitEncryptionStrategySchema = z.object(
     description: 'Publication encryption strategy powered by the LIT Protocol.',
   },
 );
-export type LitEncryptionStrategy = z.infer<typeof LitEncryptionStrategySchema>;
-
-/**
- * @internal
- */
-export const PublicationEncryptionStrategySchema = z.discriminatedUnion('provider', [
-  LitEncryptionStrategySchema,
-]);
 
 /**
  * The publication encryption strategy.
  *
  * This is normally populated by the Lens SDK so the vast majority of developers will not need to use this directly.
  */
-export type PublicationEncryptionStrategy = z.infer<typeof PublicationEncryptionStrategySchema>;
+export type PublicationEncryptionStrategy = LitEncryptionStrategy;
+
+/**
+ * @internal
+ */
+export const PublicationEncryptionStrategySchema: z.ZodType<
+  PublicationEncryptionStrategy,
+  z.ZodTypeDef,
+  object
+> = z.discriminatedUnion('provider', [LitEncryptionStrategySchema]);

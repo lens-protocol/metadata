@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.20
+
+### Patch Changes
+
+- 308e702: **refactor:** makes the lib TS typedef first
+
 ## 0.1.0-alpha.19
 
 ### Patch Changes
