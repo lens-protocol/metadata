@@ -198,7 +198,7 @@ export type MediaVideo = {
   /**
    * The alt tag for accessibility.
    */
-  altTag?: EncryptableString;
+  altTag?: string;
   /**
    * The cover image for the video.
    */
@@ -233,10 +233,80 @@ export const MediaVideoSchema = MediaCommonSchema.extend({
  */
 export type AnyMedia = MediaAudio | MediaImage | MediaVideo;
 
+function resolveAnyMediaSchma(val: AnyMedia) {
+  switch (val.type) {
+    case MediaAudioMimeType.WAV:
+    case MediaAudioMimeType.WAV_VND:
+    case MediaAudioMimeType.MP3:
+    case MediaAudioMimeType.OGG_AUDIO:
+    case MediaAudioMimeType.MP4_AUDIO:
+    case MediaAudioMimeType.AAC:
+    case MediaAudioMimeType.WEBM_AUDIO:
+    case MediaAudioMimeType.FLAC:
+      return MediaAudioSchema;
+
+    case MediaImageMimeType.BMP:
+    case MediaImageMimeType.GIF:
+    case MediaImageMimeType.HEIC:
+    case MediaImageMimeType.JPEG:
+    case MediaImageMimeType.PNG:
+    case MediaImageMimeType.SVG_XML:
+    case MediaImageMimeType.TIFF:
+    case MediaImageMimeType.WEBP:
+    case MediaImageMimeType.X_MS_BMP:
+      return MediaImageSchema;
+
+    case MediaVideoMimeType.GLTF:
+    case MediaVideoMimeType.GLTF_BINARY:
+    case MediaVideoMimeType.M4V:
+    case MediaVideoMimeType.MOV:
+    case MediaVideoMimeType.MP4:
+    case MediaVideoMimeType.MPEG:
+    case MediaVideoMimeType.OGG:
+    case MediaVideoMimeType.OGV:
+    case MediaVideoMimeType.QUICKTIME:
+    case MediaVideoMimeType.WEBM:
+      return MediaVideoSchema;
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return null;
+}
+
 /**
  * @internal
  */
-export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, object> = z.discriminatedUnion(
-  'type',
-  [MediaAudioSchema, MediaImageSchema, MediaVideoSchema],
-);
+export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
+  .discriminatedUnion('type', [MediaAudioSchema, MediaImageSchema, MediaVideoSchema])
+  .catch((ctx) => ctx.input as AnyMedia)
+  .superRefine((val, ctx): val is AnyMedia => {
+    const Schema = resolveAnyMediaSchma(val);
+
+    if (!Schema) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_union_discriminator,
+        options: [
+          ...new Set(
+            [
+              Object.values(MediaAudioMimeType),
+              Object.values(MediaImageMimeType),
+              Object.values(MediaVideoMimeType),
+            ].flat(),
+          ),
+        ],
+        message:
+          'Invalid discriminator value. Expected one of `MediaAudioMimeType`, `MediaImageMimeType`, `MediaVideoMimeType` values.',
+      });
+      return z.NEVER;
+    }
+
+    const result = Schema.safeParse(val);
+
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        ctx.addIssue(issue);
+      });
+    }
+
+    return z.NEVER;
+  });

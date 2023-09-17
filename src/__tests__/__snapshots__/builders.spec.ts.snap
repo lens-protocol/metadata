@@ -4,6 +4,13 @@ exports[`Given the publication metadata builders when using the article builder 
 {
   "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
   "lens": {
+    "attachments": [
+      {
+        "altTag": "The answer",
+        "item": "https://example.com/answer",
+        "type": "image/png",
+      },
+    ],
     "content": "GM!",
     "id": Any<String>,
     "locale": "en",
@@ -29,12 +36,30 @@ exports[`Given the publication metadata builders when using the profile builder 
 
 exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 1`] = `
 {
-  "$schema": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json",
+  "$schema": "https://json-schemas.lens.dev/publications/audio/3.0.0.json",
   "lens": {
-    "content": "GM!",
+    "attachments": [
+      {
+        "duration": 234,
+        "item": "https://example.com/song-1.mp3",
+        "type": "audio/mpeg",
+      },
+      {
+        "duration": 345,
+        "item": "https://example.com/song-2.mp3",
+        "type": "audio/mpeg",
+      },
+    ],
+    "audio": {
+      "artist": "John Doe",
+      "cover": "https://example.com/cover.png",
+      "item": "https://example.com/song.mp3",
+      "type": "audio/mpeg",
+    },
     "id": Any<String>,
     "locale": "en",
-    "mainContentFocus": "TEXT_ONLY",
+    "mainContentFocus": "AUDIO",
+    "title": "Great song!",
   },
 }
 `;

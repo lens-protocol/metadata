@@ -38,9 +38,22 @@ describe(`Given the publication metadata builders`, () => {
         audio: {
           item: 'https://example.com/song.mp3',
           type: MediaAudioMimeType.MP3,
+
           artist: 'John Doe',
           cover: 'https://example.com/cover.png',
         },
+        attachments: [
+          {
+            item: 'https://example.com/song-1.mp3',
+            type: MediaAudioMimeType.MP3,
+            duration: 234,
+          },
+          {
+            item: 'https://example.com/song-2.mp3',
+            type: MediaAudioMimeType.MP3,
+            duration: 345,
+          },
+        ],
       });
 
       expect(metadata).toMatchSnapshot({
