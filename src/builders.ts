@@ -154,6 +154,7 @@ type ArticleDetails = InputForPublicationMetadataDetails<ArticleMetadataDetails>
  * All {@link ArticleMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.ARTICLE_LATEST`
  */
 export type ArticleOptions = ArticleDetails & {
   /**
@@ -161,7 +162,6 @@ export type ArticleOptions = ArticleDetails & {
    */
   marketplace?: MarketplaceDetails;
 };
-
 /**
  * Creates a valid ArticleMetadata.
  *
@@ -197,6 +197,7 @@ type AudioDetails = InputForPublicationMetadataDetails<AudioMetadataDetails>;
  * All {@link AudioMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.AUDIO_LATEST`
  */
 export type AudioOptions = AudioDetails & {
   /**
@@ -239,6 +240,7 @@ type CheckingInDetails = InputForPublicationMetadataDetails<CheckingInMetadataDe
  * All {@link CheckingInMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.CHECKING_IN_LATEST`
  */
 export type CheckingInOptions = CheckingInDetails & {
   /**
@@ -281,6 +283,7 @@ type EmbedDetails = InputForPublicationMetadataDetails<EmbedMetadataDetails>;
  * All {@link EmbedMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.EMBED_LATEST`
  */
 export type EmbedOptions = EmbedDetails & {
   /**
@@ -323,6 +326,7 @@ type EventDetails = InputForPublicationMetadataDetails<EventMetadataDetails>;
  * All {@link EventMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.EVENT_LATEST`
  */
 export type EventOptions = EventDetails & {
   /**
@@ -365,6 +369,7 @@ type ImageDetails = InputForPublicationMetadataDetails<ImageMetadataDetails>;
  * All {@link ImageMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.IMAGE_LATEST`
  */
 export type ImageOptions = ImageDetails & {
   /**
@@ -407,6 +412,7 @@ type LinkDetails = InputForPublicationMetadataDetails<LinkMetadataDetails>;
  * All {@link LinkMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.LINK_LATEST`
  */
 export type LinkOptions = LinkDetails & {
   /**
@@ -449,6 +455,7 @@ type LiveStreamDetails = InputForPublicationMetadataDetails<LiveStreamMetadataDe
  * All {@link LiveStreamMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.LIVESTREAM_LATEST`
  */
 export type LiveStreamOptions = LiveStreamDetails & {
   /**
@@ -462,7 +469,7 @@ export type LiveStreamOptions = LiveStreamDetails & {
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
  */
-export function livestream({
+export function liveStream({
   marketplace,
   locale = DEFAULT_LOCALE,
   id = v4(),
@@ -491,6 +498,7 @@ type MintDetails = InputForPublicationMetadataDetails<MintMetadataDetails>;
  * All {@link MintMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.MINT_LATEST`
  */
 export type MintOptions = MintDetails & {
   /**
@@ -533,6 +541,7 @@ type SpaceDetails = InputForPublicationMetadataDetails<SpaceMetadataDetails>;
  * All {@link SpaceMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.SPACE_LATEST`
  */
 export type SpaceOptions = SpaceDetails & {
   /**
@@ -575,6 +584,7 @@ type StoryDetails = InputForPublicationMetadataDetails<StoryMetadataDetails>;
  * All {@link StoryMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.STORY_LATEST`
  */
 export type StoryOptions = StoryDetails & {
   /**
@@ -617,6 +627,7 @@ type TextOnlyDetails = InputForPublicationMetadataDetails<TextOnlyMetadataDetail
  * All {@link TextOnlyMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.TEXT_ONLY_LATEST`
  */
 export type TextOnlyOptions = TextOnlyDetails & {
   /**
@@ -659,6 +670,7 @@ type ThreeDDetails = InputForPublicationMetadataDetails<ThreeDMetadataDetails>;
  * All {@link ThreeDMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.THREE_D_LATEST`
  */
 export type ThreeDOptions = ThreeDDetails & {
   /**
@@ -701,6 +713,7 @@ type TransactionDetails = InputForPublicationMetadataDetails<TransactionMetadata
  * All {@link TransactionMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.TRANSACTION_LATEST`
  */
 export type TransactionOptions = TransactionDetails & {
   /**
@@ -743,6 +756,7 @@ type VideoDetails = InputForPublicationMetadataDetails<VideoMetadataDetails>;
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.VIDEO_LATEST`
  */
 export type VideoOptions = VideoDetails & {
   /**
@@ -770,6 +784,44 @@ export function video({
         id,
         locale,
         mainContentFocus: PublicationMainFocus.VIDEO,
+        ...others,
+      },
+    }),
+  );
+}
+
+/**
+ * All {@link VideoMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PublicationSchemaId.SHORT_VIDEO`
+ */
+export type ShortVideoOptions = VideoDetails & {
+  /**
+   * All the {@link MarketplaceMetadata} fields.
+   */
+  marketplace?: MarketplaceDetails;
+};
+/**
+ * Creates a valid VideoMetadata for a short.
+ *
+ * @category Compose
+ * @param input - Use your IDE suggestions for an enhanced development experience
+ */
+export function shortVideo({
+  marketplace,
+  locale = DEFAULT_LOCALE,
+  id = v4(),
+  ...others
+}: ShortVideoOptions): VideoMetadata {
+  return process(
+    VideoSchema.safeParse({
+      $schema: PublicationSchemaId.VIDEO_LATEST,
+      ...marketplace,
+      lens: {
+        id,
+        locale,
+        mainContentFocus: PublicationMainFocus.SHORT_VIDEO,
         ...others,
       },
     }),

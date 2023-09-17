@@ -337,7 +337,7 @@ import {
   MediaAudioMimeType,
   MediaImageMimeType,
   MediaVideoMimeType,
-  MetadataAttributeType
+  MetadataAttributeType,
   PublicationMainFocus,
   ThreeDFormat,
 
