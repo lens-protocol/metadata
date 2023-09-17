@@ -60,7 +60,7 @@ pnpm add @lens-protocol/metadata zod
 
 You can create compliant `PublicationMetadata` objects via the following builder functions:
 
-```typescript
+```ts
 import {
   article,
   audio,
@@ -89,7 +89,7 @@ const json = article({
 
 We also provided a set of builder function for specific metadata sub-types (list to be expanded):
 
-```typescript
+```ts
 import { geoUri } from '@lens-protocol/metadata';
 
 const uri = geoUri({
@@ -102,7 +102,7 @@ const uri = geoUri({
 
 You can create compliant `MirrorMetadata` objects via the following builder function:
 
-```typescript
+```ts
 import { mirror } from '@lens-protocol/metadata';
 
 const json = mirror({
@@ -117,7 +117,7 @@ const json = mirror({
 
 You can create compliant `ProfileMetadata` objects via the following builder function:
 
-```typescript
+```ts
 import { profile } from '@lens-protocol/metadata';
 
 const json = profile({
@@ -134,7 +134,7 @@ const json = profile({
 
 Assuming we have 2 JS objects:
 
-```typescript
+```ts
 const valid = {
   /** example of valid metadata **/
 };
@@ -149,7 +149,7 @@ Publication metadata schema is a union of all _content_ schemas (e.g. `ArticleMe
 
 Use it to parse the metadata referenced by `contentURI` of `Comment`, `Mirror`, and `Quote` publications.
 
-```typescript
+```ts
 import { PublicationMetadataSchema } from '@lens-protocol/metadata';
 
 PublicationMetadataSchema.parse(valid); // => PublicationMetadata
@@ -169,7 +169,7 @@ Mirror metadata schema serve the purpose allowing mirrors be associated to a giv
 
 Use it to parse the metadata referenced by `metadataURI` of `Mirror` publications.
 
-```typescript
+```ts
 import { MirrorMetadataSchema } from '@lens-protocol/metadata';
 
 MirrorMetadataSchema.parse(valid); // => MirrorMetadata
@@ -185,7 +185,7 @@ MirrorMetadataSchema.safeParse(invalid);
 
 #### Profile metadata
 
-```typescript
+```ts
 import { ProfileMetadataSchema } from '@lens-protocol/metadata';
 
 ProfileMetadataSchema.parse(valid); // => ProfileMetadata
@@ -203,7 +203,7 @@ ProfileMetadataSchema.safeParse(invalid);
 
 A convenience `extractVersion` function is available to extract the version from a parsed `PublicationMetadata` or `ProfileMetadata`.
 
-```typescript
+```ts
 import {
   extractVersion,
   PublicationMetadataSchema,
@@ -223,7 +223,7 @@ extractVersion(profileMetadata); // => '2.0.0'
 
 `ZodError` contains all the information needed to inform you about the validation error, but it's not very user friendly. You can use `formatZodError` to get a more readable error message.
 
-```typescript
+```ts
 import { PublicationMetadataSchema, formatZodError } from '@lens-protocol/metadata';
 
 const result = PublicationMetadataSchema.safeParse(invalid);
@@ -241,7 +241,7 @@ Every time you have a discriminated union, you can use the discriminant to narro
 
 #### `PublicationMetadata`
 
-```typescript
+```ts
 import {
   PublicationMetadata,
   PublicationMetadataSchema,
@@ -270,7 +270,7 @@ switch (publicationMetadata.$schema) {
 
 #### `AccessCondition`
 
-```typescript
+```ts
 import { AccessCondition, ConditionType, PublicationMetadataSchema } from '@lens-protocol/metadata';
 
 const publicationMetadata = PublicationMetadataSchema.parse(valid);
@@ -295,7 +295,7 @@ switch (publicationMetadata.encryptedWith?.accessCondition.type) {
 
 #### `MetadataAttribute`
 
-```typescript
+```ts
 import { MetadataAttribute, MetadataAttributeType } from '@lens-protocol/metadata';
 
 switch (attribute.type) {
@@ -330,7 +330,7 @@ Use your IDE's autocomplete to explore the available types.
 
 Some examples:
 
-```typescript
+```ts
 import {
   // enums
   MediaAudioKind,
@@ -393,7 +393,7 @@ The package also exports parsers for legacy metadata formats via the `@lens-prot
 
 You can parse legacy Publication Metadata v1 and v2 via:
 
-```typescript
+```ts
 import { PublicationMetadataSchema } from '@lens-protocol/metadata/legacy';
 
 PublicationMetadataSchema.parse(valid); // => PublicationMetadata
@@ -421,7 +421,7 @@ In turn `legacy.PublicationMetadataV2` is a discriminated union of:
 
 where the `mainContentFocus` property is the discriminant.
 
-```typescript
+```ts
 import {
   PublicationMetadataSchema,
   PublicationMetadataVersion,
@@ -453,7 +453,7 @@ switch (publicationMetadata.version) {
 
 You can also parse legacy Profile Metadata (aka v1) via:
 
-```typescript
+```ts
 import { ProfileMetadataSchema } from '@lens-protocol/metadata/legacy';
 
 ProfileMetadataSchema.parse(valid); // => ProfileMetadata
@@ -469,7 +469,7 @@ ProfileMetadataSchema.safeParse(invalid);
 
 Similarly to the main entrypoint the `@lens-protocol/metadata/legacy` entrypoint also exports all the types and enums that you might need to work with the legacy metadata (some examples below).
 
-```typescript
+```ts
 import {
   // enums
   AudioMimeType,
@@ -525,7 +525,7 @@ import {
 
 Importing JSON schema in TypeScript is a simple as:
 
-```typescript
+```ts
 import audio from '@lens-protocol/metadata/jsonschemas/publications/audio/3.0.0.json' assert { type: 'json' };
 
 import audio from '@lens-protocol/metadata/jsonschemas/publications/article/3.0.0.json' assert { type: 'json' };
@@ -578,7 +578,7 @@ In this example we will add a new version of the `AudioSchema` schema, but the s
 
 In case the changes are backwards compatible, you could create a single `AudioMetadataDetailsSchema` definition and just declare 2 schemas out of it, one for the old version and one for the new version. For example:
 
-```typescript
+```ts
 export const AudioMetadataDetailsSchema = metadataDetailsWith({
   mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
 
@@ -608,7 +608,7 @@ export type AudioV1Metadata = z.infer<typeof AudioV1Schema>;
 
 In this case consumers of this package can take advantage of the structural likeness and just do the following:
 
-```typescript
+```ts
 switch (publicationMetadata.$schema) {
   case PublicationSchemaId.AUDIO_V1_0_0:
   case PublicationSchemaId.AUDIO_LATEST:

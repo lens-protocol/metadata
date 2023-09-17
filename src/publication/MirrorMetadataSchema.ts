@@ -63,7 +63,7 @@ export type MirrorMetadata = ShapeCheck<{
  *
  * @example
  * with `parse`:
- * ```typescript
+ * ```ts
  * MirrorMetadata.parse(valid); // => MirrorMetadata
  *
  * MirrorMetadata.parse(invalid); // => throws ZodError
@@ -71,7 +71,7 @@ export type MirrorMetadata = ShapeCheck<{
  *
  * @example
  * with `safeParse`:
- * ```typescript
+ * ```ts
  * MirrorMetadata.safeParse(valid);
  * // => { success: true, data: MirrorMetadata }
  *

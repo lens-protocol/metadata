@@ -167,6 +167,15 @@ export type ArticleOptions = ArticleDetails & {
  *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * ```ts
+ * const metadata = article({
+ *   title: 'Great Question'
+ *   content: 'Lorem ipsum dolor sit amet, ...',
+ *   tags: ['question', '42'],
+ * });
+ * ```
  */
 export function article({
   marketplace,
@@ -210,6 +219,47 @@ export type AudioOptions = AudioDetails & {
  *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * Single track:
+ * ```ts
+ * const metadata = audio({
+ *   title: 'Great song!',
+ *   audio: {
+ *     item: 'https://example.com/song.mp3',
+ *     type: MediaAudioMimeType.MP3,
+ *     artist: 'John Doe',
+ *     cover: 'https://example.com/cover.png',
+ *   },
+ * });
+ * ```
+ *
+ * @example
+ * Album:
+ * ```ts
+ * const metadata = audio({
+ *   title: 'Great song!',
+ *   audio: {
+ *     item: 'https://example.com/sample.mp3',
+ *     type: MediaAudioMimeType.MP3,
+ *     duration: 60,
+ *     artist: 'John Doe',
+ *     cover: 'https://example.com/cover.png',
+ *   },
+ *   attachments: [
+ *     {
+ *       item: 'https://example.com/song-1.mp3',
+ *       type: MediaAudioMimeType.MP3,
+ *       duration: 234,
+ *     },
+ *     {
+ *       item: 'https://example.com/song-2.mp3',
+ *       type: MediaAudioMimeType.MP3,
+ *       duration: 345,
+ *     },
+ *   ],
+ * });
+ * ```
  */
 export function audio({
   marketplace,

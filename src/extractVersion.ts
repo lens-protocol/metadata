@@ -13,7 +13,7 @@ const schemaVersionRegex = /(\d+\.\d+\.\d+)/;
  *
  * @example
  * Extract the version of a profile metadata object:
- * ```typescript
+ * ```ts
  * const metadata = await ProfileMetadataSchema.parse(valid);
  *
  * const version = extractVersion(metadata); // '2.0.0'
@@ -21,7 +21,7 @@ const schemaVersionRegex = /(\d+\.\d+\.\d+)/;
  *
  * @example
  * Extract the version of a mirror metadata object:
- * ```typescript
+ * ```ts
  * const metadata = await MirrorMetadataSchema.parse(valid);
  *
  * const version = extractVersion(metadata); // '1.0.0'
@@ -29,7 +29,7 @@ const schemaVersionRegex = /(\d+\.\d+\.\d+)/;
  *
  * @example
  * Extract the version of a publication metadata object:
- * ```typescript
+ * ```ts
  * const metadata = await PublicationMetadataSchema.parse(valid);
  *
  * const version = extractVersion(metadata); // '3.0.0'

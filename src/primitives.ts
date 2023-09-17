@@ -236,7 +236,7 @@ const LongitudeSchema = z.coerce.number({ description: 'The longitude.' }).min(-
  * Use the {@link geoUri} helper to create one, do not attempt to create one manually.
  *
  * @example
- * ```typescript
+ * ```ts
  * 'geo:40.689247,-74.044502'
  *
  * 'geo:41.890209,12.492231'
@@ -313,7 +313,7 @@ export const GeoPointSchema: z.ZodType<GeoPoint, z.ZodTypeDef, object> = z.objec
  *
  * @category Helpers
  * @example
- * ```typescript
+ * ```ts
  * geoUri({ lat: 40.689247, lng: -74.044502 }) // 'geo:40.689247,-74.044502'
  *
  * geoUri({ lat: 41.890209, lng: 12.492231 }) // 'geo:41.890209,12.492231'

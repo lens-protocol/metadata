@@ -3,12 +3,16 @@
 exports[`Given the publication metadata builders when using the article builder should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
-  "image": "https://example.com/image.png",
   "lens": {
     "content": "GM!",
     "id": Any<String>,
     "locale": "en",
     "mainContentFocus": "ARTICLE",
+    "tags": [
+      "question",
+      "42",
+    ],
+    "title": "Great Question",
   },
 }
 `;
@@ -24,6 +28,18 @@ exports[`Given the publication metadata builders when using the profile builder 
 `;
 
 exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json",
+  "lens": {
+    "content": "GM!",
+    "id": Any<String>,
+    "locale": "en",
+    "mainContentFocus": "TEXT_ONLY",
+  },
+}
+`;
+
+exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 2`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json",
   "lens": {

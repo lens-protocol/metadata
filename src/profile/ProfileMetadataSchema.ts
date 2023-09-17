@@ -101,7 +101,7 @@ export type ProfileMetadata = {
  *
  * @example
  * with `parse`:
- * ```typescript
+ * ```ts
  * ProfileMetadataSchema.parse(valid); // => ProfileMetadata
  *
  * ProfileMetadataSchema.parse(invalid); // => throws ZodError
@@ -109,7 +109,7 @@ export type ProfileMetadata = {
  *
  * @example
  * with `safeParse`:
- * ```typescript
+ * ```ts
  * ProfileMetadataSchema.safeParse(valid);
  * // => { success: true, data: ProfileMetadata }
  *

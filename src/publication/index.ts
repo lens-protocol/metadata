@@ -43,7 +43,7 @@ import { ShapeCheck } from '../utils';
  *
  * @example
  * Use the `$schema` property to narrow down the type of the metadata:
- * ```typescript
+ * ```ts
  * const metadata: PublicationMetadata = ...
  *
  * if (metadata.$schema === PublicationSchemaId.ARTICLE_LATEST) {
@@ -54,7 +54,7 @@ import { ShapeCheck } from '../utils';
  *
  * @example
  * Use the `$schema` property to determine the type of the metadata in an exhaustive switch statement:
- * ```typescript
+ * ```ts
  * const metadata: PublicationMetadata = ...
  *
  * switch (metadata.$schema) {
@@ -99,7 +99,7 @@ export type PublicationMetadata = ShapeCheck<
  *
  * @example
  * with `parse`:
- * ```typescript
+ * ```ts
  * PublicationMetadataSchema.parse(valid); // => PublicationMetadata
  *
  * PublicationMetadataSchema.parse(invalid); // => throws ZodError
@@ -107,7 +107,7 @@ export type PublicationMetadata = ShapeCheck<
  *
  * @example
  * with `safeParse`:
- * ```typescript
+ * ```ts
  * PublicationMetadataSchema.safeParse(valid);
  * // => { success: true, data: PublicationMetadata }
  *
