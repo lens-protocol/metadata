@@ -49,3 +49,7 @@ jobs:
       - name: Copy json schemas to s3
         run: |
           aws s3 sync --delete jsonschemas s3://${{ secrets.BUCKET_NAME }}
+
+      - name: Invalidate cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
