@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.25
+
+### Patch Changes
+
+- f0897dc: **fix:** missing `MintMetadata.attachments`
+
 ## 0.1.0-alpha.24
 
 ### Patch Changes
