@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
+  AnyMedia,
   AnyMediaSchema,
   MarketplaceMetadata,
   PublicationMetadataCommon,
@@ -37,6 +38,10 @@ export type MintMetadataDetails = PublicationMetadataCommon & {
    * Optional markdown content.
    */
   content?: EncryptableMarkdown;
+  /**
+   * Any attachment you want to include with it.
+   */
+  attachments?: AnyMedia[];
 };
 
 const MintMetadataDetailsSchema: z.ZodType<MintMetadataDetails, z.ZodTypeDef, object> =
