@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.24
+
+### Patch Changes
+
+- f3acec1: **fix:** `ArticleMetadata.content` non optional
+
 ## 0.1.0-alpha.23
 
 ### Patch Changes
