@@ -26,7 +26,7 @@ export type ArticleMetadataDetails = PublicationMetadataCommon & {
   /**
    * Markdown content.
    */
-  content?: EncryptableMarkdown;
+  content: EncryptableMarkdown;
   /**
    * The optional article title.
    */
