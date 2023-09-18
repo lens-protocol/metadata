@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.22
+
+### Patch Changes
+
+- 9a71023: **fix:** missing `TransactionMetadataDetails` with `PublicationMetadataCommon`
+
 ## 0.1.0-alpha.21
 
 ### Patch Changes
