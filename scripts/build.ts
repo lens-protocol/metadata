@@ -55,7 +55,7 @@ await fs.ensureDir(outputDir);
 
 // Publication schemas
 const schemas = new Map<string, z.ZodSchema<unknown>>([
-  ['publications/3D/3.0.0.json', ThreeDSchema],
+  ['publications/3d/3.0.0.json', ThreeDSchema],
   ['publications/article/3.0.0.json', ArticleSchema],
   ['publications/audio/3.0.0.json', AudioSchema],
   ['publications/checking-in/3.0.0.json', CheckingInSchema],
