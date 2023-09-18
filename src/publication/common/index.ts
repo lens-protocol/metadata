@@ -58,7 +58,7 @@ export type PublicationMetadataCommon = {
   /**
    * The locale of the metadata.
    */
-  locale?: Locale;
+  locale: Locale;
   /**
    * The encryption strategy used to encrypt the publication.
    *

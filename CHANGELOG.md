@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.23
+
+### Patch Changes
+
+- b76078c: **fix:** non-optional `locale: Locale`
+
 ## 0.1.0-alpha.22
 
 ### Patch Changes
