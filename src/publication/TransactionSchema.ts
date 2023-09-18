@@ -6,6 +6,7 @@ import {
   AnyMedia,
   AnyMediaSchema,
   MarketplaceMetadata,
+  PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   publicationWith,
@@ -29,7 +30,7 @@ export enum MetadataTransactionType {
   OTHER = 'OTHER',
 }
 
-export type TransactionMetadataDetails = {
+export type TransactionMetadataDetails = PublicationMetadataCommon & {
   /**
    * The main focus of the publication.
    */
