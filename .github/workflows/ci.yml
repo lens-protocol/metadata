@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v3
@@ -29,3 +32,14 @@ jobs:
       - run: pnpm test
 
       - run: pnpm build
+
+      - name: Configure AWS credentials from Production account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-duration-seconds: 300
+
+      - name: Copy json schemas to s3
+        run: |
+          aws s3 sync --delete jsonschemas s3://${{ secrets.BUCKET_NAME }}
