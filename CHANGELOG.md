@@ -1,5 +1,23 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.25
+
+### Patch Changes
+
+- f0897dc: **fix:** missing `MintMetadata.attachments`
+
+## 0.1.0-alpha.24
+
+### Patch Changes
+
+- f3acec1: **fix:** `ArticleMetadata.content` non optional
+
+## 0.1.0-alpha.23
+
+### Patch Changes
+
+- b76078c: **fix:** non-optional `locale: Locale`
+
 ## 0.1.0-alpha.22
 
 ### Patch Changes
