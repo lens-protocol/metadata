@@ -101,7 +101,12 @@ const PublicationMetadataCommonSchema = z.object({
 
   encryptedWith: PublicationEncryptionStrategySchema.optional(),
 
-  tags: TagSchema.array().max(10).optional().describe('An arbitrary list of tags.'),
+  tags: z
+    .set(TagSchema)
+    .max(20)
+    .transform((value) => [...value]) // z.set(...)..transform((value) => [...value]) enforces unique items in JSON Schema too, while remaining an array
+    .optional()
+    .describe('An arbitrary list of tags.'),
 
   contentWarning: z
     .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
