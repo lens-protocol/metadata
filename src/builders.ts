@@ -863,7 +863,7 @@ export type TextOnlyOptions = TextOnlyDetails & {
  *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
- * 
+ *
  * @example
  * ```ts
  * const metadata = textOnly({
