@@ -46,6 +46,7 @@
         "appId": {
           "type": "string",
           "minLength": 1,
+          "maxLength": 200,
           "description": "The App Id that this Profile data refers to. If omitted the data is considered to be the global Profile data."
         }
       },

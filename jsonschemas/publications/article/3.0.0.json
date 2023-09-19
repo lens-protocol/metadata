@@ -55,6 +55,7 @@
         "appId": {
           "type": "string",
           "minLength": 1,
+          "maxLength": 200,
           "description": "The App Id that this publication belongs to."
         },
         "hideFromFeed": {
@@ -81,10 +82,11 @@
         },
         "tags": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "$ref": "#/$defs/Tag"
           },
-          "maxItems": 10,
+          "maxItems": 20,
           "description": "An arbitrary list of tags."
         },
         "contentWarning": {

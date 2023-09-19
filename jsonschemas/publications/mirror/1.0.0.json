@@ -16,6 +16,7 @@
         "appId": {
           "type": "string",
           "minLength": 1,
+          "maxLength": 200,
           "description": "The App Id that this publication belongs to."
         }
       },
