@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from '@jest/globals';
 
 import { MetadataAttributeType } from '../MetadataAttribute.js';
@@ -33,6 +34,28 @@ import {
 } from '../publication/index.js';
 
 describe(`Given the publication metadata builders`, () => {
+  describe('when setting tags on any publication metadata', () => {
+    it('should ensure they at 20 at most', () => {
+      expect(() =>
+        article({
+          title: 'Great Question',
+          content: 'What is the answer to life, the universe and everything?',
+          tags: faker.word.words(21).split(''),
+        }),
+      ).toThrowError(ValidationError);
+    });
+
+    it('should ensure they are unique', () => {
+      expect(() =>
+        article({
+          title: 'Great Question',
+          content: 'What is the answer to life, the universe and everything?',
+          tags: ['question', '42', '42'],
+        }),
+      ).toThrowError(ValidationError);
+    });
+  });
+
   describe(`when using the ${article.name} builder`, () => {
     it('should return a valid TextOnlyMetadata', () => {
       const metadata = article({

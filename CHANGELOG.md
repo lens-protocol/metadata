@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.26
+
+### Patch Changes
+
+- 2d8869d: **feat:** implements new limits
+
 ## 0.1.0-alpha.25
 
 ### Patch Changes

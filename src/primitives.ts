@@ -130,8 +130,11 @@ export function toAppId(value: string): AppId {
 /**
  * @internal
  */
-export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> =
-  nonEmptyStringSchema('A Lens App identifier.').transform(toAppId);
+export const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = nonEmptyStringSchema(
+  'A Lens App identifier.',
+)
+  .max(200)
+  .transform(toAppId);
 
 /**
  * A cryptographic signature.
