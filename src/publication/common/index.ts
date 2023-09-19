@@ -102,9 +102,30 @@ const PublicationMetadataCommonSchema = z.object({
   encryptedWith: PublicationEncryptionStrategySchema.optional(),
 
   tags: z
-    .set(TagSchema)
+    .set(TagSchema) // z.set(...) sets uniqueItems: true in generated JSON Schemas
     .max(20)
-    .transform((value) => [...value]) // z.set(...)..transform((value) => [...value]) enforces unique items in JSON Schema too, while remaining an array
+    .catch((ctx) => ctx.input as Set<Tag>)
+    .superRefine((input, ctx) => {
+      // but needs to be corrected in code
+      const result = z.array(TagSchema).max(20).safeParse(input);
+
+      if (result.success) {
+        const uniqueTags = [...new Set(result.data)];
+        if (result.data.length > uniqueTags.length) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            fatal: true,
+            message: `Duplicate tags are not allowed: ${result.data.join(', ')}`,
+          });
+        }
+        return z.NEVER;
+      }
+
+      result.error.issues.forEach((issue) => {
+        ctx.addIssue(issue);
+      });
+    })
+    .transform((value) => [...value]) // type coercion
     .optional()
     .describe('An arbitrary list of tags.'),
 
