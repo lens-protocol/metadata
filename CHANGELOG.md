@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.27
+
+### Patch Changes
+
+- 4bb1bc8: **fix:** legacy publication parse to accept fields as per past behavior
+
 ## 0.1.0-alpha.26
 
 ### Patch Changes
