@@ -32,24 +32,25 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
+#    needs: build
+#    if: github.ref == 'refs/heads/main'
     permissions:
       id-token: write
       contents: read
 
     steps:
-      - name: Configure AWS credentials from Production account
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          role-duration-seconds: 900
+      # - name: Configure AWS credentials from Production account
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
+      #     aws-region: ${{ secrets.AWS_REGION }}
+      #     role-duration-seconds: 900
 
       - name: Copy json schemas to s3
         run: |
-          aws s3 sync --delete jsonschemas s3://${{ secrets.BUCKET_NAME }}
+          ls -la .
+#          aws s3 sync --delete jsonschemas s3://${{ secrets.BUCKET_NAME }}
 
-      - name: Invalidate cache
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
+      # - name: Invalidate cache
+      #   run: |
+      #     aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
