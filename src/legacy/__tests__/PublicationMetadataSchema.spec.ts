@@ -29,10 +29,56 @@ describe(`Given the PublicationMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
-        · "metadata_id": Required
         · "name": Required
-        · "attributes": Required"
+        · "attributes": Required
+        · "metadata_id": Required"
       `);
+    });
+
+    it('then it should pass on expected nullable fields', () => {
+      expectSchema(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '1.0.0',
+          metadata_id: '123',
+          name: '123',
+          attributes: [],
+          content: 'a',
+
+          animation_url: null,
+          appId: null,
+          contentWarning: null,
+          description: null,
+          external_url: null,
+          image: null,
+          media: null,
+          tags: null,
+        }),
+      ).toMatchObject({
+        animation_url: null,
+        appId: null,
+        contentWarning: null,
+        description: null,
+        external_url: null,
+        image: null,
+        media: null,
+        tags: null,
+      });
+    });
+
+    it('then it should pass on `appId` set to empty string', () => {
+      expectSchema(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '1.0.0',
+          metadata_id: '123',
+          name: '123',
+          attributes: [],
+          content: 'a',
+
+          appId: '',
+        }),
+      ).toMatchObject({
+        appId: '',
+      });
     });
 
     it(`then it should check at least one between content, image, and media is present`, () => {
@@ -115,9 +161,9 @@ describe(`Given the PublicationMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
-        · "metadata_id": Required
         · "name": Required
         · "attributes": Required
+        · "metadata_id": Required
         · "content": Required
         · "locale": Required"
       `);
