@@ -2,12 +2,12 @@
 import { z } from 'zod';
 
 import {
-  AppIdSchema,
   LocaleSchema,
   Markdown,
   TagSchema,
   markdownSchema,
   nonEmptyStringSchema,
+  toAppId,
   toMarkdown,
   uriSchema,
 } from '../primitives.js';
@@ -52,6 +52,12 @@ export enum AudioMimeType {
   WEBM_AUDIO = 'audio/webm',
 }
 
+const supportedAudioMimeTypes = Object.values(AudioMimeType);
+
+function isSupportedAudioMimeTypes(value: unknown): value is AudioMimeType {
+  return supportedAudioMimeTypes.includes(value as AudioMimeType);
+}
+
 export enum ImageMimeType {
   BMP = 'image/bmp',
   GIF = 'image/gif',
@@ -63,6 +69,12 @@ export enum ImageMimeType {
   TIFF = 'image/tiff',
   WEBP = 'image/webp',
   X_MS_BMP = 'image/x-ms-bmp',
+}
+
+const supportedImageMimeTypes = Object.values(ImageMimeType);
+
+function isSupportedImageMimeType(value: unknown): value is ImageMimeType {
+  return supportedImageMimeTypes.includes(value as ImageMimeType);
 }
 
 export enum VideoMimeType {
@@ -78,6 +90,12 @@ export enum VideoMimeType {
   MOV = 'video/mov',
 }
 
+const supportedVideoMimeTypes = Object.values(VideoMimeType);
+
+function isSupportedVideoMimeType(value: unknown): value is VideoMimeType {
+  return supportedVideoMimeTypes.includes(value as VideoMimeType);
+}
+
 const AnimationUrlSchema = uriSchema(
   'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
     'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
@@ -87,12 +105,6 @@ const AnimationUrlSchema = uriSchema(
 );
 
 const OpenSeaSchema = z.object({
-  metadata_id: z.string({
-    description:
-      'The metadata_id can be anything but if your uploading to ipfs ' +
-      'you will want it to be random. Using uuid could be an option!',
-  }),
-
   description: markdownSchema(
     'A human-readable description of the item. It could be plain text or markdown.',
   )
@@ -102,7 +114,9 @@ const OpenSeaSchema = z.object({
   external_url: uriSchema(
     `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
       'and will allow users to leave OpenSea and view the item on the site.',
-  ).optional(),
+  )
+    .optional()
+    .nullable(),
 
   name: nonEmptyStringSchema('Name of the NFT item.'),
 
@@ -151,6 +165,12 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
 }
 
 const PublicationCommonSchema = OpenSeaSchema.extend({
+  metadata_id: z.string({
+    description:
+      'The metadata_id can be anything but if your uploading to ipfs ' +
+      'you will want it to be random. Using uuid could be an option!',
+  }),
+
   content: ContentSchema.transform((value) => value as Markdown)
     .optional()
     .nullable(),
@@ -160,7 +180,13 @@ const PublicationCommonSchema = OpenSeaSchema.extend({
     .nullable()
     .describe('This is lens supported attached media items to the publication.'),
 
-  appId: AppIdSchema.optional().nullable().describe('The App Id that this publication belongs to.'),
+  // bespoke z.string() instead of AppIdSchema to emulate past behavior
+  appId: z
+    .string()
+    .transform(toAppId)
+    .optional()
+    .nullable()
+    .describe('The App Id that this publication belongs to.'),
 });
 
 /**
@@ -364,7 +390,8 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
 
   contentWarning: z
     .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
-    .optional(),
+    .optional()
+    .nullable(),
 
   mainContentFocus: z.nativeEnum(PublicationMainFocus, {
     description: 'Main content focus that for this publication.',
@@ -392,7 +419,7 @@ const PublicationMetadataV2AudioSchema = PublicationMetadataV2CommonSchema.exten
   media: MediaSchema.array()
     .min(1)
     .refine(
-      (value) => value.some((media) => media.type && media.type in AudioMimeType),
+      (value) => value.some((media) => isSupportedAudioMimeTypes(media.type)),
       `Metadata ${PublicationMainFocus.AUDIO} requires an audio to be attached.`,
     ),
 });
@@ -411,7 +438,7 @@ const PublicationMetadataV2ImageSchema = PublicationMetadataV2CommonSchema.exten
   media: MediaSchema.array()
     .min(1)
     .refine(
-      (value) => value.some((media) => media.type && media.type in ImageMimeType),
+      (value) => value.some((media) => isSupportedImageMimeType(media.type)),
       `Metadata ${PublicationMainFocus.IMAGE} requires an image to be attached.`,
     ),
 });
@@ -449,7 +476,7 @@ const PublicationMetadataV2VideoSchema = PublicationMetadataV2CommonSchema.exten
   media: MediaSchema.array()
     .min(1)
     .refine(
-      (value) => value.some((media) => media.type && media.type in VideoMimeType),
+      (value) => value.some((media) => isSupportedVideoMimeType(media.type)),
       `Metadata ${PublicationMainFocus.VIDEO} requires an image to be attached.`,
     ),
 });
