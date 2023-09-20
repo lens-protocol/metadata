@@ -44,7 +44,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
-          role-duration-seconds: 300
+          role-duration-seconds: 900
 
       - name: Copy json schemas to s3
         run: |
