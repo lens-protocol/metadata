@@ -1,12 +1,19 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from '@jest/globals';
 
-import { MetadataAttributeType } from '../MetadataAttribute.js';
+import { geoUri } from '../../primitives.js';
 import {
-  ValidationError,
+  MediaAudioMimeType,
+  MediaImageMimeType,
+  MediaVideoMimeType,
+  MetadataLicenseType,
+  MetadataTransactionType,
+  ThreeDFormat,
+} from '../../publication/index.js';
+import { ValidationError } from '../ValidationError.js';
+import {
   article,
   textOnly,
-  profile,
   audio,
   checkingIn,
   embed,
@@ -21,17 +28,7 @@ import {
   transaction,
   video,
   shortVideo,
-  mirror,
-} from '../builders.js';
-import { geoUri } from '../primitives.js';
-import {
-  MediaAudioMimeType,
-  MediaImageMimeType,
-  MediaVideoMimeType,
-  MetadataLicenseType,
-  MetadataTransactionType,
-  ThreeDFormat,
-} from '../publication/index.js';
+} from '../publications.js';
 
 describe(`Given the publication metadata builders`, () => {
   describe('when setting tags on any publication metadata', () => {
@@ -433,69 +430,6 @@ describe(`Given the publication metadata builders`, () => {
           altTag: 'The video of my life',
           license: MetadataLicenseType.CCO,
         },
-      });
-
-      expect(metadata).toMatchSnapshot({
-        lens: {
-          id: expect.any(String),
-        },
-      });
-    });
-  });
-
-  describe(`when using the ${mirror.name} builder`, () => {
-    it('should return a valid MirrorMetadata', () => {
-      const metadata = mirror({
-        appId: 'com.example.app',
-      });
-
-      expect(metadata).toMatchSnapshot({
-        lens: {
-          id: expect.any(String),
-        },
-      });
-    });
-  });
-
-  describe(`when using the ${profile.name} builder`, () => {
-    it('should return a valid ProfileMetadata', () => {
-      const metadata = profile({
-        name: 'John Doe',
-        bio: `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
-
-        - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        - Donec a diam lectus.
-        `,
-        picture: 'https://example.com/picture.png',
-        coverPicture: 'https://example.com/cover.png',
-        attributes: [
-          {
-            key: 'twitter',
-            type: MetadataAttributeType.STRING,
-            value: 'https://twitter.com/johndoe',
-          },
-          {
-            key: 'dob',
-            type: MetadataAttributeType.DATE,
-            value: '1990-01-01T00:00:00Z',
-          },
-          {
-            key: 'enabled',
-            type: MetadataAttributeType.BOOLEAN,
-            value: 'true',
-          },
-          {
-            key: 'height',
-            type: MetadataAttributeType.NUMBER,
-            value: '1.8',
-          },
-          {
-            key: 'settings',
-            type: MetadataAttributeType.JSON,
-            value: '{"theme": "dark"}',
-          },
-        ],
       });
 
       expect(metadata).toMatchSnapshot({
