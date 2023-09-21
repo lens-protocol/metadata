@@ -16,7 +16,7 @@ import {
   TokenIdSchema,
   nonEmptyStringSchema,
 } from '../../primitives.js';
-import { hasTwoOrMore, Brand, assertHasTwoOrMore, TwoAtLeastArray, Prettify } from '../../utils.js';
+import { hasTwoOrMore, Brand, TwoAtLeastArray } from '../../utils.js';
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -59,20 +59,6 @@ export const NftOwnershipConditionSchema = z.object({
         'you MUST provide a list of token IDs for ERC1155.',
     ),
 });
-
-/**
- * Creates a NFT ownership condition.
- *
- * @category Helpers
- */
-export function nftOwnershipCondition(
-  input: Prettify<Omit<NftOwnershipCondition, 'type'>>,
-): NftOwnershipCondition {
-  return NftOwnershipConditionSchema.parse({
-    type: ConditionType.NFT_OWNERSHIP,
-    ...input,
-  });
-}
 
 export enum ConditionComparisonOperator {
   EQUAL = 'EQUAL',
@@ -121,20 +107,6 @@ export const ProfileOwnershipConditionSchema = z.object({
   profileId: ProfileIdSchema,
 });
 
-/**
- * Creates a Lens Profile ownership condition.
- *
- * @category Helpers
- */
-export function profileOwnershipCondition(
-  input: Prettify<Omit<ProfileOwnershipCondition, 'type'>>,
-): ProfileOwnershipCondition {
-  return ProfileOwnershipConditionSchema.parse({
-    type: ConditionType.PROFILE_OWNERSHIP,
-    ...input,
-  });
-}
-
 export type FollowCondition = {
   type: ConditionType.FOLLOW;
   follow: ProfileId;
@@ -146,18 +118,6 @@ export const FollowConditionSchema = z.object({
   type: z.literal(ConditionType.FOLLOW),
   follow: ProfileIdSchema,
 });
-
-/**
- * Creates a follow Lens Profile condition.
- *
- * @category Helpers
- */
-export function followCondition(input: Prettify<Omit<FollowCondition, 'type'>>): FollowCondition {
-  return FollowConditionSchema.parse({
-    type: ConditionType.FOLLOW,
-    ...input,
-  });
-}
 
 export type CollectCondition = {
   type: ConditionType.COLLECT;
@@ -203,18 +163,6 @@ export type AndCondition<T> = {
   type: ConditionType.AND;
   criteria: TwoAtLeastArray<T>;
 };
-/**
- * Creates an AND condition between two or more conditions.
- *
- * @category Helpers
- */
-export function andCondition<T>(options: T[]): AndCondition<T> {
-  assertHasTwoOrMore(options);
-  return {
-    type: ConditionType.AND,
-    criteria: options,
-  };
-}
 
 function andConditionSchema<
   Criteria extends [
@@ -237,18 +185,6 @@ export type OrCondition<T> = {
   type: ConditionType.OR;
   criteria: TwoAtLeastArray<T>;
 };
-/**
- * Creates an OR condition between two or more conditions.
- *
- * @category Helpers
- */
-export function orCondition<T>(options: T[]): OrCondition<T> {
-  assertHasTwoOrMore(options);
-  return {
-    type: ConditionType.OR,
-    criteria: options,
-  };
-}
 
 function orConditionSchema<
   Criteria extends [

@@ -9,6 +9,9 @@ export class ValidationError extends Error {
   name = 'ValidationError' as const;
 }
 
+/**
+ * @internal
+ */
 export function evaluate<Input, Output>(result: z.SafeParseReturnType<Input, Output>): Output {
   if (result.success) {
     return result.data;

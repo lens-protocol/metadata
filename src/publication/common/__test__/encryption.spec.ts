@@ -3,14 +3,13 @@ import { describe, it } from '@jest/globals';
 import { expectSchema } from '../../../__helpers__/assertions.js';
 import { mockNetworkAddress, mockProfileId } from '../../../__helpers__/mocks.js';
 import {
-  AccessConditionSchema,
-  NftContractType,
   andCondition,
   followCondition,
   nftOwnershipCondition,
   orCondition,
   profileOwnershipCondition,
-} from '../index.js';
+} from '../../../builders/index.js';
+import { AccessConditionSchema, NftContractType } from '../index.js';
 
 describe(`Given the encryption schemas`, () => {
   describe(`when parsing with AccessConditionSchema`, () => {
