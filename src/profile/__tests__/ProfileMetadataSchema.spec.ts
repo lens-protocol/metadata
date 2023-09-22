@@ -1,12 +1,12 @@
 import { describe, it } from '@jest/globals';
 
-import { expectSchema } from '../../__helpers__/assertions.js';
+import { expectResult } from '../../__helpers__/assertions.js';
 import { ProfileMetadataSchema } from '../ProfileMetadataSchema.js';
 
 describe(`Given the ProfileMetadataSchema`, () => {
   describe(`when parsing an invalid object`, () => {
     it(`then it should flag the missing fields`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         ProfileMetadataSchema.safeParse({
           $schema: 'https://json-schemas.lens.dev/profile/2.0.0.json',
           lens: {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given the publication metadata builders when using the article builder should return a valid TextOnlyMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "article" builder should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
   "lens": {
@@ -38,7 +38,7 @@ exports[`Given the publication metadata builders when using the article builder 
 }
 `;
 
-exports[`Given the publication metadata builders when using the audio builder should return a valid AudioMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "audio" builder should return a valid AudioMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/audio/3.0.0.json",
   "lens": {
@@ -68,7 +68,7 @@ exports[`Given the publication metadata builders when using the audio builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata for Geo URI location 1`] = `
+exports[`Given the publication metadata builders when using the "checkingIn" builder should return a valid CheckingInMetadata for Geo URI location 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
   "lens": {
@@ -81,7 +81,7 @@ exports[`Given the publication metadata builders when using the checkingIn build
 }
 `;
 
-exports[`Given the publication metadata builders when using the checkingIn builder should return a valid CheckingInMetadata for PhysicalAddress 1`] = `
+exports[`Given the publication metadata builders when using the "checkingIn" builder should return a valid CheckingInMetadata for PhysicalAddress 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json",
   "lens": {
@@ -100,7 +100,7 @@ exports[`Given the publication metadata builders when using the checkingIn build
 }
 `;
 
-exports[`Given the publication metadata builders when using the embed builder should return a valid EmbedMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "embed" builder should return a valid EmbedMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/embed/3.0.0.json",
   "lens": {
@@ -112,7 +112,7 @@ exports[`Given the publication metadata builders when using the embed builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the event builder should return a valid EventMetadata for Geo URI location 1`] = `
+exports[`Given the publication metadata builders when using the "event" builder should return a valid EventMetadata for Geo URI location 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/event/3.0.0.json",
   "lens": {
@@ -130,7 +130,7 @@ exports[`Given the publication metadata builders when using the event builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the event builder should return a valid EventMetadata for PhysicalAddress 1`] = `
+exports[`Given the publication metadata builders when using the "event" builder should return a valid EventMetadata for PhysicalAddress 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/event/3.0.0.json",
   "lens": {
@@ -151,7 +151,7 @@ exports[`Given the publication metadata builders when using the event builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the image builder should return a valid ImageMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "image" builder should return a valid ImageMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/image/3.0.0.json",
   "lens": {
@@ -183,7 +183,7 @@ exports[`Given the publication metadata builders when using the image builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the link builder should return a valid LinkMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "link" builder should return a valid LinkMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/link/3.0.0.json",
   "lens": {
@@ -196,7 +196,7 @@ exports[`Given the publication metadata builders when using the link builder sho
 }
 `;
 
-exports[`Given the publication metadata builders when using the liveStream builder should return a valid LiveStreamMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "liveStream" builder should return a valid LiveStreamMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/livestream/3.0.0.json",
   "lens": {
@@ -211,7 +211,7 @@ exports[`Given the publication metadata builders when using the liveStream build
 }
 `;
 
-exports[`Given the publication metadata builders when using the liveStream builder when using the mint builder should return a valid MintMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "liveStream" builder when using the "mint" builder should return a valid MintMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/mint/3.0.0.json",
   "lens": {
@@ -224,7 +224,7 @@ exports[`Given the publication metadata builders when using the liveStream build
 }
 `;
 
-exports[`Given the publication metadata builders when using the shortVideo builder should return a valid VideoMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "shortVideo" builder should return a valid VideoMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/video/3.0.0.json",
   "lens": {
@@ -244,7 +244,7 @@ exports[`Given the publication metadata builders when using the shortVideo build
 }
 `;
 
-exports[`Given the publication metadata builders when using the space builder should return a valid SpaceMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "space" builder should return a valid SpaceMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/space/3.0.0.json",
   "lens": {
@@ -258,7 +258,7 @@ exports[`Given the publication metadata builders when using the space builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the story builder should return a valid StoryMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "story" builder should return a valid StoryMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/story/3.0.0.json",
   "lens": {
@@ -276,7 +276,7 @@ exports[`Given the publication metadata builders when using the story builder sh
 }
 `;
 
-exports[`Given the publication metadata builders when using the textOnly builder should return a valid TextOnlyMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "textOnly" builder should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json",
   "lens": {
@@ -288,7 +288,7 @@ exports[`Given the publication metadata builders when using the textOnly builder
 }
 `;
 
-exports[`Given the publication metadata builders when using the threeD builder should return a valid ThreeDMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "threeD" builder should return a valid ThreeDMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/3d/3.0.0.json",
   "lens": {
@@ -312,7 +312,7 @@ exports[`Given the publication metadata builders when using the threeD builder s
 }
 `;
 
-exports[`Given the publication metadata builders when using the transaction builder should return a valid TransactionMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "transaction" builder should return a valid TransactionMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/transaction/3.0.0.json",
   "lens": {
@@ -327,7 +327,7 @@ exports[`Given the publication metadata builders when using the transaction buil
 }
 `;
 
-exports[`Given the publication metadata builders when using the video builder should return a valid VideoMetadata 1`] = `
+exports[`Given the publication metadata builders when using the "video" builder should return a valid VideoMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/publications/video/3.0.0.json",
   "lens": {

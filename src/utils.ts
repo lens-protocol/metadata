@@ -75,16 +75,6 @@ export function hasAtLeastOne<T>(items: ReadonlyArray<T>): items is NonEmptyArra
 }
 
 /**
- * @internal
- */
-export function assertNonEmptyArray<T>(items: ReadonlyArray<T>): asserts items is NonEmptyArray<T> {
-  invariant(
-    hasAtLeastOne(items),
-    `Expected array of to have at least one item, but received 0 items`,
-  );
-}
-
-/**
  * Declares an array of at least two elements of the specified type.
  */
 export type TwoAtLeastArray<T> = [T, T, ...T[]];
@@ -94,18 +84,6 @@ export type TwoAtLeastArray<T> = [T, T, ...T[]];
  */
 export function hasTwoOrMore<T>(items: ReadonlyArray<T>): items is TwoAtLeastArray<T> {
   return items.length >= 2;
-}
-
-/**
- * @internal
- */
-export function assertHasTwoOrMore<T>(
-  items: ReadonlyArray<T>,
-): asserts items is TwoAtLeastArray<T> {
-  invariant(
-    hasTwoOrMore(items),
-    `Expected array of to have at least two items, but received ${items.length} items`,
-  );
 }
 
 /**

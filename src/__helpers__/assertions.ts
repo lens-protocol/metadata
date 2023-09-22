@@ -3,7 +3,7 @@ import { SafeParseReturnType } from 'zod';
 
 import { formatZodError } from '../formatters';
 
-export function expectSchema(
+export function expectResult(
   fn: () => SafeParseReturnType<unknown, unknown>,
 ): ReturnType<typeof expect> {
   const result = fn();

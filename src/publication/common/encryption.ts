@@ -44,13 +44,32 @@ export type NftOwnershipCondition = {
   contract: NetworkAddress;
   tokenIds?: TokenId[];
 };
+
+/**
+ * @private
+ */
+export function refineNftOwnershipCondition(
+  condition: NftOwnershipCondition,
+  ctx: z.RefinementCtx,
+) {
+  if (condition.contractType === NftContractType.ERC1155) {
+    if (condition.tokenIds === undefined || condition.tokenIds.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'ERC1155 requires at least one token id.',
+        path: [...ctx.path, 'tokenIds'],
+      });
+    }
+  }
+}
+
 /**
  * @internal
  */
 export const NftOwnershipConditionSchema = z.object({
   type: z.literal(ConditionType.NFT_OWNERSHIP),
-  contractType: z.nativeEnum(NftContractType),
   contract: NetworkAddressSchema,
+  contractType: z.nativeEnum(NftContractType),
   tokenIds: TokenIdSchema.array()
     .min(1)
     .optional()
@@ -141,16 +160,11 @@ export type SimpleCondition =
   | NftOwnershipCondition
   | ProfileOwnershipCondition;
 
-/**
- * @internal
- */
-export type BaseCondition = {
+type BaseCondition = {
   type: ConditionType;
 };
-/**
- * @internal
- */
-export type ComposableConditionSchema<T extends BaseCondition = BaseCondition> = z.ZodObject<
+
+type ComposableConditionSchema<T extends BaseCondition = BaseCondition> = z.ZodObject<
   {
     type: z.ZodTypeAny;
   } & z.ZodRawShape,
@@ -159,7 +173,7 @@ export type ComposableConditionSchema<T extends BaseCondition = BaseCondition> =
   T
 >;
 
-export type AndCondition<T> = {
+export type AndCondition<T extends BaseCondition = SimpleCondition> = {
   type: ConditionType.AND;
   criteria: TwoAtLeastArray<T>;
 };
@@ -176,12 +190,24 @@ function andConditionSchema<
     criteria: z
       .discriminatedUnion('type', options)
       .array()
-      .max(5, 'Invalid AND condition: should have at most 5 conditions')
-      .refine(hasTwoOrMore, 'Invalid AND condition: should have at least 2 conditions'),
+      .max(5, 'Should have at most 5 conditions')
+      .refine(hasTwoOrMore, 'Should have at least 2 conditions'),
   });
 }
 
-export type OrCondition<T> = {
+/**
+ * @internal
+ */
+export const AndConditionSchema = andConditionSchema([
+  NftOwnershipConditionSchema,
+  Erc20OwnershipConditionSchema,
+  EoaOwnershipConditionSchema,
+  ProfileOwnershipConditionSchema,
+  FollowConditionSchema,
+  CollectConditionSchema,
+]);
+
+export type OrCondition<T extends BaseCondition = SimpleCondition> = {
   type: ConditionType.OR;
   criteria: TwoAtLeastArray<T>;
 };
@@ -198,10 +224,22 @@ function orConditionSchema<
     criteria: z
       .discriminatedUnion('type', options)
       .array()
-      .max(5, 'Invalid OR condition: should have at most 5 conditions')
-      .refine(hasTwoOrMore, 'Invalid OR condition: should have at least 2 conditions'),
+      .max(5, 'Should have at most 5 conditions')
+      .refine(hasTwoOrMore, 'Should have at least 2 conditions'),
   });
 }
+
+/**
+ * @internal
+ */
+export const OrConditionSchema = orConditionSchema([
+  NftOwnershipConditionSchema,
+  Erc20OwnershipConditionSchema,
+  EoaOwnershipConditionSchema,
+  ProfileOwnershipConditionSchema,
+  FollowConditionSchema,
+  CollectConditionSchema,
+]);
 
 export type AnyCondition =
   | SimpleCondition
@@ -214,17 +252,8 @@ function refineAnyCondition(condition: AnyCondition, ctx: z.RefinementCtx) {
       refineAnyCondition(c, { ...ctx, path: [...ctx.path, 'criteria', idx] }),
     );
   }
-  if (
-    condition.type === ConditionType.NFT_OWNERSHIP &&
-    condition.contractType === NftContractType.ERC1155
-  ) {
-    if (condition.tokenIds === undefined || condition.tokenIds.length === 0) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'ERC1155 requires at least one token id.',
-        path: [...ctx.path, 'tokenIds'],
-      });
-    }
+  if (condition.type === ConditionType.NFT_OWNERSHIP) {
+    refineNftOwnershipCondition(condition, ctx);
   }
 }
 
@@ -234,28 +263,14 @@ export type AccessCondition = OrCondition<AnyCondition>;
  */
 export const AccessConditionSchema: z.ZodType<AccessCondition, z.ZodTypeDef, object> =
   orConditionSchema([
-    NftOwnershipConditionSchema,
-    Erc20OwnershipConditionSchema,
-    EoaOwnershipConditionSchema,
-    ProfileOwnershipConditionSchema,
-    FollowConditionSchema,
+    AndConditionSchema,
     CollectConditionSchema,
-    andConditionSchema([
-      NftOwnershipConditionSchema,
-      Erc20OwnershipConditionSchema,
-      EoaOwnershipConditionSchema,
-      ProfileOwnershipConditionSchema,
-      FollowConditionSchema,
-      CollectConditionSchema,
-    ]),
-    orConditionSchema([
-      NftOwnershipConditionSchema,
-      Erc20OwnershipConditionSchema,
-      EoaOwnershipConditionSchema,
-      ProfileOwnershipConditionSchema,
-      FollowConditionSchema,
-      CollectConditionSchema,
-    ]),
+    EoaOwnershipConditionSchema,
+    Erc20OwnershipConditionSchema,
+    FollowConditionSchema,
+    NftOwnershipConditionSchema,
+    OrConditionSchema,
+    ProfileOwnershipConditionSchema,
   ]).superRefine((root, ctx): root is AccessCondition => {
     root.criteria.forEach((condition, idx) => {
       refineAnyCondition(condition, {

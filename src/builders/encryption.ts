@@ -1,54 +1,221 @@
+import { evaluate } from './ValidationError';
+import { amount } from '../primitives';
 import {
   AndCondition,
+  AndConditionSchema,
+  AnyCondition,
+  CollectCondition,
+  CollectConditionSchema,
+  ConditionComparisonOperator,
   ConditionType,
+  EoaOwnershipCondition,
+  EoaOwnershipConditionSchema,
+  Erc20OwnershipCondition,
+  Erc20OwnershipConditionSchema,
   FollowCondition,
   FollowConditionSchema,
+  NftContractType,
   NftOwnershipCondition,
   NftOwnershipConditionSchema,
   OrCondition,
+  OrConditionSchema,
   ProfileOwnershipCondition,
   ProfileOwnershipConditionSchema,
+  refineNftOwnershipCondition,
 } from '../publication';
-import { Prettify, assertHasTwoOrMore } from '../utils';
 
+export type CollectConditionDetails = {
+  /**
+   * The Publication Id that needs to be collected to fulfill the condition.
+   */
+  publicationId: string;
+  /**
+   * If the Publication Id refers to the current publication.
+   */
+  thisPublication: boolean;
+};
 /**
- * Creates a NFT ownership condition.
+ * Creates a Collect condition.
  *
  * @category Helpers
  */
-export function nftOwnershipCondition(
-  input: Prettify<Omit<NftOwnershipCondition, 'type'>>,
-): NftOwnershipCondition {
-  return NftOwnershipConditionSchema.parse({
-    type: ConditionType.NFT_OWNERSHIP,
-    ...input,
-  });
+export function collectCondition(input: CollectConditionDetails): CollectCondition {
+  return evaluate(
+    CollectConditionSchema.safeParse({
+      type: ConditionType.COLLECT,
+      ...input,
+    }),
+  );
 }
 
+export type EoaOwnershipConditionDetails = {
+  /**
+   * The EVM address to verify ownership of.
+   */
+  address: string;
+};
+/**
+ * Creates an EOA ownership condition.
+ *
+ * @category Helpers
+ */
+export function eoaOwnershipCondition(input: EoaOwnershipConditionDetails): EoaOwnershipCondition {
+  return evaluate(
+    EoaOwnershipConditionSchema.safeParse({
+      type: ConditionType.EOA_OWNERSHIP,
+      ...input,
+    }),
+  );
+}
+
+export type Erc20OwnershipConditionDetails = {
+  /**
+   * The chain Id where the ERC-20 token is deployed.
+   */
+  chainId: number;
+  /**
+   * The comparison operator to use to compare the ERC-20 token balance.
+   */
+  condition: ConditionComparisonOperator;
+  /**
+   * The ERC-20 token contract address details.
+   */
+  contract: string;
+  /**
+   * The ERC-20 token decimals (e.g. 18 for GHO)
+   */
+  decimals: number;
+  /**
+   * The human readable amount to compare the ERC-20 token balance against using the comparison operator.
+   *
+   * @example
+   * 1.5
+   * 42
+   * 0.000002
+   */
+  value: string;
+};
+
+/**
+ * Creates an ERC-20 token ownership condition.
+ *
+ * @category Helpers
+ * @param input - The ERC-20 token ownership condition details.
+ */
+export function erc20OwnershipCondition({
+  condition,
+  ...others
+}: Erc20OwnershipConditionDetails): Erc20OwnershipCondition {
+  return evaluate(
+    Erc20OwnershipConditionSchema.safeParse({
+      type: ConditionType.ERC20_OWNERSHIP,
+      amount: amount(others),
+      condition,
+    }),
+  );
+}
+
+export type NetworkAddressDetails = {
+  /**
+   * The chain id.
+   */
+  chainId: number;
+  /**
+   * The EVM address.
+   */
+  address: string;
+};
+
+export type Erc721OwnershipConditionDetails = {
+  /**
+   * The NFT contract address details.
+   */
+  contract: NetworkAddressDetails;
+  /**
+   * The list of token ids to verify ownership of.
+   */
+  tokenIds?: string[];
+};
+
+/**
+ * Creates an ERC-721 NFT ownership condition.
+ *
+ * @category Helpers
+ */
+export function erc721OwnershipCondition(
+  input: Erc721OwnershipConditionDetails,
+): NftOwnershipCondition {
+  return evaluate(
+    NftOwnershipConditionSchema.superRefine(refineNftOwnershipCondition).safeParse({
+      type: ConditionType.NFT_OWNERSHIP,
+      contractType: NftContractType.ERC721,
+      ...input,
+    }),
+  );
+}
+
+export type Erc1155OwnershipConditionDetails = {
+  /**
+   * The NFT contract address details.
+   */
+  contract: NetworkAddressDetails;
+  /**
+   * The list of token ids to verify ownership of.
+   */
+  tokenIds: string[];
+};
+
+/**
+ * Creates an ERC-1155 NFT ownership condition.
+ *
+ * @category Helpers
+ */
+export function erc1155OwnershipCondition(
+  input: Erc721OwnershipConditionDetails,
+): NftOwnershipCondition {
+  return evaluate(
+    NftOwnershipConditionSchema.superRefine(refineNftOwnershipCondition).safeParse({
+      type: ConditionType.NFT_OWNERSHIP,
+      contractType: NftContractType.ERC1155,
+      ...input,
+    }),
+  );
+}
+
+export type ProfileOwnershipConditionDetails = {
+  profileId: string;
+};
 /**
  * Creates a Lens Profile ownership condition.
  *
  * @category Helpers
  */
 export function profileOwnershipCondition(
-  input: Prettify<Omit<ProfileOwnershipCondition, 'type'>>,
+  input: ProfileOwnershipConditionDetails,
 ): ProfileOwnershipCondition {
-  return ProfileOwnershipConditionSchema.parse({
-    type: ConditionType.PROFILE_OWNERSHIP,
-    ...input,
-  });
+  return evaluate(
+    ProfileOwnershipConditionSchema.safeParse({
+      type: ConditionType.PROFILE_OWNERSHIP,
+      ...input,
+    }),
+  );
 }
 
+export type FollowConditionDetails = {
+  follow: string;
+};
 /**
  * Creates a follow Lens Profile condition.
  *
  * @category Helpers
  */
-export function followCondition(input: Prettify<Omit<FollowCondition, 'type'>>): FollowCondition {
-  return FollowConditionSchema.parse({
-    type: ConditionType.FOLLOW,
-    ...input,
-  });
+export function followCondition(input: FollowConditionDetails): FollowCondition {
+  return evaluate(
+    FollowConditionSchema.safeParse({
+      type: ConditionType.FOLLOW,
+      ...input,
+    }),
+  );
 }
 
 /**
@@ -56,22 +223,25 @@ export function followCondition(input: Prettify<Omit<FollowCondition, 'type'>>):
  *
  * @category Helpers
  */
-export function andCondition<T>(options: T[]): AndCondition<T> {
-  assertHasTwoOrMore(options);
-  return {
-    type: ConditionType.AND,
-    criteria: options,
-  };
+export function andCondition<T extends AnyCondition[]>(criteria: T): AndCondition<T[number]> {
+  return evaluate(
+    AndConditionSchema.safeParse({
+      type: ConditionType.AND,
+      criteria,
+    }),
+  );
 }
+
 /**
  * Creates an OR condition between two or more conditions.
  *
  * @category Helpers
  */
-export function orCondition<T>(options: T[]): OrCondition<T> {
-  assertHasTwoOrMore(options);
-  return {
-    type: ConditionType.OR,
-    criteria: options,
-  };
+export function orCondition<T extends AnyCondition[]>(criteria: T): OrCondition<T[number]> {
+  return evaluate(
+    OrConditionSchema.safeParse({
+      type: ConditionType.OR,
+      criteria,
+    }),
+  );
 }

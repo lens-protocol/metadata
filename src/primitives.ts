@@ -476,7 +476,13 @@ export const ChainIdSchema: z.Schema<ChainId, z.ZodTypeDef, number> = z
  * An EVM compatible address on a specific chain.
  */
 export type NetworkAddress = {
+  /**
+   * The chain id.
+   */
   chainId: ChainId;
+  /**
+   * The EVM address.
+   */
   address: EvmAddress;
 };
 /**
@@ -566,6 +572,28 @@ export const AmountSchema: z.Schema<Amount, z.ZodTypeDef, object> = z.object(
     description: 'An amount of a specific asset.',
   },
 );
+
+/**
+ * @internal
+ */
+export type AmountDetails = {
+  chainId: number;
+  contract: string;
+  decimals: number;
+  value: string;
+};
+/**
+ * @internal
+ */
+export function amount(input: AmountDetails): Amount {
+  return AmountSchema.parse({
+    asset: asset(
+      { chainId: toChainId(input.chainId), address: toEvmAddress(input.contract) },
+      input.decimals,
+    ),
+    value: input.value,
+  });
+}
 
 /**
  * A Lens Profile identifier.
