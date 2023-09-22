@@ -177,24 +177,6 @@
           "items": {
             "anyOf": [
               {
-                "$ref": "#/$defs/NftOwnershipCondition"
-              },
-              {
-                "$ref": "#/$defs/Erc20OwnershipCondition"
-              },
-              {
-                "$ref": "#/$defs/EoaOwnershipCondition"
-              },
-              {
-                "$ref": "#/$defs/ProfileOwnershipCondition"
-              },
-              {
-                "$ref": "#/$defs/FollowCondition"
-              },
-              {
-                "$ref": "#/$defs/CollectCondition"
-              },
-              {
                 "type": "object",
                 "properties": {
                   "type": {
@@ -235,6 +217,21 @@
                 "additionalProperties": false
               },
               {
+                "$ref": "#/$defs/CollectCondition"
+              },
+              {
+                "$ref": "#/$defs/EoaOwnershipCondition"
+              },
+              {
+                "$ref": "#/$defs/Erc20OwnershipCondition"
+              },
+              {
+                "$ref": "#/$defs/FollowCondition"
+              },
+              {
+                "$ref": "#/$defs/NftOwnershipCondition"
+              },
+              {
                 "type": "object",
                 "properties": {
                   "type": {
@@ -273,6 +270,9 @@
                   "criteria"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "$ref": "#/$defs/ProfileOwnershipCondition"
               }
             ]
           },
@@ -998,15 +998,15 @@
           "type": "string",
           "const": "NFT_OWNERSHIP"
         },
+        "contract": {
+          "$ref": "#/$defs/NetworkAddress"
+        },
         "contractType": {
           "type": "string",
           "enum": [
             "ERC721",
             "ERC1155"
           ]
-        },
-        "contract": {
-          "$ref": "#/$defs/NetworkAddress"
         },
         "tokenIds": {
           "type": "array",
@@ -1020,8 +1020,8 @@
       },
       "required": [
         "type",
-        "contractType",
-        "contract"
+        "contract",
+        "contractType"
       ],
       "additionalProperties": false
     },
