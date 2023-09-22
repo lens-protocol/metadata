@@ -1,12 +1,19 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from '@jest/globals';
 
-import { MetadataAttributeType } from '../MetadataAttribute.js';
+import { geoUri } from '../../primitives.js';
 import {
-  ValidationError,
+  MediaAudioMimeType,
+  MediaImageMimeType,
+  MediaVideoMimeType,
+  MetadataLicenseType,
+  MetadataTransactionType,
+  ThreeDFormat,
+} from '../../publication/index.js';
+import { ValidationError } from '../ValidationError.js';
+import {
   article,
   textOnly,
-  profile,
   audio,
   checkingIn,
   embed,
@@ -21,17 +28,7 @@ import {
   transaction,
   video,
   shortVideo,
-  mirror,
-} from '../builders.js';
-import { geoUri } from '../primitives.js';
-import {
-  MediaAudioMimeType,
-  MediaImageMimeType,
-  MediaVideoMimeType,
-  MetadataLicenseType,
-  MetadataTransactionType,
-  ThreeDFormat,
-} from '../publication/index.js';
+} from '../publications.js';
 
 describe(`Given the publication metadata builders`, () => {
   describe('when setting tags on any publication metadata', () => {
@@ -56,7 +53,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${article.name} builder`, () => {
+  describe(`when using the "${article.name}" builder`, () => {
     it('should return a valid TextOnlyMetadata', () => {
       const metadata = article({
         title: 'Great Question',
@@ -97,7 +94,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${audio.name} builder`, () => {
+  describe(`when using the "${audio.name}" builder`, () => {
     it('should return a valid AudioMetadata', () => {
       const metadata = audio({
         title: 'Great song!',
@@ -129,7 +126,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${checkingIn.name} builder`, () => {
+  describe(`when using the "${checkingIn.name}" builder`, () => {
     it('should return a valid CheckingInMetadata for Geo URI location', () => {
       const metadata = checkingIn({
         location: 'The Moon',
@@ -166,7 +163,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${embed.name} builder`, () => {
+  describe(`when using the "${embed.name}" builder`, () => {
     it('should return a valid EmbedMetadata', () => {
       const metadata = embed({
         embed: 'https://example.com/embed.html',
@@ -180,7 +177,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${event.name} builder`, () => {
+  describe(`when using the "${event.name}" builder`, () => {
     it('should return a valid EventMetadata for Geo URI location', () => {
       const metadata = event({
         location: 'The Moon',
@@ -222,7 +219,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${image.name} builder`, () => {
+  describe(`when using the "${image.name}" builder`, () => {
     it('should return a valid ImageMetadata', () => {
       const metadata = image({
         title: 'Touch grass',
@@ -256,7 +253,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${link.name} builder`, () => {
+  describe(`when using the "${link.name}" builder`, () => {
     it('should return a valid LinkMetadata', () => {
       const metadata = link({
         sharingLink: 'https://example.com/embed.html',
@@ -271,7 +268,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${liveStream.name} builder`, () => {
+  describe(`when using the "${liveStream.name}" builder`, () => {
     it('should return a valid LiveStreamMetadata', () => {
       const metadata = liveStream({
         title: 'Live stream #1',
@@ -287,7 +284,7 @@ describe(`Given the publication metadata builders`, () => {
       });
     });
 
-    describe(`when using the ${mint.name} builder`, () => {
+    describe(`when using the "${mint.name}" builder`, () => {
       it('should return a valid MintMetadata', () => {
         const metadata = mint({
           content: 'Check out this NFT!',
@@ -304,7 +301,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${space.name} builder`, () => {
+  describe(`when using the "${space.name}" builder`, () => {
     it('should return a valid SpaceMetadata', () => {
       const metadata = space({
         title: 'Space #1',
@@ -320,7 +317,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${story.name} builder`, () => {
+  describe(`when using the "${story.name}" builder`, () => {
     it('should return a valid StoryMetadata', () => {
       const metadata = story({
         asset: {
@@ -340,7 +337,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${threeD.name} builder`, () => {
+  describe(`when using the "${threeD.name}" builder`, () => {
     it('should return a valid ThreeDMetadata', () => {
       const metadata = threeD({
         content: 'Check out this 3D model!',
@@ -363,7 +360,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${transaction.name} builder`, () => {
+  describe(`when using the "${transaction.name}" builder`, () => {
     it('should return a valid TransactionMetadata', () => {
       const metadata = transaction({
         chainId: 1,
@@ -380,7 +377,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${textOnly.name} builder`, () => {
+  describe(`when using the "${textOnly.name}" builder`, () => {
     it('should return a valid TextOnlyMetadata', () => {
       const metadata = textOnly({ content: 'GM!' });
 
@@ -392,7 +389,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${video.name} builder`, () => {
+  describe(`when using the "${video.name}" builder`, () => {
     it('should return a valid VideoMetadata', () => {
       const metadata = video({
         title: 'Great video!',
@@ -421,7 +418,7 @@ describe(`Given the publication metadata builders`, () => {
     });
   });
 
-  describe(`when using the ${shortVideo.name} builder`, () => {
+  describe(`when using the "${shortVideo.name}" builder`, () => {
     it('should return a valid VideoMetadata', () => {
       const metadata = shortVideo({
         title: 'Great video!',
@@ -433,69 +430,6 @@ describe(`Given the publication metadata builders`, () => {
           altTag: 'The video of my life',
           license: MetadataLicenseType.CCO,
         },
-      });
-
-      expect(metadata).toMatchSnapshot({
-        lens: {
-          id: expect.any(String),
-        },
-      });
-    });
-  });
-
-  describe(`when using the ${mirror.name} builder`, () => {
-    it('should return a valid MirrorMetadata', () => {
-      const metadata = mirror({
-        appId: 'com.example.app',
-      });
-
-      expect(metadata).toMatchSnapshot({
-        lens: {
-          id: expect.any(String),
-        },
-      });
-    });
-  });
-
-  describe(`when using the ${profile.name} builder`, () => {
-    it('should return a valid ProfileMetadata', () => {
-      const metadata = profile({
-        name: 'John Doe',
-        bio: `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
-
-        - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        - Donec a diam lectus.
-        `,
-        picture: 'https://example.com/picture.png',
-        coverPicture: 'https://example.com/cover.png',
-        attributes: [
-          {
-            key: 'twitter',
-            type: MetadataAttributeType.STRING,
-            value: 'https://twitter.com/johndoe',
-          },
-          {
-            key: 'dob',
-            type: MetadataAttributeType.DATE,
-            value: '1990-01-01T00:00:00Z',
-          },
-          {
-            key: 'enabled',
-            type: MetadataAttributeType.BOOLEAN,
-            value: 'true',
-          },
-          {
-            key: 'height',
-            type: MetadataAttributeType.NUMBER,
-            value: '1.8',
-          },
-          {
-            key: 'settings',
-            type: MetadataAttributeType.JSON,
-            value: '{"theme": "dark"}',
-          },
-        ],
       });
 
       expect(metadata).toMatchSnapshot({

@@ -1,19 +1,19 @@
 import { describe, it } from '@jest/globals';
 
-import { expectSchema } from '../../__helpers__/assertions.js';
+import { expectResult } from '../../__helpers__/assertions.js';
 import { PublicationMainFocus, PublicationMetadataSchema } from '../index.js';
 
 describe(`Given the PublicationMetadataSchema`, () => {
   describe(`when parsing an empty object`, () => {
     it(`then it should complain about the missing version`, () => {
-      expectSchema(() => PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
+      expectResult(() => PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Required"
       `);
     });
 
     it(`then it should complain about invalid version`, () => {
-      expectSchema(() => PublicationMetadataSchema.safeParse({ version: '42' }))
+      expectResult(() => PublicationMetadataSchema.safeParse({ version: '42' }))
         .toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Invalid enum value. Expected '1.0.0' | '2.0.0', received '42'"
@@ -23,7 +23,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
 
   describe(`when parsing an invalid v1 object`, () => {
     it(`then it should complain about missing basic mandatory fields`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
         }),
@@ -36,7 +36,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should pass on expected nullable fields', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
@@ -66,7 +66,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should pass on `appId` set to empty string', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
@@ -82,7 +82,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should check at least one between content, image, and media is present`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
@@ -98,7 +98,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should complain about empty content', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
@@ -115,7 +115,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should complain about too long content', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
@@ -130,7 +130,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should complain about invalid media items', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
@@ -154,7 +154,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
 
   describe(`when parsing an invalid v2 object`, () => {
     it(`then it should complain about missing basic mandatory fields`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           mainContentFocus: PublicationMainFocus.TEXT_ONLY,
@@ -170,7 +170,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should complain about invalid v2 fields', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -193,7 +193,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.ARTICLE} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -209,7 +209,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.AUDIO} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -231,7 +231,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.EMBED} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -247,7 +247,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.IMAGE} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -268,7 +268,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.LINK} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -285,7 +285,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.TEXT_ONLY} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -307,7 +307,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it(`then it should complain about invalid ${PublicationMainFocus.VIDEO} metadata`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -328,7 +328,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should complain about missing encryptionParams', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
@@ -348,7 +348,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should complain about invalid encryptionParams', () => {
-      expectSchema(() =>
+      expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',

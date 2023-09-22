@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.28
+
+### Patch Changes
+
+- a1a8199: **feat:** new access condition builders
+
 ## 0.1.0-alpha.27
 
 ### Patch Changes

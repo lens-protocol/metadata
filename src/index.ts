@@ -1,5 +1,5 @@
 export * from './constants.js';
-export * from './builders.js';
+export * from './builders/index.js';
 export * from './extractVersion.js';
 export * from './formatters.js';
 export * from './MetadataAttribute.js';

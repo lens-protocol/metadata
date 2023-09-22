@@ -1,12 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { expectSchema } from '../__helpers__/assertions.js';
+import { expectResult } from '../__helpers__/assertions.js';
 import { GeoURISchema, datetimeSchema, geoPoint, geoUri } from '../primitives.js';
 
 describe(`Given the primitives schemas`, () => {
   describe(`when parsing a datetime value`, () => {
     it(`then should support ISO 8601 UTC datetime strings`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         datetimeSchema('not used').safeParse('2023-05-16T18:43:35Z'),
       ).toMatchInlineSnapshot(`"2023-05-16T18:43:35Z"`);
     });
@@ -14,26 +14,26 @@ describe(`Given the primitives schemas`, () => {
 
   describe(`when parsing a Geo URI value`, () => {
     it(`then should ensure it's a Geo URI in the the 'geo:lat,lng' format`, () => {
-      expectSchema(() => GeoURISchema.safeParse(' ')).toMatchInlineSnapshot(`
+      expectResult(() => GeoURISchema.safeParse(' ')).toMatchInlineSnapshot(`
         "fix the following issues
         Should be a Geo URI. Expected \`geo:lat,lng\`."
       `);
     });
 
     it(`then should ensure it's within the expected coordinate limits`, () => {
-      expectSchema(() => GeoURISchema.safeParse('geo:-90.0000001,0')).toMatchInlineSnapshot(`
+      expectResult(() => GeoURISchema.safeParse('geo:-90.0000001,0')).toMatchInlineSnapshot(`
         "fix the following issues
         · "lat": Number must be greater than or equal to -90"
       `);
-      expectSchema(() => GeoURISchema.safeParse('geo:90.0000001,0')).toMatchInlineSnapshot(`
+      expectResult(() => GeoURISchema.safeParse('geo:90.0000001,0')).toMatchInlineSnapshot(`
         "fix the following issues
         · "lat": Number must be less than or equal to 90"
       `);
-      expectSchema(() => GeoURISchema.safeParse('geo:0,-180.0000001')).toMatchInlineSnapshot(`
+      expectResult(() => GeoURISchema.safeParse('geo:0,-180.0000001')).toMatchInlineSnapshot(`
         "fix the following issues
         · "lng": Number must be greater than or equal to -180"
       `);
-      expectSchema(() => GeoURISchema.safeParse('geo:0,180.0000001')).toMatchInlineSnapshot(`
+      expectResult(() => GeoURISchema.safeParse('geo:0,180.0000001')).toMatchInlineSnapshot(`
         "fix the following issues
         · "lng": Number must be less than or equal to 180"
       `);

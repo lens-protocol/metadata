@@ -1,6 +1,6 @@
 {
   "name": "@lens-protocol/metadata",
-  "version": "0.1.0-alpha.27",
+  "version": "0.1.0-alpha.28",
   "description": "Lens Protocol Metadata Standards",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -101,9 +101,7 @@
     }
   },
   "engines": {
-    "node": "^v18.12.1",
-    "pnpm": "^8.0.0",
-    "npm": "^8.19.2"
+    "node": "^v18.12.1"
   },
   "packageManager": "pnpm@8.2.0",
   "dependencies": {

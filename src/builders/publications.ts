@@ -1,13 +1,7 @@
 import { v4 } from 'uuid';
-import { z } from 'zod';
 
-import { formatZodError } from './formatters';
-import {
-  ProfileMetadata,
-  ProfileMetadataDetails,
-  ProfileMetadataSchema,
-  ProfileSchemaId,
-} from './profile';
+import { evaluate } from './ValidationError';
+import { RecursiveUnbrand, InputForPublicationMetadataDetails } from './utils';
 import {
   ThreeDMetadata,
   ThreeDSchema,
@@ -27,8 +21,6 @@ import {
   LiveStreamSchema,
   MintMetadata,
   MintSchema,
-  MirrorMetadata,
-  MirrorMetadataSchema,
   PublicationMainFocus,
   PublicationSchemaId,
   SpaceMetadata,
@@ -42,8 +34,6 @@ import {
   VideoMetadata,
   VideoSchema,
   MarketplaceMetadata,
-  PublicationMetadata,
-  MirrorSchemaId,
   ArticleMetadataDetails,
   AudioMetadataDetails,
   CheckingInMetadataDetails,
@@ -61,83 +51,12 @@ import {
   VideoMetadataDetails,
   ArticleMetadata,
   ArticleSchema,
-  MirrorMetadataDetails,
-} from './publication';
-import { Brand, Overwrite, Prettify } from './utils.js';
+} from '../publication';
 
 /**
  * The default locale used by the builder helpers.
  */
 export const DEFAULT_LOCALE = 'en';
-
-/**
- * An error that occurs when an object does not match the expected shape.
- */
-export class ValidationError extends Error {
-  name = 'ValidationError' as const;
-}
-
-/**
- * @internal
- */
-type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
-
-/**
- * @internal
- */
-type RecursiveUnbrand<T> = T extends Brand<infer R, BrandOf<T>>
-  ? R
-  : {
-      [K in keyof T]: RecursiveUnbrand<T[K]>;
-    };
-
-/**
- * @internal
- */
-type ExtractLensSpec<T extends { lens: unknown }> = T['lens'];
-
-/**
- * @internal
- */
-type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
-
-/**
- * @internal
- */
-type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> = Overwrite<
-  Details,
-  {
-    /**
-     * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
-     *
-     * @defaultValue a UUID
-     */
-    id?: string;
-    /**
-     * The language of the publication.
-     *
-     * It's a locale string in the format of `<language>-<region>` or just `<language>`, where:
-     * - `language` is a two-letter ISO 639-1 language code, e.g. `en` or `it`
-     * - `region` is a two-letter ISO 3166-1 alpha-2 region code, e.g. `US` or `IT`
-     *
-     * You can just pass in the language tag if you do not know the region or don't need to be specific.
-     *
-     * @defaultValue `en`
-     */
-    locale?: string;
-  }
->;
-
-type InputForPublicationMetadataDetails<T extends PublicationMetadata['lens']> = RecursiveUnbrand<
-  OmitInferredPublicationFields<PublicationDefaults<T>>
->;
-
-function process<Input, Output>(result: z.SafeParseReturnType<Input, Output>): Output {
-  if (result.success) {
-    return result.data;
-  }
-  throw new ValidationError(formatZodError(result.error));
-}
 
 /**
  * @private
@@ -197,7 +116,7 @@ export function article({
   id = v4(),
   ...others
 }: ArticleOptions): ArticleMetadata {
-  return process(
+  return evaluate(
     ArticleSchema.safeParse({
       $schema: PublicationSchemaId.ARTICLE_LATEST,
       ...marketplace,
@@ -281,7 +200,7 @@ export function audio({
   id = v4(),
   ...others
 }: AudioOptions): AudioMetadata {
-  return process(
+  return evaluate(
     AudioSchema.safeParse({
       $schema: PublicationSchemaId.AUDIO_LATEST,
       ...marketplace,
@@ -352,7 +271,7 @@ export function checkingIn({
   id = v4(),
   ...others
 }: CheckingInOptions): CheckingInMetadata {
-  return process(
+  return evaluate(
     CheckingInSchema.safeParse({
       $schema: PublicationSchemaId.CHECKING_IN_LATEST,
       ...marketplace,
@@ -402,7 +321,7 @@ export function embed({
   id = v4(),
   ...others
 }: EmbedOptions): EmbedMetadata {
-  return process(
+  return evaluate(
     EmbedSchema.safeParse({
       $schema: PublicationSchemaId.EMBED_LATEST,
       ...marketplace,
@@ -477,7 +396,7 @@ export function event({
   id = v4(),
   ...others
 }: EventOptions): EventMetadata {
-  return process(
+  return evaluate(
     EventSchema.safeParse({
       $schema: PublicationSchemaId.EVENT_LATEST,
       ...marketplace,
@@ -563,7 +482,7 @@ export function image({
   id = v4(),
   ...others
 }: ImageOptions): ImageMetadata {
-  return process(
+  return evaluate(
     ImageSchema.safeParse({
       $schema: PublicationSchemaId.IMAGE_LATEST,
       ...marketplace,
@@ -614,7 +533,7 @@ export function link({
   id = v4(),
   ...others
 }: LinkOptions): LinkMetadata {
-  return process(
+  return evaluate(
     LinkSchema.safeParse({
       $schema: PublicationSchemaId.LINK_LATEST,
       ...marketplace,
@@ -667,7 +586,7 @@ export function liveStream({
   id = v4(),
   ...others
 }: LiveStreamOptions): LiveStreamMetadata {
-  return process(
+  return evaluate(
     LiveStreamSchema.safeParse({
       $schema: PublicationSchemaId.LIVESTREAM_LATEST,
       ...marketplace,
@@ -719,7 +638,7 @@ export function mint({
   id = v4(),
   ...others
 }: MintOptions): MintMetadata {
-  return process(
+  return evaluate(
     MintSchema.safeParse({
       $schema: PublicationSchemaId.MINT_LATEST,
       ...marketplace,
@@ -771,7 +690,7 @@ export function space({
   id = v4(),
   ...others
 }: SpaceOptions): SpaceMetadata {
-  return process(
+  return evaluate(
     SpaceSchema.safeParse({
       $schema: PublicationSchemaId.SPACE_LATEST,
       ...marketplace,
@@ -827,7 +746,7 @@ export function story({
   id = v4(),
   ...others
 }: StoryOptions): StoryMetadata {
-  return process(
+  return evaluate(
     StorySchema.safeParse({
       $schema: PublicationSchemaId.STORY_LATEST,
       ...marketplace,
@@ -877,7 +796,7 @@ export function textOnly({
   id = v4(),
   ...others
 }: TextOnlyOptions): TextOnlyMetadata {
-  return process(
+  return evaluate(
     TextOnlySchema.safeParse({
       $schema: PublicationSchemaId.TEXT_ONLY_LATEST,
       ...marketplace,
@@ -936,7 +855,7 @@ export function threeD({
   id = v4(),
   ...others
 }: ThreeDOptions): ThreeDMetadata {
-  return process(
+  return evaluate(
     ThreeDSchema.safeParse({
       $schema: PublicationSchemaId.THREE_D_LATEST,
       ...marketplace,
@@ -989,7 +908,7 @@ export function transaction({
   id = v4(),
   ...others
 }: TransactionOptions): TransactionMetadata {
-  return process(
+  return evaluate(
     TransactionSchema.safeParse({
       $schema: PublicationSchemaId.TRANSACTION_LATEST,
       ...marketplace,
@@ -1076,7 +995,7 @@ export function video({
   id = v4(),
   ...others
 }: VideoOptions): VideoMetadata {
-  return process(
+  return evaluate(
     VideoSchema.safeParse({
       $schema: PublicationSchemaId.VIDEO_LATEST,
       ...marketplace,
@@ -1129,7 +1048,7 @@ export function shortVideo({
   id = v4(),
   ...others
 }: ShortVideoOptions): VideoMetadata {
-  return process(
+  return evaluate(
     VideoSchema.safeParse({
       $schema: PublicationSchemaId.VIDEO_LATEST,
       ...marketplace,
@@ -1137,141 +1056,6 @@ export function shortVideo({
         id,
         locale,
         mainContentFocus: PublicationMainFocus.SHORT_VIDEO,
-        ...others,
-      },
-    }),
-  );
-}
-
-/**
- * @private
- * @privateRemarks MUST stay very @private to produce usable docs
- */
-type MirrorDetails = Prettify<RecursiveUnbrand<Omit<MirrorMetadataDetails, 'id'>>>;
-/**
- * All {@link MirrorMetadataDetails} fields with:
- * - `id` defaults to a UUID
- */
-export type MirrorOptions = MirrorDetails & {
-  /**
-   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
-   *
-   * @defaultValue a UUID
-   */
-  id?: string;
-};
-/**
- * Creates a valid MirrorMetadata.
- *
- * @category Compose
- * @param input - Use your IDE suggestions for an enhanced development experience
- *
- * @example
- * ```ts
- * const metadata = mirror({
- *   appId: 'com.example.app',
- * });
- * ```
- */
-export function mirror({ id = v4(), ...others }: MirrorOptions): MirrorMetadata {
-  return process(
-    MirrorMetadataSchema.safeParse({
-      $schema: MirrorSchemaId.LATEST,
-      lens: {
-        id,
-        ...others,
-      },
-    }),
-  );
-}
-
-/**
- * @private
- * @privateRemarks MUST stay very @private to produce usable docs
- */
-type ProfileDetails = Prettify<RecursiveUnbrand<Omit<ProfileMetadataDetails, 'id'>>>;
-/**
- * All {@link ProfileMetadataDetails} fields with:
- */
-export type ProfileOptions = ProfileDetails & {
-  /**
-   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
-   *
-   * @defaultValue a UUID
-   */
-  id?: string;
-};
-/**
- * Creates a valid ProfileMetadata.
- *
- * @category Compose
- * @param input - Use your IDE suggestions for an enhanced development experience
- *
- * @example
- * Global profile (no `appId`):
- * ```ts
- * const metadata = profile({
- *   name: 'John Doe',
- *   bio: `
- *   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
- *
- *   - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- *   - Donec a diam lectus.
- *   `,
- * });
- * ```
- *
- * @example
- * App specific profile (with `appId`):
- * ```ts
- * const metadata = profile({
- *   appId: 'com.example.app',
- *   name: 'John Doe',
- * });
- * ```
- *
- * @example
- * With attributes:
- * ```ts
- * const metadata = profile({
- *   name: 'John Doe',
- *   picture: 'https://example.com/picture.png',
- *   attributes: [
- *     {
- *       key: 'twitter',
- *       type: MetadataAttributeType.STRING,
- *       value: 'https://twitter.com/johndoe',
- *     },
- *     {
- *       key: 'dob',
- *       type: MetadataAttributeType.DATE,
- *       value: '1990-01-01T00:00:00Z',
- *     },
- *     {
- *       key: 'enabled',
- *       type: MetadataAttributeType.BOOLEAN,
- *       value: 'true',
- *     },
- *     {
- *       key: 'height',
- *       type: MetadataAttributeType.NUMBER,
- *       value: '1.8',
- *     },
- *     {
- *       key: 'settings',
- *       type: MetadataAttributeType.JSON,
- *       value: '{"theme": "dark"}',
- *     },
- *   ],
- * });
- * ```
- */
-export function profile({ id = v4(), ...others }: ProfileOptions): ProfileMetadata {
-  return process(
-    ProfileMetadataSchema.safeParse({
-      $schema: ProfileSchemaId.LATEST,
-      lens: {
-        id,
         ...others,
       },
     }),

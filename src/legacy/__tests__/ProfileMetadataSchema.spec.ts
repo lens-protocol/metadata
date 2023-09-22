@@ -1,12 +1,12 @@
 import { describe, it } from '@jest/globals';
 
-import { expectSchema } from '../../__helpers__/assertions.js';
+import { expectResult } from '../../__helpers__/assertions.js';
 import { ProfileMetadataSchema } from '../index.js';
 
 describe(`Given the ProfileMetadataSchema`, () => {
   describe(`when parsing an invalid object`, () => {
     it(`then it should flag the missing fields`, () => {
-      expectSchema(() => ProfileMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
+      expectResult(() => ProfileMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Invalid literal value, expected "1.0.0"
         · "metadata_id": Required
@@ -18,7 +18,7 @@ describe(`Given the ProfileMetadataSchema`, () => {
     });
 
     it(`then it should handle attributes in a backwards compatible way`, () => {
-      expectSchema(() =>
+      expectResult(() =>
         ProfileMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: 'foo',
