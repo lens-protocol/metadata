@@ -1,8 +1,11 @@
 import { evaluate } from './ValidationError';
 import { amount } from '../primitives';
 import {
+  AccessCondition,
+  AccessConditionSchema,
   AndCondition,
   AndConditionSchema,
+  AnyCondition,
   CollectCondition,
   CollectConditionSchema,
   ConditionComparisonOperator,
@@ -240,6 +243,20 @@ export function andCondition<T extends SimpleCondition[]>(criteria: T): AndCondi
 export function orCondition<T extends SimpleCondition[]>(criteria: T): OrCondition<T[number]> {
   return evaluate(
     OrConditionSchema.safeParse({
+      type: ConditionType.OR,
+      criteria,
+    }),
+  );
+}
+
+/**
+ * Creates the access condition specification for a given publication.
+ *
+ * @internal
+ */
+export function accessCondition(criteria: AnyCondition[]): AccessCondition {
+  return evaluate(
+    AccessConditionSchema.safeParse({
       type: ConditionType.OR,
       criteria,
     }),

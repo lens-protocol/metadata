@@ -13,6 +13,7 @@ import {
   collectCondition,
   eoaOwnershipCondition,
   erc20OwnershipCondition,
+  accessCondition,
 } from '../encryption.js';
 
 describe(`Given the encryption access condition helpers`, () => {
@@ -265,6 +266,44 @@ describe(`Given the encryption access condition helpers`, () => {
           profileOwnershipCondition({ profileId: '0x01' }),
         ]),
       ).toThrowError('Should have at most 5 conditions');
+    });
+  });
+
+  describe(`when using the "${accessCondition.name}" helper`, () => {
+    it('should return a valid AccessCondition', () => {
+      const condition = accessCondition([
+        profileOwnershipCondition({ profileId: '0x01' }),
+        andCondition([
+          followCondition({ follow: '0x02' }),
+          collectCondition({ publicationId: '0x03', thisPublication: false }),
+        ]),
+      ]);
+
+      expect(condition).toMatchInlineSnapshot(`
+        {
+          "criteria": [
+            {
+              "profileId": "0x01",
+              "type": "PROFILE_OWNERSHIP",
+            },
+            {
+              "criteria": [
+                {
+                  "follow": "0x02",
+                  "type": "FOLLOW",
+                },
+                {
+                  "publicationId": "0x03",
+                  "thisPublication": false,
+                  "type": "COLLECT",
+                },
+              ],
+              "type": "AND",
+            },
+          ],
+          "type": "OR",
+        }
+      `);
     });
   });
 });
