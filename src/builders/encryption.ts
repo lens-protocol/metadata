@@ -3,7 +3,6 @@ import { amount } from '../primitives';
 import {
   AndCondition,
   AndConditionSchema,
-  AnyCondition,
   CollectCondition,
   CollectConditionSchema,
   ConditionComparisonOperator,
@@ -21,6 +20,7 @@ import {
   OrConditionSchema,
   ProfileOwnershipCondition,
   ProfileOwnershipConditionSchema,
+  SimpleCondition,
   refineNftOwnershipCondition,
 } from '../publication';
 
@@ -223,7 +223,7 @@ export function followCondition(input: FollowConditionDetails): FollowCondition 
  *
  * @category Helpers
  */
-export function andCondition<T extends AnyCondition[]>(criteria: T): AndCondition<T[number]> {
+export function andCondition<T extends SimpleCondition[]>(criteria: T): AndCondition<T[number]> {
   return evaluate(
     AndConditionSchema.safeParse({
       type: ConditionType.AND,
@@ -237,7 +237,7 @@ export function andCondition<T extends AnyCondition[]>(criteria: T): AndConditio
  *
  * @category Helpers
  */
-export function orCondition<T extends AnyCondition[]>(criteria: T): OrCondition<T[number]> {
+export function orCondition<T extends SimpleCondition[]>(criteria: T): OrCondition<T[number]> {
   return evaluate(
     OrConditionSchema.safeParse({
       type: ConditionType.OR,
