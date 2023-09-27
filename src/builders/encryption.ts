@@ -1,5 +1,5 @@
 import { evaluate } from './ValidationError';
-import { amount } from '../primitives';
+import { NetworkAddressDetails, amount } from '../primitives';
 import {
   AccessCondition,
   AccessConditionSchema,
@@ -73,17 +73,13 @@ export function eoaOwnershipCondition(input: EoaOwnershipConditionDetails): EoaO
 
 export type Erc20OwnershipConditionDetails = {
   /**
-   * The chain Id where the ERC-20 token is deployed.
-   */
-  chainId: number;
-  /**
    * The comparison operator to use to compare the ERC-20 token balance.
    */
   condition: ConditionComparisonOperator;
   /**
    * The ERC-20 token contract address details.
    */
-  contract: string;
+  contract: NetworkAddressDetails;
   /**
    * The ERC-20 token decimals (e.g. 18 for GHO)
    */
@@ -117,17 +113,6 @@ export function erc20OwnershipCondition({
     }),
   );
 }
-
-export type NetworkAddressDetails = {
-  /**
-   * The chain id.
-   */
-  chainId: number;
-  /**
-   * The EVM address.
-   */
-  address: string;
-};
 
 export type Erc721OwnershipConditionDetails = {
   /**
