@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.29
+
+### Patch Changes
+
+- 286daa4: **fix:** `orCondition` and `andCondition` input type
+- 1cacc5a: **chore:** creates internal `accessCondition` builder
+
 ## 0.1.0-alpha.28
 
 ### Patch Changes
