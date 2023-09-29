@@ -17,7 +17,6 @@ import {
   nonEmptyStringSchema,
 } from '../../primitives.js';
 import { hasTwoOrMore, Brand, TwoAtLeastArray } from '../../utils.js';
-import {NetworkAddressDetails} from "../../builders";
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -156,7 +155,7 @@ export const CollectConditionSchema = z.object({
 
 export type AdvancedContractCondition = {
   type: ConditionType.ADVANCED_CONTRACT;
-  contract: NetworkAddressDetails;
+  contract: NetworkAddress;
   functionName: string;
   abi: string;
   params?: string[] | string[][];
@@ -228,6 +227,7 @@ export const AndConditionSchema = andConditionSchema([
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
+  AdvancedContractConditionSchema
 ]);
 
 export type OrCondition<T extends BaseCondition = SimpleCondition> = {
@@ -262,6 +262,7 @@ export const OrConditionSchema = orConditionSchema([
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
+  AdvancedContractConditionSchema
 ]);
 
 export type AnyCondition =
