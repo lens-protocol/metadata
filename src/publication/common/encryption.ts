@@ -17,6 +17,7 @@ import {
   nonEmptyStringSchema,
 } from '../../primitives.js';
 import { hasTwoOrMore, Brand, TwoAtLeastArray } from '../../utils.js';
+import {NetworkAddressDetails} from "../../builders";
 
 export enum EncryptionProvider {
   LIT_PROTOCOL = 'LIT_PROTOCOL',
@@ -34,6 +35,7 @@ export enum ConditionType {
   PROFILE_OWNERSHIP = 'PROFILE_OWNERSHIP',
   FOLLOW = 'FOLLOW',
   COLLECT = 'COLLECT',
+  ADVANCED_CONTRACT = 'ADVANCED_CONTRACT',
   AND = 'AND',
   OR = 'OR',
 }
@@ -152,8 +154,29 @@ export const CollectConditionSchema = z.object({
   thisPublication: z.boolean().optional().default(false),
 });
 
+export type AdvancedContractCondition = {
+  type: ConditionType.ADVANCED_CONTRACT;
+  contract: NetworkAddressDetails;
+  functionName: string;
+  abi: string;
+  params?: string[] | string[][];
+}
+
+/**
+ * @internal
+ */
+export const AdvancedContractConditionSchema = z.object({
+  type: z.literal(ConditionType.ADVANCED_CONTRACT),
+  contract: NetworkAddressSchema,
+  functionName: z.string().min(1),
+  abi: z.string().min(1),
+  params: z.union([ z.string().array(), z.string().array().array() ]).optional(),
+})
+
+
 export type SimpleCondition =
   | CollectCondition
+  | AdvancedContractCondition
   | EoaOwnershipCondition
   | Erc20OwnershipCondition
   | FollowCondition
@@ -265,6 +288,7 @@ export const AccessConditionSchema: z.ZodType<AccessCondition, z.ZodTypeDef, obj
   orConditionSchema([
     AndConditionSchema,
     CollectConditionSchema,
+    AdvancedContractConditionSchema,
     EoaOwnershipConditionSchema,
     Erc20OwnershipConditionSchema,
     FollowConditionSchema,
