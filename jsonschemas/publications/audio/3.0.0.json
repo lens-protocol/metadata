@@ -185,6 +185,71 @@
                         },
                         {
                           "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "ADVANCED_CONTRACT"
+                            },
+                            "contract": {
+                              "$ref": "#/$defs/NetworkAddress"
+                            },
+                            "functionName": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "abi": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "params": {
+                              "anyOf": [
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "condition": {
+                              "type": "string",
+                              "enum": [
+                                "EQUAL",
+                                "NOT_EQUAL",
+                                "GREATER_THAN",
+                                "GREATER_THAN_OR_EQUAL",
+                                "LESS_THAN",
+                                "LESS_THAN_OR_EQUAL"
+                              ]
+                            },
+                            "value": {
+                              "type": [
+                                "string",
+                                "boolean"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "contract",
+                            "functionName",
+                            "abi",
+                            "condition",
+                            "value"
+                          ],
+                          "additionalProperties": false
                         }
                       ]
                     },
@@ -199,6 +264,9 @@
               },
               {
                 "$ref": "#/$defs/CollectCondition"
+              },
+              {
+                "$ref": "#/$defs/AccessCondition/properties/criteria/items/anyOf/0/properties/criteria/items/anyOf/6"
               },
               {
                 "$ref": "#/$defs/EoaOwnershipCondition"
@@ -240,6 +308,9 @@
                         },
                         {
                           "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AccessCondition/properties/criteria/items/anyOf/0/properties/criteria/items/anyOf/6"
                         }
                       ]
                     },

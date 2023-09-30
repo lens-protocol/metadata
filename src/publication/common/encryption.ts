@@ -159,6 +159,8 @@ export type AdvancedContractCondition = {
   functionName: string;
   abi: string;
   params?: string[] | string[][];
+  condition: ConditionComparisonOperator;
+  value: string | boolean;
 }
 
 /**
@@ -170,6 +172,8 @@ export const AdvancedContractConditionSchema = z.object({
   functionName: z.string().min(1),
   abi: z.string().min(1),
   params: z.union([ z.string().array(), z.string().array().array() ]).optional(),
+  condition: z.nativeEnum(ConditionComparisonOperator),
+  value: z.union([ z.string(), z.boolean() ])
 })
 
 
