@@ -765,10 +765,8 @@
                               ]
                             },
                             "value": {
-                              "type": [
-                                "string",
-                                "boolean"
-                              ]
+                              "type": "string",
+                              "pattern": "^(true|false|\\d{1,70})$"
                             }
                           },
                           "required": [
