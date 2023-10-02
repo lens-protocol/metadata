@@ -229,23 +229,11 @@
                               "minLength": 1
                             },
                             "params": {
-                              "anyOf": [
-                                {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "string"
-                                    }
-                                  }
-                                }
-                              ]
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
                             },
                             "comparison": {
                               "type": "string",
