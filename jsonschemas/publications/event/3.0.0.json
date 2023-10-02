@@ -753,7 +753,7 @@
                                 }
                               ]
                             },
-                            "condition": {
+                            "comparison": {
                               "type": "string",
                               "enum": [
                                 "EQUAL",
@@ -774,7 +774,7 @@
                             "contract",
                             "functionName",
                             "abi",
-                            "condition",
+                            "comparison",
                             "value"
                           ],
                           "additionalProperties": false
