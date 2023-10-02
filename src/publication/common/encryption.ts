@@ -158,7 +158,7 @@ export type AdvancedContractCondition = {
   contract: NetworkAddress;
   functionName: string;
   abi: string;
-  params?: string[] | string[][];
+  params: string[] | string[][];
   comparison: ConditionComparisonOperator;
   value: string;
 }
@@ -171,7 +171,7 @@ export const AdvancedContractConditionSchema = z.object({
   contract: NetworkAddressSchema,
   functionName: z.string().min(1),
   abi: z.string().min(1),
-  params: z.union([ z.string().array(), z.string().array().array() ]).optional(),
+  params: z.union([ z.string().array(), z.string().array().array() ]),
   comparison: z.nativeEnum(ConditionComparisonOperator),
   value: z.string().regex(/^(true|false|\d{1,70})$/)
 })

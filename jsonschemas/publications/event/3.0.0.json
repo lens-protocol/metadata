@@ -774,6 +774,7 @@
                             "contract",
                             "functionName",
                             "abi",
+                            "params",
                             "comparison",
                             "value"
                           ],
