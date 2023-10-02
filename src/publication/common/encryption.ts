@@ -161,7 +161,7 @@ export type AdvancedContractCondition = {
   params: string[];
   comparison: ConditionComparisonOperator;
   value: string;
-}
+};
 
 /**
  * @internal
@@ -170,16 +170,32 @@ export const AdvancedContractConditionSchema = z.object({
   type: z.literal(ConditionType.ADVANCED_CONTRACT),
   contract: NetworkAddressSchema.describe('The contract address and chain id'),
   functionName: z.string().min(1).describe('The name of the function you want to call'),
-  abi: z.string().min(1).describe('The contract ABI. Has to be in human readable ' +
-    'single string format containing the signature of the function you want to call. See ' +
-    'https://docs.ethers.org/v5/api/utils/abi/fragments/#human-readable-abi for more info'),
-  params: z.string().array().describe('The parameters to pass to the function. Must be ' +
-    'exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to ' +
-    'represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays.'),
-  comparison: z.nativeEnum(ConditionComparisonOperator).describe('The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL'),
-  value: z.string().regex(/^(true|false|\d{1,70})$/).describe(`The comparison value. Accepts 'true', 'false' or a number`)
-})
-
+  abi: z
+    .string()
+    .min(1)
+    .describe(
+      'The contract ABI. Has to be in human readable ' +
+        'single string format containing the signature of the function you want to call. See ' +
+        'https://docs.ethers.org/v5/api/utils/abi/fragments/#human-readable-abi for more info',
+    ),
+  params: z
+    .string()
+    .array()
+    .describe(
+      'The parameters to pass to the function. Must be ' +
+        'exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to ' +
+        'represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays.',
+    ),
+  comparison: z
+    .nativeEnum(ConditionComparisonOperator)
+    .describe(
+      'The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL',
+    ),
+  value: z
+    .string()
+    .regex(/^(true|false|\d{1,70})$/)
+    .describe(`The comparison value. Accepts 'true', 'false' or a number`),
+});
 
 export type SimpleCondition =
   | CollectCondition
@@ -235,7 +251,7 @@ export const AndConditionSchema = andConditionSchema([
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
-  AdvancedContractConditionSchema
+  AdvancedContractConditionSchema,
 ]);
 
 export type OrCondition<T extends BaseCondition = SimpleCondition> = {
@@ -270,7 +286,7 @@ export const OrConditionSchema = orConditionSchema([
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
-  AdvancedContractConditionSchema
+  AdvancedContractConditionSchema,
 ]);
 
 export type AnyCondition =
