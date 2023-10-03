@@ -26,6 +26,7 @@ import {
   SimpleCondition,
   refineNftOwnershipCondition,
   AdvancedContractCondition,
+  AdvancedContractConditionSchema,
 } from '../publication';
 
 export type CollectConditionDetails = {
