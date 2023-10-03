@@ -25,6 +25,7 @@ import {
   ProfileOwnershipConditionSchema,
   SimpleCondition,
   refineNftOwnershipCondition,
+  AdvancedContractCondition,
 } from '../publication';
 
 export type CollectConditionDetails = {
@@ -216,6 +217,26 @@ export function followCondition(input: FollowConditionDetails): FollowCondition 
   return evaluate(
     FollowConditionSchema.safeParse({
       type: ConditionType.FOLLOW,
+      ...input,
+    }),
+  );
+}
+
+export type AdvancedContractConditionDetails = {
+  contract: NetworkAddressDetails;
+  functionName: string;
+  abi: string;
+  params: string[];
+  comparison: ConditionComparisonOperator;
+  value: string;
+};
+
+export function advancedContractCondition(
+  input: AdvancedContractConditionDetails,
+): AdvancedContractCondition {
+  return evaluate(
+    AdvancedContractConditionSchema.safeParse({
+      type: ConditionType.ADVANCED_CONTRACT,
       ...input,
     }),
   );
