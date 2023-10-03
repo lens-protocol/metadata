@@ -258,6 +258,12 @@ export type AdvancedContractConditionDetails = {
   value: string;
 };
 
+/**
+ * Creates an arbitrary on-chain condition based on the return value
+ * of a given contract view function.
+ *
+ * @category Helpers
+ */
 export function advancedContractCondition(
   input: AdvancedContractConditionDetails,
 ): AdvancedContractCondition {
