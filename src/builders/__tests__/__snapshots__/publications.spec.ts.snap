@@ -126,6 +126,7 @@ exports[`Given the publication metadata builders when using the "event" builder 
     "mainContentFocus": "EVENT",
     "position": "geo:40.6892,-74.0444",
     "startsAt": "2028-10-01T00:00:00Z",
+    "title": "Where should we go next?",
   },
 }
 `;

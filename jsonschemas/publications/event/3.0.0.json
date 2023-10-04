@@ -98,6 +98,11 @@
           ],
           "description": "Specify a content warning."
         },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The title of the event."
+        },
         "mainContentFocus": {
           "type": "string",
           "const": "EVENT",

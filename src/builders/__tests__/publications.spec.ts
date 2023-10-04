@@ -180,6 +180,7 @@ describe(`Given the publication metadata builders`, () => {
   describe(`when using the "${event.name}" builder`, () => {
     it('should return a valid EventMetadata for Geo URI location', () => {
       const metadata = event({
+        title: 'Where should we go next?',
         location: 'The Moon',
         position: geoUri({
           lat: 40.6892,
