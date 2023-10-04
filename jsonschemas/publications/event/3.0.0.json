@@ -52,6 +52,11 @@
           "minLength": 1,
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The title of the event."
+        },
         "appId": {
           "type": "string",
           "minLength": 1,
@@ -661,6 +666,7 @@
       },
       "required": [
         "id",
+        "title",
         "locale",
         "mainContentFocus",
         "location",

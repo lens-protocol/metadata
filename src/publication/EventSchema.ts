@@ -27,6 +27,7 @@ import {
   encryptableGeoUriSchema,
   encryptableMarkdownSchema,
   Signature,
+  nonEmptyStringSchema,
 } from '../primitives.js';
 
 /**
@@ -66,6 +67,10 @@ export const SchedulingAdjustmentsSchema: z.ZodType<SchedulingAdjustments, z.Zod
   });
 
 export type EventMetadataDetails = PublicationMetadataCommon & {
+  /**
+   * The title of the event.
+   */
+  title: string;
   /**
    * The main focus of the publication.
    */
@@ -112,6 +117,8 @@ export type EventMetadataDetails = PublicationMetadataCommon & {
 
 const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, object> =
   metadataDetailsWith({
+    title: nonEmptyStringSchema().describe('The title of the event.'),
+
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 
     location: z
