@@ -263,6 +263,7 @@ export type AdvancedContractConditionDetails = {
  * of a given contract view function.
  *
  * @category Helpers
+ * @experimental This feature is experimental and might change in the future.
  */
 export function advancedContractCondition(
   input: AdvancedContractConditionDetails,
