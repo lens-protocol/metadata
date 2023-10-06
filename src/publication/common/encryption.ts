@@ -148,7 +148,7 @@ export type CollectCondition = {
  */
 export const CollectConditionSchema = z.object({
   type: z.literal(ConditionType.COLLECT),
-  publicationId: PublicationIdSchema,
+  publicationId: PublicationIdSchema, // TODO check on-chain publication ID
   thisPublication: z.boolean().optional().default(false),
 });
 
