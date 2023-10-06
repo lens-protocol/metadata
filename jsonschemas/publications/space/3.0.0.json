@@ -170,6 +170,77 @@
   ],
   "additionalProperties": false,
   "$defs": {
+    "AdvancedContractCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ADVANCED_CONTRACT"
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "address": {
+              "$ref": "#/$defs/EvmAddress"
+            }
+          },
+          "required": [
+            "chainId",
+            "address"
+          ],
+          "additionalProperties": false,
+          "description": "The contract address and chain id"
+        },
+        "functionName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the function you want to call"
+        },
+        "abi": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/fragments/#human-readable-abi for more info"
+        },
+        "params": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
+        },
+        "comparison": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ],
+          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(true|false|\\d{1,70})$",
+          "description": "The comparison value. Accepts 'true', 'false' or a number"
+        }
+      },
+      "required": [
+        "type",
+        "contract",
+        "functionName",
+        "abi",
+        "params",
+        "comparison",
+        "value"
+      ],
+      "additionalProperties": false
+    },
     "AccessCondition": {
       "type": "object",
       "properties": {
@@ -209,6 +280,9 @@
                         },
                         {
                           "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AdvancedContractCondition"
                         }
                       ]
                     },
@@ -223,6 +297,9 @@
               },
               {
                 "$ref": "#/$defs/CollectCondition"
+              },
+              {
+                "$ref": "#/$defs/AdvancedContractCondition"
               },
               {
                 "$ref": "#/$defs/EoaOwnershipCondition"
@@ -264,6 +341,9 @@
                         },
                         {
                           "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AdvancedContractCondition"
                         }
                       ]
                     },
@@ -982,8 +1062,7 @@
       "type": "object",
       "properties": {
         "chainId": {
-          "type": "number",
-          "exclusiveMinimum": 0
+          "$ref": "#/$defs/AdvancedContractCondition/properties/contract/properties/chainId"
         },
         "address": {
           "$ref": "#/$defs/EvmAddress"

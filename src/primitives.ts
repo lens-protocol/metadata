@@ -537,10 +537,10 @@ export const AssetSchema: z.Schema<Asset, z.ZodTypeDef, object> = z.object({
 /**
  * Creates an {@link Asset}.
  *
- * @category Helpers
+ * @internal
  */
-export function asset(contract: NetworkAddress, decimals: number): Asset {
-  return { contract, decimals };
+export function asset(contract: NetworkAddressDetails, decimals: number): Asset {
+  return AssetSchema.parse({ contract, decimals });
 }
 
 /**
@@ -573,12 +573,22 @@ export const AmountSchema: z.Schema<Amount, z.ZodTypeDef, object> = z.object(
   },
 );
 
+export type NetworkAddressDetails = {
+  /**
+   * The chain id.
+   */
+  chainId: number;
+  /**
+   * The EVM address.
+   */
+  address: string;
+};
+
 /**
  * @internal
  */
 export type AmountDetails = {
-  chainId: number;
-  contract: string;
+  contract: NetworkAddressDetails;
   decimals: number;
   value: string;
 };
@@ -587,10 +597,7 @@ export type AmountDetails = {
  */
 export function amount(input: AmountDetails): Amount {
   return AmountSchema.parse({
-    asset: asset(
-      { chainId: toChainId(input.chainId), address: toEvmAddress(input.contract) },
-      input.decimals,
-    ),
+    asset: asset(input.contract, input.decimals),
     value: input.value,
   });
 }
