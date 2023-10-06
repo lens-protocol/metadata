@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.30
+
+### Patch Changes
+
+- 810b568: **fix:** consolidated `erc20OwnershipCondition` signature
+- e5fef24: **feat:** adds advanced contract condition
+
 ## 0.1.0-alpha.29
 
 ### Patch Changes
