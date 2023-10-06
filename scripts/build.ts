@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
+  AdvancedContractConditionSchema,
   AnyMediaSchema,
   ArticleSchema,
   AudioSchema,
@@ -81,6 +82,7 @@ for (const [path, Schema] of schemas) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
+      AdvancedContractCondition: AdvancedContractConditionSchema,
       AccessCondition: AccessConditionSchema,
       PhysicalAddress: PhysicalAddressSchema,
       Amount: AmountSchema,
