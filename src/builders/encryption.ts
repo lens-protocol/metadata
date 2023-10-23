@@ -1,5 +1,5 @@
 import { evaluate } from './ValidationError';
-import { amount } from '../primitives';
+import { NetworkAddressDetails, amount } from '../primitives';
 import {
   AccessCondition,
   AccessConditionSchema,
@@ -25,6 +25,8 @@ import {
   ProfileOwnershipConditionSchema,
   SimpleCondition,
   refineNftOwnershipCondition,
+  AdvancedContractCondition,
+  AdvancedContractConditionSchema,
 } from '../publication';
 
 export type CollectConditionDetails = {
@@ -73,17 +75,13 @@ export function eoaOwnershipCondition(input: EoaOwnershipConditionDetails): EoaO
 
 export type Erc20OwnershipConditionDetails = {
   /**
-   * The chain Id where the ERC-20 token is deployed.
-   */
-  chainId: number;
-  /**
    * The comparison operator to use to compare the ERC-20 token balance.
    */
   condition: ConditionComparisonOperator;
   /**
    * The ERC-20 token contract address details.
    */
-  contract: string;
+  contract: NetworkAddressDetails;
   /**
    * The ERC-20 token decimals (e.g. 18 for GHO)
    */
@@ -117,17 +115,6 @@ export function erc20OwnershipCondition({
     }),
   );
 }
-
-export type NetworkAddressDetails = {
-  /**
-   * The chain id.
-   */
-  chainId: number;
-  /**
-   * The EVM address.
-   */
-  address: string;
-};
 
 export type Erc721OwnershipConditionDetails = {
   /**
@@ -216,6 +203,59 @@ export function followCondition(input: FollowConditionDetails): FollowCondition 
   return evaluate(
     FollowConditionSchema.safeParse({
       type: ConditionType.FOLLOW,
+      ...input,
+    }),
+  );
+}
+
+export type AdvancedContractConditionDetails = {
+  /**
+   * The contract information, including the chain id and the EVM address.
+   */
+  contract: NetworkAddressDetails;
+
+  /**
+   * The function name to call. Has to be exactly the same as in the ABI.
+   */
+  functionName: string;
+
+  /**
+   * The function ABI. Has to be in a human-readable string format, which you can convert using the ethers library.
+   * See here for more info https://docs.ethers.io/v5/api/utils/abi/fragments/#human-readable-abi
+   */
+  abi: string;
+
+  /**
+   * The parameters to pass to the function. Has to be matching the arguments described in the ABI.
+   * In case of tuples and arrays, you have to pass the values as a stringified JSON array.
+   */
+  params: string[];
+
+  /**
+   * The comparison operator to use to compare the result of the function call. In case of integer outputs
+   * you can use any comparison operator. In case of boolean outputs, you can only use EQUAL and NOT_EQUAL.
+   */
+  comparison: ConditionComparisonOperator;
+
+  /**
+   * The value to compare the result of the function call against. Can be a boolean or a BigNumber in string format.
+   */
+  value: string;
+};
+
+/**
+ * Creates an arbitrary on-chain condition based on the return value
+ * of a given contract view function.
+ *
+ * @category Helpers
+ * @experimental This feature is experimental and might change in the future.
+ */
+export function advancedContractCondition(
+  input: AdvancedContractConditionDetails,
+): AdvancedContractCondition {
+  return evaluate(
+    AdvancedContractConditionSchema.safeParse({
+      type: ConditionType.ADVANCED_CONTRACT,
       ...input,
     }),
   );

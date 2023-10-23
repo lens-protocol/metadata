@@ -34,6 +34,7 @@ export enum ConditionType {
   PROFILE_OWNERSHIP = 'PROFILE_OWNERSHIP',
   FOLLOW = 'FOLLOW',
   COLLECT = 'COLLECT',
+  ADVANCED_CONTRACT = 'ADVANCED_CONTRACT',
   AND = 'AND',
   OR = 'OR',
 }
@@ -148,12 +149,57 @@ export type CollectCondition = {
  */
 export const CollectConditionSchema = z.object({
   type: z.literal(ConditionType.COLLECT),
-  publicationId: PublicationIdSchema,
+  publicationId: PublicationIdSchema, // TODO check on-chain publication ID
   thisPublication: z.boolean().optional().default(false),
+});
+
+export type AdvancedContractCondition = {
+  type: ConditionType.ADVANCED_CONTRACT;
+  contract: NetworkAddress;
+  functionName: string;
+  abi: string;
+  params: string[];
+  comparison: ConditionComparisonOperator;
+  value: string;
+};
+
+/**
+ * @internal
+ */
+export const AdvancedContractConditionSchema = z.object({
+  type: z.literal(ConditionType.ADVANCED_CONTRACT),
+  contract: NetworkAddressSchema.describe('The contract address and chain id'),
+  functionName: z.string().min(1).describe('The name of the function you want to call'),
+  abi: z
+    .string()
+    .min(1)
+    .describe(
+      'The contract ABI. Has to be in human readable ' +
+        'single string format containing the signature of the function you want to call. See ' +
+        'https://docs.ethers.org/v5/api/utils/abi/fragments/#human-readable-abi for more info',
+    ),
+  params: z
+    .string()
+    .array()
+    .describe(
+      'The parameters to pass to the function. Must be ' +
+        'exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to ' +
+        'represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays.',
+    ),
+  comparison: z
+    .nativeEnum(ConditionComparisonOperator)
+    .describe(
+      'The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL',
+    ),
+  value: z
+    .string()
+    .regex(/^(true|false|\d{1,70})$/)
+    .describe(`The comparison value. Accepts 'true', 'false' or a number`),
 });
 
 export type SimpleCondition =
   | CollectCondition
+  | AdvancedContractCondition
   | EoaOwnershipCondition
   | Erc20OwnershipCondition
   | FollowCondition
@@ -205,6 +251,7 @@ export const AndConditionSchema = andConditionSchema([
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
+  AdvancedContractConditionSchema,
 ]);
 
 export type OrCondition<T extends BaseCondition = SimpleCondition> = {
@@ -239,6 +286,7 @@ export const OrConditionSchema = orConditionSchema([
   ProfileOwnershipConditionSchema,
   FollowConditionSchema,
   CollectConditionSchema,
+  AdvancedContractConditionSchema,
 ]);
 
 export type AnyCondition =
@@ -265,6 +313,7 @@ export const AccessConditionSchema: z.ZodType<AccessCondition, z.ZodTypeDef, obj
   orConditionSchema([
     AndConditionSchema,
     CollectConditionSchema,
+    AdvancedContractConditionSchema,
     EoaOwnershipConditionSchema,
     Erc20OwnershipConditionSchema,
     FollowConditionSchema,

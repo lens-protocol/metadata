@@ -47,8 +47,10 @@ describe(`Given the encryption access condition helpers`, () => {
   describe(`when using the "${erc20OwnershipCondition.name}" helper`, () => {
     it('should return a valid Erc20OwnershipCondition', () => {
       const condition = erc20OwnershipCondition({
-        contract: '0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f',
-        chainId: 1,
+        contract: {
+          address: '0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f',
+          chainId: 1,
+        },
         decimals: 18,
         value: '42',
         condition: ConditionComparisonOperator.EQUAL,
