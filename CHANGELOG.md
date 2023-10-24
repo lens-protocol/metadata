@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.1.0-alpha.31
+
+### Patch Changes
+
+- f14e899: **fix:** adds missing `EventSchema.title`
+
 ## 0.1.0-alpha.30
 
 ### Patch Changes
