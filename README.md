@@ -622,10 +622,24 @@ switch (publicationMetadata.$schema) {
 
 To contribute to the Lens Protocol Metadata Standards, please fork this repository and submit a pull request with your changes.
 
+To run the tests, run:
+
+```bash
+pnpm test
+```
+
+**Pro-tip:** you can run `pnpm test -- --watch` to run the tests in watch mode.
+
 To build the project, run:
 
 ```bash
 pnpm build
+```
+
+Generate and include up to date documentation with:
+
+```bash
+pnpm typedoc:docs
 ```
 
 Add changeset with:
@@ -649,7 +663,7 @@ To release a new version follow the steps below:
 pnpm install && pnpm build && pnpm typedoc:docs
 ```
 
-3. Update relevant `package.json`'s versions and update `CHANGELOG.md` for each package:
+3. Update relevant `package.json`'s versions and update `CHANGELOG.md` with:
 
 ```bash
 pnpm changeset version
