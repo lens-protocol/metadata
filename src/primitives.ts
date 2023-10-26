@@ -53,8 +53,8 @@ function allFailed<Input>(
  */
 export const EncryptedStringSchema = nonEmptyStringSchema('An encrypted value.')
   .regex(
-    /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/, // base64 regex
-    'Should be encrypted and base64 encoded.',
+    /^\S+$/, // Approximation of Lit Encrypted value
+    'Should be a valid encrypted value.',
   )
   .transform(toEncryptedString);
 

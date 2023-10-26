@@ -1,5 +1,66 @@
 # @lens-protocol/metadata
 
+## 1.0.0
+
+### Major Changes
+
+- 55dc2bf: First major release
+
+### Minor Changes
+
+- 3baeab5: **Added** first iteration over LIP-2 spec
+
+### Patch Changes
+
+- 3f3c349: **Added** versioning strategy
+- 9a71023: **fix:** missing `TransactionMetadataDetails` with `PublicationMetadataCommon`
+- 9db94c5: **fix:** simplifies `MirrorMetadata` and removes `globalReach` across the board
+- 2a6ae84: **Fixed** `MarketplaceMetadataAttribute` property names
+- 809643a: **Added** support for encryptable fields
+- a1a8199: **feat:** new access condition builders
+- 286daa4: **fix:** `orCondition` and `andCondition` input type
+- e9808e6: **Added** `GeoURI` and `Address` for better targeting o `EventMetadata` and `CheckingInMetadata`
+- 6cab78d: **Added** `extractVersion` convenience helper
+- 1cacc5a: **chore:** creates internal `accessCondition` builder
+- 3480452: **Fixed** Publication Metadata v3 strict rule around non-empty Marketplace attributes
+- cb70c63: **Fixed** `AccessCondition` and `legacy.AccessCondition` inference
+- 3569b6d: **Added** `formatZodError`, datetimes instead of unix timestamps and future proof events datetimes
+- 5e152b0: **Fixes** tsconfig so to not need tslib
+- a75cf84: **Fixed** `Amount.currencty > Amount.asset`
+- cb7ed1a: **Added** `ProfileMetadata.lens.appId`
+- eec20a1: **Fixed** TS4023 error while using `legacy` namespace by moving content under `@lens-protocol/metadata/legacy` entry point
+- a8e465d: **Added** support for Profile metadata v1
+- b76078c: **fix:** non-optional `locale: Locale`
+- d0cd540: **Fixed** `NftOwnershipCondition` to include ERC-1155 limitations around token IDs
+- 691847a: **Fixed** missing `EncryptionParams.encryptedFields` rules and typedef
+- f3acec1: **fix:** `ArticleMetadata.content` non optional
+- faf84e4: **Fixed** `StoryMetadata.attachments` (removed)
+- 645e78d: **fix:** `AnyMedia` discriminated union validation
+- e966e85: **Fixed** missing `title`, wrong `altTag`, and adds `EncryptedPaths`
+- 5d0a2a9: **Fixes** minor mismatches with legacy spec
+- d1fc6d4: **Fixed** all pub metadata schema to start from 3.0.0 and profile metadata schema from 2.0.0
+- f071212: **Fixed** `AnyMediaSchema` union and `ThreeDAsset.assets` name
+- ee041cf: **Fixed** `PublicationMetadataMetadata` typo
+- 4bb1bc8: **fix:** legacy publication parse to accept fields as per past behavior
+- f14e899: **fix:** adds missing `EventSchema.title`
+- b111da8: **Added** metadata builder functions
+- 7191ce1: **Fixed** too strict engines directive
+- b72c6e4: **Fixed** missing properties in `TransactionMetadata` and `SpaceSchema`
+- d643054: **Added** support for token-gated publications
+- f1ff3a3: **Fixed** `MirrorSchema` id, location, generated JSON schema"
+- f0897dc: **fix:** missing `MintMetadata.attachments`
+- 74242d1: **Added** `MirrorMetadataSchema`
+- 2d8869d: **feat:** implements new limits
+- ba502d1: **feat:** adds `shortVideo` builder and small fix
+- 308e702: **refactor:** makes the lib TS typedef first
+- 8d1f2b1: **Added** docs generated with typedocs
+- 4af411a: **fixed:** encrypted value regexp
+- cf7bfaa: **Added** support for legacy Publication Metadata v1 and v2
+- 5af6230: **Added** `type` to `AccessCondition`(s)
+- 810b568: **fix:** consolidated `erc20OwnershipCondition` signature
+- 406238b: **Added** `ProfileMetadataSchema` and several other improvements
+- e5fef24: **feat:** adds advanced contract condition
+
 ## 0.1.0-alpha.31
 
 ### Patch Changes
