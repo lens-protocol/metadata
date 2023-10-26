@@ -151,7 +151,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
         · "lens.mintLink": expected to match one of the following groups:
         		String must contain at least 6 character(s); Should be a valid URI
         	OR:
-        		Should be encrypted and base64 encoded."
+        		Should be a valid encrypted value."
       `);
     });
   });
