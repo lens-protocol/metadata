@@ -142,7 +142,7 @@ const OpenSeaSchema = z.object({
  * @internal
  */
 export const MediaSchema = z.object({
-  item: uriSchema('Marketplaces will store any NFT image here.'),
+  item: z.string({ description: 'Marketplaces will store any NFT image here.' }),
   altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
   cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
   type: z.string().optional().nullable().describe('This is the mime type of the media.'),
