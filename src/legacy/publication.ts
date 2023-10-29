@@ -5,7 +5,6 @@ import {
   LocaleSchema,
   Markdown,
   TagSchema,
-  markdownSchema,
   nonEmptyStringSchema,
   toAppId,
   toMarkdown,
@@ -105,9 +104,10 @@ const AnimationUrlSchema = uriSchema(
 );
 
 const OpenSeaSchema = z.object({
-  description: markdownSchema(
-    'A human-readable description of the item. It could be plain text or markdown.',
-  )
+  description: z
+    .string({
+      description: 'A human-readable description of the item. It could be plain text or markdown.',
+    })
     .optional()
     .nullable(),
 
