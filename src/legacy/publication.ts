@@ -396,7 +396,10 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   content: ContentSchema.transform(toMarkdown).optional().nullable(),
 
   contentWarning: z
-    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
+    .union([
+      z.string(),
+      z.nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' }),
+    ])
     .optional()
     .nullable(),
 
@@ -435,7 +438,7 @@ export type PublicationMetadataV2Audio = z.infer<typeof PublicationMetadataV2Aud
 const PublicationMetadataV2EmbedSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.EMBED),
 
-  animation_url: AnimationUrlSchema,
+  animation_url: AnimationUrlSchema.optional().nullable(),
 });
 export type PublicationMetadataV2Embed = z.infer<typeof PublicationMetadataV2EmbedSchema>;
 
