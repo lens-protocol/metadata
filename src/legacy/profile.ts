@@ -66,9 +66,9 @@ export const ProfileMetadataSchema = z.object({
 
   name: nonEmptyStringSchema('The display name for the profile.').nullable(),
 
-  bio: markdownSchema('The bio for the profile.').nullable(),
+  bio: markdownSchema('The bio for the profile.').nullable().optional(),
 
-  cover_picture: z.string({ description: 'Cover picture.' }).nullable(),
+  cover_picture: z.string({ description: 'Cover picture.' }).nullable().optional(),
 
   attributes: ProfileMetadataAttributeSchema.array().describe(
     'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
