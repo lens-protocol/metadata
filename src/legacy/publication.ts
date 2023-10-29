@@ -126,7 +126,12 @@ const OpenSeaSchema = z.object({
     'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
   ),
 
-  image: uriSchema('Marketplaces will store any NFT image here.').optional().nullable(),
+  image: z
+    .string({
+      description: 'Marketplaces will store any NFT image here.',
+    })
+    .optional()
+    .nullable(),
 
   animation_url: AnimationUrlSchema.optional().nullable(),
 
