@@ -111,10 +111,12 @@ const OpenSeaSchema = z.object({
     .optional()
     .nullable(),
 
-  external_url: uriSchema(
-    `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-      'and will allow users to leave OpenSea and view the item on the site.',
-  )
+  external_url: z
+    .string({
+      description:
+        `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
+        'and will allow users to leave OpenSea and view the item on the site.',
+    })
     .optional()
     .nullable(),
 
