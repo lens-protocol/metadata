@@ -601,15 +601,13 @@
           "description": "The name of the trait."
         },
         "value": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The value of the trait"
+          "type": [
+            "string",
+            "number"
+          ]
         }
       },
-      "required": [
-        "value"
-      ],
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "MediaAudio": {
       "type": "object",
