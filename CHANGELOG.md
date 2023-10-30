@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.0.2
+
+### Patch Changes
+
+- c1231a8: **fix:** legacy `ProfileMetadataSchema` to be more loose
+
 ## 1.0.1
 
 ### Patch Changes
