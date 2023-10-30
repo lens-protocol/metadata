@@ -102,41 +102,44 @@ const AnimationUrlSchema = uriSchema(
     'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
 );
 
-const OpenSeaSchema = z.object({
-  description: z
-    .string({
-      description: 'A human-readable description of the item. It could be plain text or markdown.',
-    })
-    .optional()
-    .nullable(),
+const OpenSeaSchema = z
+  .object({
+    description: z
+      .string({
+        description:
+          'A human-readable description of the item. It could be plain text or markdown.',
+      })
+      .optional()
+      .nullable(),
 
-  external_url: z
-    .string({
-      description:
-        `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-        'and will allow users to leave OpenSea and view the item on the site.',
-    })
-    .optional()
-    .nullable(),
+    external_url: z
+      .string({
+        description:
+          `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
+          'and will allow users to leave OpenSea and view the item on the site.',
+      })
+      .optional()
+      .nullable(),
 
-  name: nonEmptyStringSchema('Name of the NFT item.'),
+    name: nonEmptyStringSchema('Name of the NFT item.'),
 
-  attributes: MarketplaceMetadataAttributeSchema.array().describe(
-    'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
-  ),
+    attributes: MarketplaceMetadataAttributeSchema.array().describe(
+      'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
+    ),
 
-  image: z
-    .string({
-      description: 'Marketplaces will store any NFT image here.',
-    })
-    .optional()
-    .nullable()
-    .catch(null),
+    image: z
+      .string({
+        description: 'Marketplaces will store any NFT image here.',
+      })
+      .optional()
+      .nullable()
+      .catch(null),
 
-  animation_url: AnimationUrlSchema.optional().nullable(),
+    animation_url: AnimationUrlSchema.optional().nullable(),
 
-  version: z.nativeEnum(PublicationMetadataVersion),
-});
+    version: z.nativeEnum(PublicationMetadataVersion),
+  })
+  .passthrough(); // loose validation for any unknown fields
 
 /**
  * @internal
@@ -190,6 +193,7 @@ const PublicationCommonSchema = OpenSeaSchema.extend({
     .nullable(),
 
   media: MediaSchema.array()
+    .catch((ctx) => ctx.input.filter((media) => MediaSchema.safeParse(media).success) as Media[])
     .optional()
     .nullable()
     .describe('This is lens supported attached media items to the publication.'),
@@ -416,13 +420,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
     description: 'Main content focus that for this publication.',
   }),
 
-  tags: z
-    .string()
-    .array()
-    .max(10)
-    .optional()
-    .nullable()
-    .describe('Ability to tag your publication.'),
+  tags: z.string().array().optional().nullable().describe('Ability to tag your publication.'),
 
   encryptionParams: EncryptionParamsSchema.optional(),
 });
@@ -450,7 +448,7 @@ export type PublicationMetadataV2Audio = z.infer<typeof PublicationMetadataV2Aud
 const PublicationMetadataV2EmbedSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.EMBED),
 
-  animation_url: AnimationUrlSchema.optional().nullable(),
+  animation_url: AnimationUrlSchema.optional().nullable(), // should not really be null but some publications have it as null
 });
 export type PublicationMetadataV2Embed = z.infer<typeof PublicationMetadataV2EmbedSchema>;
 
@@ -573,4 +571,13 @@ export const PublicationMetadataSchema = z
     }
 
     return z.NEVER;
+  })
+  .transform((data) => {
+    switch (data.version) {
+      case PublicationMetadataVersion.V1:
+        return PublicationMetadataV1Schema.parse(data);
+
+      case PublicationMetadataVersion.V2:
+        return PublicationMetadataV2Schema.parse(data);
+    }
   });

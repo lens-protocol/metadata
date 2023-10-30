@@ -129,25 +129,31 @@ describe(`Given the PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then it should complain about invalid media items', () => {
+    it('then it should be resilient with invalid media items', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
           metadata_id: '123',
           name: '123',
+          content: 'lorem',
           attributes: [],
           media: [
             {},
             {
-              item: 'https://example.com/image.png',
-              cover: 'not valid URI',
+              cover: 'https://example.com/image.png',
+              // missing `item`
             },
           ],
         }),
       ).toMatchInlineSnapshot(`
-        "fix the following issues
-        · "media[0].item": Required
-        · "media[1].cover": Should be a valid URI"
+        {
+          "attributes": [],
+          "content": "lorem",
+          "media": [],
+          "metadata_id": "123",
+          "name": "123",
+          "version": "1.0.0",
+        }
       `);
     });
   });
@@ -169,7 +175,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       `);
     });
 
-    it('then it should complain about invalid v2 fields', () => {
+    it('then it should be resilient to invalid v2 fields', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -177,18 +183,35 @@ describe(`Given the PublicationMetadataSchema`, () => {
           name: '123',
           attributes: [],
           content: 'a',
-          locale: '',
+          locale: 'en',
           contentWarning: 'NOVALID',
           mainContentFocus: PublicationMainFocus.TEXT_ONLY,
           tags: ['a'.repeat(51), '', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         }),
       ).toMatchInlineSnapshot(`
-        "fix the following issues
-        · "locale": String must contain at least 2 character(s)
-        · "contentWarning": Invalid enum value. Expected 'NSFW' | 'SENSITIVE' | 'SPOILER', received 'NOVALID'
-        · "tags": Array must contain at most 10 element(s)
-        · "tags[0]": String must contain at most 50 character(s)
-        · "tags[1]": String must contain at least 1 character(s)"
+        {
+          "attributes": [],
+          "content": "a",
+          "contentWarning": null,
+          "locale": "en",
+          "mainContentFocus": "TEXT_ONLY",
+          "metadata_id": "123",
+          "name": "123",
+          "tags": [
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "j",
+          ],
+          "version": "2.0.0",
+        }
       `);
     });
 
@@ -227,22 +250,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "media": Metadata AUDIO requires an audio to be attached."
-      `);
-    });
-
-    it(`then it should complain about invalid ${PublicationMainFocus.EMBED} metadata`, () => {
-      expectResult(() =>
-        PublicationMetadataSchema.safeParse({
-          version: '2.0.0',
-          metadata_id: '123',
-          name: '123',
-          attributes: [],
-          locale: 'en',
-          mainContentFocus: PublicationMainFocus.EMBED,
-        }),
-      ).toMatchInlineSnapshot(`
-        "fix the following issues
-        · "animation_url": Required"
       `);
     });
 
@@ -342,8 +349,8 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "encryptionParams.accessCondition": Required
-        · "encryptionParams.encryptionKey": Required
-        · "encryptionParams.encryptedFields": Required"
+        · "encryptionParams.encryptedFields": Required
+        · "encryptionParams.providerSpecificParams": Required"
       `);
     });
 
@@ -375,7 +382,9 @@ describe(`Given the PublicationMetadataSchema`, () => {
                 ],
               },
             },
-            encryptionKey: '0x...',
+            providerSpecificParams: {
+              encryptionKey: '0x...',
+            },
             encryptedFields: {
               content: 42,
             },
@@ -383,11 +392,11 @@ describe(`Given the PublicationMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
-        · "encryptionParams.accessCondition.or.criteria[0]": Unrecognized key(s) in object: 'collect'
+        · "encryptionParams.accessCondition.or.criteria[0]": Unrecognized key(s) in object: 'profile'
         · "encryptionParams.accessCondition.or.criteria": Invalid OR condition: should have at least 2 conditions
         · "encryptionParams.accessCondition": Unrecognized key(s) in object: 'and'
-        · "encryptionParams.encryptionKey": Encryption key should be 368 characters long.
-        · "encryptionParams.encryptedFields.content": Expected string, received number"
+        · "encryptionParams.encryptedFields.content": Expected string, received number
+        · "encryptionParams.providerSpecificParams.encryptionKey": Encryption key should be 368 characters long."
       `);
     });
   });
@@ -600,10 +609,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
           "content": "gtte",
           "description": "gtte",
           "external_url": "https://theshr.xyz",
-          "image": {
-            "item": "https://cloudflare-ipfs.com/ipfs/QmbL8etpvTHWFEYmyPzqBn7cqv3yyaxpfQmqNTimA2718F",
-            "type": "image/jpeg",
-          },
+          "image": null,
           "imageMimeType": "image/png",
           "media": [
             {
