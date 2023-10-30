@@ -8,12 +8,7 @@ describe(`Given the ProfileMetadataSchema`, () => {
     it(`then it should flag the missing fields`, () => {
       expectResult(() => ProfileMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
-        · "version": Invalid literal value, expected "1.0.0"
-        · "metadata_id": Required
-        · "name": Required
-        · "bio": Required
-        · "cover_picture": Required
-        · "attributes": Required"
+        · "name": Required"
       `);
     });
 
@@ -80,6 +75,46 @@ describe(`Given the ProfileMetadataSchema`, () => {
           "cover_picture": null,
           "metadata_id": "foo",
           "name": null,
+          "version": "1.0.0",
+        }
+      `);
+    });
+  });
+
+  describe('when performing regression testing', () => {
+    it('then it should support optional `bio` and `description`', () => {
+      expectResult(() =>
+        ProfileMetadataSchema.safeParse({
+          version: '1.0.0',
+          metadata_id: 'b817be7a-3ecf-4fc9-a983-7a04654d2911',
+          description: 'test',
+          content: 'test',
+          external_url: null,
+          image: null,
+          imageMimeType: null,
+          name: 'Post by @niooo1.test',
+          attributes: [{ traitType: 'string', key: 'type', value: 'post' }],
+          media: [],
+          appId: 'Lenster',
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "appId": "Lenster",
+          "attributes": [
+            {
+              "key": "type",
+              "traitType": "string",
+              "value": "post",
+            },
+          ],
+          "content": "test",
+          "description": "test",
+          "external_url": null,
+          "image": null,
+          "imageMimeType": null,
+          "media": [],
+          "metadata_id": "b817be7a-3ecf-4fc9-a983-7a04654d2911",
+          "name": "Post by @niooo1.test",
           "version": "1.0.0",
         }
       `);

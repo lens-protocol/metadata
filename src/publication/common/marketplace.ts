@@ -25,7 +25,7 @@ export enum MarketplaceMetadataAttributeDisplayType {
  * @see https://docs.opensea.io/docs/metadata-standards#attributes
  */
 export type MarketplaceMetadataAttribute = {
-  value: string;
+  value?: string | number | undefined;
   display_type?: MarketplaceMetadataAttributeDisplayType | undefined;
   trait_type?: string | undefined;
 };
@@ -37,11 +37,13 @@ export const MarketplaceMetadataAttributeSchema: z.ZodType<
   MarketplaceMetadataAttribute,
   z.ZodTypeDef,
   object
-> = z.object({
-  display_type: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
-  trait_type: nonEmptyStringSchema('The name of the trait.').optional(),
-  value: nonEmptyStringSchema('The value of the trait'),
-});
+> = z
+  .object({
+    display_type: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
+    trait_type: nonEmptyStringSchema('The name of the trait.').optional(),
+    value: z.union([z.string(), z.number()]).optional(),
+  })
+  .passthrough(); // make it more loose to allow for future marketplace extensions
 
 /**
  * The metadata standard for marketplace(s).

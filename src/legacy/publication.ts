@@ -4,8 +4,6 @@ import { z } from 'zod';
 import {
   LocaleSchema,
   Markdown,
-  TagSchema,
-  markdownSchema,
   nonEmptyStringSchema,
   toAppId,
   toMarkdown,
@@ -104,42 +102,61 @@ const AnimationUrlSchema = uriSchema(
     'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
 );
 
-const OpenSeaSchema = z.object({
-  description: markdownSchema(
-    'A human-readable description of the item. It could be plain text or markdown.',
-  )
-    .optional()
-    .nullable(),
+const OpenSeaSchema = z
+  .object({
+    description: z
+      .string({
+        description:
+          'A human-readable description of the item. It could be plain text or markdown.',
+      })
+      .optional()
+      .nullable(),
 
-  external_url: uriSchema(
-    `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-      'and will allow users to leave OpenSea and view the item on the site.',
-  )
-    .optional()
-    .nullable(),
+    external_url: z
+      .string({
+        description:
+          `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
+          'and will allow users to leave OpenSea and view the item on the site.',
+      })
+      .optional()
+      .nullable(),
 
-  name: nonEmptyStringSchema('Name of the NFT item.'),
+    name: nonEmptyStringSchema('Name of the NFT item.'),
 
-  attributes: MarketplaceMetadataAttributeSchema.array().describe(
-    'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
-  ),
+    attributes: MarketplaceMetadataAttributeSchema.array().describe(
+      'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
+    ),
 
-  image: uriSchema('Marketplaces will store any NFT image here.').optional().nullable(),
+    image: z
+      .string({
+        description: 'Marketplaces will store any NFT image here.',
+      })
+      .optional()
+      .nullable()
+      .catch(null),
 
-  animation_url: AnimationUrlSchema.optional().nullable(),
+    animation_url: AnimationUrlSchema.optional().nullable(),
 
-  version: z.nativeEnum(PublicationMetadataVersion),
-});
+    version: z.nativeEnum(PublicationMetadataVersion),
+  })
+  .passthrough(); // loose validation for any unknown fields
 
 /**
  * @internal
  */
-export const MediaSchema = z.object({
-  item: uriSchema('Marketplaces will store any NFT image here.'),
-  altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
-  cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
-  type: z.string().optional().nullable().describe('This is the mime type of the media.'),
-});
+export const MediaSchema = z
+  .object({
+    item: nonEmptyStringSchema('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
+    altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
+    cover: z
+      .string() // it can be `This publication is gated.`
+      .describe('The cover for any video or audio media.')
+      .optional()
+      .nullable()
+      .catch(null),
+    type: z.string().optional().nullable().describe('This is the mime type of the media.'),
+  })
+  .passthrough(); // loose validation for media
 export type Media = z.infer<typeof MediaSchema>;
 /**
  * @deprecated Use `Media` instead.
@@ -176,6 +193,7 @@ const PublicationCommonSchema = OpenSeaSchema.extend({
     .nullable(),
 
   media: MediaSchema.array()
+    .catch((ctx) => ctx.input.filter((media) => MediaSchema.safeParse(media).success) as Media[])
     .optional()
     .nullable()
     .describe('This is lens supported attached media items to the publication.'),
@@ -223,7 +241,7 @@ const CollectConditionSchema = z
   .object({
     collect: z.object({
       publicationId: z.string().nullable(),
-      thisPublication: z.boolean().nullable(),
+      thisPublication: z.boolean().nullable().optional(),
     }),
   })
   .strict();
@@ -354,12 +372,14 @@ export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 /**
  * @internal
  */
-export const EncryptedMediaSchema = z.object({
-  item: uriSchema('Marketplaces will store any NFT image here.'),
-  altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
-  cover: uriSchema('The cover for any video or audio media.').optional().nullable(),
-  type: z.string().optional().nullable().describe('This is the mime type of the media.'),
-});
+export const EncryptedMediaSchema = z
+  .object({
+    item: z.string().describe('Marketplaces will store any NFT image here.'),
+    altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
+    cover: z.string().describe('The cover for any video or audio media.').optional().nullable(),
+    type: z.string().optional().nullable().describe('This is the mime type of the media.'),
+  })
+  .passthrough(); // loose validation for media
 export type EncryptedMedia = z.infer<typeof EncryptedMediaSchema>;
 
 const EncryptedFieldsSchema = z.object({
@@ -376,8 +396,10 @@ export type EncryptedFields = z.infer<typeof EncryptedFieldsSchema>;
  */
 export const EncryptionParamsSchema = z.object({
   accessCondition: AccessConditionSchema,
-  encryptionKey: z.string().length(368, 'Encryption key should be 368 characters long.'),
   encryptedFields: EncryptedFieldsSchema,
+  providerSpecificParams: z.object({
+    encryptionKey: z.string().length(368, 'Encryption key should be 368 characters long.'),
+  }),
 });
 export type EncryptionParams = z.infer<typeof EncryptionParamsSchema>;
 
@@ -391,17 +413,14 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   contentWarning: z
     .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
     .optional()
-    .nullable(),
+    .nullable()
+    .catch(null),
 
   mainContentFocus: z.nativeEnum(PublicationMainFocus, {
     description: 'Main content focus that for this publication.',
   }),
 
-  tags: TagSchema.array()
-    .max(10)
-    .optional()
-    .nullable()
-    .describe('Ability to tag your publication.'),
+  tags: z.string().array().optional().nullable().describe('Ability to tag your publication.'),
 
   encryptionParams: EncryptionParamsSchema.optional(),
 });
@@ -418,8 +437,9 @@ const PublicationMetadataV2AudioSchema = PublicationMetadataV2CommonSchema.exten
 
   media: MediaSchema.array()
     .min(1)
+    .catch((ctx) => ctx.input.filter((media) => MediaSchema.safeParse(media).success) as Media[])
     .refine(
-      (value) => value.some((media) => isSupportedAudioMimeTypes(media.type)),
+      (value) => value.some((media) => isSupportedAudioMimeTypes(media?.type)),
       `Metadata ${PublicationMainFocus.AUDIO} requires an audio to be attached.`,
     ),
 });
@@ -428,7 +448,7 @@ export type PublicationMetadataV2Audio = z.infer<typeof PublicationMetadataV2Aud
 const PublicationMetadataV2EmbedSchema = PublicationMetadataV2CommonSchema.extend({
   mainContentFocus: z.literal(PublicationMainFocus.EMBED),
 
-  animation_url: AnimationUrlSchema,
+  animation_url: AnimationUrlSchema.optional().nullable(), // should not really be null but some publications have it as null
 });
 export type PublicationMetadataV2Embed = z.infer<typeof PublicationMetadataV2EmbedSchema>;
 
@@ -437,6 +457,7 @@ const PublicationMetadataV2ImageSchema = PublicationMetadataV2CommonSchema.exten
 
   media: MediaSchema.array()
     .min(1)
+    .catch((ctx) => ctx.input.filter((media) => MediaSchema.safeParse(media).success) as Media[])
     .refine(
       (value) => value.some((media) => isSupportedImageMimeType(media.type)),
       `Metadata ${PublicationMainFocus.IMAGE} requires an image to be attached.`,
@@ -475,6 +496,7 @@ const PublicationMetadataV2VideoSchema = PublicationMetadataV2CommonSchema.exten
 
   media: MediaSchema.array()
     .min(1)
+    .catch((ctx) => ctx.input.filter((media) => MediaSchema.safeParse(media).success) as Media[])
     .refine(
       (value) => value.some((media) => isSupportedVideoMimeType(media.type)),
       `Metadata ${PublicationMainFocus.VIDEO} requires an image to be attached.`,
@@ -549,4 +571,13 @@ export const PublicationMetadataSchema = z
     }
 
     return z.NEVER;
+  })
+  .transform((data) => {
+    switch (data.version) {
+      case PublicationMetadataVersion.V1:
+        return PublicationMetadataV1Schema.parse(data);
+
+      case PublicationMetadataVersion.V2:
+        return PublicationMetadataV2Schema.parse(data);
+    }
   });
