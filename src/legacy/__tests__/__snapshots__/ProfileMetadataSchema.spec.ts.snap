@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the ProfileMetadataSchema when parsing an invalid object then it should default missing fields 1`] = `
+{
+  "metadata_id": Any<String>,
+  "name": null,
+  "version": "1.0.0",
+}
+`;
