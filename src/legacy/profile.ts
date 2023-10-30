@@ -1,8 +1,6 @@
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
-import { markdownSchema, nonEmptyStringSchema } from '../primitives.js';
-
 export enum ProfileMetadataAttributeDisplayType {
   number = 'number',
   string = 'string',
@@ -23,9 +21,9 @@ function serializeValue(value: unknown): string {
 const ProfileMetadataAttributeSchema = z.object({
   // On the paper ProfileMetadataAttributeDisplayType but validation never checked for it
   // so to avoid breaking changes we are keeping it as string
-  displayType: z.string().optional(),
+  displayType: z.string().nullable().optional().catch(null),
 
-  traitType: z.string().optional(),
+  traitType: z.string().nullable().optional().catch(null),
 
   value: z.unknown().transform(serializeValue),
 
@@ -68,11 +66,11 @@ export const ProfileMetadataSchema = z
       })
       .catch(() => v4()),
 
-    name: nonEmptyStringSchema('The display name for the profile.').nullable(),
+    name: z.string({ description: 'The display name for the profile.' }).nullable().catch(null),
 
-    bio: markdownSchema('The bio for the profile.').nullable().optional(),
+    bio: z.string({ description: 'The bio for the profile.' }).nullable().optional().catch(null),
 
-    cover_picture: z.string({ description: 'Cover picture.' }).nullable().optional(),
+    cover_picture: z.string({ description: 'Cover picture.' }).nullable().optional().catch(null),
 
     attributes: ProfileMetadataAttributeSchema.array()
       .describe(
