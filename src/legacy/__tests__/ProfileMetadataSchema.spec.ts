@@ -8,12 +8,7 @@ describe(`Given the ProfileMetadataSchema`, () => {
     it(`then it should flag the missing fields`, () => {
       expectResult(() => ProfileMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
-        · "version": Invalid literal value, expected "1.0.0"
-        · "metadata_id": Required
-        · "name": Required
-        · "bio": Required
-        · "cover_picture": Required
-        · "attributes": Required"
+        · "name": Required"
       `);
     });
 
@@ -104,6 +99,7 @@ describe(`Given the ProfileMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         {
+          "appId": "Lenster",
           "attributes": [
             {
               "key": "type",
@@ -111,6 +107,12 @@ describe(`Given the ProfileMetadataSchema`, () => {
               "value": "post",
             },
           ],
+          "content": "test",
+          "description": "test",
+          "external_url": null,
+          "image": null,
+          "imageMimeType": null,
+          "media": [],
           "metadata_id": "b817be7a-3ecf-4fc9-a983-7a04654d2911",
           "name": "Post by @niooo1.test",
           "version": "1.0.0",

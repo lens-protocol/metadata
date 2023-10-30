@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import { markdownSchema, nonEmptyStringSchema } from '../primitives.js';
@@ -55,24 +56,30 @@ export type ProfileMetadataAttribute = z.infer<typeof ProfileMetadataAttributeSc
  * // => { success: false, error: ZodError }
  * ```
  */
-export const ProfileMetadataSchema = z.object({
-  version: z.literal('1.0.0').describe('The metadata version.'),
+export const ProfileMetadataSchema = z
+  .object({
+    version: z.literal('1.0.0').describe('The metadata version.').catch('1.0.0'),
 
-  metadata_id: z.string({
-    description:
-      'The metadata id can be anything but if your uploading to ipfs ' +
-      'you will want it to be random. Using uuid could be an option!',
-  }),
+    metadata_id: z
+      .string({
+        description:
+          'The metadata id can be anything but if your uploading to ipfs ' +
+          'you will want it to be random. Using uuid could be an option!',
+      })
+      .catch(() => v4()),
 
-  name: nonEmptyStringSchema('The display name for the profile.').nullable(),
+    name: nonEmptyStringSchema('The display name for the profile.').nullable(),
 
-  bio: markdownSchema('The bio for the profile.').nullable().optional(),
+    bio: markdownSchema('The bio for the profile.').nullable().optional(),
 
-  cover_picture: z.string({ description: 'Cover picture.' }).nullable().optional(),
+    cover_picture: z.string({ description: 'Cover picture.' }).nullable().optional(),
 
-  attributes: ProfileMetadataAttributeSchema.array().describe(
-    'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
-  ),
-});
+    attributes: ProfileMetadataAttributeSchema.array()
+      .describe(
+        'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
+      )
+      .optional(),
+  })
+  .passthrough(); // make it more loose to allow for past profile metadata
 
 export type ProfileMetadata = z.infer<typeof ProfileMetadataSchema>;
