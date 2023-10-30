@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.0.1
+
+### Patch Changes
+
+- e651a74: **fix:** legacy `PublicationMetadataSchema` and `ProfileMetadataSchema` to replicate old discrepancies
+
 ## 1.0.0
 
 ### Major Changes
