@@ -30,8 +30,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "name": Required
-        · "attributes": Required
-        · "metadata_id": Required"
+        · "attributes": Required"
       `);
     });
 
@@ -169,7 +168,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
         "fix the following issues
         · "name": Required
         · "attributes": Required
-        · "metadata_id": Required
         · "content": Required
         · "locale": Required"
       `);
