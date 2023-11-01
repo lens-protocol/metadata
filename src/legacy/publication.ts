@@ -1,4 +1,5 @@
 /* eslint-disable no-case-declarations */
+import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import {
@@ -182,11 +183,13 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
 }
 
 const PublicationCommonSchema = OpenSeaSchema.extend({
-  metadata_id: z.string({
-    description:
-      'The metadata_id can be anything but if your uploading to ipfs ' +
-      'you will want it to be random. Using uuid could be an option!',
-  }),
+  metadata_id: z
+    .string({
+      description:
+        'The metadata_id can be anything but if your uploading to ipfs ' +
+        'you will want it to be random. Using uuid could be an option!',
+    })
+    .catch(() => v4()),
 
   content: ContentSchema.transform((value) => value as Markdown)
     .optional()
@@ -201,6 +204,7 @@ const PublicationCommonSchema = OpenSeaSchema.extend({
   // bespoke z.string() instead of AppIdSchema to emulate past behavior
   appId: z
     .string()
+    .max(200)
     .transform(toAppId)
     .optional()
     .nullable()
@@ -289,11 +293,11 @@ export type ProfileOwnership = z.infer<typeof ProfileOwnershipSchema>;
 const Erc20OwnershipSchema = z
   .object({
     token: z.object({
-      amount: z.string(),
-      chainID: z.number(),
+      amount: z.coerce.string(),
+      chainID: z.coerce.number(),
       condition: z.nativeEnum(ConditionComparisonOperator),
       contractAddress: z.string(),
-      decimals: z.number(),
+      decimals: z.coerce.number(),
     }),
   })
   .strict();
