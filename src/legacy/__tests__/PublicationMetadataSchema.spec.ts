@@ -30,8 +30,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "name": Required
-        · "attributes": Required
-        · "metadata_id": Required"
+        · "attributes": Required"
       `);
     });
 
@@ -169,7 +168,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
         "fix the following issues
         · "name": Required
         · "attributes": Required
-        · "metadata_id": Required
         · "content": Required
         · "locale": Required"
       `);
@@ -1031,7 +1029,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
 
     it('then it should support optional `CollectCondition.thisPublication`', () => {
-      PublicationMetadataSchema.safeParse({
+      PublicationMetadataSchema.parse({
         version: '2.0.0',
         metadata_id: '5b04fde0-de86-4b47-b434-41821489425a',
         description: null,
@@ -1075,6 +1073,153 @@ describe(`Given the PublicationMetadataSchema`, () => {
                       {
                         follow: {
                           profileId: '0x4fab',
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
+    });
+
+    it('then it should support `encryptionParams.accessCondition` with nested AND/OR(s)', () => {
+      PublicationMetadataSchema.parse({
+        version: '2.0.0',
+        metadata_id: '42e35810-1634-11ee-a1e4-35b03fa05a29',
+        appId: 'orb',
+        name: 'Gated Publication',
+        description: 'Gated Publication',
+        content: 'This publication is gated.',
+        mainContentFocus: 'TEXT_ONLY',
+        tags: ['gatedorbcommunitiessmurfsociety'],
+        attributes: [
+          {
+            displayType: 'string',
+            traitType: 'handle',
+            value: '@catastrophe',
+          },
+          {
+            displayType: 'string',
+            traitType: 'app',
+            value: 'orb',
+          },
+        ],
+
+        media: [],
+        image: null,
+        imageMimeType: null,
+        animation_url: null,
+        external_url: 'This publication is gated.',
+        locale: 'en-ES',
+        encryptionParams: {
+          encryptedFields: {
+            content: 'eGaIrzK0thVY669W43V7OLg-diKreuqAF5tx5zuD3ov25stWp-Ok93Hazcv-dyWQ',
+            media: [],
+            image: null,
+            animation_url: null,
+            external_url: 'XoDiXK9u_tRKrz_-X0s6ebXPx5PUhASGZaX9mA9pywX3olifSukYQeUczzsnUbBh',
+          },
+          providerSpecificParams: {
+            encryptionKey:
+              '9696d09ade64f4d87dd3758b9adc508ed0ae6494519a86c31a00cb43d4c3882bdcb9edd2dea0b9391471a00bb9555c0a9d7a244d59a06e46117af39b257e0eddab47d30fb40ef8a6f8c79a55236e624a98de66d30392b2bd17973e5512533fb56b4ffffc52110df903f2ace7398296b738a2e2447ff8d94c0bf96cbc73eceeeb00000000000000204454467e2ec65d55adce6a4250b7c1c3e58e1b78077153b15c6641e9a60a2c6997db80a5a25c1eeede6e89994e8cf997',
+          },
+          encryptionProvider: 'LIT_PROTOCOL',
+          accessCondition: {
+            or: {
+              criteria: [
+                {
+                  profile: {
+                    profileId: '0x01a649',
+                  },
+                },
+                {
+                  or: {
+                    criteria: [
+                      {
+                        nft: {
+                          contractAddress: '0xd4166f411F046dB9AF0369B732e3E0CC3Df890C8',
+                          chainID: 137,
+                          contractType: 'ERC721',
+                        },
+                      },
+                      {
+                        profile: {
+                          profileId: '0x01cacd',
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
+
+      PublicationMetadataSchema.parse({
+        version: '2.0.0',
+        metadata_id: '42e35810-1634-11ee-a1e4-35b03fa05a29',
+        appId: 'orb',
+        name: 'Gated Publication',
+        description: 'Gated Publication',
+        content: 'This publication is gated.',
+        mainContentFocus: 'TEXT_ONLY',
+        tags: ['gatedorbcommunitiessmurfsociety'],
+        attributes: [
+          {
+            displayType: 'string',
+            traitType: 'handle',
+            value: '@catastrophe',
+          },
+          {
+            displayType: 'string',
+            traitType: 'app',
+            value: 'orb',
+          },
+        ],
+        media: [],
+        image: null,
+        imageMimeType: null,
+        animation_url: null,
+        external_url: 'This publication is gated.',
+        locale: 'en-ES',
+        encryptionParams: {
+          encryptedFields: {
+            content: 'eGaIrzK0thVY669W43V7OLg-diKreuqAF5tx5zuD3ov25stWp-Ok93Hazcv-dyWQ',
+            media: [],
+            image: null,
+            animation_url: null,
+            external_url: 'XoDiXK9u_tRKrz_-X0s6ebXPx5PUhASGZaX9mA9pywX3olifSukYQeUczzsnUbBh',
+          },
+          providerSpecificParams: {
+            encryptionKey:
+              '9696d09ade64f4d87dd3758b9adc508ed0ae6494519a86c31a00cb43d4c3882bdcb9edd2dea0b9391471a00bb9555c0a9d7a244d59a06e46117af39b257e0eddab47d30fb40ef8a6f8c79a55236e624a98de66d30392b2bd17973e5512533fb56b4ffffc52110df903f2ace7398296b738a2e2447ff8d94c0bf96cbc73eceeeb00000000000000204454467e2ec65d55adce6a4250b7c1c3e58e1b78077153b15c6641e9a60a2c6997db80a5a25c1eeede6e89994e8cf997',
+          },
+          encryptionProvider: 'LIT_PROTOCOL',
+          accessCondition: {
+            or: {
+              criteria: [
+                {
+                  profile: {
+                    profileId: '0x01a649',
+                  },
+                },
+                {
+                  or: {
+                    criteria: [
+                      {
+                        nft: {
+                          contractAddress: '0xd4166f411F046dB9AF0369B732e3E0CC3Df890C8',
+                          chainID: 137,
+                          contractType: 'ERC721',
+                        },
+                      },
+                      {
+                        profile: {
+                          profileId: '0x01cacd',
                         },
                       },
                     ],
