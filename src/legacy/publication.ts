@@ -271,7 +271,7 @@ const NftOwnershipSchema = z
       contractAddress: z.string(),
       chainID: z.number(),
       contractType: z.nativeEnum(NftContractType),
-      tokenIds: z.string().array().nonempty().nullable(),
+      tokenIds: z.string().array().nullable().optional(),
     }),
   })
   .strict();
