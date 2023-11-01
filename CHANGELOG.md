@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.0.3
+
+### Patch Changes
+
+- e791e7f: **fix** legacy support for relaxed token-gated nft condition
+
 ## 1.0.2
 
 ### Patch Changes
