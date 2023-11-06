@@ -275,10 +275,11 @@ const NftOwnershipSchema = z
       contractAddress: z.string(),
       chainID: z.number(),
       contractType: z.nativeEnum(NftContractType),
-      tokenIds: z.string().array().nullable().optional(),
+      tokenIds: z.string().array().min(1).nullable().optional().catch(null),
     }),
   })
   .strict();
+
 export type NftOwnership = z.infer<typeof NftOwnershipSchema>;
 
 const ProfileOwnershipSchema = z

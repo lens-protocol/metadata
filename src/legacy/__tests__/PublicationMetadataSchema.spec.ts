@@ -1231,5 +1231,156 @@ describe(`Given the PublicationMetadataSchema`, () => {
         },
       });
     });
+
+    it('then it should support legacy NftOwnership condition with empty `tokenIds`', () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: '7faf5c50-261d-11ee-9137-d7b90eb5eea6',
+          appId: 'orb',
+          name: 'Gated Publication',
+          description: 'Gated Publication',
+          content: 'This publication is gated.',
+          mainContentFocus: 'TEXT_ONLY',
+          tags: ['gatedorbcommunitiesrefraction'],
+          attributes: [
+            {
+              displayType: 'string',
+              traitType: 'handle',
+              value: '@christina',
+            },
+            {
+              displayType: 'string',
+              traitType: 'app',
+              value: 'orb',
+            },
+          ],
+
+          media: [],
+          image: null,
+          imageMimeType: null,
+          animation_url: null,
+          external_url: 'This publication is gated.',
+          locale: 'en-AU',
+          encryptionParams: {
+            encryptedFields: {
+              content: 'zXlbCWLCUhpkNMHP91Bv3V0fvBNOQAq7h1YhmlCKp9qkF1QFrhA7l6xxefFYY0NZ',
+              media: [],
+              image: null,
+              animation_url: null,
+              external_url: 'JQntcOUH1HKY3SAfWvCzO8I5lq-WI_gHMsI4XPYb3iKQsL4I0iBddFA9IEbE_-Jg',
+            },
+            providerSpecificParams: {
+              encryptionKey:
+                '09a605177283511c4662ccc1154193f42c0eff4bd27e529cc08ebe83c9ac98d2502580f788bca99ded0c01c56207c00e9094aa7a19b156d63ee05b0bbf7c08918779ed62fe366b33cd660bc36d80ca278a34ac17b2321521e091600a8be060b6c6cd0c30c2d55f9d9b61a0e47aa98a938525b67393c5cfb59ab724ca6d23b0bf0000000000000020f3c7c41c82ff1d66f2e4b6bcfdae224fda8b5e32a45c4e5c5df3286832c41f14a9b087bc74486f566d07b11b612c47b0',
+            },
+            encryptionProvider: 'LIT_PROTOCOL',
+            accessCondition: {
+              or: {
+                criteria: [
+                  {
+                    profile: {
+                      profileId: '0x01a649',
+                    },
+                  },
+                  {
+                    or: {
+                      criteria: [
+                        {
+                          nft: {
+                            contractAddress: '0xce12395424e6b8d73e5cf321f19f023002504899',
+                            chainID: 137,
+                            contractType: 'ERC721',
+                            tokenIds: [],
+                          },
+                        },
+                        {
+                          profile: {
+                            profileId: '0x8e',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "animation_url": null,
+          "appId": "orb",
+          "attributes": [
+            {
+              "displayType": "string",
+              "traitType": "handle",
+              "value": "@christina",
+            },
+            {
+              "displayType": "string",
+              "traitType": "app",
+              "value": "orb",
+            },
+          ],
+          "content": "This publication is gated.",
+          "description": "Gated Publication",
+          "encryptionParams": {
+            "accessCondition": {
+              "or": {
+                "criteria": [
+                  {
+                    "profile": {
+                      "profileId": "0x01a649",
+                    },
+                  },
+                  {
+                    "or": {
+                      "criteria": [
+                        {
+                          "nft": {
+                            "chainID": 137,
+                            "contractAddress": "0xce12395424e6b8d73e5cf321f19f023002504899",
+                            "contractType": "ERC721",
+                            "tokenIds": null,
+                          },
+                        },
+                        {
+                          "profile": {
+                            "profileId": "0x8e",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+            "encryptedFields": {
+              "animation_url": null,
+              "content": "zXlbCWLCUhpkNMHP91Bv3V0fvBNOQAq7h1YhmlCKp9qkF1QFrhA7l6xxefFYY0NZ",
+              "external_url": "JQntcOUH1HKY3SAfWvCzO8I5lq-WI_gHMsI4XPYb3iKQsL4I0iBddFA9IEbE_-Jg",
+              "image": null,
+              "media": [],
+            },
+            "providerSpecificParams": {
+              "encryptionKey": "09a605177283511c4662ccc1154193f42c0eff4bd27e529cc08ebe83c9ac98d2502580f788bca99ded0c01c56207c00e9094aa7a19b156d63ee05b0bbf7c08918779ed62fe366b33cd660bc36d80ca278a34ac17b2321521e091600a8be060b6c6cd0c30c2d55f9d9b61a0e47aa98a938525b67393c5cfb59ab724ca6d23b0bf0000000000000020f3c7c41c82ff1d66f2e4b6bcfdae224fda8b5e32a45c4e5c5df3286832c41f14a9b087bc74486f566d07b11b612c47b0",
+            },
+          },
+          "external_url": "This publication is gated.",
+          "image": null,
+          "imageMimeType": null,
+          "locale": "en-AU",
+          "mainContentFocus": "TEXT_ONLY",
+          "media": [],
+          "metadata_id": "7faf5c50-261d-11ee-9137-d7b90eb5eea6",
+          "name": "Gated Publication",
+          "tags": [
+            "gatedorbcommunitiesrefraction",
+          ],
+          "version": "2.0.0",
+        }
+      `);
+    });
   });
 });
