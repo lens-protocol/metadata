@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 1.0.4
+
+### Patch Changes
+
+- 61ef350: **fix** legacy nft ownership condition so that empty `tokenIds` resolves as `null`
+- e4c987a: **fix:** honour publication metadata that despite being invalid did got through Lens v1/2 validation logic
+
 ## 1.0.3
 
 ### Patch Changes
