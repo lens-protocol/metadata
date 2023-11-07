@@ -8,7 +8,6 @@ import {
   nonEmptyStringSchema,
   toAppId,
   toMarkdown,
-  uriSchema,
 } from '../primitives.js';
 import * as latest from '../publication';
 import {
@@ -95,13 +94,14 @@ function isSupportedVideoMimeType(value: unknown): value is VideoMimeType {
   return supportedVideoMimeTypes.includes(value as VideoMimeType);
 }
 
-const AnimationUrlSchema = uriSchema(
-  'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
+const AnimationUrlSchema = z.string({
+  description:
+    'In spec for OpenSea and other providers - also used when using EMBED main publication focus' +
     'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
     'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
     'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
     'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
-);
+});
 
 const OpenSeaSchema = z
   .object({
@@ -111,7 +111,8 @@ const OpenSeaSchema = z
           'A human-readable description of the item. It could be plain text or markdown.',
       })
       .optional()
-      .nullable(),
+      .nullable()
+      .catch(null),
 
     external_url: z
       .string({
@@ -122,11 +123,13 @@ const OpenSeaSchema = z
       .optional()
       .nullable(),
 
-    name: nonEmptyStringSchema('Name of the NFT item.'),
+    name: z.string({ description: 'Name of the NFT item.' }),
 
-    attributes: MarketplaceMetadataAttributeSchema.array().describe(
-      'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
-    ),
+    attributes: MarketplaceMetadataAttributeSchema.array()
+      .describe(
+        'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
+      )
+      .catch([]),
 
     image: z
       .string({
@@ -275,10 +278,11 @@ const NftOwnershipSchema = z
       contractAddress: z.string(),
       chainID: z.number(),
       contractType: z.nativeEnum(NftContractType),
-      tokenIds: z.string().array().nullable().optional(),
+      tokenIds: z.string().array().min(1).nullable().optional().catch(null),
     }),
   })
   .strict();
+
 export type NftOwnership = z.infer<typeof NftOwnershipSchema>;
 
 const ProfileOwnershipSchema = z
@@ -373,6 +377,17 @@ const AccessConditionSchema = orCondition([
 ]);
 export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 
+const EncryptedMediaWithWrongShapeSchema = z
+  .object({
+    original: z.object({
+      url: nonEmptyStringSchema(),
+      cover: z.string().nullable().optional().catch(null),
+      altTag: z.string().nullable().optional().catch(null),
+      mimeType: z.string().nullable().optional().catch(null),
+    }),
+  })
+  .passthrough();
+
 /**
  * @internal
  */
@@ -383,7 +398,21 @@ export const EncryptedMediaSchema = z
     cover: z.string().describe('The cover for any video or audio media.').optional().nullable(),
     type: z.string().optional().nullable().describe('This is the mime type of the media.'),
   })
-  .passthrough(); // loose validation for media
+  .passthrough()
+  .catch((ctx) => {
+    const result = EncryptedMediaWithWrongShapeSchema.safeParse(ctx.input);
+
+    if (result.success) {
+      return {
+        item: result.data.original.url,
+        altTag: result.data.original.altTag,
+        cover: result.data.original.cover,
+        type: result.data.original.mimeType,
+      };
+    }
+
+    return ctx.input;
+  });
 export type EncryptedMedia = z.infer<typeof EncryptedMediaSchema>;
 
 const EncryptedFieldsSchema = z.object({

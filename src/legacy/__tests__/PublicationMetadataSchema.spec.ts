@@ -29,8 +29,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
-        · "name": Required
-        · "attributes": Required"
+        · "name": Required"
       `);
     });
 
@@ -167,7 +166,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchInlineSnapshot(`
         "fix the following issues
         · "name": Required
-        · "attributes": Required
         · "content": Required
         · "locale": Required"
       `);
@@ -178,8 +176,8 @@ describe(`Given the PublicationMetadataSchema`, () => {
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
           metadata_id: '123',
-          name: '123',
-          attributes: [],
+          name: '',
+          attributes: {},
           content: 'a',
           locale: 'en',
           contentWarning: 'NOVALID',
@@ -194,7 +192,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
           "locale": "en",
           "mainContentFocus": "TEXT_ONLY",
           "metadata_id": "123",
-          "name": "123",
+          "name": "",
           "tags": [
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "",
@@ -925,85 +923,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
       });
     });
 
-    it('then it should support `encryptionParams.providerSpecificParams` and placeholder text in `media[n].item`, `media[n].cover`', () => {
-      expectResult(() =>
-        PublicationMetadataSchema.safeParse({
-          version: '2.0.0',
-          metadata_id: 'a3541d9f-5928-46e9-9b26-a4310bf75d43',
-          description:
-            'This post is gated. It can be unlocked here -> https://www.comp0z.xyz/pub/0x51c5-0x43',
-          content:
-            'This post is gated. It can be unlocked here -> https://www.comp0z.xyz/pub/0x51c5-0x43',
-          external_url: 'https://www.comp0z.xyz/pub/0x51c5-0x43',
-          image: null,
-          imageMimeType: 'video/quicktime',
-          name: 'Lens Post by @jaenjaen.test',
-          attributes: [
-            {
-              traitType: 'type',
-              displayType: 'string',
-              value: 'video',
-            },
-          ],
-
-          media: [
-            {
-              item: 'This publication is gated.',
-              type: 'video/quicktime',
-              source: null,
-            },
-          ],
-
-          appId: 'comp0z.xyz',
-          animation_url: null,
-          locale: 'en-us',
-          tags: [],
-          contentWarning: null,
-          mainContentFocus: 'VIDEO',
-          encryptionParams: {
-            providerSpecificParams: {
-              encryptionKey:
-                '04278c188c9eb46d1c9f01940ed77a6d456de9f05d0292be01556270c8fa16bc521d23b3667a7eeabc1b195adc3dad094cd47213771a4a7bff0f366ac8000ba77307eb9c2eb08d8a9f8af4a692271853d51faf6e2848f42b480e18521023248c0429bd755b59caba50b29d14afdf0752397f0ad8b69d5891ef167f82c2ee8d9a00000000000000200a1d105a6e9d4dd4c855bb965ca279a1af3b94c657eb2a63bc8e846f877eb0dddab0809c3eafa46ae7c1c008cea1afa0',
-            },
-            encryptionProvider: 'lit-protocol',
-            encryptedFields: {
-              external_url:
-                'be4caDlXBUipKf4RBYLKrbMAOlrtzFFL4UgZkNxFp2_7jGGPFVH9hgmr8AKYPdXAFWQwE7yK_EaUfb5RWIggXw==',
-              media: [
-                {
-                  original: {
-                    url: 'H5q8DVim7h7plAvECHHONdZCAsPIklFzzm3rrC0r5LNzS_tSHVNijmgFaDYQxS5AoLHEL--kOjOy-Gmv0Qt0xmTolcqJ3JsgjuUv_kCdGro=',
-                    cover: null,
-                    altTag: null,
-                    mimeType: 'video/quicktime',
-                  },
-                },
-              ],
-            },
-            accessCondition: {
-              or: {
-                criteria: [
-                  {
-                    profile: {
-                      profileId: '0x51c5',
-                    },
-                  },
-                  {
-                    follow: {
-                      profileId: '0x51c5',
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        }),
-      ).toMatchInlineSnapshot(`
-        "fix the following issues
-        · "encryptionParams.encryptedFields.media[0].item": Required"
-      `); // this one helped find other issues, still should fail due to the error above
-    });
-
     it('then it should be resilient with raw strings as `attributes`', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
@@ -1023,8 +942,23 @@ describe(`Given the PublicationMetadataSchema`, () => {
           mainContentFocus: 'TEXT_ONLY',
         }),
       ).toMatchInlineSnapshot(`
-        "fix the following issues
-        · "attributes[0]": Expected object, received string"
+        {
+          "appId": "api_examples_github",
+          "attributes": [],
+          "content": "Content",
+          "description": "Description",
+          "image": null,
+          "imageMimeType": null,
+          "locale": "en-us",
+          "mainContentFocus": "TEXT_ONLY",
+          "media": [],
+          "metadata_id": "4ccca6a0-eb85-47cf-811e-2e160be4d4ec",
+          "name": "Name",
+          "tags": [
+            "using_api_examples",
+          ],
+          "version": "2.0.0",
+        }
       `);
     });
 
@@ -1230,6 +1164,319 @@ describe(`Given the PublicationMetadataSchema`, () => {
           },
         },
       });
+    });
+
+    it('then it should support legacy NftOwnership condition with empty `tokenIds`', () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: '7faf5c50-261d-11ee-9137-d7b90eb5eea6',
+          appId: 'orb',
+          name: 'Gated Publication',
+          description: 'Gated Publication',
+          content: 'This publication is gated.',
+          mainContentFocus: 'TEXT_ONLY',
+          tags: ['gatedorbcommunitiesrefraction'],
+          attributes: [
+            {
+              displayType: 'string',
+              traitType: 'handle',
+              value: '@christina',
+            },
+            {
+              displayType: 'string',
+              traitType: 'app',
+              value: 'orb',
+            },
+          ],
+
+          media: [],
+          image: null,
+          imageMimeType: null,
+          animation_url: null,
+          external_url: 'This publication is gated.',
+          locale: 'en-AU',
+          encryptionParams: {
+            encryptedFields: {
+              content: 'zXlbCWLCUhpkNMHP91Bv3V0fvBNOQAq7h1YhmlCKp9qkF1QFrhA7l6xxefFYY0NZ',
+              media: [],
+              image: null,
+              animation_url: null,
+              external_url: 'JQntcOUH1HKY3SAfWvCzO8I5lq-WI_gHMsI4XPYb3iKQsL4I0iBddFA9IEbE_-Jg',
+            },
+            providerSpecificParams: {
+              encryptionKey:
+                '09a605177283511c4662ccc1154193f42c0eff4bd27e529cc08ebe83c9ac98d2502580f788bca99ded0c01c56207c00e9094aa7a19b156d63ee05b0bbf7c08918779ed62fe366b33cd660bc36d80ca278a34ac17b2321521e091600a8be060b6c6cd0c30c2d55f9d9b61a0e47aa98a938525b67393c5cfb59ab724ca6d23b0bf0000000000000020f3c7c41c82ff1d66f2e4b6bcfdae224fda8b5e32a45c4e5c5df3286832c41f14a9b087bc74486f566d07b11b612c47b0',
+            },
+            encryptionProvider: 'LIT_PROTOCOL',
+            accessCondition: {
+              or: {
+                criteria: [
+                  {
+                    profile: {
+                      profileId: '0x01a649',
+                    },
+                  },
+                  {
+                    or: {
+                      criteria: [
+                        {
+                          nft: {
+                            contractAddress: '0xce12395424e6b8d73e5cf321f19f023002504899',
+                            chainID: 137,
+                            contractType: 'ERC721',
+                            tokenIds: [],
+                          },
+                        },
+                        {
+                          profile: {
+                            profileId: '0x8e',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "animation_url": null,
+          "appId": "orb",
+          "attributes": [
+            {
+              "displayType": "string",
+              "traitType": "handle",
+              "value": "@christina",
+            },
+            {
+              "displayType": "string",
+              "traitType": "app",
+              "value": "orb",
+            },
+          ],
+          "content": "This publication is gated.",
+          "description": "Gated Publication",
+          "encryptionParams": {
+            "accessCondition": {
+              "or": {
+                "criteria": [
+                  {
+                    "profile": {
+                      "profileId": "0x01a649",
+                    },
+                  },
+                  {
+                    "or": {
+                      "criteria": [
+                        {
+                          "nft": {
+                            "chainID": 137,
+                            "contractAddress": "0xce12395424e6b8d73e5cf321f19f023002504899",
+                            "contractType": "ERC721",
+                            "tokenIds": null,
+                          },
+                        },
+                        {
+                          "profile": {
+                            "profileId": "0x8e",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+            "encryptedFields": {
+              "animation_url": null,
+              "content": "zXlbCWLCUhpkNMHP91Bv3V0fvBNOQAq7h1YhmlCKp9qkF1QFrhA7l6xxefFYY0NZ",
+              "external_url": "JQntcOUH1HKY3SAfWvCzO8I5lq-WI_gHMsI4XPYb3iKQsL4I0iBddFA9IEbE_-Jg",
+              "image": null,
+              "media": [],
+            },
+            "providerSpecificParams": {
+              "encryptionKey": "09a605177283511c4662ccc1154193f42c0eff4bd27e529cc08ebe83c9ac98d2502580f788bca99ded0c01c56207c00e9094aa7a19b156d63ee05b0bbf7c08918779ed62fe366b33cd660bc36d80ca278a34ac17b2321521e091600a8be060b6c6cd0c30c2d55f9d9b61a0e47aa98a938525b67393c5cfb59ab724ca6d23b0bf0000000000000020f3c7c41c82ff1d66f2e4b6bcfdae224fda8b5e32a45c4e5c5df3286832c41f14a9b087bc74486f566d07b11b612c47b0",
+            },
+          },
+          "external_url": "This publication is gated.",
+          "image": null,
+          "imageMimeType": null,
+          "locale": "en-AU",
+          "mainContentFocus": "TEXT_ONLY",
+          "media": [],
+          "metadata_id": "7faf5c50-261d-11ee-9137-d7b90eb5eea6",
+          "name": "Gated Publication",
+          "tags": [
+            "gatedorbcommunitiesrefraction",
+          ],
+          "version": "2.0.0",
+        }
+      `);
+    });
+
+    it('then it should support `animated_url` with the `This publication is gated.` placeholder', () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: '7faf5c50-261d-11ee-9137-d7b90eb5eea6',
+          name: 'Gated Publication',
+          attributes: [],
+          locale: 'en',
+          content: 'This publication is gated.',
+          mainContentFocus: 'ARTICLE',
+          animated_url: 'This publication is gated.',
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "animated_url": "This publication is gated.",
+          "attributes": [],
+          "content": "This publication is gated.",
+          "locale": "en",
+          "mainContentFocus": "ARTICLE",
+          "metadata_id": "7faf5c50-261d-11ee-9137-d7b90eb5eea6",
+          "name": "Gated Publication",
+          "version": "2.0.0",
+        }
+      `);
+    });
+
+    it('then it should transform a specific invalid `encryptionParams.encryptedFields.media[n]` shape into the correct one', () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: '7faf5c50-261d-11ee-9137-d7b90eb5eea6',
+          name: 'Gated Publication',
+          attributes: [],
+          locale: 'en',
+          content: 'This publication is gated.',
+          mainContentFocus: 'ARTICLE',
+          media: [
+            {
+              item: 'This publication is gated.',
+              altTag: 'This publication is gated.',
+              cover: null,
+              type: 'audio/mpeg',
+              source: null,
+            },
+          ],
+
+          encryptionParams: {
+            providerSpecificParams: {
+              encryptionKey: '0'.repeat(368),
+            },
+            encryptionProvider: 'lit-protocol',
+            encryptedFields: {
+              content: '8bp3J-XAa-t0PvVGZGoa_yoc71-Nebxxin7E0GndYic=',
+              media: [
+                {
+                  original: {
+                    url: 'yCnibpSKkTcsShMaODOKHgDhGKC32TbMJKwPOIZG0sV4wq5zwcZwGGC_UxFiaGSfVhJC71YERBWUAM8Wvg7XXsKVl5JhW19lS8LaVHQO3qeYM-S0znAtxbIGHOsVol3Z',
+                    cover: null,
+                    altTag: 'CqsM1KtDAEpdHf3oUSj46IVgc1Qki9MyijNSdEF0UI4=',
+                    mimeType: 'audio/mpeg',
+                  },
+                },
+              ],
+            },
+            accessCondition: {
+              or: {
+                criteria: [
+                  {
+                    profile: {
+                      profileId: '0x011106',
+                    },
+                  },
+                  {
+                    follow: {
+                      profileId: '0x011106',
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "attributes": [],
+          "content": "This publication is gated.",
+          "encryptionParams": {
+            "accessCondition": {
+              "or": {
+                "criteria": [
+                  {
+                    "profile": {
+                      "profileId": "0x011106",
+                    },
+                  },
+                  {
+                    "follow": {
+                      "profileId": "0x011106",
+                    },
+                  },
+                ],
+              },
+            },
+            "encryptedFields": {
+              "content": "8bp3J-XAa-t0PvVGZGoa_yoc71-Nebxxin7E0GndYic=",
+              "media": [
+                {
+                  "altTag": "CqsM1KtDAEpdHf3oUSj46IVgc1Qki9MyijNSdEF0UI4=",
+                  "cover": null,
+                  "item": "yCnibpSKkTcsShMaODOKHgDhGKC32TbMJKwPOIZG0sV4wq5zwcZwGGC_UxFiaGSfVhJC71YERBWUAM8Wvg7XXsKVl5JhW19lS8LaVHQO3qeYM-S0znAtxbIGHOsVol3Z",
+                  "type": "audio/mpeg",
+                },
+              ],
+            },
+            "providerSpecificParams": {
+              "encryptionKey": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            },
+          },
+          "locale": "en",
+          "mainContentFocus": "ARTICLE",
+          "media": [
+            {
+              "altTag": "This publication is gated.",
+              "cover": null,
+              "item": "This publication is gated.",
+              "source": null,
+              "type": "audio/mpeg",
+            },
+          ],
+          "metadata_id": "7faf5c50-261d-11ee-9137-d7b90eb5eea6",
+          "name": "Gated Publication",
+          "version": "2.0.0",
+        }
+      `);
+    });
+
+    it('then it should be robust to invalid `description`', () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: '7faf5c50-261d-11ee-9137-d7b90eb5eea6',
+          name: 'Gated Publication',
+          attributes: [],
+          locale: 'en',
+          content: 'This publication is gated.',
+          mainContentFocus: 'TEXT_ONLY',
+          description: [],
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "attributes": [],
+          "content": "This publication is gated.",
+          "description": null,
+          "locale": "en",
+          "mainContentFocus": "TEXT_ONLY",
+          "metadata_id": "7faf5c50-261d-11ee-9137-d7b90eb5eea6",
+          "name": "Gated Publication",
+          "version": "2.0.0",
+        }
+      `);
     });
   });
 });
