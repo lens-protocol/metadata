@@ -73,9 +73,8 @@
         },
         "locale": {
           "type": "string",
-          "minLength": 2,
-          "maxLength": 5,
-          "description": "A locale identifier."
+          "pattern": "^[a-z]{2}(?:-[a-zA-Z]{2})?$",
+          "description": "A Locale Identifier in the `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). [language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format."
         },
         "encryptedWith": {
           "$ref": "#/$defs/PublicationEncryptionStrategy"
