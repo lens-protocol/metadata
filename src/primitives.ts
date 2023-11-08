@@ -24,15 +24,46 @@ export type Locale = Brand<string, 'Locale'>;
 export function toLocale(value: string): Locale {
   return value as Locale;
 }
+
+// using ranges instead of `i` flag so that resulting JSON Schema includes case-insensitivity.
+const localeRegex = /^[a-z]{2}(?:-[a-zA-Z]{2})?$/;
+const localeLikeRegex = /^([a-z]{2})(?:-[A-Z0-9]{2,3})?$/i;
+
+const LocaleRegexSchema = z
+  .string({
+    description:
+      'A Locale Identifier in the `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). ' +
+      '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
+  })
+  .regex(
+    localeRegex,
+    'Should be a valid Locale Identifier. Expected `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). ' +
+      '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
+  );
+
 /**
  * @internal
  */
-export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, string> = z
-  .string({
-    description: 'A locale identifier.',
+export const LocaleSchema: z.Schema<Locale, z.ZodTypeDef, unknown> = LocaleRegexSchema.catch(
+  (ctx) => {
+    // attempts to recover the language code at least
+    const match = localeLikeRegex.exec(ctx.input);
+    if (match) {
+      return match[1] as string;
+    }
+    return ctx.input;
+  },
+)
+  .superRefine((val, ctx): val is Locale => {
+    const exact = LocaleRegexSchema.safeParse(val);
+
+    if (!exact.success) {
+      exact.error.issues.forEach((issue) => {
+        ctx.addIssue(issue);
+      });
+    }
+    return z.NEVER;
   })
-  .min(2)
-  .max(5)
   .transform(toLocale);
 
 /**
