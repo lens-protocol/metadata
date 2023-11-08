@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.0.5
+
+### Patch Changes
+
+- cff8bac: **fix** makes Locale parsing more robust
+
 ## 1.0.4
 
 ### Patch Changes
