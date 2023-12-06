@@ -48,7 +48,7 @@ import {
   PhysicalAddressSchema,
   EncryptedStringSchema,
   MarkdownSchema,
-  OpenActionSchema,
+  OpenActionMetadataSchema,
   StringAttributeSchema,
   EventParameterSchema,
 } from '../src';
@@ -141,7 +141,7 @@ for (const [path, Schema] of others) {
 
 // Open Action schema
 const openActions = new Map<string, z.ZodSchema<unknown>>([
-  ['open-actions/1.0.0.json', OpenActionSchema],
+  ['open-actions/1.0.0.json', OpenActionMetadataSchema],
 ]);
 
 for (const [path, Schema] of openActions) {
