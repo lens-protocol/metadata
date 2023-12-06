@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the "openAction" metadata builder when using it should return a valid OpenActionMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/open-actions/1.0.0.json",
+  "attributes": [
+    {
+      "key": "twitter",
+      "type": "String",
+      "value": "https://twitter.com/johndoe",
+    },
+    {
+      "key": "dob",
+      "type": "String",
+      "value": "1990-01-01T00:00:00Z",
+    },
+  ],
+  "authors": [
+    "Kylee_Ferry54@hotmail.com",
+  ],
+  "description": "
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
+
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        - Donec a diam lectus.
+        ",
+  "initializeABI": [
+    {
+      "indexed": true,
+      "name": "address",
+      "type": "address",
+    },
+    {
+      "indexed": true,
+      "name": "price",
+      "type": "uint256",
+    },
+  ],
+  "name": "Open Action Name",
+  "processABI": [
+    {
+      "indexed": true,
+      "name": "collector",
+      "type": "address",
+    },
+  ],
+  "title": "Open Action Title",
+}
+`;

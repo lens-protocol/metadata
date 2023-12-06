@@ -10,7 +10,7 @@ import { StringAttributeSchema, StringAttribute } from '../MetadataAttribute';
 export type OpenActionMetadata = {
   name: string;
   title: string;
-  content: Markdown;
+  description: Markdown;
   authors: string[];
   initializeABI: EventParameter[];
   processABI: EventParameter[];
@@ -21,8 +21,10 @@ export type OpenActionMetadata = {
 export const OpenActionMetadataSchema: z.ZodType<OpenActionMetadata, z.ZodTypeDef, object> =
   z.object({
     name: nonEmptyStringSchema('The name of the Open Action.').max(200),
-    title: nonEmptyStringSchema('The title, or short description, of the Open Action.'),
-    content: markdownSchema('Markdown formatted content'),
+    title: nonEmptyStringSchema(
+      'The title of the Open Action. Best to be in a human friendly format.',
+    ),
+    description: markdownSchema('Markdown formatted description of the open action.'),
     authors: z
       .array(z.string().min(1).email('Authors list should only contain valid emails'))
       .min(1, 'You must supply at least one author'),
