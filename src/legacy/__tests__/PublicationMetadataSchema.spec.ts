@@ -767,28 +767,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
       `);
     });
 
-    // this should indeed fail
-    it.skip('then it should be resilient to `null` as `content` for TEXT_ONLY publications', () => {
-      PublicationMetadataSchema.parse({
-        version: '2.0.0',
-        metadata_id: '2NIqXaSSHePwi3rKX_4V4',
-        description: 'test collaborate',
-        content: null,
-        external_url: 'https://dataverse.art/',
-        image:
-          'https://bafybeif2xgqpawh3t6dj2ftfno7tprugcntdq4qoq7u2vxqvulvzlsiixe.ipfs.nftstorage.link/',
-        imageMimeType: null,
-        name: 'testCollaborate',
-        attributes: [],
-        media: [],
-        appId: 'dataverse-v0.1.0',
-        animation_url: null,
-        locale: 'en',
-        tags: [],
-        mainContentFocus: 'TEXT_ONLY',
-      });
-    });
-
     it('then it should be resilient to `null` as `animation_url`', () => {
       PublicationMetadataSchema.parse({
         version: '2.0.0',
@@ -1477,6 +1455,52 @@ describe(`Given the PublicationMetadataSchema`, () => {
           "version": "2.0.0",
         }
       `);
+    });
+  });
+
+  describe(`when parsing a 'lenstube-bytes' videos`, () => {
+    it(`then should flag them as ${PublicationMainFocus.SHORT_VIDEO}`, () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: 'd4c19b76-736e-4d41-8d3c-4874b80fdd78',
+          locale: 'en-GB',
+          mainContentFocus: 'VIDEO',
+          name: 'GM 🧘🏼‍♂️🚲🍂',
+          attributes: [],
+          media: [
+            {
+              item: 'ipfs://bafybeihuephqb3rts3xiz5m3ooutgmz5yand5ayqi4sczkpsflfy33qwvm',
+              type: 'video/quicktime',
+              cover: 'ipfs://bafybeiessuuhjv6szov6rwejjpjr6pil7pqpbi4hgnkedh6mzv6iyteqka',
+            },
+          ],
+          appId: 'lenstube-bytes',
+        }),
+      ).toMatchObject({
+        mainContentFocus: PublicationMainFocus.SHORT_VIDEO,
+      });
+
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          version: '2.0.0',
+          metadata_id: 'd4c19b76-736e-4d41-8d3c-4874b80fdd78',
+          locale: 'en-GB',
+          mainContentFocus: 'VIDEO',
+          name: 'GM 🧘🏼‍♂️🚲🍂',
+          attributes: [],
+          media: [
+            {
+              item: 'ipfs://bafybeihuephqb3rts3xiz5m3ooutgmz5yand5ayqi4sczkpsflfy33qwvm',
+              type: 'video/quicktime',
+              cover: 'ipfs://bafybeiessuuhjv6szov6rwejjpjr6pil7pqpbi4hgnkedh6mzv6iyteqka',
+            },
+          ],
+          appId: 'other-app',
+        }),
+      ).toMatchObject({
+        mainContentFocus: PublicationMainFocus.VIDEO,
+      });
     });
   });
 });
