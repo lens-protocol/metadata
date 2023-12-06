@@ -10,12 +10,12 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "description": "The title, or short description, of the Open Action."
+      "description": "The title of the Open Action. Best to be in a human friendly format."
     },
-    "content": {
+    "description": {
       "type": "string",
       "minLength": 1,
-      "description": "Markdown formatted content"
+      "description": "Markdown formatted description of the open action."
     },
     "authors": {
       "type": "array",
@@ -52,7 +52,7 @@
   "required": [
     "name",
     "title",
-    "content",
+    "description",
     "authors",
     "initializeABI",
     "processABI",

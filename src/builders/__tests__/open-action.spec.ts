@@ -2,7 +2,6 @@ import { describe, expect, it } from '@jest/globals';
 
 import { MetadataAttributeType } from '../../MetadataAttribute.js';
 import { openAction } from '../open-action';
-import { faker } from '@faker-js/faker';
 import { Markdown } from '../../primitives';
 
 describe(`Given the "${openAction.name}" metadata builder`, () => {
@@ -11,7 +10,7 @@ describe(`Given the "${openAction.name}" metadata builder`, () => {
       const metadata = openAction({
         name: 'Open Action Name',
         title: 'Open Action Title',
-        authors: [faker.internet.email()],
+        authors: ['me@lens.xyz'],
         attributes: [
           {
             key: 'twitter',
