@@ -35,6 +35,7 @@ export enum PublicationMainFocus {
   EMBED = latest.PublicationMainFocus.EMBED,
   IMAGE = latest.PublicationMainFocus.IMAGE,
   LINK = latest.PublicationMainFocus.LINK,
+  SHORT_VIDEO = latest.PublicationMainFocus.SHORT_VIDEO,
   TEXT_ONLY = latest.PublicationMainFocus.TEXT_ONLY,
   VIDEO = latest.PublicationMainFocus.VIDEO,
 }
@@ -540,15 +541,25 @@ export type PublicationMetadataV2Video = z.infer<typeof PublicationMetadataV2Vid
 /**
  * @internal
  */
-export const PublicationMetadataV2Schema = z.discriminatedUnion('mainContentFocus', [
-  PublicationMetadataV2ArticleSchema,
-  PublicationMetadataV2AudioSchema,
-  PublicationMetadataV2EmbedSchema,
-  PublicationMetadataV2ImageSchema,
-  PublicationMetadataV2LinkSchema,
-  PublicationMetadataV2TextOnlySchema,
-  PublicationMetadataV2VideoSchema,
-]);
+export const PublicationMetadataV2Schema = z
+  .discriminatedUnion('mainContentFocus', [
+    PublicationMetadataV2ArticleSchema,
+    PublicationMetadataV2AudioSchema,
+    PublicationMetadataV2EmbedSchema,
+    PublicationMetadataV2ImageSchema,
+    PublicationMetadataV2LinkSchema,
+    PublicationMetadataV2TextOnlySchema,
+    PublicationMetadataV2VideoSchema,
+  ])
+  .transform((data) => {
+    if (data.mainContentFocus === PublicationMainFocus.VIDEO && data.appId === 'lenstube-bytes') {
+      return {
+        ...data,
+        mainContentFocus: PublicationMainFocus.SHORT_VIDEO,
+      };
+    }
+    return data;
+  });
 export type PublicationMetadataV2 = z.infer<typeof PublicationMetadataV2Schema>;
 
 export type PublicationMetadata = PublicationMetadataV1 | PublicationMetadataV2;
@@ -574,13 +585,13 @@ export type PublicationMetadata = PublicationMetadataV1 | PublicationMetadataV2;
  * // => { success: false, error: ZodError }
  * ```
  */
-export const PublicationMetadataSchema = z
+export const PublicationMetadataSchema: z.ZodType<PublicationMetadata, z.ZodTypeDef, object> = z
   .object({
     // although not optional it will allow the refine function to provide better error message
     version: z.nativeEnum(PublicationMetadataVersion),
   })
   .passthrough()
-  .superRefine((data, ctx): data is PublicationMetadata => {
+  .transform((data, ctx) => {
     switch (data.version) {
       case PublicationMetadataVersion.V1:
         const v1Result = PublicationMetadataV1Schema.safeParse(data);
@@ -589,8 +600,9 @@ export const PublicationMetadataSchema = z
           v1Result.error.issues.forEach((issue) => {
             ctx.addIssue(issue);
           });
+          return z.NEVER;
         }
-        break;
+        return v1Result.data;
 
       case PublicationMetadataVersion.V2:
         const v2Result = PublicationMetadataV2Schema.safeParse(data);
@@ -599,18 +611,11 @@ export const PublicationMetadataSchema = z
           v2Result.error.issues.forEach((issue) => {
             ctx.addIssue(issue);
           });
+          return z.NEVER;
         }
-        break;
+
+        return v2Result.data;
     }
 
     return z.NEVER;
-  })
-  .transform((data) => {
-    switch (data.version) {
-      case PublicationMetadataVersion.V1:
-        return PublicationMetadataV1Schema.parse(data);
-
-      case PublicationMetadataVersion.V2:
-        return PublicationMetadataV2Schema.parse(data);
-    }
   });

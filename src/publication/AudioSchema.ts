@@ -76,7 +76,7 @@ export type AudioMetadata = MarketplaceMetadata & {
   /**
    * A cryptographic signature of the `lens` data.
    *
-   * @experimental DO NOT use ye
+   * @experimental DO NOT use yet
    */
   signature?: Signature;
 };

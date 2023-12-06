@@ -51,6 +51,21 @@ export type LiveStreamMetadataDetails = PublicationMetadataCommon & {
   liveUrl: EncryptableURI;
   /**
    * The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.
+   *
+   * Responses from this endpoint should conform to the following schema:
+   *
+   * ```json
+   * {
+   *   "$schema": "http://json-schema.org/draft-07/schema#",
+   *   "type": "object",
+   *   "properties": {
+   *     "isLive": {
+   *       "type": "boolean"
+   *     }
+   *   },
+   *   "required": ["isLive"]
+   * }
+   * ```
    */
   checkLiveAPI?: EncryptableURI;
   /**
@@ -113,10 +128,8 @@ export type LiveStreamMetadata = MarketplaceMetadata & {
   lens: LiveStreamMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
- *
- * @experimental DO NOT use ye
-
-@experimental DO NOT use yet
+   *
+   * @experimental DO NOT use yet
    */
   signature?: Signature;
 };

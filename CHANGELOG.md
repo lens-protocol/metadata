@@ -1,5 +1,16 @@
 # @lens-protocol/metadata
 
+## 1.1.0
+
+### Minor Changes
+
+- 880b7b5: **feat:** adds Open Action Metadata Standards
+
+### Patch Changes
+
+- 312cdff: **fixed:** parse legacy `lenstube-bytes`` videos as SHORT_VIDEO
+- 39005b4: **fixed:** documentation typos and omitted details from LIP
+
 ## 1.0.5
 
 ### Patch Changes

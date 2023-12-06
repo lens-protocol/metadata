@@ -48,6 +48,9 @@ import {
   PhysicalAddressSchema,
   EncryptedStringSchema,
   MarkdownSchema,
+  OpenActionMetadataSchema,
+  StringAttributeSchema,
+  EventParameterSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -130,6 +133,28 @@ for (const [path, Schema] of others) {
     definitionPath: '$defs',
     definitions: {
       MetadataAttribute: MetadataAttributeSchema,
+    },
+  });
+
+  await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
+}
+
+// Open Action schema
+const openActions = new Map<string, z.ZodSchema<unknown>>([
+  ['open-actions/1.0.0.json', OpenActionMetadataSchema],
+]);
+
+for (const [path, Schema] of openActions) {
+  const outputFile = join(outputDir, path);
+
+  await fs.ensureFile(outputFile);
+
+  const jsonSchema = zodToJsonSchema(Schema, {
+    target: 'jsonSchema7',
+    definitionPath: '$defs',
+    definitions: {
+      StringAttribute: StringAttributeSchema,
+      EventParameter: EventParameterSchema,
     },
   });
 
