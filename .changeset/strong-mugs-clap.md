@@ -2,4 +2,4 @@
 '@lens-protocol/metadata': minor
 ---
 
-**feat:** adds `OpenActionMetadata` and `openAction` helper
+**feat:** adds Open Action Metadata Standards
