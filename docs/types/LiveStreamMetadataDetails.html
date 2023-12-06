@@ -27,6 +27,9 @@
 <li class="tsd-parameter">
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">check<wbr/>LiveAPI</span><span class="tsd-signature-symbol">?: </span><a href="EncryptableURI.html" class="tsd-signature-type tsd-kind-type-alias">EncryptableURI</a></h5>
 <div class="tsd-comment tsd-typography"><p>The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.</p>
+<p>Responses from this endpoint should conform to the following schema:</p>
+<pre><code class="language-json"><span class="hl-2">{</span><br/><span class="hl-2">  </span><span class="hl-3">&quot;$schema&quot;</span><span class="hl-2">: </span><span class="hl-1">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">&quot;type&quot;</span><span class="hl-2">: </span><span class="hl-1">&quot;object&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">  </span><span class="hl-3">&quot;properties&quot;</span><span class="hl-2">: {</span><br/><span class="hl-2">    </span><span class="hl-3">&quot;isLive&quot;</span><span class="hl-2">: {</span><br/><span class="hl-2">      </span><span class="hl-3">&quot;type&quot;</span><span class="hl-2">: </span><span class="hl-1">&quot;boolean&quot;</span><br/><span class="hl-2">    }</span><br/><span class="hl-2">  },</span><br/><span class="hl-2">  </span><span class="hl-3">&quot;required&quot;</span><span class="hl-2">: [</span><span class="hl-1">&quot;isLive&quot;</span><span class="hl-2">]</span><br/><span class="hl-2">}</span>
+</code><button>Copy</button></pre>
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li class="tsd-parameter">

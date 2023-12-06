@@ -20,11 +20,11 @@
 </div>
 <div class="tsd-comment tsd-typography">
 <h4>Example</h4><p>with <code>parse</code>:</p>
-<pre><code class="language-ts"><span class="hl-3">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-3">valid</span><span class="hl-2">); </span><span class="hl-8">// =&gt; PublicationMetadata</span><br/><br/><span class="hl-3">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-9">parse</span><span class="hl-2">(</span><span class="hl-3">invalid</span><span class="hl-2">); </span><span class="hl-8">// =&gt; throws ZodError</span>
+<pre><code class="language-ts"><span class="hl-4">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-10">parse</span><span class="hl-2">(</span><span class="hl-4">valid</span><span class="hl-2">); </span><span class="hl-9">// =&gt; PublicationMetadata</span><br/><br/><span class="hl-4">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-10">parse</span><span class="hl-2">(</span><span class="hl-4">invalid</span><span class="hl-2">); </span><span class="hl-9">// =&gt; throws ZodError</span>
 </code><button>Copy</button></pre>
 
 <h4>Example</h4><p>with <code>safeParse</code>:</p>
-<pre><code class="language-ts"><span class="hl-3">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-9">safeParse</span><span class="hl-2">(</span><span class="hl-3">valid</span><span class="hl-2">);</span><br/><span class="hl-8">// =&gt; { success: true, data: PublicationMetadata }</span><br/><br/><span class="hl-3">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-9">safeParse</span><span class="hl-2">(</span><span class="hl-3">invalid</span><span class="hl-2">);</span><br/><span class="hl-8">// =&gt; { success: false, error: ZodError }</span>
+<pre><code class="language-ts"><span class="hl-4">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-10">safeParse</span><span class="hl-2">(</span><span class="hl-4">valid</span><span class="hl-2">);</span><br/><span class="hl-9">// =&gt; { success: true, data: PublicationMetadata }</span><br/><br/><span class="hl-4">PublicationMetadataSchema</span><span class="hl-2">.</span><span class="hl-10">safeParse</span><span class="hl-2">(</span><span class="hl-4">invalid</span><span class="hl-2">);</span><br/><span class="hl-9">// =&gt; { success: false, error: ZodError }</span>
 </code><button>Copy</button></pre>
 </div><aside class="tsd-sources">
 <ul>
