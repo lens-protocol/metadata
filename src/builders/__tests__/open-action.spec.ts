@@ -2,7 +2,6 @@ import { describe, expect, it } from '@jest/globals';
 
 import { MetadataAttributeType } from '../../MetadataAttribute.js';
 import { openAction } from '../open-action';
-import { Markdown } from '../../primitives';
 
 describe(`Given the "${openAction.name}" metadata builder`, () => {
   describe(`when using it`, () => {
@@ -28,7 +27,7 @@ describe(`Given the "${openAction.name}" metadata builder`, () => {
 
         - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         - Donec a diam lectus.
-        ` as Markdown,
+        `,
         initializeABI: [
           {
             type: 'address',

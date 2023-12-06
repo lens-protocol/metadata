@@ -1,20 +1,45 @@
 import { z } from 'zod';
-import { nonEmptyStringSchema, markdownSchema, Markdown } from '../primitives';
-import { OpenActionSchemaId } from './OpenActionSchemaId';
+
 import { EventParameterSchema, EventParameter } from './EventParameterSchema';
+import { OpenActionSchemaId } from './OpenActionSchemaId';
 import { StringAttributeSchema, StringAttribute } from '../MetadataAttribute';
+import { nonEmptyStringSchema, markdownSchema, Markdown } from '../primitives';
 
 /**
  * The metadata standard for Open Actions
  */
 export type OpenActionMetadata = {
+  /**
+   * The name of the Open Action.
+   */
   name: string;
+  /**
+   * The title of the Open Action. Best to be in a human friendly format.
+   */
   title: string;
+  /**
+   * Markdown formatted description of the open action.
+   */
   description: Markdown;
+  /**
+   * The authors of the Open Action.
+   */
   authors: string[];
+  /**
+   * The ABI describing the initialization function.
+   */
   initializeABI: EventParameter[];
+  /**
+   * The ABI describing the processing function.
+   */
   processABI: EventParameter[];
+  /**
+   * The attributes of the Open Action.
+   */
   attributes: StringAttribute[];
+  /**
+   * The schema ID of the Open Action.
+   */
   $schema: OpenActionSchemaId.LATEST;
 };
 
