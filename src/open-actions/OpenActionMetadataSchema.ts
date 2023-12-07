@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { EventParameterSchema, EventParameter } from './EventParameterSchema';
 import { OpenActionSchemaId } from './OpenActionSchemaId';
-import { StringAttributeSchema, StringAttribute } from '../MetadataAttribute';
+import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute';
 import { nonEmptyStringSchema, markdownSchema, Markdown } from '../primitives';
 
 /**
@@ -36,7 +36,7 @@ export type OpenActionMetadata = {
   /**
    * The attributes of the Open Action.
    */
-  attributes: StringAttribute[];
+  attributes: MetadataAttribute[];
   /**
    * The schema ID of the Open Action.
    */
@@ -55,6 +55,6 @@ export const OpenActionMetadataSchema: z.ZodType<OpenActionMetadata, z.ZodTypeDe
       .min(1, 'You must supply at least one author'),
     initializeABI: z.array(EventParameterSchema),
     processABI: z.array(EventParameterSchema),
-    attributes: z.array(StringAttributeSchema),
+    attributes: z.array(MetadataAttributeSchema),
     $schema: z.literal(OpenActionSchemaId.LATEST),
   });
