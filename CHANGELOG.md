@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.1.1
+
+### Patch Changes
+
+- 9d21384: **fix:** use `MetadataAttribute` in open action metadata
+
 ## 1.1.0
 
 ### Minor Changes
