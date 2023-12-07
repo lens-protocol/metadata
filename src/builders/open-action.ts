@@ -1,6 +1,6 @@
 import { evaluate } from './ValidationError';
 import { RecursiveUnbrand } from './utils';
-import { StringAttribute } from '../MetadataAttribute';
+import { MetadataAttribute } from '../MetadataAttribute';
 import { OpenActionMetadataSchema, OpenActionSchemaId, OpenActionMetadata } from '../open-actions';
 import { Prettify } from '../utils';
 
@@ -17,7 +17,7 @@ export type OpenActionOptions = OpenActionDetails & {
   /**
    * The attributes of the Open Action.
    */
-  attributes?: StringAttribute[];
+  attributes?: MetadataAttribute[];
 };
 
 /**
