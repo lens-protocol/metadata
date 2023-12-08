@@ -121,7 +121,7 @@ export type LiveStreamMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.LIVESTREAM_LATEST;
+  $schema: PublicationSchemaId.LIVESTREAM_LATEST | PublicationSchemaId.LIVESTREAM_3_0_0;
   /**
    * The metadata details.
    */
@@ -137,7 +137,11 @@ export type LiveStreamMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const LiveStreamSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.LIVESTREAM_LATEST),
-  lens: LiveStreamMetadataDetailsSchema,
-});
+export const LiveStreamSchema: z.ZodType<LiveStreamMetadata, z.ZodTypeDef, object> =
+  publicationWith({
+    $schema: z.union([
+      z.literal(PublicationSchemaId.LIVESTREAM_LATEST),
+      z.literal(PublicationSchemaId.LIVESTREAM_3_0_0),
+    ]),
+    lens: LiveStreamMetadataDetailsSchema,
+  });

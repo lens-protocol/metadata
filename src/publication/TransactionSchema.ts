@@ -85,7 +85,7 @@ export type TransactionMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.TRANSACTION_LATEST;
+  $schema: PublicationSchemaId.TRANSACTION_LATEST | PublicationSchemaId.TRANSACTION_3_0_0;
   /**
    * The metadata details.
    */
@@ -101,7 +101,11 @@ export type TransactionMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const TransactionSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.TRANSACTION_LATEST),
-  lens: TransactionMetadataDetailsSchema,
-});
+export const TransactionSchema: z.ZodType<TransactionMetadata, z.ZodTypeDef, object> =
+  publicationWith({
+    $schema: z.union([
+      z.literal(PublicationSchemaId.TRANSACTION_LATEST),
+      z.literal(PublicationSchemaId.TRANSACTION_3_0_0),
+    ]),
+    lens: TransactionMetadataDetailsSchema,
+  });

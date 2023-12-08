@@ -1,6 +1,5 @@
 export * from './constants.js';
 export * from './builders/index.js';
-export * from './extractVersion.js';
 export * from './formatters.js';
 export * from './MetadataAttribute.js';
 export * from './primitives.js';
@@ -8,3 +7,4 @@ export * from './profile/index.js';
 export * from './publication/index.js';
 export * from './open-actions/index.js';
 export type { Brand, DistributiveOmit, Overwrite, Prettify, TwoAtLeastArray } from './utils.js';
+export * from './versions.js';

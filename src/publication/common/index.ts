@@ -158,7 +158,7 @@ export function metadataDetailsWith<
  */
 export function publicationWith<
   Augmentation extends {
-    $schema: z.ZodLiteral<string>;
+    $schema: z.ZodType;
     lens: ReturnType<typeof metadataDetailsWith>;
   },
 >(augmentation: Augmentation) {

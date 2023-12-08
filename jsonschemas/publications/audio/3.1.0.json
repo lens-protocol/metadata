@@ -1,0 +1,1178 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "$ref": "#/$defs/Markdown",
+      "description": "A human-readable description of the item. It could be plain text or markdown."
+    },
+    "external_url": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Name of the NFT item."
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MarketplaceMetadataAttribute"
+      },
+      "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+    },
+    "image": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "Marketplaces will store any NFT image here."
+    },
+    "animation_url": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic signature of the Lens metadata."
+    },
+    "$schema": {
+      "type": "string",
+      "enum": [
+        "https://json-schemas.lens.dev/publications/audio/3.1.0.json",
+        "https://json-schemas.lens.dev/publications/audio/3.0.0.json"
+      ]
+    },
+    "lens": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+        },
+        "appId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "The App Id that this publication belongs to."
+        },
+        "hideFromFeed": {
+          "type": "boolean",
+          "description": "Determine if the publication should not be shown in any feed."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "maxItems": 20,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+        },
+        "locale": {
+          "type": "string",
+          "pattern": "^[a-z]{2}(?:-[a-zA-Z]{2})?$",
+          "description": "A Locale Identifier in the `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). [language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format."
+        },
+        "encryptedWith": {
+          "$ref": "#/$defs/PublicationEncryptionStrategy"
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Tag"
+          },
+          "maxItems": 20,
+          "description": "An arbitrary list of tags."
+        },
+        "contentWarning": {
+          "type": "string",
+          "enum": [
+            "NSFW",
+            "SENSITIVE",
+            "SPOILER"
+          ],
+          "description": "Specify a content warning."
+        },
+        "mainContentFocus": {
+          "type": "string",
+          "const": "AUDIO",
+          "description": "The main focus of the publication."
+        },
+        "audio": {
+          "$ref": "#/$defs/MediaAudio"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The optional audio title."
+        },
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Markdown",
+              "description": "Optional markdown content."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnyMedia"
+          },
+          "minItems": 1,
+          "description": "The other attachments you want to include with it."
+        }
+      },
+      "required": [
+        "id",
+        "locale",
+        "mainContentFocus",
+        "audio"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "$schema",
+    "lens"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "AdvancedContractCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ADVANCED_CONTRACT"
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "address": {
+              "$ref": "#/$defs/EvmAddress"
+            }
+          },
+          "required": [
+            "chainId",
+            "address"
+          ],
+          "additionalProperties": false,
+          "description": "The contract address and chain id"
+        },
+        "functionName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the function you want to call"
+        },
+        "abi": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/fragments/#human-readable-abi for more info"
+        },
+        "params": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
+        },
+        "comparison": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ],
+          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(true|false|\\d{1,70})$",
+          "description": "The comparison value. Accepts 'true', 'false' or a number"
+        }
+      },
+      "required": [
+        "type",
+        "contract",
+        "functionName",
+        "abi",
+        "params",
+        "comparison",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "AccessCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "OR"
+        },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "AND"
+                  },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/NftOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/Erc20OwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/EoaOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/ProfileOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/FollowCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AdvancedContractCondition"
+                        }
+                      ]
+                    },
+                    "maxItems": 5
+                  }
+                },
+                "required": [
+                  "type",
+                  "criteria"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/$defs/CollectCondition"
+              },
+              {
+                "$ref": "#/$defs/AdvancedContractCondition"
+              },
+              {
+                "$ref": "#/$defs/EoaOwnershipCondition"
+              },
+              {
+                "$ref": "#/$defs/Erc20OwnershipCondition"
+              },
+              {
+                "$ref": "#/$defs/FollowCondition"
+              },
+              {
+                "$ref": "#/$defs/NftOwnershipCondition"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "OR"
+                  },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/NftOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/Erc20OwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/EoaOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/ProfileOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/FollowCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AdvancedContractCondition"
+                        }
+                      ]
+                    },
+                    "maxItems": 5
+                  }
+                },
+                "required": [
+                  "type",
+                  "criteria"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/$defs/ProfileOwnershipCondition"
+              }
+            ]
+          },
+          "maxItems": 5
+        }
+      },
+      "required": [
+        "type",
+        "criteria"
+      ],
+      "additionalProperties": false
+    },
+    "PhysicalAddress": {
+      "type": "object",
+      "properties": {
+        "formatted": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The full mailing address formatted for display."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "streetAddress": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "locality": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The city or locality."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The state or region."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "postalCode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The zip or postal code."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The country name component."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        }
+      },
+      "required": [
+        "locality",
+        "country"
+      ],
+      "additionalProperties": false
+    },
+    "Amount": {
+      "type": "object",
+      "properties": {
+        "asset": {
+          "type": "object",
+          "properties": {
+            "contract": {
+              "$ref": "#/$defs/NetworkAddress"
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "The number of decimals of the asset."
+            }
+          },
+          "required": [
+            "contract",
+            "decimals"
+          ],
+          "additionalProperties": false
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
+        }
+      },
+      "required": [
+        "asset",
+        "value"
+      ],
+      "additionalProperties": false,
+      "description": "An amount of a specific asset."
+    },
+    "AnyMedia": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MediaAudio"
+        },
+        {
+          "$ref": "#/$defs/MediaImage"
+        },
+        {
+          "$ref": "#/$defs/MediaVideo"
+        }
+      ]
+    },
+    "CollectCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "COLLECT"
+        },
+        "publicationId": {
+          "$ref": "#/$defs/PublicationId"
+        },
+        "thisPublication": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "type",
+        "publicationId"
+      ],
+      "additionalProperties": false
+    },
+    "EncryptedString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^\\S+$",
+      "description": "An encrypted value."
+    },
+    "EoaOwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "EOA_OWNERSHIP"
+        },
+        "address": {
+          "$ref": "#/$defs/EvmAddress"
+        }
+      },
+      "required": [
+        "type",
+        "address"
+      ],
+      "additionalProperties": false
+    },
+    "Erc20OwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ERC20_OWNERSHIP"
+        },
+        "amount": {
+          "$ref": "#/$defs/Amount"
+        },
+        "condition": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "amount",
+        "condition"
+      ],
+      "additionalProperties": false
+    },
+    "EvmAddress": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An EVM compatible address."
+    },
+    "FollowCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "FOLLOW"
+        },
+        "follow": {
+          "$ref": "#/$defs/ProfileId"
+        }
+      },
+      "required": [
+        "type",
+        "follow"
+      ],
+      "additionalProperties": false
+    },
+    "GeoURI": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
+      "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
+    },
+    "Markdown": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A markdown text."
+    },
+    "MarketplaceMetadataAttribute": {
+      "type": "object",
+      "properties": {
+        "display_type": {
+          "type": "string",
+          "enum": [
+            "number",
+            "string",
+            "date"
+          ]
+        },
+        "trait_type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the trait."
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "MediaAudio": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "The location of the file."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "audio/wav",
+            "audio/vnd.wave",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/mp4",
+            "audio/aac",
+            "audio/webm",
+            "audio/flac"
+          ],
+          "description": "The mime type of the audio file."
+        },
+        "cover": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "The cover image for the audio."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "duration": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "How long the the audio is in seconds."
+        },
+        "license": {
+          "$ref": "#/$defs/MetadataLicenseType",
+          "description": "The license for the audio."
+        },
+        "credits": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The credits for the audio."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "artist": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The name of the artist."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "genre": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The genre of the audio"
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "recordLabel": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The record label for the audio."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "MUSIC",
+            "PODCAST",
+            "AUDIOBOOK",
+            "VOICE_NOTE",
+            "SOUND",
+            "OTHER"
+          ],
+          "description": "The type of audio."
+        },
+        "lyrics": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "The lyrics for the audio."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        }
+      },
+      "required": [
+        "item",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MediaImage": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/$defs/MediaAudio/properties/item"
+        },
+        "attributes": {
+          "$ref": "#/$defs/MediaAudio/properties/attributes"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "image/bmp",
+            "image/gif",
+            "image/heic",
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/tiff",
+            "image/webp",
+            "image/x-ms-bmp"
+          ],
+          "description": "The mime type of the image"
+        },
+        "altTag": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The alt tag for accessibility"
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "license": {
+          "$ref": "#/$defs/MetadataLicenseType",
+          "description": "The license for the image"
+        }
+      },
+      "required": [
+        "item",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MediaVideo": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/$defs/MediaAudio/properties/item"
+        },
+        "attributes": {
+          "$ref": "#/$defs/MediaAudio/properties/attributes"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "model/gltf+json",
+            "model/gltf-binary",
+            "video/x-m4v",
+            "video/mov",
+            "video/mp4",
+            "video/mpeg",
+            "video/ogg",
+            "video/ogv",
+            "video/quicktime",
+            "video/webm"
+          ],
+          "description": "The mime type of the video"
+        },
+        "altTag": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The alt tag for accessibility"
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "cover": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "The cover image for the video"
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "duration": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "How long the the video is in seconds"
+        },
+        "license": {
+          "$ref": "#/$defs/MetadataLicenseType",
+          "description": "The license for the video"
+        }
+      },
+      "required": [
+        "item",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MetadataAttribute": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Boolean"
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "description": "A JS boolean value serialized as string. It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Date"
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "format": "date-time",
+              "description": "A valid ISO 8601 date string.  It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Number"
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "String"
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A string value."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "JSON"
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A JSON string. It's consumer responsibility to validate and parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "MetadataLicenseType": {
+      "type": "string",
+      "enum": [
+        "CCO",
+        "CC BY",
+        "CC BY-ND",
+        "CC BY-NC",
+        "TBNL-C-D-PL-Legal",
+        "TBNL-C-DT-PL-Legal",
+        "TBNL-C-ND-PL-Legal",
+        "TBNL-C-D-NPL-Legal",
+        "TBNL-C-DT-NPL-Legal",
+        "TBNL-C-DTSA-PL-Legal",
+        "TBNL-C-DTSA-NPL-Legal",
+        "TBNL-C-ND-NPL-Legal",
+        "TBNL-C-D-PL-Ledger",
+        "TBNL-C-DT-PL-Ledger",
+        "TBNL-C-ND-PL-Ledger",
+        "TBNL-C-D-NPL-Ledger",
+        "TBNL-C-DT-NPL-Ledger",
+        "TBNL-C-DTSA-PL-Ledger",
+        "TBNL-C-DTSA-NPL-Ledger",
+        "TBNL-C-ND-NPL-Ledger",
+        "TBNL-NC-D-PL-Legal",
+        "TBNL-NC-DT-PL-Legal",
+        "TBNL-NC-ND-PL-Legal",
+        "TBNL-NC-D-NPL-Legal",
+        "TBNL-NC-DT-NPL-Legal",
+        "TBNL-NC-DTSA-PL-Legal",
+        "TBNL-NC-DTSA-NPL-Legal",
+        "TBNL-NC-ND-NPL-Legal",
+        "TBNL-NC-D-PL-Ledger",
+        "TBNL-NC-DT-PL-Ledger",
+        "TBNL-NC-ND-PL-Ledger",
+        "TBNL-NC-D-NPL-Ledger",
+        "TBNL-NC-DT-NPL-Ledger",
+        "TBNL-NC-DTSA-PL-Ledger",
+        "TBNL-NC-DTSA-NPL-Ledger",
+        "TBNL-NC-ND-NPL-Ledger"
+      ]
+    },
+    "NetworkAddress": {
+      "type": "object",
+      "properties": {
+        "chainId": {
+          "$ref": "#/$defs/AdvancedContractCondition/properties/contract/properties/chainId"
+        },
+        "address": {
+          "$ref": "#/$defs/EvmAddress"
+        }
+      },
+      "required": [
+        "chainId",
+        "address"
+      ],
+      "additionalProperties": false,
+      "description": "An EVM compatible address on a specific chain."
+    },
+    "NftOwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "NFT_OWNERSHIP"
+        },
+        "contract": {
+          "$ref": "#/$defs/NetworkAddress"
+        },
+        "contractType": {
+          "type": "string",
+          "enum": [
+            "ERC721",
+            "ERC1155"
+          ]
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "description": "A list of token IDs you want to check ownership of. The list is optional for ERC721, you MUST provide a list of token IDs for ERC1155."
+        }
+      },
+      "required": [
+        "type",
+        "contract",
+        "contractType"
+      ],
+      "additionalProperties": false
+    },
+    "ProfileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ProfileOwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "PROFILE_OWNERSHIP"
+        },
+        "profileId": {
+          "$ref": "#/$defs/ProfileId"
+        }
+      },
+      "required": [
+        "type",
+        "profileId"
+      ],
+      "additionalProperties": false
+    },
+    "PublicationEncryptionStrategy": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "const": "LIT_PROTOCOL"
+            },
+            "encryptionKey": {
+              "type": "string",
+              "minLength": 368,
+              "maxLength": 368,
+              "description": "A symmetric encryption key."
+            },
+            "accessCondition": {
+              "$ref": "#/$defs/AccessCondition"
+            },
+            "accessControlContract": {
+              "type": "object",
+              "properties": {
+                "chainId": {
+                  "$ref": "#/$defs/AdvancedContractCondition/properties/contract/properties/chainId"
+                },
+                "address": {
+                  "$ref": "#/$defs/EvmAddress"
+                }
+              },
+              "required": [
+                "chainId",
+                "address"
+              ],
+              "additionalProperties": false,
+              "description": "LitAccessControl contract address"
+            },
+            "encryptedPaths": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+              },
+              "minItems": 1,
+              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+            }
+          },
+          "required": [
+            "provider",
+            "encryptionKey",
+            "accessCondition",
+            "encryptedPaths"
+          ],
+          "additionalProperties": false,
+          "description": "Publication encryption strategy powered by the LIT Protocol."
+        }
+      ]
+    },
+    "PublicationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Tag": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "description": "An arbitrary tag."
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

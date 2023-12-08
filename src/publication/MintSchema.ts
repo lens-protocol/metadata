@@ -70,7 +70,7 @@ export type MintMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.MINT_LATEST;
+  $schema: PublicationSchemaId.MINT_LATEST | PublicationSchemaId.MINT_3_0_0;
   /**
    * The metadata details.
    */
@@ -86,7 +86,10 @@ export type MintMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const MintSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.MINT_LATEST),
+export const MintSchema: z.ZodType<MintMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.MINT_LATEST),
+    z.literal(PublicationSchemaId.MINT_3_0_0),
+  ]),
   lens: MintMetadataDetailsSchema,
 });

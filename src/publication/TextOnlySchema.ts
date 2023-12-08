@@ -38,7 +38,7 @@ export type TextOnlyMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.TEXT_ONLY_LATEST;
+  $schema: PublicationSchemaId.TEXT_ONLY_LATEST | PublicationSchemaId.TEXT_ONLY_3_0_0;
   /**
    * The metadata details.
    */
@@ -54,7 +54,10 @@ export type TextOnlyMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const TextOnlySchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.TEXT_ONLY_LATEST),
+export const TextOnlySchema: z.ZodType<TextOnlyMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.TEXT_ONLY_LATEST),
+    z.literal(PublicationSchemaId.TEXT_ONLY_3_0_0),
+  ]),
   lens: TextOnlyMetadataDetailsSchema,
 });

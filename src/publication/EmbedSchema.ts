@@ -59,7 +59,7 @@ export type EmbedMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.EMBED_LATEST;
+  $schema: PublicationSchemaId.EMBED_LATEST | PublicationSchemaId.EMBED_3_0_0;
   /**
    * The metadata details.
    */
@@ -75,7 +75,10 @@ export type EmbedMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const EmbedSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.EMBED_LATEST),
+export const EmbedSchema: z.ZodType<EmbedMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.EMBED_LATEST),
+    z.literal(PublicationSchemaId.EMBED_3_0_0),
+  ]),
   lens: EmbedMetadataDetailsSchema,
 });

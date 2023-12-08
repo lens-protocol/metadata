@@ -71,7 +71,7 @@ export type VideoMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.VIDEO_LATEST;
+  $schema: PublicationSchemaId.VIDEO_LATEST | PublicationSchemaId.VIDEO_3_0_0;
   /**
    * The metadata details.
    */
@@ -87,7 +87,10 @@ export type VideoMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const VideoSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.VIDEO_LATEST),
+export const VideoSchema: z.ZodType<VideoMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.VIDEO_LATEST),
+    z.literal(PublicationSchemaId.VIDEO_3_0_0),
+  ]),
   lens: VideoMetadataDetailsSchema,
 });

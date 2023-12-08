@@ -31,12 +31,13 @@ import { ImageMetadata, ImageSchema } from './ImageSchema.js';
 import { LinkMetadata, LinkSchema } from './LinkSchema.js';
 import { LiveStreamMetadata, LiveStreamSchema } from './LiveStreamSchema.js';
 import { MintMetadata, MintSchema } from './MintSchema.js';
+import { PublicationSchemaId } from './PublicationSchemaId.js';
 import { SpaceMetadata, SpaceSchema } from './SpaceSchema.js';
 import { StoryMetadata, StorySchema } from './StorySchema.js';
 import { TextOnlyMetadata, TextOnlySchema } from './TextOnlySchema.js';
 import { TransactionMetadata, TransactionSchema } from './TransactionSchema.js';
 import { VideoMetadata, VideoSchema } from './VideoSchema.js';
-import { ShapeCheck } from '../utils';
+import { ShapeCheck, assertNever } from '../utils';
 
 /**
  * `PublicationMetadata` is a discriminated union of all primary publication metadata.
@@ -92,6 +93,88 @@ export type PublicationMetadata = ShapeCheck<
   | VideoMetadata
 >;
 
+function resolvePublicationMetadataSchema(
+  $schema: PublicationSchemaId,
+): z.ZodType<PublicationMetadata, z.ZodTypeDef, object> {
+  switch ($schema) {
+    case PublicationSchemaId.ARTICLE_LATEST:
+    case PublicationSchemaId.ARTICLE_3_0_0:
+      return ArticleSchema;
+
+    case PublicationSchemaId.AUDIO_LATEST:
+    case PublicationSchemaId.AUDIO_3_0_0:
+      return AudioSchema;
+
+    case PublicationSchemaId.CHECKING_IN_LATEST:
+    case PublicationSchemaId.CHECKING_IN_3_0_0:
+      return CheckingInSchema;
+
+    case PublicationSchemaId.EMBED_LATEST:
+    case PublicationSchemaId.EMBED_3_0_0:
+      return EmbedSchema;
+
+    case PublicationSchemaId.EVENT_LATEST:
+    case PublicationSchemaId.EVENT_3_0_0:
+      return EventSchema;
+
+    case PublicationSchemaId.IMAGE_LATEST:
+    case PublicationSchemaId.IMAGE_3_0_0:
+      return ImageSchema;
+
+    case PublicationSchemaId.LINK_LATEST:
+    case PublicationSchemaId.LINK_3_0_0:
+      return LinkSchema;
+
+    case PublicationSchemaId.LIVESTREAM_LATEST:
+    case PublicationSchemaId.LIVESTREAM_3_0_0:
+      return LiveStreamSchema;
+
+    case PublicationSchemaId.MINT_LATEST:
+    case PublicationSchemaId.MINT_3_0_0:
+      return MintSchema;
+
+    case PublicationSchemaId.SPACE_LATEST:
+    case PublicationSchemaId.SPACE_3_0_0:
+      return SpaceSchema;
+
+    case PublicationSchemaId.TEXT_ONLY_LATEST:
+    case PublicationSchemaId.TEXT_ONLY_3_0_0:
+      return TextOnlySchema;
+
+    case PublicationSchemaId.STORY_LATEST:
+    case PublicationSchemaId.STORY_3_0_0:
+      return StorySchema;
+
+    case PublicationSchemaId.TRANSACTION_LATEST:
+    case PublicationSchemaId.TRANSACTION_3_0_0:
+      return TransactionSchema;
+
+    case PublicationSchemaId.THREE_D_LATEST:
+    case PublicationSchemaId.THREE_D_3_0_0:
+      return ThreeDSchema;
+
+    case PublicationSchemaId.VIDEO_LATEST:
+    case PublicationSchemaId.VIDEO_3_0_0:
+      return VideoSchema;
+  }
+  assertNever($schema, 'Unknown schema');
+}
+
+type SelfDescribingPublicationMetadata = {
+  $schema: PublicationSchemaId;
+};
+
+function toPublicationMetadata(val: SelfDescribingPublicationMetadata, ctx: z.RefinementCtx) {
+  const schema = resolvePublicationMetadataSchema(val.$schema);
+  const result = schema.safeParse(val);
+
+  if (!result.success) {
+    result.error.issues.forEach((issue) => ctx.addIssue(issue));
+    return z.NEVER;
+  }
+  return result.data;
+}
+
 /**
  * A union of all publication metadata schemas.
  *
@@ -115,21 +198,9 @@ export type PublicationMetadata = ShapeCheck<
  * // => { success: false, error: ZodError }
  * ```
  */
-export const PublicationMetadataSchema: z.ZodType<PublicationMetadata, z.ZodTypeDef, object> =
-  z.discriminatedUnion('$schema', [
-    ArticleSchema,
-    AudioSchema,
-    CheckingInSchema,
-    EmbedSchema,
-    EventSchema,
-    ImageSchema,
-    LinkSchema,
-    LiveStreamSchema,
-    MintSchema,
-    SpaceSchema,
-    TextOnlySchema,
-    StorySchema,
-    TransactionSchema,
-    ThreeDSchema,
-    VideoSchema,
-  ]);
+export const PublicationMetadataSchema: z.ZodType<PublicationMetadata, z.ZodTypeDef, object> = z
+  .object({
+    $schema: z.nativeEnum(PublicationSchemaId),
+  })
+  .passthrough()
+  .transform(toPublicationMetadata);
