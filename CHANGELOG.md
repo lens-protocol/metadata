@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 0.0.0-20231208134008
+
+### Minor Changes
+
+- d154f2e: **feat:** adds support for `LitEncryptionStrategy#accessControlContract?: NetworkAddress`
+
 ## 1.1.2
 
 ### Patch Changes
