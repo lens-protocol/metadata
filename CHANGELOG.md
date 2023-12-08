@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.1.2
+
+### Patch Changes
+
+- e508560: **fixed** legacy PublicationMetadata schema not supporting SHORT_VIDEO main content focus
+
 ## 1.1.1
 
 ### Patch Changes

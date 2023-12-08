@@ -525,8 +525,11 @@ const PublicationMetadataV2TextOnlySchema = PublicationMetadataV2CommonSchema.ex
 });
 export type PublicationMetadataV2TextOnly = z.infer<typeof PublicationMetadataV2TextOnlySchema>;
 
-const PublicationMetadataV2VideoSchema = PublicationMetadataV2CommonSchema.extend({
-  mainContentFocus: z.literal(PublicationMainFocus.VIDEO),
+const PublicationMetadataV2BaseVideoSchema = PublicationMetadataV2CommonSchema.extend({
+  mainContentFocus: z.union([
+    z.literal(PublicationMainFocus.VIDEO),
+    z.literal(PublicationMainFocus.SHORT_VIDEO),
+  ]),
 
   media: MediaSchema.array()
     .min(1)
@@ -536,7 +539,16 @@ const PublicationMetadataV2VideoSchema = PublicationMetadataV2CommonSchema.exten
       `Metadata ${PublicationMainFocus.VIDEO} requires an image to be attached.`,
     ),
 });
-export type PublicationMetadataV2Video = z.infer<typeof PublicationMetadataV2VideoSchema>;
+const PublicationMetadataV2VideoSchema = PublicationMetadataV2BaseVideoSchema.extend({
+  mainContentFocus: z.literal(PublicationMainFocus.VIDEO),
+});
+const PublicationMetadataV2ShortVideoSchema = PublicationMetadataV2BaseVideoSchema.extend({
+  mainContentFocus: z.literal(PublicationMainFocus.SHORT_VIDEO),
+});
+
+export type PublicationMetadataV2Video =
+  | z.infer<typeof PublicationMetadataV2VideoSchema>
+  | z.infer<typeof PublicationMetadataV2ShortVideoSchema>;
 
 /**
  * @internal
@@ -550,6 +562,7 @@ export const PublicationMetadataV2Schema = z
     PublicationMetadataV2LinkSchema,
     PublicationMetadataV2TextOnlySchema,
     PublicationMetadataV2VideoSchema,
+    PublicationMetadataV2ShortVideoSchema,
   ])
   .transform((data) => {
     if (data.mainContentFocus === PublicationMainFocus.VIDEO && data.appId === 'lenstube-bytes') {

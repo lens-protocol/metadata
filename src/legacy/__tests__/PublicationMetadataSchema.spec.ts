@@ -1480,7 +1480,32 @@ describe(`Given the PublicationMetadataSchema`, () => {
       ).toMatchObject({
         mainContentFocus: PublicationMainFocus.SHORT_VIDEO,
       });
+    });
 
+    it(`then should produce metadata that pass validation against the schema`, () => {
+      const metadata = PublicationMetadataSchema.parse({
+        version: '2.0.0',
+        metadata_id: 'd4c19b76-736e-4d41-8d3c-4874b80fdd78',
+        locale: 'en-GB',
+        mainContentFocus: 'VIDEO',
+        name: 'GM 🧘🏼‍♂️🚲🍂',
+        attributes: [],
+        media: [
+          {
+            item: 'ipfs://bafybeihuephqb3rts3xiz5m3ooutgmz5yand5ayqi4sczkpsflfy33qwvm',
+            type: 'video/quicktime',
+            cover: 'ipfs://bafybeiessuuhjv6szov6rwejjpjr6pil7pqpbi4hgnkedh6mzv6iyteqka',
+          },
+        ],
+        appId: 'lenstube-bytes',
+      });
+
+      expectResult(() => PublicationMetadataSchema.safeParse(metadata)).toMatchObject({
+        mainContentFocus: PublicationMainFocus.SHORT_VIDEO,
+      });
+    });
+
+    it(`then should not cause any issue to other apps`, () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
