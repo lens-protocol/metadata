@@ -55,6 +55,19 @@ export function never(message = 'Unexpected call to never()'): never {
 }
 
 /**
+ * A function that throws when called.
+ *
+ * Useful for exhaustive switch statements.
+ * @see https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
+ *
+ * @param x - A reference that should never exist
+ * @param message - An error message
+ */
+export function assertNever(x: never, message = `Unexpected object: ${String(x)}`): never {
+  throw new InvariantError(message);
+}
+
+/**
  * Specifies an object with unknown keys
  *
  * Useful when you don't care about exact props passed to the component.

@@ -59,7 +59,7 @@ export type LinkMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.LINK_LATEST;
+  $schema: PublicationSchemaId.LINK_LATEST | PublicationSchemaId.LINK_3_0_0;
   /**
    * The metadata details.
    */
@@ -75,7 +75,10 @@ export type LinkMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const LinkSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.LINK_LATEST),
+export const LinkSchema: z.ZodType<LinkMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.LINK_LATEST),
+    z.literal(PublicationSchemaId.LINK_3_0_0),
+  ]),
   lens: LinkMetadataDetailsSchema,
 });

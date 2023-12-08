@@ -68,7 +68,7 @@ export type AudioMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.AUDIO_LATEST;
+  $schema: PublicationSchemaId.AUDIO_LATEST | PublicationSchemaId.AUDIO_3_0_0;
   /**
    * The metadata details.
    */
@@ -84,7 +84,10 @@ export type AudioMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const AudioSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.AUDIO_LATEST),
+export const AudioSchema: z.ZodType<AudioMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.AUDIO_LATEST),
+    z.literal(PublicationSchemaId.AUDIO_3_0_0),
+  ]),
   lens: AudioMetadataDetailsSchema,
 });

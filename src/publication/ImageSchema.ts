@@ -68,7 +68,7 @@ export type ImageMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.IMAGE_LATEST;
+  $schema: PublicationSchemaId.IMAGE_LATEST | PublicationSchemaId.IMAGE_3_0_0;
   /**
    * The metadata details.
    */
@@ -84,7 +84,10 @@ export type ImageMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const ImageSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.IMAGE_LATEST),
+export const ImageSchema: z.ZodType<ImageMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.IMAGE_LATEST),
+    z.literal(PublicationSchemaId.IMAGE_3_0_0),
+  ]),
   lens: ImageMetadataDetailsSchema,
 });

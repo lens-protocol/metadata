@@ -77,7 +77,7 @@ export type CheckingInMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.CHECKING_IN_LATEST;
+  $schema: PublicationSchemaId.CHECKING_IN_LATEST | PublicationSchemaId.CHECKING_IN_3_0_0;
   /**
    * The metadata details.
    */
@@ -93,7 +93,11 @@ export type CheckingInMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const CheckingInSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.CHECKING_IN_LATEST),
-  lens: CheckingInMetadataDetailsSchema,
-});
+export const CheckingInSchema: z.ZodType<CheckingInMetadata, z.ZodTypeDef, object> =
+  publicationWith({
+    $schema: z.union([
+      z.literal(PublicationSchemaId.CHECKING_IN_LATEST),
+      z.literal(PublicationSchemaId.CHECKING_IN_3_0_0),
+    ]),
+    lens: CheckingInMetadataDetailsSchema,
+  });

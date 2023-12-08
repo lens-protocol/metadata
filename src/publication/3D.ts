@@ -113,7 +113,7 @@ export type ThreeDMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.THREE_D_LATEST;
+  $schema: PublicationSchemaId.THREE_D_LATEST | PublicationSchemaId.THREE_D_3_0_0;
   /**
    * The metadata details.
    */
@@ -130,7 +130,10 @@ export type ThreeDMetadata = MarketplaceMetadata & {
  * @internal
  */
 export const ThreeDSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.THREE_D_LATEST),
+  $schema: z.union([
+    z.literal(PublicationSchemaId.THREE_D_LATEST),
+    z.literal(PublicationSchemaId.THREE_D_3_0_0),
+  ]),
 
   lens: ThreeDMetadataDetailsSchema,
 });

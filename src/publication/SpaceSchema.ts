@@ -76,7 +76,7 @@ export type SpaceMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.SPACE_LATEST;
+  $schema: PublicationSchemaId.SPACE_LATEST | PublicationSchemaId.SPACE_3_0_0;
   /**
    * The metadata details.
    */
@@ -92,8 +92,10 @@ export type SpaceMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const SpaceSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.SPACE_LATEST),
-
+export const SpaceSchema: z.ZodType<SpaceMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.SPACE_LATEST),
+    z.literal(PublicationSchemaId.SPACE_3_0_0),
+  ]),
   lens: SpaceMetadataDetailsSchema,
 });

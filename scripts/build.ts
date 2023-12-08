@@ -59,21 +59,21 @@ await fs.ensureDir(outputDir);
 
 // Publication schemas
 const schemas = new Map<string, z.ZodSchema<unknown>>([
-  ['publications/3d/3.0.0.json', ThreeDSchema],
-  ['publications/article/3.0.0.json', ArticleSchema],
-  ['publications/audio/3.0.0.json', AudioSchema],
-  ['publications/checking-in/3.0.0.json', CheckingInSchema],
-  ['publications/embed/3.0.0.json', EmbedSchema],
-  ['publications/event/3.0.0.json', EventSchema],
-  ['publications/image/3.0.0.json', ImageSchema],
-  ['publications/link/3.0.0.json', LinkSchema],
-  ['publications/livestream/3.0.0.json', LiveStreamSchema],
-  ['publications/mint/3.0.0.json', MintSchema],
-  ['publications/space/3.0.0.json', SpaceSchema],
-  ['publications/story/3.0.0.json', StorySchema],
-  ['publications/text-only/3.0.0.json', TextOnlySchema],
-  ['publications/transaction/3.0.0.json', TransactionSchema],
-  ['publications/video/3.0.0.json', VideoSchema],
+  ['publications/3d/3.1.0.json', ThreeDSchema],
+  ['publications/article/3.1.0.json', ArticleSchema],
+  ['publications/audio/3.1.0.json', AudioSchema],
+  ['publications/checking-in/3.1.0.json', CheckingInSchema],
+  ['publications/embed/3.1.0.json', EmbedSchema],
+  ['publications/event/3.1.0.json', EventSchema],
+  ['publications/image/3.1.0.json', ImageSchema],
+  ['publications/link/3.1.0.json', LinkSchema],
+  ['publications/livestream/3.1.0.json', LiveStreamSchema],
+  ['publications/mint/3.1.0.json', MintSchema],
+  ['publications/space/3.1.0.json', SpaceSchema],
+  ['publications/story/3.1.0.json', StorySchema],
+  ['publications/text-only/3.1.0.json', TextOnlySchema],
+  ['publications/transaction/3.1.0.json', TransactionSchema],
+  ['publications/video/3.1.0.json', VideoSchema],
 ]);
 
 for (const [path, Schema] of schemas) {

@@ -363,6 +363,7 @@ export type LitEncryptionStrategy = {
   provider: EncryptionProvider;
   encryptionKey: LitEncryptionKey;
   accessCondition: AccessCondition;
+  accessControlContract?: NetworkAddress;
   encryptedPaths: string[];
 };
 /**
@@ -373,6 +374,9 @@ export const LitEncryptionStrategySchema = z.object(
     provider: z.literal(EncryptionProvider.LIT_PROTOCOL),
     encryptionKey: LitEncryptionKeySchema,
     accessCondition: AccessConditionSchema,
+    accessControlContract: NetworkAddressSchema.describe(
+      'LitAccessControl contract address',
+    ).optional(),
     encryptedPaths: EncryptedPaths,
   },
   {

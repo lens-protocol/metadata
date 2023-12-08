@@ -44,7 +44,7 @@ export type StoryMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.STORY_LATEST;
+  $schema: PublicationSchemaId.STORY_LATEST | PublicationSchemaId.STORY_3_0_0;
   /**
    * The metadata details.
    */
@@ -60,7 +60,10 @@ export type StoryMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const StorySchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.STORY_LATEST),
+export const StorySchema: z.ZodType<StoryMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.STORY_LATEST),
+    z.literal(PublicationSchemaId.STORY_3_0_0),
+  ]),
   lens: StoryMetadataDetailsSchema,
 });

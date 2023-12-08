@@ -164,7 +164,7 @@ export type EventMetadata = MarketplaceMetadata & {
   /**
    * The schema id.
    */
-  $schema: PublicationSchemaId.EVENT_LATEST;
+  $schema: PublicationSchemaId.EVENT_LATEST | PublicationSchemaId.EVENT_3_0_0;
   /**
    * The metadata details.
    */
@@ -180,7 +180,10 @@ export type EventMetadata = MarketplaceMetadata & {
 /**
  * @internal
  */
-export const EventSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.EVENT_LATEST),
+export const EventSchema: z.ZodType<EventMetadata, z.ZodTypeDef, object> = publicationWith({
+  $schema: z.union([
+    z.literal(PublicationSchemaId.EVENT_LATEST),
+    z.literal(PublicationSchemaId.EVENT_3_0_0),
+  ]),
   lens: EventMetadataDetailsSchema,
 });

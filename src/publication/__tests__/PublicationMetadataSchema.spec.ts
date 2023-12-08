@@ -8,7 +8,18 @@ describe(`Given the PublicationMetadataSchema`, () => {
     it(`then it should complain about the missing $schema`, () => {
       expectResult(() => PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
-        · "$schema": Invalid discriminator value. Expected 'https://json-schemas.lens.dev/publications/article/3.0.0.json' | 'https://json-schemas.lens.dev/publications/audio/3.0.0.json' | 'https://json-schemas.lens.dev/publications/checking-in/3.0.0.json' | 'https://json-schemas.lens.dev/publications/embed/3.0.0.json' | 'https://json-schemas.lens.dev/publications/event/3.0.0.json' | 'https://json-schemas.lens.dev/publications/image/3.0.0.json' | 'https://json-schemas.lens.dev/publications/link/3.0.0.json' | 'https://json-schemas.lens.dev/publications/livestream/3.0.0.json' | 'https://json-schemas.lens.dev/publications/mint/3.0.0.json' | 'https://json-schemas.lens.dev/publications/space/3.0.0.json' | 'https://json-schemas.lens.dev/publications/text-only/3.0.0.json' | 'https://json-schemas.lens.dev/publications/story/3.0.0.json' | 'https://json-schemas.lens.dev/publications/transaction/3.0.0.json' | 'https://json-schemas.lens.dev/publications/3d/3.0.0.json' | 'https://json-schemas.lens.dev/publications/video/3.0.0.json'"
+        · "$schema": Required"
+      `);
+    });
+
+    it(`then it should complain about the not supported $schema`, () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({
+          $schema: 'https://schema.originprotocol.com/not-valid.json',
+        }),
+      ).toMatchInlineSnapshot(`
+        "fix the following issues
+        · "$schema": Invalid enum value. Expected 'https://json-schemas.lens.dev/publications/3d/3.1.0.json' | 'https://json-schemas.lens.dev/publications/3d/3.0.0.json' | 'https://json-schemas.lens.dev/publications/article/3.1.0.json' | 'https://json-schemas.lens.dev/publications/article/3.0.0.json' | 'https://json-schemas.lens.dev/publications/audio/3.1.0.json' | 'https://json-schemas.lens.dev/publications/audio/3.0.0.json' | 'https://json-schemas.lens.dev/publications/checking-in/3.1.0.json' | 'https://json-schemas.lens.dev/publications/checking-in/3.0.0.json' | 'https://json-schemas.lens.dev/publications/embed/3.1.0.json' | 'https://json-schemas.lens.dev/publications/embed/3.0.0.json' | 'https://json-schemas.lens.dev/publications/event/3.1.0.json' | 'https://json-schemas.lens.dev/publications/event/3.0.0.json' | 'https://json-schemas.lens.dev/publications/image/3.1.0.json' | 'https://json-schemas.lens.dev/publications/image/3.0.0.json' | 'https://json-schemas.lens.dev/publications/link/3.1.0.json' | 'https://json-schemas.lens.dev/publications/link/3.0.0.json' | 'https://json-schemas.lens.dev/publications/livestream/3.1.0.json' | 'https://json-schemas.lens.dev/publications/livestream/3.0.0.json' | 'https://json-schemas.lens.dev/publications/mint/3.1.0.json' | 'https://json-schemas.lens.dev/publications/mint/3.0.0.json' | 'https://json-schemas.lens.dev/publications/space/3.1.0.json' | 'https://json-schemas.lens.dev/publications/space/3.0.0.json' | 'https://json-schemas.lens.dev/publications/story/3.1.0.json' | 'https://json-schemas.lens.dev/publications/story/3.0.0.json' | 'https://json-schemas.lens.dev/publications/transaction/3.1.0.json' | 'https://json-schemas.lens.dev/publications/transaction/3.0.0.json' | 'https://json-schemas.lens.dev/publications/text-only/3.1.0.json' | 'https://json-schemas.lens.dev/publications/text-only/3.0.0.json' | 'https://json-schemas.lens.dev/publications/video/3.1.0.json' | 'https://json-schemas.lens.dev/publications/video/3.0.0.json', received 'https://schema.originprotocol.com/not-valid.json'"
       `);
     });
   });

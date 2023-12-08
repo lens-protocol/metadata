@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker';
 
 import {
+  MirrorMetadata,
+  MirrorMetadataSchema,
+  MirrorSchemaId,
   PublicationMainFocus,
   PublicationSchemaId,
   TextOnlyMetadata,
@@ -15,6 +18,16 @@ export function mockTextOnlyMetadata(): TextOnlyMetadata {
       mainContentFocus: PublicationMainFocus.TEXT_ONLY,
       content: faker.lorem.sentence(),
       locale: 'en',
+    },
+  });
+}
+
+export function mockMirrorMetadata(): MirrorMetadata {
+  return MirrorMetadataSchema.parse({
+    $schema: MirrorSchemaId.LATEST,
+    lens: {
+      id: faker.string.uuid(),
+      appId: faker.commerce.productName(),
     },
   });
 }
