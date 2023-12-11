@@ -9,13 +9,13 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableMarkdownSchema,
   encryptableUriSchema,
 } from '../primitives.js';
 
@@ -44,7 +44,7 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
 
     embed: encryptableUriSchema('The embed URL.'),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

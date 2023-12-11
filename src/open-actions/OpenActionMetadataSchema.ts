@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { EventParameterSchema, EventParameter } from './EventParameterSchema';
 import { OpenActionSchemaId } from './OpenActionSchemaId';
 import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute';
-import { nonEmptyStringSchema, markdownSchema, Markdown } from '../primitives';
+import { nonEmptyStringSchema, Markdown, markdown } from '../primitives';
 
 /**
  * The metadata standard for Open Actions
@@ -49,7 +49,9 @@ export const OpenActionMetadataSchema: z.ZodType<OpenActionMetadata, z.ZodTypeDe
     title: nonEmptyStringSchema(
       'The title of the Open Action. Best to be in a human friendly format.',
     ),
-    description: markdownSchema('Markdown formatted description of the open action.'),
+    description: markdown(
+      nonEmptyStringSchema('Markdown formatted description of the open action.'),
+    ),
     authors: z
       .array(z.string().min(1).email('Authors list should only contain valid emails'))
       .min(1, 'You must supply at least one author'),

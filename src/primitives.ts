@@ -89,7 +89,12 @@ export const EncryptedStringSchema = nonEmptyStringSchema('An encrypted value.')
   )
   .transform(toEncryptedString);
 
-function encryptableSchema<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, string>) {
+/**
+ * Modifies a schema to accept an encrypted string value as well as its decrypted version.
+ *
+ * @internal
+ */
+export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, string>) {
   const options = [schema, EncryptedStringSchema] as const;
   return z
     .union(options)
@@ -110,14 +115,20 @@ function encryptableSchema<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, 
 /**
  * @internal
  */
+export function nonEmpty(schema: z.ZodString) {
+  return schema.min(1);
+}
+/**
+ * @internal
+ */
 export function nonEmptyStringSchema(description?: string) {
-  return z.string({ description }).min(1);
+  return nonEmpty(z.string({ description }));
 }
 /**
  * @internal
  */
 export function encryptableStringSchema(description: string) {
-  return encryptableSchema(nonEmptyStringSchema(description));
+  return encryptable(nonEmptyStringSchema(description));
 }
 
 /**
@@ -194,22 +205,14 @@ export type Markdown = Brand<string, 'Markdown'>;
 export function toMarkdown(value: string): Markdown {
   return value as Markdown;
 }
+
 /**
  * @internal
  */
-export const MarkdownSchema = nonEmptyStringSchema('A markdown text.').transform(toMarkdown);
-/**
- * @internal
- */
-export function markdownSchema(description: string): z.Schema<Markdown, z.ZodTypeDef, string> {
-  return MarkdownSchema.describe(description);
+export function markdown(schema: z.ZodString): z.Schema<Markdown, z.ZodTypeDef, string> {
+  return schema.transform(toMarkdown);
 }
-/**
- * @internal
- */
-export function encryptableMarkdownSchema(description: string) {
-  return encryptableSchema(markdownSchema(description));
-}
+
 /**
  * A markdown text or its encrypted version.
  *
@@ -246,7 +249,7 @@ export function uriSchema(
  * @internal
  */
 export function encryptableUriSchema(description?: string) {
-  return encryptableSchema(uriSchema(description));
+  return encryptable(uriSchema(description));
 }
 
 /**
@@ -383,7 +386,7 @@ export function geoPoint(value: GeoURI): GeoPoint {
  * @internal
  */
 export function encryptableGeoUriSchema(description: string) {
-  return encryptableSchema(GeoURISchema.describe(description));
+  return encryptable(GeoURISchema.describe(description));
 }
 
 /**
@@ -458,7 +461,7 @@ export function datetimeSchema(description: string): z.Schema<DateTime, z.ZodTyp
  * @internal
  */
 export function encryptableDateTimeSchema(description: string) {
-  return encryptableSchema(datetimeSchema(description));
+  return encryptable(datetimeSchema(description));
 }
 
 /**

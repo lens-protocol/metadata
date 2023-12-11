@@ -9,6 +9,7 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
@@ -19,7 +20,6 @@ import {
   PhysicalAddressSchema,
   Signature,
   encryptableGeoUriSchema,
-  encryptableMarkdownSchema,
   encryptableStringSchema,
 } from '../primitives.js';
 
@@ -62,7 +62,7 @@ const CheckingInMetadataDetailsSchema: z.ZodType<CheckingInMetadataDetails, z.Zo
 
     address: PhysicalAddressSchema.optional().describe('The optional address of the location.'),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

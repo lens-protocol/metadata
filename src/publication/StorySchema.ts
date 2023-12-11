@@ -9,9 +9,10 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
-import { EncryptableMarkdown, Signature, encryptableMarkdownSchema } from '../primitives.js';
+import { EncryptableMarkdown, Signature } from '../primitives.js';
 
 export type StoryMetadataDetails = PublicationMetadataCommon & {
   /**
@@ -34,7 +35,7 @@ const StoryMetadataDetailsSchema: z.ZodType<StoryMetadataDetails, z.ZodTypeDef, 
 
     asset: AnyMediaSchema.describe('The story asset.'),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
   });
 
 /**

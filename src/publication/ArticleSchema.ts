@@ -14,7 +14,8 @@ import {
 import {
   EncryptableMarkdown,
   Signature,
-  encryptableMarkdownSchema,
+  encryptable,
+  markdown,
   nonEmptyStringSchema,
 } from '../primitives.js';
 
@@ -40,7 +41,9 @@ const ArticleMetadataDetailsSchema: z.ZodType<ArticleMetadataDetails, z.ZodTypeD
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),
 
-    content: encryptableMarkdownSchema('The content for the publication as markdown.'),
+    content: encryptable(
+      markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
+    ),
 
     title: nonEmptyStringSchema('The optional article title.').optional(),
 

@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "description": {
-      "$ref": "#/$defs/Markdown",
+      "type": "string",
       "description": "A human-readable description of the item. It could be plain text or markdown."
     },
     "external_url": {
@@ -173,7 +173,7 @@
         "content": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Markdown",
+              "type": "string",
               "description": "Optional markdown content."
             },
             {
@@ -636,11 +636,6 @@
       "minLength": 1,
       "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
       "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
-    },
-    "Markdown": {
-      "type": "string",
-      "minLength": 1,
-      "description": "A markdown text."
     },
     "MarketplaceMetadataAttribute": {
       "type": "object",

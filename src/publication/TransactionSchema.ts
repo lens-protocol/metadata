@@ -9,6 +9,7 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
@@ -17,7 +18,6 @@ import {
   EncryptableMarkdown,
   EncryptableString,
   Signature,
-  encryptableMarkdownSchema,
   encryptableStringSchema,
 } from '../primitives.js';
 
@@ -70,7 +70,7 @@ const TransactionMetadataDetailsSchema: z.ZodType<
 
   chainId: ChainIdSchema.describe('The Chain Id.'),
 
-  content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+  content: optionalContentSchema(),
 
   attachments: AnyMediaSchema.array()
     .min(1)

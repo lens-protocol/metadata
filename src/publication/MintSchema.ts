@@ -9,13 +9,13 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableMarkdownSchema,
   encryptableUriSchema,
 } from '../primitives.js';
 
@@ -55,7 +55,7 @@ const MintMetadataDetailsSchema: z.ZodType<MintMetadataDetails, z.ZodTypeDef, ob
         'The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata',
     ),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

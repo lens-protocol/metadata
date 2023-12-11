@@ -15,6 +15,8 @@ import {
   AppId,
   Locale,
   Tag,
+  encryptable,
+  markdown,
 } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -189,4 +191,11 @@ export function mainContentFocus(...focuses: [PublicationMainFocus, ...Publicati
     return z.union(literals, { description });
   }
   return z.literal(focuses[0], { description });
+}
+
+/**
+ * @internal
+ */
+export function optionalContentSchema() {
+  return encryptable(markdown(z.string({ description: 'Optional markdown content.' }))).optional();
 }

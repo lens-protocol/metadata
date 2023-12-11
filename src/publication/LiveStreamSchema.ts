@@ -9,6 +9,7 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common/index.js';
 import {
@@ -17,7 +18,6 @@ import {
   EncryptableURI,
   Signature,
   encryptableDateTimeSchema,
-  encryptableMarkdownSchema,
   encryptableUriSchema,
   nonEmptyStringSchema,
 } from '../primitives.js';
@@ -106,7 +106,7 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
       'The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.',
     ).optional(),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)
