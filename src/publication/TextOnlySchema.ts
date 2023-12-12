@@ -9,7 +9,13 @@ import {
   metadataDetailsWith,
   publicationWith,
 } from './common';
-import { EncryptableMarkdown, Signature, encryptableMarkdownSchema } from '../primitives.js';
+import {
+  EncryptableMarkdown,
+  Signature,
+  encryptable,
+  markdown,
+  nonEmptyStringSchema,
+} from '../primitives.js';
 
 export type TextOnlyMetadataDetails = PublicationMetadataCommon & {
   /**
@@ -26,7 +32,9 @@ const TextOnlyMetadataDetailsSchema: z.ZodType<TextOnlyMetadataDetails, z.ZodTyp
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TEXT_ONLY),
 
-    content: encryptableMarkdownSchema('The content for the publication as markdown.'),
+    content: encryptable(
+      markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
+    ),
   });
 
 /**

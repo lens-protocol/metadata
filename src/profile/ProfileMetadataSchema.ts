@@ -9,7 +9,7 @@ import {
   Signature,
   SignatureSchema,
   URI,
-  markdownSchema,
+  markdown,
   nonEmptyStringSchema,
   uriSchema,
 } from '../primitives.js';
@@ -59,7 +59,7 @@ const ProfileMetadataDetailsSchema: z.ZodType<ProfileMetadataDetails, z.ZodTypeD
 
       name: nonEmptyStringSchema('The profile display name.').optional(),
 
-      bio: markdownSchema('The profile bio as markdown.').optional(),
+      bio: markdown(nonEmptyStringSchema('The profile bio as markdown.')).optional(),
 
       picture: uriSchema('The profile picture.').optional(),
 

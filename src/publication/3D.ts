@@ -12,10 +12,10 @@ import {
   MetadataLicenseTypeSchema,
   publicationWith,
   MarketplaceMetadata,
+  optionalContentSchema,
 } from './common';
 import {
   EncryptableMarkdown,
-  encryptableMarkdownSchema,
   nonEmptyStringSchema,
   Signature,
   URI,
@@ -98,7 +98,7 @@ const ThreeDMetadataDetailsSchema: z.ZodType<ThreeDMetadataDetails, z.ZodTypeDef
 
     assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

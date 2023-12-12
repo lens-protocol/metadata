@@ -343,10 +343,11 @@ export function toLitEncryptionKey(value: string): LitEncryptionKey {
 /**
  * @internal
  */
-export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, string> =
-  nonEmptyStringSchema('A symmetric encryption key.')
-    .length(368, 'Encryption key should be 368 characters long.')
-    .transform(toLitEncryptionKey);
+export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, string> = z
+  .string()
+  .describe('A symmetric encryption key.')
+  .length(368, 'Encryption key should be 368 characters long.')
+  .transform(toLitEncryptionKey);
 
 /**
  * @internal

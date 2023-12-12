@@ -47,10 +47,7 @@ import {
   GeoURISchema,
   PhysicalAddressSchema,
   EncryptedStringSchema,
-  MarkdownSchema,
   OpenActionMetadataSchema,
-  StringAttributeSchema,
-  EventParameterSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -97,7 +94,6 @@ for (const [path, Schema] of schemas) {
       EvmAddress: EvmAddressSchema,
       FollowCondition: FollowConditionSchema,
       GeoURI: GeoURISchema,
-      Markdown: MarkdownSchema,
       MarketplaceMetadataAttribute: MarketplaceMetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,
@@ -153,8 +149,7 @@ for (const [path, Schema] of openActions) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
-      StringAttribute: StringAttributeSchema,
-      EventParameter: EventParameterSchema,
+      MetadataAttribute: MetadataAttributeSchema,
     },
   });
 

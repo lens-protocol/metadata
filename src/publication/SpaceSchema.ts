@@ -9,6 +9,7 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
@@ -17,7 +18,6 @@ import {
   EncryptableURI,
   Signature,
   encryptableDateTimeSchema,
-  encryptableMarkdownSchema,
   encryptableUriSchema,
   nonEmptyStringSchema,
 } from '../primitives.js';
@@ -61,7 +61,7 @@ export const SpaceMetadataDetailsSchema: z.ZodType<SpaceMetadataDetails, z.ZodTy
       'The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

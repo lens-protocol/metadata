@@ -9,13 +9,13 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableMarkdownSchema,
   encryptableUriSchema,
 } from '../primitives.js';
 
@@ -44,7 +44,7 @@ const LinkMetadataDetailsSchema: z.ZodType<LinkMetadataDetails, z.ZodTypeDef, ob
 
     sharingLink: encryptableUriSchema('The sharing link url.'),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

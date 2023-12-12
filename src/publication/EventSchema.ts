@@ -11,6 +11,7 @@ import {
   TimezoneIdSchema,
   mainContentFocus,
   metadataDetailsWith,
+  optionalContentSchema,
   publicationWith,
 } from './common';
 import {
@@ -25,7 +26,6 @@ import {
   EncryptableDateTime,
   EncryptableMarkdown,
   encryptableGeoUriSchema,
-  encryptableMarkdownSchema,
   Signature,
   nonEmptyStringSchema,
 } from '../primitives.js';
@@ -149,7 +149,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
       .optional()
       .describe('The links you want to include with it.'),
 
-    content: encryptableMarkdownSchema('Optional markdown content.').optional(),
+    content: optionalContentSchema(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

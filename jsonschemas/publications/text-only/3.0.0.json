@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "description": {
-      "$ref": "#/$defs/Markdown",
+      "type": "string",
       "description": "A human-readable description of the item. It could be plain text or markdown."
     },
     "external_url": {
@@ -13,7 +13,6 @@
     },
     "name": {
       "type": "string",
-      "minLength": 1,
       "description": "Name of the NFT item."
     },
     "attributes": {
@@ -105,7 +104,8 @@
         "content": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Markdown",
+              "type": "string",
+              "minLength": 1,
               "description": "The content for the publication as markdown."
             },
             {
@@ -481,7 +481,6 @@
     },
     "EncryptedString": {
       "type": "string",
-      "minLength": 1,
       "pattern": "^\\S+$",
       "description": "An encrypted value."
     },
@@ -533,7 +532,8 @@
     },
     "EvmAddress": {
       "type": "string",
-      "minLength": 1,
+      "minLength": 42,
+      "maxLength": 42,
       "description": "An EVM compatible address."
     },
     "FollowCondition": {
@@ -555,14 +555,8 @@
     },
     "GeoURI": {
       "type": "string",
-      "minLength": 1,
       "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
       "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
-    },
-    "Markdown": {
-      "type": "string",
-      "minLength": 1,
-      "description": "A markdown text."
     },
     "MarketplaceMetadataAttribute": {
       "type": "object",
@@ -1068,7 +1062,7 @@
     },
     "ProfileId": {
       "type": "string",
-      "minLength": 1
+      "minLength": 4
     },
     "ProfileOwnershipCondition": {
       "type": "object",
@@ -1112,8 +1106,7 @@
                 "minLength": 1,
                 "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
               },
-              "minItems": 1,
-              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+              "minItems": 1
             }
           },
           "required": [
@@ -1129,7 +1122,7 @@
     },
     "PublicationId": {
       "type": "string",
-      "minLength": 1
+      "minLength": 9
     },
     "Tag": {
       "type": "string",

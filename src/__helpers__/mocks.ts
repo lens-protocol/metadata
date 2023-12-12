@@ -14,7 +14,7 @@ export function mockProfileId(): ProfileId {
 }
 
 export function mockEvmAddress(): EvmAddress {
-  return toEvmAddress(faker.string.hexadecimal({ length: 32 }));
+  return toEvmAddress(faker.string.hexadecimal({ length: 40 }));
 }
 
 export function mockNetworkAddress(overrides?: Partial<NetworkAddress>): NetworkAddress {

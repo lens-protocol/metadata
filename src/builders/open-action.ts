@@ -31,27 +31,24 @@ export type OpenActionOptions = OpenActionDetails & {
  * const metadata = openAction({
  *   name: 'My Open Action',
  *   title: 'This is my Open Action',
- *   content: 'Get ready for the future of social interaction!',
+ *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
- *   initializeABI: [
+ *   initializeCalldataABI: JSON.stringify([
  *     {
- *       name: 'address',
  *       type: 'address',
- *       indexed: true,
+ *       name: 'address',
  *     },
  *     {
- *       name: 'price',
  *       type: 'uint256',
- *       indexed: true,
- *     }
- *   ],
- *   processABI: [
+ *       name: 'price',
+ *     },
+ *   ]),
+ *   processCalldataABI: JSON.stringify([
  *     {
- *       name: 'collector',
  *       type: 'address',
- *       indexed: true,
- *     }
- *   ]
+ *       name: 'collector',
+ *     },
+ *   ]),
  * });
  * ```
  */

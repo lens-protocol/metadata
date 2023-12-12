@@ -1,9 +1,68 @@
 import { describe, expect, it } from '@jest/globals';
+import { z } from 'zod';
 
 import { expectResult } from '../__helpers__/assertions.js';
-import { GeoURISchema, datetimeSchema, geoPoint, geoUri, LocaleSchema } from '../primitives.js';
+import {
+  GeoURISchema,
+  datetimeSchema,
+  geoPoint,
+  geoUri,
+  LocaleSchema,
+  nonEmpty,
+} from '../primitives.js';
 
 describe(`Given the primitives schemas`, () => {
+  describe(`when parsing a string with a schema defined with ${nonEmpty.name} modifier`, () => {
+    const Schema = nonEmpty(z.string());
+
+    it('then it should preprocess the string trimming all "whitespace" characters', () => {
+      [
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#white_space
+        '\u0009',
+        '\u000B',
+        '\u000C',
+        '\u0020',
+        '\u00A0',
+        '\uFEFF',
+
+        // https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7BGeneral_Category%3DSpace_Separator%7D
+        '\u1680',
+        '\u2000',
+        '\u2001',
+        '\u2002',
+        '\u2003',
+        '\u2004',
+        '\u2005',
+        '\u2006',
+        '\u2007',
+        '\u2008',
+        '\u2009',
+        '\u200A',
+        '\u202F',
+        '\u205F',
+        '\u3000',
+      ].forEach((char) => {
+        expect(Schema.parse(`${char}42${char}`)).toBe('42');
+      });
+    });
+
+    it('then it should preprocess the string trimming all other invisible unicode characters', () => {
+      [
+        '\u0000', // null character
+        '\u0007', // bell character
+        '\u000E', // shift in
+        '\u000F', // shift out
+
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#format-control_characters
+        '\u200B', // zero width space
+        '\u200C', // zero width non-joiner Unicode code point
+        '\u200D', // zero width joiner Unicode code point
+      ].forEach((char) => {
+        expect(Schema.parse(`${char}42${char}`)).toBe('42');
+      });
+    });
+  });
+
   describe(`when parsing a Locale string`, () => {
     it('then it should validate typical locale strings in the format `<language>-<region>`', () => {
       ['en', 'en-GB', 'it', 'it-IT', `es`].forEach((value) => {

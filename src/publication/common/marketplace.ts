@@ -1,12 +1,6 @@
 import { z } from 'zod';
 
-import {
-  Markdown,
-  URI,
-  markdownSchema,
-  nonEmptyStringSchema,
-  uriSchema,
-} from '../../primitives.js';
+import { Markdown, URI, markdown, nonEmptyStringSchema, uriSchema } from '../../primitives.js';
 
 /**
  * The display type of a marketplace metadata attribute.
@@ -87,8 +81,10 @@ export type MarketplaceMetadata = {
  * @internal
  */
 export const MarketplaceMetadataSchema = z.object({
-  description: markdownSchema(
-    'A human-readable description of the item. It could be plain text or markdown.',
+  description: markdown(
+    z.string({
+      description: 'A human-readable description of the item. It could be plain text or markdown.',
+    }),
   ).optional(),
 
   external_url: uriSchema(
@@ -96,7 +92,7 @@ export const MarketplaceMetadataSchema = z.object({
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
 
-  name: nonEmptyStringSchema('Name of the NFT item.').optional(),
+  name: z.string({ description: 'Name of the NFT item.' }).optional(),
 
   attributes: MarketplaceMetadataAttributeSchema.array()
     .optional()

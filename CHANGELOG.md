@@ -1,5 +1,13 @@
 # @lens-protocol/metadata
 
+## 1.1.3
+
+### Patch Changes
+
+- 45f384b: **fixed:** `OpenActionMetadataSchema` reflects latest decisions on the process/API side
+- 03c3b03: **fixed:** fields with non-empty string validation to perform a robust value trimming before evaluating the rules
+- a41559c: **fixed:** `PublicationMetadata` validation in case of empty `description` or empty `lens.content` for optional content pub types
+
 ## 1.1.2
 
 ### Patch Changes
