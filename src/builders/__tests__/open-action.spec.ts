@@ -28,7 +28,7 @@ describe(`Given the "${openAction.name}" metadata builder`, () => {
         - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         - Donec a diam lectus.
         `,
-        initializeABI: [
+        initializeCalldataABI: JSON.stringify([
           {
             type: 'address',
             name: 'address',
@@ -39,14 +39,14 @@ describe(`Given the "${openAction.name}" metadata builder`, () => {
             name: 'price',
             indexed: true,
           },
-        ],
-        processABI: [
+        ]),
+        processCalldataABI: JSON.stringify([
           {
             type: 'address',
             name: 'collector',
             indexed: true,
           },
-        ],
+        ]),
       });
 
       expect(metadata).toMatchSnapshot();

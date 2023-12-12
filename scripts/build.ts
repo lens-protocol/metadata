@@ -48,8 +48,6 @@ import {
   PhysicalAddressSchema,
   EncryptedStringSchema,
   OpenActionMetadataSchema,
-  StringAttributeSchema,
-  EventParameterSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -151,8 +149,7 @@ for (const [path, Schema] of openActions) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
-      StringAttribute: StringAttributeSchema,
-      EventParameter: EventParameterSchema,
+      MetadataAttribute: MetadataAttributeSchema,
     },
   });
 

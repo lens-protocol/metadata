@@ -22,26 +22,9 @@ exports[`Given the "openAction" metadata builder when using it should return a v
 
         - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         - Donec a diam lectus.",
-  "initializeABI": [
-    {
-      "indexed": true,
-      "name": "address",
-      "type": "address",
-    },
-    {
-      "indexed": true,
-      "name": "price",
-      "type": "uint256",
-    },
-  ],
+  "initializeCalldataABI": "[{"type":"address","name":"address","indexed":true},{"type":"uint256","name":"price","indexed":true}]",
   "name": "Open Action Name",
-  "processABI": [
-    {
-      "indexed": true,
-      "name": "collector",
-      "type": "address",
-    },
-  ],
+  "processCalldataABI": "[{"type":"address","name":"collector","indexed":true}]",
   "title": "Open Action Title",
 }
 `;
