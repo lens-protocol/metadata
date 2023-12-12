@@ -622,13 +622,13 @@ switch (publicationMetadata.$schema) {
 
 To contribute to the Lens Protocol Metadata Standards, please fork this repository and submit a pull request with your changes.
 
-To run the tests, run:
+To run the unit tests, run:
 
 ```bash
-pnpm test
+pnpm test:unit
 ```
 
-**Pro-tip:** you can run `pnpm test -- --watch` to run the tests in watch mode.
+**Pro-tip:** you can run `pnpm test:unit --watch` to run the tests in watch mode.
 
 To build the project, run:
 
