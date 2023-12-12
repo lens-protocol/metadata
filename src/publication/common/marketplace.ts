@@ -92,7 +92,7 @@ export const MarketplaceMetadataSchema = z.object({
       'and will allow users to leave OpenSea and view the item on the site.',
   ).optional(),
 
-  name: nonEmptyStringSchema('Name of the NFT item.').optional(),
+  name: z.string({ description: 'Name of the NFT item.' }).optional(),
 
   attributes: MarketplaceMetadataAttributeSchema.array()
     .optional()

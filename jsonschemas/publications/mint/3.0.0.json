@@ -13,7 +13,6 @@
     },
     "name": {
       "type": "string",
-      "minLength": 1,
       "description": "Name of the NFT item."
     },
     "attributes": {
