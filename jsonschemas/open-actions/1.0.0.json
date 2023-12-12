@@ -3,8 +3,8 @@
   "properties": {
     "name": {
       "type": "string",
-      "minLength": 1,
       "maxLength": 200,
+      "minLength": 1,
       "description": "The name of the Open Action."
     },
     "title": {

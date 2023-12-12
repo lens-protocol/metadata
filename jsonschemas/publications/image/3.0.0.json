@@ -497,7 +497,6 @@
     },
     "EncryptedString": {
       "type": "string",
-      "minLength": 1,
       "pattern": "^\\S+$",
       "description": "An encrypted value."
     },
@@ -549,7 +548,8 @@
     },
     "EvmAddress": {
       "type": "string",
-      "minLength": 1,
+      "minLength": 42,
+      "maxLength": 42,
       "description": "An EVM compatible address."
     },
     "FollowCondition": {
@@ -571,7 +571,6 @@
     },
     "GeoURI": {
       "type": "string",
-      "minLength": 1,
       "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
       "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
     },
@@ -1079,7 +1078,7 @@
     },
     "ProfileId": {
       "type": "string",
-      "minLength": 1
+      "minLength": 4
     },
     "ProfileOwnershipCondition": {
       "type": "object",
@@ -1123,8 +1122,7 @@
                 "minLength": 1,
                 "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
               },
-              "minItems": 1,
-              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+              "minItems": 1
             }
           },
           "required": [
@@ -1140,7 +1138,7 @@
     },
     "PublicationId": {
       "type": "string",
-      "minLength": 1
+      "minLength": 9
     },
     "Tag": {
       "type": "string",

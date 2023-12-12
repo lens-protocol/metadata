@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { EventParameterSchema, EventParameter } from './EventParameterSchema';
 import { OpenActionSchemaId } from './OpenActionSchemaId';
 import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute';
-import { nonEmptyStringSchema, Markdown, markdown } from '../primitives';
+import { nonEmptyStringSchema, Markdown, markdown, nonEmpty } from '../primitives';
 
 /**
  * The metadata standard for Open Actions
@@ -45,7 +45,7 @@ export type OpenActionMetadata = {
 
 export const OpenActionMetadataSchema: z.ZodType<OpenActionMetadata, z.ZodTypeDef, object> =
   z.object({
-    name: nonEmptyStringSchema('The name of the Open Action.').max(200),
+    name: nonEmpty(z.string().max(200)).describe('The name of the Open Action.'),
     title: nonEmptyStringSchema(
       'The title of the Open Action. Best to be in a human friendly format.',
     ),

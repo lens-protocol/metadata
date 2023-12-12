@@ -19,11 +19,11 @@ import {
 describe(`Given the encryption access condition helpers`, () => {
   describe(`when using the "${collectCondition.name}" helper`, () => {
     it('should return a valid CollectCondition', () => {
-      const condition = collectCondition({ publicationId: '0x01', thisPublication: false });
+      const condition = collectCondition({ publicationId: '0x01-0x01', thisPublication: false });
 
       expect(condition).toMatchInlineSnapshot(`
         {
-          "publicationId": "0x01",
+          "publicationId": "0x01-0x01",
           "thisPublication": false,
           "type": "COLLECT",
         }
@@ -33,11 +33,13 @@ describe(`Given the encryption access condition helpers`, () => {
 
   describe(`when using the "${eoaOwnershipCondition.name}" helper`, () => {
     it('should return a valid EoaOwnershipCondition', () => {
-      const condition = eoaOwnershipCondition({ address: '0x01' });
+      const condition = eoaOwnershipCondition({
+        address: '0x1234567890123456789012345678901234567890',
+      });
 
       expect(condition).toMatchInlineSnapshot(`
         {
-          "address": "0x01",
+          "address": "0x1234567890123456789012345678901234567890",
           "type": "EOA_OWNERSHIP",
         }
       `);
@@ -105,7 +107,7 @@ describe(`Given the encryption access condition helpers`, () => {
     it('should return a valid NftOwnershipCondition', () => {
       const condition = erc721OwnershipCondition({
         contract: {
-          address: '0x01',
+          address: '0x1234567890123456789012345678901234567890',
           chainId: 1,
         },
         tokenIds: ['0x02'],
@@ -114,7 +116,7 @@ describe(`Given the encryption access condition helpers`, () => {
       expect(condition).toMatchInlineSnapshot(`
         {
           "contract": {
-            "address": "0x01",
+            "address": "0x1234567890123456789012345678901234567890",
             "chainId": 1,
           },
           "contractType": "ERC721",
@@ -128,7 +130,7 @@ describe(`Given the encryption access condition helpers`, () => {
     it(`should support empty "tokenIds"`, () => {
       const condition = erc721OwnershipCondition({
         contract: {
-          address: '0x01',
+          address: '0x1234567890123456789012345678901234567890',
           chainId: 1,
         },
       });
@@ -136,7 +138,7 @@ describe(`Given the encryption access condition helpers`, () => {
       expect(condition).toMatchInlineSnapshot(`
         {
           "contract": {
-            "address": "0x01",
+            "address": "0x1234567890123456789012345678901234567890",
             "chainId": 1,
           },
           "contractType": "ERC721",
@@ -150,7 +152,7 @@ describe(`Given the encryption access condition helpers`, () => {
     it('should return a valid NftOwnershipCondition', () => {
       const condition = erc1155OwnershipCondition({
         contract: {
-          address: '0x01',
+          address: '0x1234567890123456789012345678901234567890',
           chainId: 1,
         },
         tokenIds: ['0x02'],
@@ -159,7 +161,7 @@ describe(`Given the encryption access condition helpers`, () => {
       expect(condition).toMatchInlineSnapshot(`
         {
           "contract": {
-            "address": "0x01",
+            "address": "0x1234567890123456789012345678901234567890",
             "chainId": 1,
           },
           "contractType": "ERC1155",
@@ -175,7 +177,7 @@ describe(`Given the encryption access condition helpers`, () => {
       expect(() =>
         erc1155OwnershipCondition({
           contract: {
-            address: '0x01',
+            address: '0x1234567890123456789012345678901234567890',
             chainId: 1,
           },
         } as Erc1155OwnershipConditionDetails),
@@ -277,7 +279,7 @@ describe(`Given the encryption access condition helpers`, () => {
         profileOwnershipCondition({ profileId: '0x01' }),
         andCondition([
           followCondition({ follow: '0x02' }),
-          collectCondition({ publicationId: '0x03', thisPublication: false }),
+          collectCondition({ publicationId: '0x01-0x03', thisPublication: false }),
         ]),
       ]);
 
@@ -295,7 +297,7 @@ describe(`Given the encryption access condition helpers`, () => {
                   "type": "FOLLOW",
                 },
                 {
-                  "publicationId": "0x03",
+                  "publicationId": "0x01-0x03",
                   "thisPublication": false,
                   "type": "COLLECT",
                 },

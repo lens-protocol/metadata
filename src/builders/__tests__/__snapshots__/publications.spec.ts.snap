@@ -11,8 +11,7 @@ exports[`Given the publication metadata builders when using the "article" builde
         "type": "image/png",
       },
     ],
-    "content": "
-        ## Heading
+    "content": "## Heading
 
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
 
@@ -24,8 +23,7 @@ exports[`Given the publication metadata builders when using the "article" builde
 
         42
 
-        ![The answer](https://example.com/answer.png)
-        ",
+        ![The answer](https://example.com/answer.png)",
     "id": Any<String>,
     "locale": "en",
     "mainContentFocus": "ARTICLE",
