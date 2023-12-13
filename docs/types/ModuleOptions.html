@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>OpenActionMetadata | Lens Protocol Metadata Standards</title><meta name="description" content="Documentation for Lens Protocol Metadata Standards"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ModuleOptions | Lens Protocol Metadata Standards</title><meta name="description" content="Documentation for Lens Protocol Metadata Standards"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,73 +13,25 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../index.html">Lens Protocol Metadata Standards</a></li>
-<li><a href="OpenActionMetadata.html">OpenActionMetadata</a></li></ul>
-<h1>Type alias OpenActionMetadata</h1></div>
-<div class="tsd-signature"><span class="tsd-kind-type-alias">Open<wbr/>Action<wbr/>Metadata</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">$schema</span><span class="tsd-signature-symbol">: </span><a href="../enums/OpenActionSchemaId.html#LATEST" class="tsd-signature-type tsd-kind-enum-member">LATEST</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">attributes</span><span class="tsd-signature-symbol">: </span><a href="MetadataAttribute.html" class="tsd-signature-type tsd-kind-type-alias">MetadataAttribute</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">authors</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">: </span><a href="Markdown.html" class="tsd-signature-type tsd-kind-type-alias">Markdown</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">initializeCalldataABI</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">initializeResultDataABI</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">processCalldataABI</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div>
-<div class="tsd-comment tsd-typography"><p>The metadata standard for Open Actions</p>
+<li><a href="ModuleOptions.html">ModuleOptions</a></li></ul>
+<h1>Type alias ModuleOptions</h1></div>
+<div class="tsd-signature"><span class="tsd-kind-type-alias">Module<wbr/>Options</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">ModuleDetails</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">attributes</span><span class="tsd-signature-symbol">?: </span><a href="MetadataAttribute.html" class="tsd-signature-type tsd-kind-type-alias">MetadataAttribute</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div>
+<div class="tsd-comment tsd-typography"><p>All <a href="ModuleMetadata.html" class="tsd-kind-type-alias">ModuleMetadata</a> fields without <code>$schema</code> a with:</p>
+<ul>
+<li><code>attributes</code> defaults to an empty array</li>
+</ul>
 </div>
 <div class="tsd-type-declaration">
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
 <li class="tsd-parameter">
-<h5><span class="tsd-kind-property">$schema</span><span class="tsd-signature-symbol">: </span><a href="../enums/OpenActionSchemaId.html#LATEST" class="tsd-signature-type tsd-kind-enum-member">LATEST</a></h5>
-<div class="tsd-comment tsd-typography"><p>The schema ID of the Open Action.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">attributes</span><span class="tsd-signature-symbol">: </span><a href="MetadataAttribute.html" class="tsd-signature-type tsd-kind-type-alias">MetadataAttribute</a><span class="tsd-signature-symbol">[]</span></h5>
-<div class="tsd-comment tsd-typography"><p>An arbitrary bag of attributes you wish to add to the Open Action metadata.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">authors</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
-<div class="tsd-comment tsd-typography"><p>List of authors of the Open Action module.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">: </span><a href="Markdown.html" class="tsd-signature-type tsd-kind-type-alias">Markdown</a></h5>
-<div class="tsd-comment tsd-typography"><p>Markdown formatted description of the Open Action.</p>
-<p>It should explain what this module does, how to use it, examples just
-like you would if you were building an NPM package.
-The more detail the better to allow dApp to easily integrate it.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">initialize<wbr/>CalldataABI</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The ABI as JSON-string describing the initialization function input(s).</p>
-<p>This will be used to encode the input data for the initialization function.</p>
-<p>It will also be used by the consumers of this Open Action to decode
-the input data for the initialization function so to infer the
-initializations criteria.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">initialize<wbr/>Result<wbr/>DataABI</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The ABI as JSON-string describing the initialization result data.</p>
-<p>This will be used by the consumers of this Open Action to decode
-the result data from the initialization function so to infer the
-initializations result.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The name of the Open Action module.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">process<wbr/>CalldataABI</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The ABI as JSON-string describing the process function input(s).</p>
-<p>This will be used to encode the input data for the process function.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-<div class="tsd-comment tsd-typography"><p>The human-friendly title of the Open Action module.</p>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">attributes</span><span class="tsd-signature-symbol">?: </span><a href="MetadataAttribute.html" class="tsd-signature-type tsd-kind-type-alias">MetadataAttribute</a><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>An arbitrary bag of attributes you wish to add to the metadata.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/lens-protocol/metadata/blob/main/src/open-actions/OpenActionMetadataSchema.ts#L23">src/open-actions/OpenActionMetadataSchema.ts:23</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/lens-protocol/metadata/blob/main/src/builders/modules.ts#L16">src/builders/modules.ts:16</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -107,8 +59,8 @@ initializations result.</p>
 <li><a href="../enums/MetadataLicenseType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>MetadataLicenseType</a></li>
 <li><a href="../enums/MetadataTransactionType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>MetadataTransactionType</a></li>
 <li><a href="../enums/MirrorSchemaId.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>MirrorSchemaId</a></li>
+<li><a href="../enums/ModuleSchemaId.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>ModuleSchemaId</a></li>
 <li><a href="../enums/NftContractType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>NftContractType</a></li>
-<li><a href="../enums/OpenActionSchemaId.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>OpenActionSchemaId</a></li>
 <li><a href="../enums/ProfileSchemaId.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>ProfileSchemaId</a></li>
 <li><a href="../enums/PublicationContentWarning.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>PublicationContentWarning</a></li>
 <li><a href="../enums/PublicationMainFocus.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>PublicationMainFocus</a></li>
