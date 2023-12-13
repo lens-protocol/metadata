@@ -1,34 +1,34 @@
 import { evaluate } from './ValidationError';
 import { RecursiveUnbrand } from './utils';
 import { MetadataAttribute } from '../MetadataAttribute';
-import { OpenActionMetadataSchema, OpenActionSchemaId, OpenActionMetadata } from '../open-actions';
+import { ModuleMetadata, ModuleMetadataSchema, ModuleSchemaId } from '../module';
 import { Prettify } from '../utils';
 
 /**
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type OpenActionDetails = Prettify<RecursiveUnbrand<Omit<OpenActionMetadata, '$schema'>>>;
+type ModuleDetails = Prettify<RecursiveUnbrand<Omit<ModuleMetadata, '$schema'>>>;
 /**
- * All {@link OpenActionMetadata} fields without `$schema` a with:
+ * All {@link ModuleMetadata} fields without `$schema` a with:
  * - `attributes` defaults to an empty array
  */
-export type OpenActionOptions = OpenActionDetails & {
+export type ModuleOptions = ModuleDetails & {
   /**
-   * The attributes of the Open Action.
+   * An arbitrary bag of attributes you wish to add to the metadata.
    */
   attributes?: MetadataAttribute[];
 };
 
 /**
- * Creates a valid OpenActionMetadata.
+ * Creates a valid ModuleMetadata.
  *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
  *
  * @example
  * ```ts
- * const metadata = openAction({
+ * const metadata = module({
  *   name: 'My Open Action',
  *   title: 'This is my Open Action',
  *   description: 'Get ready for the future of social interaction!',
@@ -52,10 +52,10 @@ export type OpenActionOptions = OpenActionDetails & {
  * });
  * ```
  */
-export function openAction({ attributes = [], ...others }: OpenActionOptions): OpenActionMetadata {
+export function module({ attributes = [], ...others }: ModuleOptions): ModuleMetadata {
   return evaluate(
-    OpenActionMetadataSchema.safeParse({
-      $schema: OpenActionSchemaId.LATEST,
+    ModuleMetadataSchema.safeParse({
+      $schema: ModuleSchemaId.LATEST,
       attributes,
       ...others,
     }),

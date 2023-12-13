@@ -1,12 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { MetadataAttributeType } from '../../MetadataAttribute.js';
-import { openAction } from '../open-action';
+import { module } from '../modules.js';
 
-describe(`Given the "${openAction.name}" metadata builder`, () => {
+describe(`Given the "${module.name}" metadata builder`, () => {
   describe(`when using it`, () => {
     it('should return a valid OpenActionMetadata', () => {
-      const metadata = openAction({
+      const metadata = module({
         name: 'Open Action Name',
         title: 'Open Action Title',
         authors: ['me@lens.xyz'],

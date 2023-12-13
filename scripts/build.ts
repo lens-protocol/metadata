@@ -47,8 +47,8 @@ import {
   GeoURISchema,
   PhysicalAddressSchema,
   EncryptedStringSchema,
-  OpenActionMetadataSchema,
 } from '../src';
+import { ModuleMetadataSchema } from '../src/module';
 
 const outputDir = 'jsonschemas';
 
@@ -135,9 +135,9 @@ for (const [path, Schema] of others) {
   await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
 }
 
-// Open Action schema
+// Module schema
 const openActions = new Map<string, z.ZodSchema<unknown>>([
-  ['open-actions/1.0.0.json', OpenActionMetadataSchema],
+  ['module/1.0.0.json', ModuleMetadataSchema],
 ]);
 
 for (const [path, Schema] of openActions) {
