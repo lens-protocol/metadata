@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.1.4
+
+### Patch Changes
+
+- 161eb85: **fixed:** Module Metadata name and terminology
+
 ## 1.1.3
 
 ### Patch Changes
