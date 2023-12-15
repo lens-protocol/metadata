@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 1.1.5
+
+### Patch Changes
+
+- 5ee9cc1: **fix:** 1.1.4 install issue
+
 ## 1.1.4
 
 ### Patch Changes
