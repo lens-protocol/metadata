@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 1.1.6
+
+### Patch Changes
+
+- d4f8995: **chore:** relax required node version
+- 4ead7d4: **fix:** internal `MarketplaceMetadataSchema` for parsing of Lens v1 Collect NFTs.
+
 ## 1.1.5
 
 ### Patch Changes
