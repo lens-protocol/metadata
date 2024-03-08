@@ -5,13 +5,13 @@ import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  MarketplaceMetadata,
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   optionalContentSchema,
   publicationWith,
 } from './common/index.js';
+import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableDateTime,
   EncryptableMarkdown,

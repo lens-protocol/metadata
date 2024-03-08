@@ -5,13 +5,13 @@ import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  MarketplaceMetadata,
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   optionalContentSchema,
   publicationWith,
 } from './common';
+import { MarketplaceMetadata } from '../marketplace.js';
 import { EncryptableMarkdown, Signature } from '../primitives.js';
 
 export type StoryMetadataDetails = PublicationMetadataCommon & {

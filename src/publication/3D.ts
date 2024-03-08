@@ -11,9 +11,9 @@ import {
   MetadataLicenseType,
   MetadataLicenseTypeSchema,
   publicationWith,
-  MarketplaceMetadata,
   optionalContentSchema,
 } from './common';
+import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
   nonEmptyStringSchema,

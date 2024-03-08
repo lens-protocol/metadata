@@ -22,17 +22,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid v1 object`, () => {
-    it(`then it should complain about missing basic mandatory fields`, () => {
-      expectResult(() =>
-        PublicationMetadataSchema.safeParse({
-          version: '1.0.0',
-        }),
-      ).toMatchInlineSnapshot(`
-        "fix the following issues
-        · "name": Required"
-      `);
-    });
-
     it('then it should pass on expected nullable fields', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
@@ -165,7 +154,6 @@ describe(`Given the PublicationMetadataSchema`, () => {
         }),
       ).toMatchInlineSnapshot(`
         "fix the following issues
-        · "name": Required
         · "content": Required
         · "locale": Required"
       `);
@@ -648,7 +636,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
 
         Ut quis quod et voluptatem nobis est dolores reprehenderit nam porro consequuntur. Aut aperiam unde non quia sint est quia nihil ut dolor dolores rem esse veniam. Ut neque voluptatem ut dolorum eveniet est reprehenderit quia sed sunt necessitatibus qui aliquam rerum.",
           "external_url": null,
-          "image": "ipfs//:bafkreibbydhgzfdapyu3ra3ei7xxnhaqaw4acczhdmb5b6xqrobuzmlkaa",
+          "image": null,
           "imageMimeType": null,
           "locale": "en-us",
           "mainContentFocus": "TEXT_ONLY",
@@ -1279,7 +1267,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
               "encryptionKey": "09a605177283511c4662ccc1154193f42c0eff4bd27e529cc08ebe83c9ac98d2502580f788bca99ded0c01c56207c00e9094aa7a19b156d63ee05b0bbf7c08918779ed62fe366b33cd660bc36d80ca278a34ac17b2321521e091600a8be060b6c6cd0c30c2d55f9d9b61a0e47aa98a938525b67393c5cfb59ab724ca6d23b0bf0000000000000020f3c7c41c82ff1d66f2e4b6bcfdae224fda8b5e32a45c4e5c5df3286832c41f14a9b087bc74486f566d07b11b612c47b0",
             },
           },
-          "external_url": "This publication is gated.",
+          "external_url": null,
           "image": null,
           "imageMimeType": null,
           "locale": "en-AU",

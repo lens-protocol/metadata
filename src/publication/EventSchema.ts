@@ -5,7 +5,6 @@ import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  MarketplaceMetadata,
   PublicationMetadataCommon,
   TimezoneId,
   TimezoneIdSchema,
@@ -14,6 +13,7 @@ import {
   optionalContentSchema,
   publicationWith,
 } from './common';
+import { MarketplaceMetadata } from '../marketplace.js';
 import {
   PhysicalAddressSchema,
   encryptableDateTimeSchema,
