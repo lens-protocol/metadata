@@ -5,7 +5,6 @@ import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  MarketplaceMetadata,
   MediaVideo,
   MediaVideoSchema,
   PublicationMetadataCommon,
@@ -14,6 +13,7 @@ import {
   optionalContentSchema,
   publicationWith,
 } from './common';
+import { MarketplaceMetadata } from '../marketplace.js';
 import { EncryptableMarkdown, Signature, nonEmptyStringSchema } from '../primitives.js';
 
 export type VideoMetadataDetails = PublicationMetadataCommon & {

@@ -2,6 +2,7 @@
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
+import { MarketplaceMetadataSchema } from '../marketplace.js';
 import {
   LocaleSchema,
   Markdown,
@@ -12,7 +13,6 @@ import {
 import * as latest from '../publication';
 import {
   ConditionComparisonOperator,
-  MarketplaceMetadataAttributeSchema,
   NftContractType,
   PublicationContentWarning,
 } from '../publication/common';
@@ -20,8 +20,8 @@ import { hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
 export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
-export { MarketplaceMetadataAttributeDisplayType } from '../publication/common';
-export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../publication/common';
+export { MarketplaceMetadataAttributeDisplayType } from '../marketplace.js';
+export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../marketplace.js';
 export type * from '../primitives.js';
 
 export enum PublicationMetadataVersion {
@@ -104,47 +104,47 @@ const AnimationUrlSchema = z.string({
     'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
 });
 
-const OpenSeaSchema = z
-  .object({
-    description: z
-      .string({
-        description:
-          'A human-readable description of the item. It could be plain text or markdown.',
-      })
-      .optional()
-      .nullable()
-      .catch(null),
+// const OpenSeaSchema = z
+//   .object({
+//     description: z
+//       .string({
+//         description:
+//           'A human-readable description of the item. It could be plain text or markdown.',
+//       })
+//       .optional()
+//       .nullable()
+//       .catch(null),
 
-    external_url: z
-      .string({
-        description:
-          `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-          'and will allow users to leave OpenSea and view the item on the site.',
-      })
-      .optional()
-      .nullable(),
+//     external_url: z
+//       .string({
+//         description:
+//           `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
+//           'and will allow users to leave OpenSea and view the item on the site.',
+//       })
+//       .optional()
+//       .nullable(),
 
-    name: z.string({ description: 'Name of the NFT item.' }),
+//     name: z.string({ description: 'Name of the NFT item.' }),
 
-    attributes: MarketplaceMetadataAttributeSchema.array()
-      .describe(
-        'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
-      )
-      .catch([]),
+//     attributes: MarketplaceMetadataAttributeSchema.array()
+//       .describe(
+//         'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
+//       )
+//       .catch([]),
 
-    image: z
-      .string({
-        description: 'Marketplaces will store any NFT image here.',
-      })
-      .optional()
-      .nullable()
-      .catch(null),
+//     image: z
+//       .string({
+//         description: 'Marketplaces will store any NFT image here.',
+//       })
+//       .optional()
+//       .nullable()
+//       .catch(null),
 
-    animation_url: AnimationUrlSchema.optional().nullable(),
+//     animation_url: AnimationUrlSchema.optional().nullable(),
 
-    version: z.nativeEnum(PublicationMetadataVersion),
-  })
-  .passthrough(); // loose validation for any unknown fields
+//     version: z.nativeEnum(PublicationMetadataVersion),
+//   })
+//   .passthrough(); // loose validation for any unknown fields
 
 /**
  * @internal
@@ -186,7 +186,7 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
   return isNullish(value) || value.length === 0;
 }
 
-const PublicationCommonSchema = OpenSeaSchema.extend({
+const PublicationCommonSchema = MarketplaceMetadataSchema.extend({
   metadata_id: z
     .string({
       description:
@@ -213,6 +213,8 @@ const PublicationCommonSchema = OpenSeaSchema.extend({
     .optional()
     .nullable()
     .describe('The App Id that this publication belongs to.'),
+
+  version: z.nativeEnum(PublicationMetadataVersion),
 });
 
 /**
@@ -629,6 +631,4 @@ export const PublicationMetadataSchema: z.ZodType<PublicationMetadata, z.ZodType
 
         return v2Result.data;
     }
-
-    return z.NEVER;
   });

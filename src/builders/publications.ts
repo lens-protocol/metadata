@@ -2,6 +2,7 @@ import { v4 } from 'uuid';
 
 import { evaluate } from './ValidationError';
 import { RecursiveUnbrand, InputForPublicationMetadataDetails } from './utils';
+import { MarketplaceMetadata } from '../marketplace';
 import {
   ThreeDMetadata,
   ThreeDSchema,
@@ -33,7 +34,6 @@ import {
   TransactionSchema,
   VideoMetadata,
   VideoSchema,
-  MarketplaceMetadata,
   ArticleMetadataDetails,
   AudioMetadataDetails,
   CheckingInMetadataDetails,
