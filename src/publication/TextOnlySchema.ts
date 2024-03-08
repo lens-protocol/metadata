@@ -3,12 +3,12 @@ import { z } from 'zod';
 import { PublicationMainFocus } from './PublicationMainFocus.js';
 import { PublicationSchemaId } from './PublicationSchemaId.js';
 import {
-  MarketplaceMetadata,
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   publicationWith,
 } from './common';
+import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
   Signature,

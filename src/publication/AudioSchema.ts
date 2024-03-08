@@ -6,7 +6,6 @@ import {
   AnyMedia,
   AnyMediaSchema,
   mainContentFocus,
-  MarketplaceMetadata,
   MediaAudio,
   MediaAudioSchema,
   metadataDetailsWith,
@@ -14,6 +13,7 @@ import {
   PublicationMetadataCommon,
   publicationWith,
 } from './common';
+import { MarketplaceMetadata } from '../marketplace.js';
 import { EncryptableMarkdown, nonEmptyStringSchema, Signature } from '../primitives.js';
 
 export type AudioMetadataDetails = PublicationMetadataCommon & {

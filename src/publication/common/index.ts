@@ -4,8 +4,8 @@ import {
   PublicationEncryptionStrategy,
   PublicationEncryptionStrategySchema,
 } from './encryption.js';
-import { MarketplaceMetadataSchema } from './marketplace.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { MarketplaceMetadataSchema } from '../../marketplace.js';
 import {
   AppIdSchema,
   LocaleSchema,
@@ -22,7 +22,6 @@ import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
 export * from './encryption.js';
 export * from './license.js';
-export * from './marketplace.js';
 export * from './media.js';
 export * from './timezones.js';
 
