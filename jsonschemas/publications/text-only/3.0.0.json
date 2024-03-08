@@ -2,13 +2,45 @@
   "type": "object",
   "properties": {
     "description": {
-      "type": "string",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "not": {}
+            },
+            {
+              "type": "string",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        {
+          "type": "null"
+        }
+      ],
       "description": "A human-readable description of the item. It could be plain text or markdown."
     },
     "external_url": {
-      "type": "string",
-      "minLength": 6,
-      "format": "uri",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "not": {}
+            },
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        {
+          "type": "null"
+        }
+      ],
       "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
     },
     "name": {
@@ -23,15 +55,47 @@
       "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
     },
     "image": {
-      "type": "string",
-      "minLength": 6,
-      "format": "uri",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "not": {}
+            },
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "Marketplaces will store any NFT image here."
+            }
+          ],
+          "description": "Marketplaces will store any NFT image here."
+        },
+        {
+          "type": "null"
+        }
+      ],
       "description": "Marketplaces will store any NFT image here."
     },
     "animation_url": {
-      "type": "string",
-      "minLength": 6,
-      "format": "uri",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "not": {}
+            },
+            {
+              "type": "string",
+              "minLength": 6,
+              "format": "uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        {
+          "type": "null"
+        }
+      ],
       "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
     },
     "signature": {
@@ -127,7 +191,7 @@
     "$schema",
     "lens"
   ],
-  "additionalProperties": false,
+  "additionalProperties": true,
   "$defs": {
     "AdvancedContractCondition": {
       "type": "object",
