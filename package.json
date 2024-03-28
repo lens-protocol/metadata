@@ -19,9 +19,6 @@
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "dist/index.d.ts"
-      ],
       "legacy": [
         "dist/legacy/index.d.ts"
       ]
