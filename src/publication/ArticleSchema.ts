@@ -67,8 +67,6 @@ export type ArticleMetadata = MarketplaceMetadata & {
   lens: ArticleMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
-   *
-   * @experimental DO NOT use yet
    */
   signature?: Signature;
 };

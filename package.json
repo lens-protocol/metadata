@@ -69,6 +69,7 @@
     "@jest/globals": "^29.7.0",
     "@lens-protocol/client": "2.0.0-alpha.25",
     "@types/fs-extra": "^11.0.1",
+    "@types/json-stable-stringify": "^1.0.36",
     "@types/node": "^20.5.0",
     "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
@@ -106,6 +107,7 @@
   },
   "packageManager": "pnpm@8.2.0",
   "dependencies": {
+    "json-stable-stringify": "^1.1.1",
     "uuid": "^9.0.1"
   },
   "pnpm": {

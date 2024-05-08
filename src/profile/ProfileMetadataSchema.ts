@@ -95,8 +95,6 @@ export type ProfileMetadata = {
   lens: ProfileMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
-   *
-   * @experimental DO NOT use yet
    */
   signature?: Signature;
 };
