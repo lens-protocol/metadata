@@ -1,5 +1,15 @@
 # @lens-protocol/metadata
 
+## 1.2.0
+
+### Minor Changes
+
+- 281fbe2: **feat:** adds `signMetadata` and `lensMessage` helpers
+
+### Patch Changes
+
+- ab32b2f: **fix:** avoids odd `@lens-protocol/metadata/*` imports from VSCode autocomplete
+
 ## 1.1.6
 
 ### Patch Changes
