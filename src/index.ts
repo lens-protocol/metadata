@@ -8,4 +8,5 @@ export * from './module/index.js';
 export * from './primitives.js';
 export * from './profile/index.js';
 export * from './publication/index.js';
+export * from './signMetadata.js';
 export type { Brand, DistributiveOmit, Overwrite, Prettify, TwoAtLeastArray } from './utils.js';

@@ -51,8 +51,6 @@ export type MirrorMetadata = ShapeCheck<{
   lens: MirrorMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
-   *
-   * @experimental DO NOT use yet
    */
   signature?: Signature;
 }>;

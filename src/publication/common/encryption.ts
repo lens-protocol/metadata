@@ -176,7 +176,7 @@ export const AdvancedContractConditionSchema = z.object({
     .describe(
       'The contract ABI. Has to be in human readable ' +
         'single string format containing the signature of the function you want to call. See ' +
-        'https://docs.ethers.org/v5/api/utils/abi/fragments/#human-readable-abi for more info',
+        'https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info',
     ),
   params: z
     .string()

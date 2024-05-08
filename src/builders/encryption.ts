@@ -221,7 +221,7 @@ export type AdvancedContractConditionDetails = {
 
   /**
    * The function ABI. Has to be in a human-readable string format, which you can convert using the ethers library.
-   * See here for more info https://docs.ethers.io/v5/api/utils/abi/fragments/#human-readable-abi
+   * See here for more info https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi
    */
   abi: string;
 
