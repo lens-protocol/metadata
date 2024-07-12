@@ -74,6 +74,10 @@ export type PublicationMetadataCommon = {
    * Specify a content warning.
    */
   contentWarning?: PublicationContentWarning;
+  /**
+   * Does publication contain OpenFrame tags compatible with Lens applications: of:accepts:lens or of:accepts:anonymous
+   */
+  frameEmbed?: boolean;
 };
 
 const PublicationMetadataCommonSchema = z.object({
