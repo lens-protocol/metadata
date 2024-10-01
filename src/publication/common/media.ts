@@ -235,24 +235,16 @@ export const MediaVideoSchema = MediaCommonSchema.extend({
  */
 export type AnyMedia = MediaAudio | MediaImage | MediaVideo;
 
-const AnyMediaImageMimeType = {
-  ...MediaAudioMimeType,
-  ...MediaImageMimeType,
-  ...MediaVideoMimeType,
-};
-type AnyMediaImageMimeType = MediaAudioMimeType | MediaImageMimeType | MediaVideoMimeType;
-
-type AnyMediaShape = Pick<AnyMedia, 'type'>;
-const AnyMediaShapeScheme: z.ZodType<AnyMediaShape, z.ZodTypeDef, unknown> = z.object({
-  type: z.nativeEnum(AnyMediaImageMimeType),
+const MediaLikeShape = z.object({
+  type: z.string(),
 });
 
-function isAnyMediaShape(val: unknown): val is AnyMediaShape {
-  return AnyMediaShapeScheme.safeParse(val).success;
+function hasMediaLikeShape(val: unknown): val is z.infer<typeof MediaLikeShape> {
+  return MediaLikeShape.safeParse(val).success;
 }
 
 function resolveAnyMediaSchema(val: unknown) {
-  if (!isAnyMediaShape(val)) return null;
+  if (!hasMediaLikeShape(val)) return MediaLikeShape;
 
   switch (val.type) {
     case MediaAudioMimeType.WAV:
@@ -288,6 +280,8 @@ function resolveAnyMediaSchema(val: unknown) {
     case MediaVideoMimeType.WEBM:
       return MediaVideoSchema;
   }
+
+  return null;
 }
 
 /**
