@@ -568,6 +568,21 @@
       },
       "additionalProperties": true
     },
+    "MediaAttributes": {
+      "anyOf": [
+        {
+          "not": {}
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1
+        }
+      ],
+      "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+    },
     "MediaAudio": {
       "type": "object",
       "properties": {
@@ -585,12 +600,7 @@
           ]
         },
         "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MetadataAttribute"
-          },
-          "minItems": 1,
-          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+          "$ref": "#/$defs/MediaAttributes"
         },
         "type": {
           "type": "string",
@@ -715,7 +725,7 @@
           "$ref": "#/$defs/MediaAudio/properties/item"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAudio/properties/attributes"
+          "$ref": "#/$defs/MediaAttributes"
         },
         "type": {
           "type": "string",
@@ -762,7 +772,7 @@
           "$ref": "#/$defs/MediaAudio/properties/item"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAudio/properties/attributes"
+          "$ref": "#/$defs/MediaAttributes"
         },
         "type": {
           "type": "string",

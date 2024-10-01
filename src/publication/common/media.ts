@@ -9,14 +9,16 @@ import {
   encryptableUriSchema,
 } from '../../primitives.js';
 
+export const MediaAttributesSchema = MetadataAttributeSchema.array()
+  .min(1)
+  .optional()
+  .describe(
+    'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
+  );
+
 const MediaCommonSchema = z.object({
   item: encryptableUriSchema('The location of the file.'),
-  attributes: MetadataAttributeSchema.array()
-    .min(1)
-    .optional()
-    .describe(
-      'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
-    ),
+  attributes: MediaAttributesSchema,
 });
 
 /**
@@ -286,9 +288,6 @@ function resolveAnyMediaSchema(val: unknown) {
     case MediaVideoMimeType.WEBM:
       return MediaVideoSchema;
   }
-
-  // the alleged AnyMedia is not a valid shape
-  return AnyMediaShapeScheme;
 }
 
 /**
