@@ -1,3 +1,5 @@
+#!/usr/bin/env -S npx tsx
+
 import { join } from 'path';
 
 import fs from 'fs-extra';
