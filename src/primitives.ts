@@ -123,7 +123,8 @@ export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, u
 
     if (!result.success) {
       result.error.issues.forEach((issue) => {
-        ctx.addIssue(issue);
+        // why fatal = true? see: https://github.com/colinhacks/zod/pull/2912#issuecomment-2010989328
+        ctx.addIssue({ ...issue, fatal: true });
       });
       return z.NEVER;
     }
