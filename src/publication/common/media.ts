@@ -252,7 +252,7 @@ function isAnyMediaShape(val: unknown): val is AnyMediaShape {
 }
 
 function resolveAnyMediaSchema(val: unknown) {
-  if (!isAnyMediaShape(val)) return AnyMediaShapeScheme;
+  if (!isAnyMediaShape(val)) return null;
 
   switch (val.type) {
     case MediaAudioMimeType.WAV:
@@ -300,9 +300,9 @@ export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
   // correct JSON Schema definition but we manually refine the type for runtime checks
   .catch((ctx) => ctx.input as AnyMedia) // passthrough even if might not be an AnyMedia type
   .superRefine((val: unknown, ctx): val is AnyMedia => {
-    const Schema = resolveAnyMediaSchema(val);
+    const schema = resolveAnyMediaSchema(val);
 
-    if (!Schema) {
+    if (!schema) {
       ctx.addIssue({
         code: z.ZodIssueCode.invalid_union_discriminator,
         options: [
@@ -320,7 +320,7 @@ export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
       return z.NEVER;
     }
 
-    const result = Schema.safeParse(val);
+    const result = schema.safeParse(val);
 
     if (!result.success) {
       result.error.issues.forEach((issue) => {
