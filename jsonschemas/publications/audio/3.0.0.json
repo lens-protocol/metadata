@@ -208,77 +208,6 @@
   ],
   "additionalProperties": true,
   "$defs": {
-    "AdvancedContractCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "ADVANCED_CONTRACT"
-        },
-        "contract": {
-          "type": "object",
-          "properties": {
-            "chainId": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "address": {
-              "$ref": "#/$defs/EvmAddress"
-            }
-          },
-          "required": [
-            "chainId",
-            "address"
-          ],
-          "additionalProperties": false,
-          "description": "The contract address and chain id"
-        },
-        "functionName": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The name of the function you want to call"
-        },
-        "abi": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
-        },
-        "params": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
-        },
-        "comparison": {
-          "type": "string",
-          "enum": [
-            "EQUAL",
-            "NOT_EQUAL",
-            "GREATER_THAN",
-            "GREATER_THAN_OR_EQUAL",
-            "LESS_THAN",
-            "LESS_THAN_OR_EQUAL"
-          ],
-          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
-        },
-        "value": {
-          "type": "string",
-          "pattern": "^(true|false|\\d{1,70})$",
-          "description": "The comparison value. Accepts 'true', 'false' or a number"
-        }
-      },
-      "required": [
-        "type",
-        "contract",
-        "functionName",
-        "abi",
-        "params",
-        "comparison",
-        "value"
-      ],
-      "additionalProperties": false
-    },
     "AccessCondition": {
       "type": "object",
       "properties": {
@@ -408,85 +337,74 @@
       ],
       "additionalProperties": false
     },
-    "PhysicalAddress": {
+    "AdvancedContractCondition": {
       "type": "object",
       "properties": {
-        "formatted": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The full mailing address formatted for display."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "type": {
+          "type": "string",
+          "const": "ADVANCED_CONTRACT"
         },
-        "streetAddress": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
+        "contract": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "type": "number",
+              "exclusiveMinimum": 0
             },
-            {
-              "$ref": "#/$defs/EncryptedString"
+            "address": {
+              "$ref": "#/$defs/EvmAddress"
             }
-          ]
+          },
+          "required": [
+            "chainId",
+            "address"
+          ],
+          "additionalProperties": false,
+          "description": "The contract address and chain id"
         },
-        "locality": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The city or locality."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "functionName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the function you want to call"
         },
-        "region": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The state or region."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "abi": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
         },
-        "postalCode": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The zip or postal code."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "params": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
         },
-        "country": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The country name component."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "comparison": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ],
+          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(true|false|\\d{1,70})$",
+          "description": "The comparison value. Accepts 'true', 'false' or a number"
         }
       },
       "required": [
-        "locality",
-        "country"
+        "type",
+        "contract",
+        "functionName",
+        "abi",
+        "params",
+        "comparison",
+        "value"
       ],
       "additionalProperties": false
     },
@@ -1136,6 +1054,88 @@
         "type",
         "contract",
         "contractType"
+      ],
+      "additionalProperties": false
+    },
+    "PhysicalAddress": {
+      "type": "object",
+      "properties": {
+        "formatted": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The full mailing address formatted for display."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "streetAddress": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "locality": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The city or locality."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The state or region."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "postalCode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The zip or postal code."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The country name component."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ]
+        }
+      },
+      "required": [
+        "locality",
+        "country"
       ],
       "additionalProperties": false
     },

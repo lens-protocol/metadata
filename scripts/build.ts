@@ -84,9 +84,8 @@ for (const [path, Schema] of schemas) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
-      AdvancedContractCondition: AdvancedContractConditionSchema,
       AccessCondition: AccessConditionSchema,
-      PhysicalAddress: PhysicalAddressSchema,
+      AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       CollectCondition: CollectConditionSchema,
@@ -104,6 +103,7 @@ for (const [path, Schema] of schemas) {
       MetadataLicenseType: MetadataLicenseTypeSchema,
       NetworkAddress: NetworkAddressSchema,
       NftOwnershipCondition: NftOwnershipConditionSchema,
+      PhysicalAddress: PhysicalAddressSchema,
       ProfileId: ProfileIdSchema,
       ProfileOwnershipCondition: ProfileOwnershipConditionSchema,
       PublicationEncryptionStrategy: PublicationEncryptionStrategySchema,
