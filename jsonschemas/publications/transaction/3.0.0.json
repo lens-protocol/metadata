@@ -188,7 +188,7 @@
           "description": "The type of transaction."
         },
         "chainId": {
-          "$ref": "#/$defs/AdvancedContractCondition/properties/contract/properties/chainId",
+          "$ref": "#/$defs/ChainId",
           "description": "The Chain Id."
         },
         "content": {
@@ -369,8 +369,7 @@
           "type": "object",
           "properties": {
             "chainId": {
-              "type": "number",
-              "exclusiveMinimum": 0
+              "$ref": "#/$defs/ChainId"
             },
             "address": {
               "$ref": "#/$defs/EvmAddress"
@@ -475,6 +474,10 @@
           "$ref": "#/$defs/MediaVideo"
         }
       ]
+    },
+    "ChainId": {
+      "type": "number",
+      "exclusiveMinimum": 0
     },
     "CollectCondition": {
       "type": "object",
@@ -1021,7 +1024,7 @@
       "type": "object",
       "properties": {
         "chainId": {
-          "$ref": "#/$defs/AdvancedContractCondition/properties/contract/properties/chainId"
+          "$ref": "#/$defs/ChainId"
         },
         "address": {
           "$ref": "#/$defs/EvmAddress"

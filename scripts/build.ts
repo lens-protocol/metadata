@@ -51,6 +51,7 @@ import {
   EncryptedStringSchema,
   MediaAttributesSchema,
   EncryptableUriSchema,
+  ChainIdSchema,
 } from '../src';
 import { ModuleMetadataSchema } from '../src/module';
 
@@ -90,6 +91,7 @@ for (const [path, Schema] of schemas) {
       AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
+      ChainId: ChainIdSchema,
       CollectCondition: CollectConditionSchema,
       EncryptableUri: EncryptableUriSchema,
       EncryptedString: EncryptedStringSchema,
