@@ -16,7 +16,7 @@ import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableUriSchema,
+  EncryptableUriSchema,
 } from '../primitives.js';
 
 // TODO validate the mint link using the allow list
@@ -48,7 +48,7 @@ const MintMetadataDetailsSchema: z.ZodType<MintMetadataDetails, z.ZodTypeDef, ob
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.MINT),
 
-    mintLink: encryptableUriSchema(
+    mintLink: EncryptableUriSchema.describe(
       'The mint item it can be a URL of the known provider like opensea ' +
         'https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 ' +
         'or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. ' +

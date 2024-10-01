@@ -100,6 +100,7 @@ export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef,
   const options = [schema, EncryptedStringSchema] as const;
   return z
     .union(options)
+    .describe('An encrypted value or its decrypted version.')
     .catch((ctx) => ctx.input as T)
     .superRefine((val, ctx): val is T | EncryptedString => {
       const results = options.map((s) => s.safeParse(val));
@@ -276,12 +277,11 @@ export function uriSchema(
     .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
     .transform(toUri);
 }
+
 /**
  * @internal
  */
-export function encryptableUriSchema(description?: string) {
-  return encryptable(uriSchema(description));
-}
+export const EncryptableUriSchema = encryptable(uriSchema());
 
 /**
  * A URI or its encrypted version.

@@ -18,7 +18,7 @@ import {
   EncryptableURI,
   Signature,
   encryptableDateTimeSchema,
-  encryptableUriSchema,
+  EncryptableUriSchema,
   nonEmptyStringSchema,
 } from '../primitives.js';
 
@@ -55,7 +55,7 @@ export const SpaceMetadataDetailsSchema: z.ZodType<SpaceMetadataDetails, z.ZodTy
 
     title: nonEmptyStringSchema().describe('The space title.'),
 
-    link: encryptableUriSchema('The space join link.'),
+    link: EncryptableUriSchema.describe('The space join link.'),
 
     startsAt: encryptableDateTimeSchema(
       'The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',

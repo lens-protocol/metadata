@@ -6,7 +6,7 @@ import {
   EncryptableString,
   EncryptableURI,
   encryptableStringSchema,
-  encryptableUriSchema,
+  EncryptableUriSchema,
 } from '../../primitives.js';
 
 export const MediaAttributesSchema = MetadataAttributeSchema.array()
@@ -17,7 +17,7 @@ export const MediaAttributesSchema = MetadataAttributeSchema.array()
   );
 
 const MediaCommonSchema = z.object({
-  item: encryptableUriSchema('The location of the file.'),
+  item: EncryptableUriSchema,
   attributes: MediaAttributesSchema,
 });
 
@@ -104,7 +104,7 @@ export type MediaAudio = {
  */
 export const MediaAudioSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio file.' }),
-  cover: encryptableUriSchema('The cover image for the audio.').optional(),
+  cover: EncryptableUriSchema.optional(),
   duration: z
     .number({ description: 'How long the the audio is in seconds.' })
     .positive()
@@ -116,7 +116,7 @@ export const MediaAudioSchema = MediaCommonSchema.extend({
   genre: encryptableStringSchema('The genre of the audio').optional(),
   recordLabel: encryptableStringSchema('The record label for the audio.').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio.' }).optional(),
-  lyrics: encryptableUriSchema('The lyrics for the audio.').optional(),
+  lyrics: EncryptableUriSchema.optional(),
 });
 
 /**
@@ -221,7 +221,7 @@ export type MediaVideo = {
 export const MediaVideoSchema = MediaCommonSchema.extend({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
   altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
-  cover: encryptableUriSchema('The cover image for the video').optional(),
+  cover: EncryptableUriSchema.optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })
     .positive()

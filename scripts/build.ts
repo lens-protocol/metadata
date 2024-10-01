@@ -50,6 +50,7 @@ import {
   PhysicalAddressSchema,
   EncryptedStringSchema,
   MediaAttributesSchema,
+  EncryptableUriSchema,
 } from '../src';
 import { ModuleMetadataSchema } from '../src/module';
 
@@ -90,6 +91,7 @@ for (const [path, Schema] of schemas) {
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       CollectCondition: CollectConditionSchema,
+      EncryptableUri: EncryptableUriSchema,
       EncryptedString: EncryptedStringSchema,
       EoaOwnershipCondition: EoaOwnershipConditionSchema,
       Erc20OwnershipCondition: Erc20OwnershipConditionSchema,

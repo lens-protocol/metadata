@@ -180,7 +180,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "endsAt": {
           "anyOf": [
@@ -192,46 +193,20 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "playbackUrl": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "Some livestream platforms have the playback url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri",
+          "description": "Some livestream platforms have the playback url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
         },
         "liveUrl": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "Some livestream platforms have the live url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri",
+          "description": "Some livestream platforms have the live url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
         },
         "checkLiveAPI": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri",
+          "description": "The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check."
         },
         "content": {
           "anyOf": [
@@ -242,7 +217,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "attachments": {
           "type": "array",
@@ -538,6 +514,20 @@
       ],
       "additionalProperties": false
     },
+    "EncryptableUri": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
+          "description": "A Uniform Resource Identifier. "
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
     "EncryptedString": {
       "type": "string",
       "pattern": "^\\S+$",
@@ -661,17 +651,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The location of the file."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
           "$ref": "#/$defs/MediaAttributes"
@@ -691,17 +671,7 @@
           "description": "The mime type of the audio file."
         },
         "cover": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The cover image for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         },
         "duration": {
           "type": "integer",
@@ -722,7 +692,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "artist": {
           "anyOf": [
@@ -734,7 +705,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "genre": {
           "anyOf": [
@@ -746,7 +718,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "recordLabel": {
           "anyOf": [
@@ -758,7 +731,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "kind": {
           "type": "string",
@@ -773,17 +747,7 @@
           "description": "The type of audio."
         },
         "lyrics": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The lyrics for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         }
       },
       "required": [
@@ -796,7 +760,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/MediaAudio/properties/item"
+          "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
           "$ref": "#/$defs/MediaAttributes"
@@ -826,7 +790,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "license": {
           "$ref": "#/$defs/MetadataLicenseType",
@@ -843,7 +808,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/MediaAudio/properties/item"
+          "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
           "$ref": "#/$defs/MediaAttributes"
@@ -874,20 +839,11 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "cover": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The cover image for the video"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         },
         "duration": {
           "type": "integer",
@@ -1142,7 +1098,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "streetAddress": {
           "anyOf": [
@@ -1154,7 +1111,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "locality": {
           "anyOf": [
@@ -1166,7 +1124,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "region": {
           "anyOf": [
@@ -1178,7 +1137,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "postalCode": {
           "anyOf": [
@@ -1190,7 +1150,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "country": {
           "anyOf": [
@@ -1202,7 +1163,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         }
       },
       "required": [

@@ -16,7 +16,7 @@ import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableUriSchema,
+  EncryptableUriSchema,
 } from '../primitives.js';
 
 export type LinkMetadataDetails = PublicationMetadataCommon & {
@@ -42,7 +42,7 @@ const LinkMetadataDetailsSchema: z.ZodType<LinkMetadataDetails, z.ZodTypeDef, ob
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LINK),
 
-    sharingLink: encryptableUriSchema('The sharing link url.'),
+    sharingLink: EncryptableUriSchema.describe('The sharing link url.'),
 
     content: optionalContentSchema(),
 
