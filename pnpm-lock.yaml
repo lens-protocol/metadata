@@ -99,14 +99,14 @@ devDependencies:
     specifier: ^5.1.6
     version: 5.1.6
   zod:
-    specifier: ^3.22.4
-    version: 3.22.4
+    specifier: ^3.23.8
+    version: 3.23.8
   zod-to-json-schema:
-    specifier: ^3.21.4
-    version: 3.21.4(zod@3.22.4)
+    specifier: ^3.23.3
+    version: 3.23.3(zod@3.23.8)
   zod-validation-error:
     specifier: ^1.3.1
-    version: 1.3.1(zod@3.22.4)
+    version: 1.3.1(zod@3.23.8)
 
 packages:
 
@@ -1963,7 +1963,7 @@ packages:
       '@ethersproject/providers': 5.7.2
       '@ethersproject/wallet': 5.7.0
       '@lens-protocol/blockchain-bindings': 0.10.2(@faker-js/faker@8.0.2)(@jest/globals@29.7.0)
-      '@lens-protocol/gated-content': 0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(ethers@5.7.2)(zod@3.22.4)
+      '@lens-protocol/gated-content': 0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(ethers@5.7.2)(zod@3.23.8)
       '@lens-protocol/shared-kernel': 0.12.0
       '@lens-protocol/storage': 0.8.1
       graphql: 16.9.0
@@ -1971,7 +1971,7 @@ packages:
       graphql-tag: 2.12.6(graphql@16.9.0)
       jwt-decode: 3.1.2
       tslib: 2.7.0
-      zod: 3.22.4
+      zod: 3.23.8
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -2026,7 +2026,7 @@ packages:
       tslib: 2.7.0
     dev: true
 
-  /@lens-protocol/gated-content@0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(ethers@5.7.2)(zod@3.22.4):
+  /@lens-protocol/gated-content@0.5.1(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/hash@5.7.0)(@ethersproject/providers@5.7.2)(@ethersproject/wallet@5.7.0)(ethers@5.7.2)(zod@3.23.8):
     resolution: {integrity: sha512-rXD0/lkdFIGrwi7+LLgxYwb1Bbsnbi3XouUxfXbqBD32YwKkpYRNb0EfYcB3HZOQv9vmeTTlyrozNKxWoCBJ3A==}
     peerDependencies:
       '@ethersproject/abi': ^5.7.0
@@ -2058,7 +2058,7 @@ packages:
       '@lit-protocol/types': 2.1.62
       siwe: 2.3.2(ethers@5.7.2)
       tslib: 2.7.0
-      zod: 3.22.4
+      zod: 3.23.8
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -2097,7 +2097,7 @@ packages:
     dependencies:
       '@lens-protocol/shared-kernel': 0.12.0
       tslib: 2.7.0
-      zod: 3.22.4
+      zod: 3.23.8
     dev: true
 
   /@lit-labs/ssr-dom-shim@1.2.1:
@@ -8762,23 +8762,23 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zod-to-json-schema@3.21.4(zod@3.22.4):
-    resolution: {integrity: sha512-fjUZh4nQ1s6HMccgIeE0VP4QG/YRGPmyjO9sAh890aQKPEk3nqbfUXhMFaC+Dr5KvYBm8BCyvfpZf2jY9aGSsw==}
+  /zod-to-json-schema@3.23.3(zod@3.23.8):
+    resolution: {integrity: sha512-TYWChTxKQbRJp5ST22o/Irt9KC5nj7CdBKYB/AosCRdj/wxEMvv4NNaj9XVUHDOIp53ZxArGhnw5HMZziPFjog==}
     peerDependencies:
-      zod: ^3.21.4
+      zod: ^3.23.3
     dependencies:
-      zod: 3.22.4
+      zod: 3.23.8
     dev: true
 
-  /zod-validation-error@1.3.1(zod@3.22.4):
+  /zod-validation-error@1.3.1(zod@3.23.8):
     resolution: {integrity: sha512-cNEXpla+tREtNdAnNKY4xKY1SGOn2yzyuZMu4O0RQylX9apRpUjNcPkEc3uHIAr5Ct7LenjZt6RzjEH6+JsqVQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       zod: ^3.18.0
     dependencies:
-      zod: 3.22.4
+      zod: 3.23.8
     dev: true
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
     dev: true
