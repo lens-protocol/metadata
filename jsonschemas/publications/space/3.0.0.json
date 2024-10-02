@@ -582,14 +582,6 @@
       },
       "additionalProperties": true
     },
-    "MediaAttributes": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/MetadataAttribute"
-      },
-      "minItems": 1,
-      "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
-    },
     "MediaAudio": {
       "type": "object",
       "properties": {
@@ -597,7 +589,11 @@
           "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAttributes",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
           "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
@@ -707,7 +703,12 @@
           "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAudio/properties/attributes"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
           "type": "string",
@@ -755,7 +756,12 @@
           "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAudio/properties/attributes"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
           "type": "string",

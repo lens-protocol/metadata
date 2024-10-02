@@ -49,7 +49,6 @@ import {
   GeoURISchema,
   PhysicalAddressSchema,
   EncryptedStringSchema,
-  MediaAttributesSchema,
   EncryptableUriSchema,
   ChainIdSchema,
 } from '../src';
@@ -101,7 +100,6 @@ for (const [path, Schema] of schemas) {
       FollowCondition: FollowConditionSchema,
       GeoURI: GeoURISchema,
       MarketplaceMetadataAttribute: MarketplaceMetadataAttributeSchema,
-      MediaAttributes: MediaAttributesSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,
       MediaVideo: MediaVideoSchema,

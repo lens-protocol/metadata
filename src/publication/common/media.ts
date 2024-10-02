@@ -9,16 +9,19 @@ import {
   EncryptableUriSchema,
 } from '../../primitives.js';
 
-export const MediaAttributesSchema = MetadataAttributeSchema.array()
-  .min(1)
-  .describe(
-    'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
-  );
-
-const MediaCommonSchema = z.object({
-  item: EncryptableUriSchema,
-  attributes: MediaAttributesSchema.optional(),
-});
+function mediaCommonSchema<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
+  return z
+    .object({
+      item: EncryptableUriSchema,
+      attributes: MetadataAttributeSchema.array()
+        .min(1)
+        .describe(
+          'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
+        )
+        .optional(),
+    })
+    .extend(augmentation);
+}
 
 /**
  * The kind of audio media.
@@ -101,7 +104,7 @@ export type MediaAudio = {
 /**
  * @internal
  */
-export const MediaAudioSchema = MediaCommonSchema.extend({
+export const MediaAudioSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio file.' }),
   cover: EncryptableUriSchema.optional(),
   duration: z
@@ -160,7 +163,7 @@ export type MediaImage = {
 /**
  * @internal
  */
-export const MediaImageSchema = MediaCommonSchema.extend({
+export const MediaImageSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaImageMimeType, { description: 'The mime type of the image' }),
   altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the image'),
@@ -217,7 +220,7 @@ export type MediaVideo = {
 /**
  * @internal
  */
-export const MediaVideoSchema = MediaCommonSchema.extend({
+export const MediaVideoSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
   altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
   cover: EncryptableUriSchema.optional(),
