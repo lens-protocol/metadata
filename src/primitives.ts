@@ -100,6 +100,7 @@ export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef,
   const options = [schema, EncryptedStringSchema] as const;
   return z
     .union(options)
+    .describe('An encrypted value or its decrypted version.')
     .catch((ctx) => ctx.input as T)
     .superRefine((val, ctx): val is T | EncryptedString => {
       const results = options.map((s) => s.safeParse(val));
@@ -123,7 +124,8 @@ export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, u
 
     if (!result.success) {
       result.error.issues.forEach((issue) => {
-        ctx.addIssue(issue);
+        // why fatal = true? see: https://github.com/colinhacks/zod/pull/2912#issuecomment-2010989328
+        ctx.addIssue({ ...issue, fatal: true });
       });
       return z.NEVER;
     }
@@ -275,12 +277,11 @@ export function uriSchema(
     .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
     .transform(toUri);
 }
+
 /**
  * @internal
  */
-export function encryptableUriSchema(description?: string) {
-  return encryptable(uriSchema(description));
-}
+export const EncryptableUriSchema = encryptable(uriSchema());
 
 /**
  * A URI or its encrypted version.

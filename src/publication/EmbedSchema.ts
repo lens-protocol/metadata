@@ -16,7 +16,7 @@ import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableUriSchema,
+  EncryptableUriSchema,
 } from '../primitives.js';
 
 export type EmbedMetadataDetails = PublicationMetadataCommon & {
@@ -42,7 +42,7 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.EMBED),
 
-    embed: encryptableUriSchema('The embed URL.'),
+    embed: EncryptableUriSchema.describe('The embed URL.'),
 
     content: optionalContentSchema(),
 

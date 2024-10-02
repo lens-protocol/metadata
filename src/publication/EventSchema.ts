@@ -17,7 +17,7 @@ import { MarketplaceMetadata } from '../marketplace.js';
 import {
   PhysicalAddressSchema,
   encryptableDateTimeSchema,
-  encryptableUriSchema,
+  EncryptableUriSchema,
   encryptableStringSchema,
   EncryptableURI,
   EncryptableString,
@@ -123,7 +123,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
 
     location: z
       .union([
-        encryptableUriSchema('A virtual location.'),
+        EncryptableUriSchema.describe('A virtual location.'),
         encryptableStringSchema('The event location (free form text).'),
       ])
       .describe('The location of the event.'),
@@ -143,8 +143,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
         'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: encryptableUriSchema()
-      .array()
+    links: EncryptableUriSchema.array()
       .min(1)
       .optional()
       .describe('The links you want to include with it.'),

@@ -4,15 +4,7 @@
     "description": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            }
-          ],
+          "type": "string",
           "description": "A human-readable description of the item. It could be plain text or markdown."
         },
         {
@@ -24,17 +16,9 @@
     "external_url": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            }
-          ],
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
           "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
         },
         {
@@ -57,17 +41,9 @@
     "image": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "Marketplaces will store any NFT image here."
-            }
-          ],
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
           "description": "Marketplaces will store any NFT image here."
         },
         {
@@ -79,17 +55,9 @@
     "animation_url": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            }
-          ],
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
           "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
         },
         {
@@ -171,17 +139,8 @@
           "description": "The space title."
         },
         "link": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The space join link."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri",
+          "description": "The space join link."
         },
         "startsAt": {
           "anyOf": [
@@ -193,7 +152,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "content": {
           "anyOf": [
@@ -204,7 +164,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "attachments": {
           "type": "array",
@@ -232,77 +193,6 @@
   ],
   "additionalProperties": true,
   "$defs": {
-    "AdvancedContractCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "ADVANCED_CONTRACT"
-        },
-        "contract": {
-          "type": "object",
-          "properties": {
-            "chainId": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "address": {
-              "$ref": "#/$defs/EvmAddress"
-            }
-          },
-          "required": [
-            "chainId",
-            "address"
-          ],
-          "additionalProperties": false,
-          "description": "The contract address and chain id"
-        },
-        "functionName": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The name of the function you want to call"
-        },
-        "abi": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
-        },
-        "params": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
-        },
-        "comparison": {
-          "type": "string",
-          "enum": [
-            "EQUAL",
-            "NOT_EQUAL",
-            "GREATER_THAN",
-            "GREATER_THAN_OR_EQUAL",
-            "LESS_THAN",
-            "LESS_THAN_OR_EQUAL"
-          ],
-          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
-        },
-        "value": {
-          "type": "string",
-          "pattern": "^(true|false|\\d{1,70})$",
-          "description": "The comparison value. Accepts 'true', 'false' or a number"
-        }
-      },
-      "required": [
-        "type",
-        "contract",
-        "functionName",
-        "abi",
-        "params",
-        "comparison",
-        "value"
-      ],
-      "additionalProperties": false
-    },
     "AccessCondition": {
       "type": "object",
       "properties": {
@@ -432,85 +322,73 @@
       ],
       "additionalProperties": false
     },
-    "PhysicalAddress": {
+    "AdvancedContractCondition": {
       "type": "object",
       "properties": {
-        "formatted": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The full mailing address formatted for display."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "type": {
+          "type": "string",
+          "const": "ADVANCED_CONTRACT"
         },
-        "streetAddress": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
+        "contract": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "$ref": "#/$defs/ChainId"
             },
-            {
-              "$ref": "#/$defs/EncryptedString"
+            "address": {
+              "$ref": "#/$defs/EvmAddress"
             }
-          ]
+          },
+          "required": [
+            "chainId",
+            "address"
+          ],
+          "additionalProperties": false,
+          "description": "The contract address and chain id"
         },
-        "locality": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The city or locality."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "functionName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the function you want to call"
         },
-        "region": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The state or region."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "abi": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
         },
-        "postalCode": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The zip or postal code."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "params": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
         },
-        "country": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The country name component."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+        "comparison": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ],
+          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(true|false|\\d{1,70})$",
+          "description": "The comparison value. Accepts 'true', 'false' or a number"
         }
       },
       "required": [
-        "locality",
-        "country"
+        "type",
+        "contract",
+        "functionName",
+        "abi",
+        "params",
+        "comparison",
+        "value"
       ],
       "additionalProperties": false
     },
@@ -561,6 +439,10 @@
         }
       ]
     },
+    "ChainId": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
     "CollectCondition": {
       "type": "object",
       "properties": {
@@ -581,6 +463,20 @@
         "publicationId"
       ],
       "additionalProperties": false
+    },
+    "EncryptableUri": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
+          "description": "A Uniform Resource Identifier. "
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
     },
     "EncryptedString": {
       "type": "string",
@@ -690,17 +586,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The location of the file."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
           "type": "array",
@@ -725,17 +611,7 @@
           "description": "The mime type of the audio file."
         },
         "cover": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The cover image for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         },
         "duration": {
           "type": "integer",
@@ -756,7 +632,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "artist": {
           "anyOf": [
@@ -768,7 +645,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "genre": {
           "anyOf": [
@@ -780,7 +658,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "recordLabel": {
           "anyOf": [
@@ -792,7 +671,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "kind": {
           "type": "string",
@@ -807,17 +687,7 @@
           "description": "The type of audio."
         },
         "lyrics": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The lyrics for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         }
       },
       "required": [
@@ -830,10 +700,15 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/MediaAudio/properties/item"
+          "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAudio/properties/attributes"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
           "type": "string",
@@ -860,7 +735,8 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "license": {
           "$ref": "#/$defs/MetadataLicenseType",
@@ -877,10 +753,15 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/MediaAudio/properties/item"
+          "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAudio/properties/attributes"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
           "type": "string",
@@ -908,20 +789,11 @@
             {
               "$ref": "#/$defs/EncryptedString"
             }
-          ]
+          ],
+          "description": "An encrypted value or its decrypted version."
         },
         "cover": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "The cover image for the video"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ]
+          "$ref": "#/$defs/EncryptableUri"
         },
         "duration": {
           "type": "integer",
@@ -1116,7 +988,7 @@
       "type": "object",
       "properties": {
         "chainId": {
-          "$ref": "#/$defs/AdvancedContractCondition/properties/contract/properties/chainId"
+          "$ref": "#/$defs/ChainId"
         },
         "address": {
           "$ref": "#/$defs/EvmAddress"
@@ -1160,6 +1032,94 @@
         "type",
         "contract",
         "contractType"
+      ],
+      "additionalProperties": false
+    },
+    "PhysicalAddress": {
+      "type": "object",
+      "properties": {
+        "formatted": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The full mailing address formatted for display."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "An encrypted value or its decrypted version."
+        },
+        "streetAddress": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "An encrypted value or its decrypted version."
+        },
+        "locality": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The city or locality."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "An encrypted value or its decrypted version."
+        },
+        "region": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The state or region."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "An encrypted value or its decrypted version."
+        },
+        "postalCode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The zip or postal code."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "An encrypted value or its decrypted version."
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "The country name component."
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "An encrypted value or its decrypted version."
+        }
+      },
+      "required": [
+        "locality",
+        "country"
       ],
       "additionalProperties": false
     },

@@ -6,18 +6,22 @@ import {
   EncryptableString,
   EncryptableURI,
   encryptableStringSchema,
-  encryptableUriSchema,
+  EncryptableUriSchema,
 } from '../../primitives.js';
 
-const MediaCommonSchema = z.object({
-  item: encryptableUriSchema('The location of the file.'),
-  attributes: MetadataAttributeSchema.array()
-    .min(1)
-    .optional()
-    .describe(
-      'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
-    ),
-});
+function mediaCommonSchema<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
+  return z
+    .object({
+      item: EncryptableUriSchema,
+      attributes: MetadataAttributeSchema.array()
+        .min(1)
+        .describe(
+          'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
+        )
+        .optional(),
+    })
+    .extend(augmentation);
+}
 
 /**
  * The kind of audio media.
@@ -100,9 +104,9 @@ export type MediaAudio = {
 /**
  * @internal
  */
-export const MediaAudioSchema = MediaCommonSchema.extend({
+export const MediaAudioSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio file.' }),
-  cover: encryptableUriSchema('The cover image for the audio.').optional(),
+  cover: EncryptableUriSchema.optional(),
   duration: z
     .number({ description: 'How long the the audio is in seconds.' })
     .positive()
@@ -114,7 +118,7 @@ export const MediaAudioSchema = MediaCommonSchema.extend({
   genre: encryptableStringSchema('The genre of the audio').optional(),
   recordLabel: encryptableStringSchema('The record label for the audio.').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio.' }).optional(),
-  lyrics: encryptableUriSchema('The lyrics for the audio.').optional(),
+  lyrics: EncryptableUriSchema.optional(),
 });
 
 /**
@@ -159,7 +163,7 @@ export type MediaImage = {
 /**
  * @internal
  */
-export const MediaImageSchema = MediaCommonSchema.extend({
+export const MediaImageSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaImageMimeType, { description: 'The mime type of the image' }),
   altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the image'),
@@ -216,10 +220,10 @@ export type MediaVideo = {
 /**
  * @internal
  */
-export const MediaVideoSchema = MediaCommonSchema.extend({
+export const MediaVideoSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
   altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
-  cover: encryptableUriSchema('The cover image for the video').optional(),
+  cover: EncryptableUriSchema.optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })
     .positive()
@@ -233,24 +237,16 @@ export const MediaVideoSchema = MediaCommonSchema.extend({
  */
 export type AnyMedia = MediaAudio | MediaImage | MediaVideo;
 
-const AnyMediaImageMimeType = {
-  ...MediaAudioMimeType,
-  ...MediaImageMimeType,
-  ...MediaVideoMimeType,
-};
-type AnyMediaImageMimeType = MediaAudioMimeType | MediaImageMimeType | MediaVideoMimeType;
-
-type AnyMediaShape = Pick<AnyMedia, 'type'>;
-const AnyMediaShapeScheme: z.ZodType<AnyMediaShape, z.ZodTypeDef, unknown> = z.object({
-  type: z.nativeEnum(AnyMediaImageMimeType),
+const MediaLikeShape = z.object({
+  type: z.string(),
 });
 
-function isAnyMediaShape(val: unknown): val is AnyMediaShape {
-  return AnyMediaShapeScheme.safeParse(val).success;
+function hasMediaLikeShape(val: unknown): val is z.infer<typeof MediaLikeShape> {
+  return MediaLikeShape.safeParse(val).success;
 }
 
 function resolveAnyMediaSchema(val: unknown) {
-  if (!isAnyMediaShape(val)) return AnyMediaShapeScheme;
+  if (!hasMediaLikeShape(val)) return MediaLikeShape;
 
   switch (val.type) {
     case MediaAudioMimeType.WAV:
@@ -287,8 +283,7 @@ function resolveAnyMediaSchema(val: unknown) {
       return MediaVideoSchema;
   }
 
-  // the alleged AnyMedia is not a valid shape
-  return AnyMediaShapeScheme;
+  return null;
 }
 
 /**
@@ -301,9 +296,9 @@ export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
   // correct JSON Schema definition but we manually refine the type for runtime checks
   .catch((ctx) => ctx.input as AnyMedia) // passthrough even if might not be an AnyMedia type
   .superRefine((val: unknown, ctx): val is AnyMedia => {
-    const Schema = resolveAnyMediaSchema(val);
+    const schema = resolveAnyMediaSchema(val);
 
-    if (!Schema) {
+    if (!schema) {
       ctx.addIssue({
         code: z.ZodIssueCode.invalid_union_discriminator,
         options: [
@@ -321,7 +316,7 @@ export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
       return z.NEVER;
     }
 
-    const result = Schema.safeParse(val);
+    const result = schema.safeParse(val);
 
     if (!result.success) {
       result.error.issues.forEach((issue) => {

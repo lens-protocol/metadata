@@ -1,3 +1,5 @@
+#!/usr/bin/env -S npx tsx
+
 import { join } from 'path';
 
 import fs from 'fs-extra';
@@ -47,6 +49,8 @@ import {
   GeoURISchema,
   PhysicalAddressSchema,
   EncryptedStringSchema,
+  EncryptableUriSchema,
+  ChainIdSchema,
 } from '../src';
 import { ModuleMetadataSchema } from '../src/module';
 
@@ -82,12 +86,13 @@ for (const [path, Schema] of schemas) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
-      AdvancedContractCondition: AdvancedContractConditionSchema,
       AccessCondition: AccessConditionSchema,
-      PhysicalAddress: PhysicalAddressSchema,
+      AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
+      ChainId: ChainIdSchema,
       CollectCondition: CollectConditionSchema,
+      EncryptableUri: EncryptableUriSchema,
       EncryptedString: EncryptedStringSchema,
       EoaOwnershipCondition: EoaOwnershipConditionSchema,
       Erc20OwnershipCondition: Erc20OwnershipConditionSchema,
@@ -102,6 +107,7 @@ for (const [path, Schema] of schemas) {
       MetadataLicenseType: MetadataLicenseTypeSchema,
       NetworkAddress: NetworkAddressSchema,
       NftOwnershipCondition: NftOwnershipConditionSchema,
+      PhysicalAddress: PhysicalAddressSchema,
       ProfileId: ProfileIdSchema,
       ProfileOwnershipCondition: ProfileOwnershipConditionSchema,
       PublicationEncryptionStrategy: PublicationEncryptionStrategySchema,
