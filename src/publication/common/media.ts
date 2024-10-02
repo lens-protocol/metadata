@@ -11,14 +11,13 @@ import {
 
 export const MediaAttributesSchema = MetadataAttributeSchema.array()
   .min(1)
-  .optional()
   .describe(
     'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.',
   );
 
 const MediaCommonSchema = z.object({
   item: EncryptableUriSchema,
-  attributes: MediaAttributesSchema,
+  attributes: MediaAttributesSchema.optional(),
 });
 
 /**

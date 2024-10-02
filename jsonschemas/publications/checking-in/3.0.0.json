@@ -4,15 +4,7 @@
     "description": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            }
-          ],
+          "type": "string",
           "description": "A human-readable description of the item. It could be plain text or markdown."
         },
         {
@@ -24,17 +16,9 @@
     "external_url": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            }
-          ],
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
           "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
         },
         {
@@ -57,17 +41,9 @@
     "image": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "Marketplaces will store any NFT image here."
-            }
-          ],
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
           "description": "Marketplaces will store any NFT image here."
         },
         {
@@ -79,17 +55,9 @@
     "animation_url": {
       "anyOf": [
         {
-          "anyOf": [
-            {
-              "not": {}
-            },
-            {
-              "type": "string",
-              "minLength": 6,
-              "format": "uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            }
-          ],
+          "type": "string",
+          "minLength": 6,
+          "format": "uri",
           "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
         },
         {
@@ -620,18 +588,11 @@
       "additionalProperties": true
     },
     "MediaAttributes": {
-      "anyOf": [
-        {
-          "not": {}
-        },
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MetadataAttribute"
-          },
-          "minItems": 1
-        }
-      ],
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MetadataAttribute"
+      },
+      "minItems": 1,
       "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
     },
     "MediaAudio": {
@@ -641,7 +602,8 @@
           "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAttributes"
+          "$ref": "#/$defs/MediaAttributes",
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
         },
         "type": {
           "type": "string",
@@ -750,7 +712,7 @@
           "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAttributes"
+          "$ref": "#/$defs/MediaAudio/properties/attributes"
         },
         "type": {
           "type": "string",
@@ -798,7 +760,7 @@
           "$ref": "#/$defs/EncryptableUri"
         },
         "attributes": {
-          "$ref": "#/$defs/MediaAttributes"
+          "$ref": "#/$defs/MediaAudio/properties/attributes"
         },
         "type": {
           "type": "string",

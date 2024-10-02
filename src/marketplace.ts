@@ -88,16 +88,16 @@ export const MarketplaceMetadataSchema = z
           'A human-readable description of the item. It could be plain text or markdown.',
       }),
     )
-      .optional()
       .nullable()
+      .optional()
       .catch(null),
 
     external_url: uriSchema(
       `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
         'and will allow users to leave OpenSea and view the item on the site.',
     )
-      .optional()
       .nullable()
+      .optional()
       .catch(null),
 
     name: z.string({ description: 'Name of the NFT item.' }).optional(),
@@ -110,8 +110,8 @@ export const MarketplaceMetadataSchema = z
       .catch([]),
 
     image: uriSchema('Marketplaces will store any NFT image here.')
-      .optional()
       .nullable()
+      .optional()
       .catch(null),
 
     animation_url: uriSchema(
@@ -120,8 +120,8 @@ export const MarketplaceMetadataSchema = z
         'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
         'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
     )
-      .optional()
       .nullable()
+      .optional()
       .catch(null),
   })
   .passthrough(); // loose validation for any unknown fields;
