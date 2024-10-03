@@ -2,7 +2,7 @@
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
-import { MarketplaceMetadataSchema } from '../marketplace.js';
+import { marketplaceMetadataSchemaWith } from '../marketplace.js';
 import {
   LocaleSchema,
   Markdown,
@@ -185,7 +185,7 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
   return isNullish(value) || value.length === 0;
 }
 
-const PublicationCommonSchema = MarketplaceMetadataSchema.extend({
+const PublicationCommonSchema = marketplaceMetadataSchemaWith({
   metadata_id: z
     .string({
       description:
