@@ -8,7 +8,6 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -17,9 +16,10 @@ import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableDateTimeSchema,
   EncryptableUriSchema,
-  nonEmptyStringSchema,
+  EncryptableDateTimeSchema,
+  EncryptableMarkdownSchema,
+  NonEmptyStringSchema,
 } from '../primitives.js';
 
 export type SpaceMetadataDetails = PublicationMetadataCommon & {
@@ -53,15 +53,15 @@ export const SpaceMetadataDetailsSchema: z.ZodType<SpaceMetadataDetails, z.ZodTy
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.SPACE),
 
-    title: nonEmptyStringSchema().describe('The space title.'),
+    title: NonEmptyStringSchema.describe('The space title.'),
 
     link: EncryptableUriSchema.describe('The space join link.'),
 
-    startsAt: encryptableDateTimeSchema(
+    startsAt: EncryptableDateTimeSchema.describe(
       'The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

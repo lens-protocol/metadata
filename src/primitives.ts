@@ -144,12 +144,22 @@ export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, u
       .trim();
   }, schema.min(1));
 }
+
+/**
+ * @internal
+ */
+export const NonEmptyStringSchema = nonEmpty(z.string());
 /**
  * @internal
  */
 export function nonEmptyStringSchema(description?: string) {
   return nonEmpty(z.string({ description }));
 }
+
+/**
+ * @internal
+ */
+export const EncryptableStringSchema = encryptable(nonEmptyStringSchema());
 /**
  * @internal
  */
@@ -244,6 +254,10 @@ export function markdown(
 ): z.ZodType<Markdown, z.ZodTypeDef, unknown> {
   return schema.transform(toMarkdown);
 }
+
+export const EncryptableMarkdownSchema = encryptable(
+  markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
+);
 
 /**
  * A markdown text or its encrypted version.
@@ -423,6 +437,11 @@ export function encryptableGeoUriSchema(description: string) {
 }
 
 /**
+ * @internal
+ */
+export const EncryptableGeoURISchema = encryptable(GeoURISchema);
+
+/**
  * A Geo URI or its encrypted version.
  *
  * For example in the context of a token-gated publication, fields of this type are encrypted.
@@ -463,15 +482,17 @@ export type PhysicalAddress = {
  * @internal
  */
 export const PhysicalAddressSchema: z.ZodType<PhysicalAddress, z.ZodTypeDef, object> = z.object({
-  formatted: encryptableStringSchema('The full mailing address formatted for display.').optional(),
-  streetAddress: encryptableStringSchema(
+  formatted: EncryptableStringSchema.describe(
+    'The full mailing address formatted for display.',
+  ).optional(),
+  streetAddress: EncryptableStringSchema.describe(
     'The street address including house number, street name, P.O. Box, ' +
       'apartment or unit number and extended multi-line address information.',
   ).optional(),
-  locality: encryptableStringSchema('The city or locality.'),
-  region: encryptableStringSchema('The state or region.').optional(),
-  postalCode: encryptableStringSchema('The zip or postal code.').optional(),
-  country: encryptableStringSchema('The country name component.'),
+  locality: EncryptableStringSchema.describe('The city or locality.'),
+  region: EncryptableStringSchema.describe('The state or region.').optional(),
+  postalCode: EncryptableStringSchema.describe('The zip or postal code.').optional(),
+  country: EncryptableStringSchema.describe('The country name component.'),
 });
 
 /**
@@ -487,7 +508,7 @@ export function toDateTime(value: string): DateTime {
 /**
  * @internal
  */
-export function datetimeSchema(description: string): z.ZodType<DateTime, z.ZodTypeDef, unknown> {
+export function datetimeSchema(description?: string): z.ZodType<DateTime, z.ZodTypeDef, unknown> {
   return z.string({ description }).datetime().transform(toDateTime);
 }
 /**
@@ -496,6 +517,8 @@ export function datetimeSchema(description: string): z.ZodType<DateTime, z.ZodTy
 export function encryptableDateTimeSchema(description: string) {
   return encryptable(datetimeSchema(description));
 }
+
+export const EncryptableDateTimeSchema = encryptable(datetimeSchema());
 
 /**
  * A DateTime or its encrypted version.

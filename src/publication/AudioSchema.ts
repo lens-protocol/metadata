@@ -9,12 +9,16 @@ import {
   MediaAudio,
   MediaAudioSchema,
   metadataDetailsWith,
-  optionalContentSchema,
   PublicationMetadataCommon,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
-import { EncryptableMarkdown, nonEmptyStringSchema, Signature } from '../primitives.js';
+import {
+  EncryptableMarkdown,
+  EncryptableMarkdownSchema,
+  Signature,
+  NonEmptyStringSchema,
+} from '../primitives.js';
 
 export type AudioMetadataDetails = PublicationMetadataCommon & {
   /**
@@ -45,9 +49,9 @@ const AudioMetadataDetailsSchema: z.ZodType<AudioMetadataDetails, z.ZodTypeDef, 
 
     audio: MediaAudioSchema,
 
-    title: nonEmptyStringSchema('The optional audio title.').optional(),
+    title: NonEmptyStringSchema.describe('The optional audio title.').optional(),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

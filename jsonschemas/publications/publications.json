@@ -324,6 +324,54 @@
       ],
       "additionalProperties": false
     },
+    "EncryptableDateTime": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableGeoURI": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GeoURI"
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableMarkdown": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "description": "The content for the publication as markdown."
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableString": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
     "EncryptableUri": {
       "anyOf": [
         {
@@ -488,56 +536,20 @@
           "description": "The license for the audio."
         },
         "credits": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The credits for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The credits for the audio."
         },
         "artist": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The name of the artist."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The name of the artist."
         },
         "genre": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The genre of the audio"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The genre of the audio"
         },
         "recordLabel": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The record label for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The record label for the audio."
         },
         "kind": {
           "type": "string",
@@ -591,17 +603,8 @@
           "description": "The mime type of the image"
         },
         "altTag": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The alt tag for accessibility"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The alt tag for accessibility"
         },
         "license": {
           "$ref": "#/$defs/MetadataLicenseType",
@@ -645,17 +648,8 @@
           "description": "The mime type of the video"
         },
         "altTag": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The alt tag for accessibility"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The alt tag for accessibility"
         },
         "cover": {
           "$ref": "#/$defs/EncryptableUri"
@@ -808,6 +802,11 @@
         }
       ]
     },
+    "MetadataId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+    },
     "MetadataLicenseType": {
       "type": "string",
       "enum": [
@@ -900,86 +899,36 @@
       ],
       "additionalProperties": false
     },
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
     "PhysicalAddress": {
       "type": "object",
       "properties": {
         "formatted": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The full mailing address formatted for display."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The full mailing address formatted for display."
         },
         "streetAddress": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
         },
         "locality": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The city or locality."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The city or locality."
         },
         "region": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The state or region."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The state or region."
         },
         "postalCode": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The zip or postal code."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The zip or postal code."
         },
         "country": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The country name component."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The country name component."
         }
       },
       "required": [
@@ -1051,6 +1000,15 @@
     "PublicationId": {
       "type": "string",
       "minLength": 9
+    },
+    "ContentWarning": {
+      "type": "string",
+      "enum": [
+        "NSFW",
+        "SENSITIVE",
+        "SPOILER"
+      ],
+      "description": "Specify a content warning."
     },
     "Signature": {
       "type": "string",
@@ -1143,9 +1101,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -1180,12 +1136,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -1194,21 +1145,10 @@
               "description": "The main focus of the publication."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "The content for the publication as markdown."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown"
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The optional article title."
             },
             "attachments": {
@@ -1315,9 +1255,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -1352,12 +1290,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -1369,21 +1302,12 @@
               "$ref": "#/$defs/MediaAudio"
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The optional audio title."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -1489,9 +1413,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -1526,12 +1448,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -1540,45 +1457,20 @@
               "description": "The main focus of the publication."
             },
             "location": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "Where you checking in from (free form text)."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableString",
+              "description": "Where you checking in from (free form text)."
             },
             "position": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/GeoURI",
-                  "description": "The optional geographic position of the location."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableGeoURI",
+              "description": "The optional geographic position of the location."
             },
             "address": {
               "$ref": "#/$defs/PhysicalAddress",
               "description": "The optional address of the location."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -1684,9 +1576,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -1721,12 +1611,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -1739,16 +1624,8 @@
               "description": "The embed URL."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -1854,9 +1731,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -1891,17 +1766,11 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The title of the event."
             },
             "mainContentFocus": {
@@ -1916,62 +1785,27 @@
                   "description": "A virtual location."
                 },
                 {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "The event location (free form text)."
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString"
-                    }
-                  ],
-                  "description": "An encrypted value or its decrypted version."
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The event location (free form text)."
                 }
               ],
               "description": "The location of the event."
             },
             "position": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/GeoURI",
-                  "description": "The geographic position of the event."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableGeoURI",
+              "description": "The geographic position of the event."
             },
             "address": {
               "$ref": "#/$defs/PhysicalAddress",
               "description": "The address of the event."
             },
             "startsAt": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
             },
             "endsAt": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
             },
             "schedulingAdjustments": {
               "type": "object",
@@ -2431,16 +2265,8 @@
               "description": "The links you want to include with it."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -2548,9 +2374,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -2585,12 +2409,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -2602,21 +2421,12 @@
               "$ref": "#/$defs/MediaImage"
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The optional image title."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -2722,9 +2532,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -2759,12 +2567,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -2777,16 +2580,8 @@
               "description": "The sharing link url."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -2892,9 +2687,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -2929,12 +2722,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -2943,35 +2731,16 @@
               "description": "The main focus of the publication."
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The livestream title."
             },
             "startsAt": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
             },
             "endsAt": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)"
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)"
             },
             "playbackUrl": {
               "$ref": "#/$defs/EncryptableUri",
@@ -2986,16 +2755,8 @@
               "description": "The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -3103,9 +2864,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -3140,12 +2899,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -3158,16 +2912,8 @@
               "description": "The mint item it can be a URL of the known provider like opensea https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata"
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -3273,9 +3019,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -3310,12 +3054,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -3324,8 +3063,7 @@
               "description": "The main focus of the publication."
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The space title."
             },
             "link": {
@@ -3333,29 +3071,12 @@
               "description": "The space join link."
             },
             "startsAt": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -3463,9 +3184,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -3500,12 +3219,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -3514,17 +3228,7 @@
               "description": "The main focus of the publication."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "The content for the publication as markdown."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown"
             }
           },
           "required": [
@@ -3622,9 +3326,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -3659,12 +3361,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -3677,16 +3374,8 @@
               "description": "The story asset."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             }
           },
           "required": [
@@ -3784,9 +3473,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -3821,12 +3508,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -3835,17 +3517,8 @@
               "description": "The main focus of the publication."
             },
             "txHash": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "The transaction hash."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableString",
+              "description": "The transaction hash."
             },
             "type": {
               "type": "string",
@@ -3861,16 +3534,8 @@
               "description": "The Chain Id."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -3978,9 +3643,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -4015,12 +3678,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -4040,8 +3698,7 @@
                     "description": "The URI of the 3D asset zip file."
                   },
                   "zipPath": {
-                    "type": "string",
-                    "minLength": 1,
+                    "$ref": "#/$defs/NonEmptyString",
                     "description": "Path in extracted zip. Relative. 3D start point, MUST be 3D file type."
                   },
                   "playerUrl": {
@@ -4076,16 +3733,8 @@
               "description": "The 3D items for the publication"
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",
@@ -4191,9 +3840,7 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+              "$ref": "#/$defs/MetadataId"
             },
             "appId": {
               "$ref": "#/$defs/AppId",
@@ -4228,12 +3875,7 @@
               "description": "An arbitrary list of tags."
             },
             "contentWarning": {
-              "type": "string",
-              "enum": [
-                "NSFW",
-                "SENSITIVE",
-                "SPOILER"
-              ],
+              "$ref": "#/$defs/ContentWarning",
               "description": "Specify a content warning."
             },
             "mainContentFocus": {
@@ -4248,21 +3890,12 @@
               "$ref": "#/$defs/MediaVideo"
             },
             "title": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The optional video title."
             },
             "content": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "Optional markdown content."
-                },
-                {
-                  "$ref": "#/$defs/EncryptedString"
-                }
-              ],
-              "description": "An encrypted value or its decrypted version."
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
             },
             "attachments": {
               "type": "array",

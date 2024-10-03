@@ -10,11 +10,15 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
-import { EncryptableMarkdown, Signature, nonEmptyStringSchema } from '../primitives.js';
+import {
+  EncryptableMarkdown,
+  Signature,
+  NonEmptyStringSchema,
+  EncryptableMarkdownSchema,
+} from '../primitives.js';
 
 export type VideoMetadataDetails = PublicationMetadataCommon & {
   /**
@@ -48,9 +52,9 @@ const VideoMetadataDetailsSchema: z.ZodType<VideoMetadataDetails, z.ZodTypeDef, 
 
     video: MediaVideoSchema,
 
-    title: nonEmptyStringSchema('The optional video title.').optional(),
+    title: NonEmptyStringSchema.describe('The optional video title.').optional(),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

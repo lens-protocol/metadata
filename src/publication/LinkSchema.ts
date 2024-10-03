@@ -8,7 +8,6 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -17,6 +16,7 @@ import {
   EncryptableURI,
   Signature,
   EncryptableUriSchema,
+  EncryptableMarkdownSchema,
 } from '../primitives.js';
 
 export type LinkMetadataDetails = PublicationMetadataCommon & {
@@ -44,7 +44,7 @@ const LinkMetadataDetailsSchema: z.ZodType<LinkMetadataDetails, z.ZodTypeDef, ob
 
     sharingLink: EncryptableUriSchema.describe('The sharing link url.'),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

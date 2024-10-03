@@ -15,8 +15,6 @@ import {
   AppId,
   Locale,
   Tag,
-  encryptable,
-  markdown,
 } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -30,6 +28,14 @@ export enum PublicationContentWarning {
   SENSITIVE = 'SENSITIVE',
   SPOILER = 'SPOILER',
 }
+
+export const MetadataIdSchema = nonEmptyStringSchema(
+  'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
+);
+
+export const PublicationContentWarningSchema = z.nativeEnum(PublicationContentWarning, {
+  description: 'Specify a content warning.',
+});
 
 /**
  * Common fields of a Lens primary publication.
@@ -91,9 +97,7 @@ export function metadataDetailsWith<
 >(augmentation: Augmentation) {
   return z
     .object({
-      id: nonEmptyStringSchema(
-        'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
-      ),
+      id: MetadataIdSchema,
 
       appId: AppIdSchema.optional().describe('The App Id that this publication belongs to.'),
 
@@ -144,9 +148,7 @@ export function metadataDetailsWith<
         .optional()
         .describe('An arbitrary list of tags.'),
 
-      contentWarning: z
-        .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
-        .optional(),
+      contentWarning: PublicationContentWarningSchema.optional(),
     })
     .extend(augmentation);
 }
@@ -190,11 +192,4 @@ export function mainContentFocus(...focuses: [PublicationMainFocus, ...Publicati
     return z.union(literals, { description });
   }
   return z.literal(focuses[0], { description });
-}
-
-/**
- * @internal
- */
-export function optionalContentSchema() {
-  return encryptable(markdown(z.string({ description: 'Optional markdown content.' }))).optional();
 }
