@@ -156,8 +156,9 @@ export const MediaSchema = z
     cover: z
       .string() // it can be `This publication is gated.`
       .describe('The cover for any video or audio media.')
+      .nullable()
       .optional()
-      .catch(undefined),
+      .catch(null),
     type: z.string().optional().nullable().describe('This is the mime type of the media.'),
   })
   .passthrough(); // loose validation for media
