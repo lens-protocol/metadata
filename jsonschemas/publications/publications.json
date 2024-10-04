@@ -482,8 +482,7 @@
           ]
         },
         "trait_type": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the trait."
         },
         "value": {
@@ -680,8 +679,7 @@
               "const": "Boolean"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -708,8 +706,7 @@
               "const": "Date"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -733,13 +730,11 @@
               "const": "Number"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
             }
           },
@@ -758,14 +753,12 @@
               "const": "String"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A string value."
+              "$ref": "#/$defs/Amount/properties/value",
+              "description": "Any string value."
             }
           },
           "required": [
@@ -783,13 +776,11 @@
               "const": "JSON"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },
@@ -900,8 +891,7 @@
       "additionalProperties": false
     },
     "NonEmptyString": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "#/$defs/Amount/properties/value"
     },
     "PhysicalAddress": {
       "type": "object",
@@ -1148,7 +1138,7 @@
               "$ref": "#/$defs/EncryptableMarkdown"
             },
             "title": {
-              "$ref": "#/$defs/NonEmptyString",
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The optional article title."
             },
             "attachments": {
@@ -1302,7 +1292,7 @@
               "$ref": "#/$defs/MediaAudio"
             },
             "title": {
-              "$ref": "#/$defs/NonEmptyString",
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The optional audio title."
             },
             "content": {
@@ -1770,7 +1760,7 @@
               "description": "Specify a content warning."
             },
             "title": {
-              "$ref": "#/$defs/NonEmptyString",
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The title of the event."
             },
             "mainContentFocus": {
@@ -2421,7 +2411,7 @@
               "$ref": "#/$defs/MediaImage"
             },
             "title": {
-              "$ref": "#/$defs/NonEmptyString",
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The optional image title."
             },
             "content": {
@@ -3063,7 +3053,7 @@
               "description": "The main focus of the publication."
             },
             "title": {
-              "$ref": "#/$defs/NonEmptyString",
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The space title."
             },
             "link": {
@@ -3890,7 +3880,7 @@
               "$ref": "#/$defs/MediaVideo"
             },
             "title": {
-              "$ref": "#/$defs/NonEmptyString",
+              "$ref": "#/$defs/Amount/properties/value",
               "description": "The optional video title."
             },
             "content": {

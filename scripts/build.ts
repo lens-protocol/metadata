@@ -97,6 +97,7 @@ for (const [path, Schema] of schemas) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
+      NonEmptyString: NonEmptyStringSchema,
       AccessCondition: AccessConditionSchema,
       AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
@@ -149,6 +150,7 @@ for (const [path, Schema] of others) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
+      NonEmptyString: NonEmptyStringSchema,
       MetadataAttribute: MetadataAttributeSchema,
     },
   });
@@ -170,6 +172,7 @@ for (const [path, Schema] of openActions) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
+      NonEmptyString: NonEmptyStringSchema,
       MetadataAttribute: MetadataAttributeSchema,
     },
   });

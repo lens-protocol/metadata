@@ -134,8 +134,7 @@
           "description": "The main focus of the publication."
         },
         "title": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The livestream title."
         },
         "startsAt": {
@@ -205,6 +204,10 @@
   ],
   "additionalProperties": true,
   "$defs": {
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
     "AccessCondition": {
       "type": "object",
       "properties": {
@@ -426,8 +429,7 @@
           "additionalProperties": false
         },
         "value": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
         }
       },
@@ -593,8 +595,7 @@
           ]
         },
         "trait_type": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the trait."
         },
         "value": {
@@ -791,8 +792,7 @@
               "const": "Boolean"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -819,8 +819,7 @@
               "const": "Date"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -844,13 +843,11 @@
               "const": "Number"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
             }
           },
@@ -869,14 +866,12 @@
               "const": "String"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A string value."
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Any string value."
             }
           },
           "required": [
@@ -894,13 +889,11 @@
               "const": "JSON"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },
