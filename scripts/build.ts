@@ -187,7 +187,7 @@ for (const [path, Schema] of openActions) {
 }
 
 async function generateUmbrellaSchema() {
-  const outputFile = join(outputDir, 'publications/publications.json');
+  const outputFile = join(outputDir, 'schema.json');
 
   await fs.ensureFile(outputFile);
 
@@ -250,6 +250,8 @@ async function generateUmbrellaSchema() {
       TransactionMetadata: TransactionSchema,
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
+      ProfileMetadata: ProfileMetadataSchema,
+      ModuleMetadataSchema: ModuleMetadataSchema,
     },
   });
 

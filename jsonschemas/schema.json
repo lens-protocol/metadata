@@ -3825,6 +3825,128 @@
         "lens"
       ],
       "additionalProperties": true
+    },
+    "ProfileMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/profile/2.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The profile display name."
+            },
+            "bio": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The profile bio as markdown."
+            },
+            "picture": {
+              "$ref": "#/$defs/Uri",
+              "description": "The profile picture."
+            },
+            "coverPicture": {
+              "$ref": "#/$defs/Uri",
+              "description": "The profile cover picture."
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "appId": {
+              "$ref": "#/$defs/AppId",
+              "description": "The App Id that this Profile data refers to. If omitted the data is considered to be the global Profile data."
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "description": "The Lens specific metadata details."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "ModuleMetadataSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1,
+          "description": "The name of the module."
+        },
+        "title": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The human-friendly title for the module."
+        },
+        "description": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "Markdown formatted description of the module."
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "email"
+          },
+          "minItems": 1,
+          "description": "List of authors email addresses."
+        },
+        "initializeCalldataABI": {
+          "type": "string",
+          "description": "The Solidity JSON ABI as JSON-string describing the initialization function calldata."
+        },
+        "initializeResultDataABI": {
+          "type": "string",
+          "description": "The Solidity JSON ABI as JSON-string describing the initialization result data."
+        },
+        "processCalldataABI": {
+          "type": "string",
+          "description": "The Solidity JSON ABI as JSON-string describing the process function calldata."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "description": "An arbitrary bag of attributes."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/modules/1.0.0.json"
+        }
+      },
+      "required": [
+        "name",
+        "title",
+        "description",
+        "authors",
+        "initializeCalldataABI",
+        "processCalldataABI",
+        "attributes",
+        "$schema"
+      ],
+      "additionalProperties": false
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"
