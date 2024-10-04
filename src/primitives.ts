@@ -255,9 +255,17 @@ export function markdown(
   return schema.transform(toMarkdown);
 }
 
+/**
+ * @internal
+ */
 export const EncryptableMarkdownSchema = encryptable(
   markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
 );
+
+/**
+ * @internal
+ */
+export const MarkdownSchema = NonEmptyStringSchema.transform(toMarkdown);
 
 /**
  * A markdown text or its encrypted version.
@@ -291,6 +299,11 @@ export function uriSchema(
     .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
     .transform(toUri);
 }
+
+/**
+ * @internal
+ */
+export const UriSchema = uriSchema();
 
 /**
  * @internal

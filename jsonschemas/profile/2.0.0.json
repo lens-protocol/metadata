@@ -9,30 +9,23 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
         "name": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The profile display name."
         },
         "bio": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The profile bio as markdown."
         },
         "picture": {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "The profile picture."
         },
         "coverPicture": {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "The profile cover picture."
         },
         "attributes": {
@@ -71,6 +64,15 @@
     "NonEmptyString": {
       "type": "string",
       "minLength": 1
+    },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier. "
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
     },
     "MetadataAttribute": {
       "anyOf": [

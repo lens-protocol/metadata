@@ -43,6 +43,15 @@
       "type": "string",
       "minLength": 1
     },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier. "
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
+    },
     "MetadataAttribute": {
       "anyOf": [
         {

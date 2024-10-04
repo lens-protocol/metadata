@@ -62,6 +62,8 @@ import {
   EncryptableDateTimeSchema,
   NonEmptyStringSchema,
   EncryptableStringSchema,
+  UriSchema,
+  MarkdownSchema,
 } from '../src';
 import { ModuleMetadataSchema } from '../src/module';
 
@@ -98,6 +100,8 @@ for (const [path, Schema] of schemas) {
     definitionPath: '$defs',
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
+      Markdown: MarkdownSchema,
+      Uri: UriSchema,
       AccessCondition: AccessConditionSchema,
       AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
@@ -151,6 +155,8 @@ for (const [path, Schema] of others) {
     definitionPath: '$defs',
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
+      Uri: UriSchema,
+      Markdown: MarkdownSchema,
       MetadataAttribute: MetadataAttributeSchema,
     },
   });
@@ -191,6 +197,8 @@ async function generateUmbrellaSchema() {
     $refStrategy: 'root',
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
+      Markdown: MarkdownSchema,
+      Uri: UriSchema,
       AccessCondition: AccessConditionSchema,
       AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
