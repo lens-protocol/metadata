@@ -190,6 +190,7 @@ async function generateUmbrellaSchema() {
     definitionPath: '$defs',
     $refStrategy: 'root',
     definitions: {
+      NonEmptyString: NonEmptyStringSchema,
       AccessCondition: AccessConditionSchema,
       AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
@@ -218,7 +219,6 @@ async function generateUmbrellaSchema() {
       MetadataLicenseType: MetadataLicenseTypeSchema,
       NetworkAddress: NetworkAddressSchema,
       NftOwnershipCondition: NftOwnershipConditionSchema,
-      NonEmptyString: NonEmptyStringSchema,
       PhysicalAddress: PhysicalAddressSchema,
       ProfileId: ProfileIdSchema,
       ProfileOwnershipCondition: ProfileOwnershipConditionSchema,
