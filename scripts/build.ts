@@ -105,6 +105,7 @@ for (const [path, Schema] of schemas) {
       CollectCondition: CollectConditionSchema,
       EncryptableUri: EncryptableUriSchema,
       EncryptedString: EncryptedStringSchema,
+      EncryptableString: EncryptableStringSchema,
       EoaOwnershipCondition: EoaOwnershipConditionSchema,
       Erc20OwnershipCondition: Erc20OwnershipConditionSchema,
       EvmAddress: EvmAddressSchema,

@@ -464,6 +464,18 @@
       "pattern": "^\\S+$",
       "description": "An encrypted value."
     },
+    "EncryptableString": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
     "EoaOwnershipCondition": {
       "type": "object",
       "properties": {
@@ -604,27 +616,19 @@
           "description": "The license for the audio."
         },
         "credits": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
+          "$ref": "#/$defs/EncryptableString",
           "description": "The credits for the audio."
         },
         "artist": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The name of the artist."
         },
         "genre": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The genre of the audio"
         },
         "recordLabel": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The record label for the audio."
         },
         "kind": {
@@ -679,7 +683,7 @@
           "description": "The mime type of the image"
         },
         "altTag": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The alt tag for accessibility"
         },
         "license": {
@@ -724,7 +728,7 @@
           "description": "The mime type of the video"
         },
         "altTag": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The alt tag for accessibility"
         },
         "cover": {
@@ -974,27 +978,27 @@
       "type": "object",
       "properties": {
         "formatted": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The full mailing address formatted for display."
         },
         "streetAddress": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
         },
         "locality": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The city or locality."
         },
         "region": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The state or region."
         },
         "postalCode": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The zip or postal code."
         },
         "country": {
-          "$ref": "#/$defs/MediaAudio/properties/credits",
+          "$ref": "#/$defs/EncryptableString",
           "description": "The country name component."
         }
       },
