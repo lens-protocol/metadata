@@ -658,7 +658,7 @@ export type Amount = {
 export const AmountSchema: z.ZodType<Amount, z.ZodTypeDef, unknown> = z.object(
   {
     asset: AssetSchema,
-    value: nonEmptyStringSchema(
+    value: NonEmptyStringSchema.describe(
       'The amount in the smallest unit of the given asset (e.g. wei for ETH).',
     ),
   },

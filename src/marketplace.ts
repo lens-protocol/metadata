@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { Markdown, URI, markdown, nonEmptyStringSchema, uriSchema } from './primitives.js';
+import { Markdown, URI, markdown, uriSchema, NonEmptyStringSchema } from './primitives.js';
 
 /**
  * The display type of a marketplace metadata attribute.
@@ -34,7 +34,7 @@ export const MarketplaceMetadataAttributeSchema: z.ZodType<
 > = z
   .object({
     display_type: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
-    trait_type: nonEmptyStringSchema('The name of the trait.').optional(),
+    trait_type: NonEmptyStringSchema.describe('The name of the trait.').optional(),
     value: z.union([z.string(), z.number()]).optional(),
   })
   .passthrough(); // make it more loose to allow for future marketplace extensions

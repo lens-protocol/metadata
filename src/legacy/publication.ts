@@ -6,9 +6,9 @@ import { marketplaceMetadataSchemaWith } from '../marketplace.js';
 import {
   LocaleSchema,
   Markdown,
-  nonEmptyStringSchema,
   toAppId,
   toMarkdown,
+  NonEmptyStringSchema,
 } from '../primitives.js';
 import * as latest from '../publication';
 import {
@@ -151,7 +151,7 @@ const AnimationUrlSchema = z.string({
  */
 export const MediaSchema = z
   .object({
-    item: nonEmptyStringSchema('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
+    item: NonEmptyStringSchema.describe('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
     altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
     cover: z
       .string() // it can be `This publication is gated.`
@@ -383,7 +383,7 @@ export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 const EncryptedMediaWithWrongShapeSchema = z
   .object({
     original: z.object({
-      url: nonEmptyStringSchema(),
+      url: NonEmptyStringSchema,
       cover: z.string().nullable().optional().catch(null),
       altTag: z.string().nullable().optional().catch(null),
       mimeType: z.string().nullable().optional().catch(null),
