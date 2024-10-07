@@ -251,7 +251,7 @@ async function generateUmbrellaSchema() {
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
       ProfileMetadata: ProfileMetadataSchema,
-      ModuleMetadataSchema: ModuleMetadataSchema,
+      ModuleMetadata: ModuleMetadataSchema,
     },
   });
 
