@@ -3951,65 +3951,6 @@
     "AppMetadata": {
       "type": "object",
       "properties": {
-        "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A human-readable description of the item. It could be plain text or markdown."
-        },
-        "external_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the NFT item."
-        },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MarketplaceMetadataAttribute"
-          },
-          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
-        },
-        "image": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Marketplaces will store any NFT image here."
-        },
-        "animation_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-        },
         "schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/app/1.0.0.json"
@@ -4094,76 +4035,21 @@
             "platforms"
           ],
           "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
         }
       },
       "required": [
         "schema",
         "lens"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "GraphMetadata": {
       "type": "object",
       "properties": {
-        "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A human-readable description of the item. It could be plain text or markdown."
-        },
-        "external_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the NFT item."
-        },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MarketplaceMetadataAttribute"
-          },
-          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
-        },
-        "image": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Marketplaces will store any NFT image here."
-        },
-        "animation_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-        },
         "schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/graph/1.0.0.json"
@@ -4195,70 +4081,11 @@
         "schema",
         "lens"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "FeedMetadata": {
       "type": "object",
       "properties": {
-        "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A human-readable description of the item. It could be plain text or markdown."
-        },
-        "external_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the NFT item."
-        },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MarketplaceMetadataAttribute"
-          },
-          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
-        },
-        "image": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Marketplaces will store any NFT image here."
-        },
-        "animation_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-        },
         "schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/feed/1.0.0.json"
@@ -4284,76 +4111,21 @@
             "title"
           ],
           "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
         }
       },
       "required": [
         "schema",
         "lens"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "CommunityMetadata": {
       "type": "object",
       "properties": {
-        "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A human-readable description of the item. It could be plain text or markdown."
-        },
-        "external_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the NFT item."
-        },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MarketplaceMetadataAttribute"
-          },
-          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
-        },
-        "image": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Marketplaces will store any NFT image here."
-        },
-        "animation_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-        },
         "schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/community/1.0.0.json"
@@ -4365,89 +4137,80 @@
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the Community."
             },
-            "title": {
+            "slug": {
               "$ref": "#/$defs/NonEmptyString",
-              "description": "The human-friendly title for the Community."
+              "description": "The slug for the Community."
             },
             "description": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "Optional markdown formatted description of the Community."
+            },
+            "icon": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Uri"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional uri of the Community's icon."
             }
           },
           "required": [
             "name",
-            "title"
+            "slug"
           ],
           "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
         }
       },
       "required": [
         "schema",
         "lens"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     },
     "UsernameMetadata": {
       "type": "object",
       "properties": {
-        "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "A human-readable description of the item. It could be plain text or markdown."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A human-readable description of the item. It could be plain text or markdown."
-        },
-        "external_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
-        },
         "name": {
           "type": "string",
-          "description": "Name of the NFT item."
+          "description": "The name of the contract."
         },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MarketplaceMetadataAttribute"
-          },
-          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the contract."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the contract."
         },
         "image": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Marketplaces will store any NFT image here."
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the contract, typically displayed as a profile picture for the contract."
         },
-        "animation_url": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri",
-              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        "banner_image": {
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the contract, displayed as a banner image for the contract."
+        },
+        "featured_image": {
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section."
+        },
+        "external_link": {
+          "$ref": "#/$defs/Uri",
+          "description": "The external link of the contract."
+        },
+        "collaborators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Uri"
+          },
+          "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
         },
         "schema": {
           "type": "string",
@@ -4456,22 +4219,38 @@
         "lens": {
           "type": "object",
           "properties": {
-            "name": {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "The name of the Username."
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/NonEmptyString"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An optional description of the Username collection."
             }
           },
-          "required": [
-            "name"
-          ],
           "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
         }
       },
       "required": [
+        "name",
+        "symbol",
+        "description",
+        "image",
+        "banner_image",
+        "featured_image",
+        "external_link",
+        "collaborators",
         "schema",
         "lens"
       ],
-      "additionalProperties": true
+      "additionalProperties": false
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"

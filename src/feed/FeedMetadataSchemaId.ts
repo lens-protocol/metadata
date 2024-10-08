@@ -1,1 +1,5 @@
-export const FeedMetadataSchemaId = 'https://json-schemas.lens.dev/feed/1.0.0.json';
+import { SchemasRoot } from '../constants';
+
+export enum FeedMetadataSchemaId {
+  LATEST = `${SchemasRoot}/feed/1.0.0.json`,
+}

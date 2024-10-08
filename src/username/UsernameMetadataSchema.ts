@@ -1,21 +1,30 @@
 import { z } from 'zod';
 
 import { UsernameMetadataSchemaId } from './UsernameMetadataSchemaId';
-import { marketplaceMetadataSchemaWith } from '../marketplace';
-import { NonEmptyStringSchema } from '../primitives';
+import { Eip7572, Eip7572Schema } from '../eip7572';
+import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
+
+export type UsernameMetadata = Eip7572 & {
+  schema: UsernameMetadataSchemaId.LATEST;
+  lens: UsernameMetadataDetails;
+  signature?: Signature;
+};
 
 export type UsernameMetadataDetails = {
   /**
-   * The of the Username.
+   * An optional description of the Username collection.
    */
   description?: string | null;
 };
 
 const UsernameMetadataDetailsSchema = z.object({
-  name: NonEmptyStringSchema.describe('The name of the Username.'),
+  description: NonEmptyStringSchema.nullable()
+    .optional()
+    .describe('An optional description of the Username collection.'),
 });
 
-export const UsernameMetadataSchema = marketplaceMetadataSchemaWith({
-  schema: z.literal(UsernameMetadataSchemaId),
+export const UsernameMetadataSchema = Eip7572Schema.extend({
+  schema: z.literal(UsernameMetadataSchemaId.LATEST),
   lens: UsernameMetadataDetailsSchema,
+  signature: SignatureSchema.optional(),
 });

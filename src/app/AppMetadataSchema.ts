@@ -1,9 +1,34 @@
 import { z } from 'zod';
 
 import { AppMetadataSchemaId } from './AppMetadataSchemaId';
-import { marketplaceMetadataSchemaWith } from '../marketplace';
-import { Markdown, NonEmptyStringSchema, URI, MarkdownSchema, UriSchema } from '../primitives';
+import {
+  Markdown,
+  NonEmptyStringSchema,
+  URI,
+  MarkdownSchema,
+  UriSchema,
+  SignatureSchema,
+  Signature,
+} from '../primitives';
 import { NonEmptyArray } from '../utils';
+
+/**
+ * The app metadata
+ */
+export type AppMetadata = {
+  /**
+   * The schema id.
+   */
+  $schema: AppMetadataSchemaId.LATEST;
+  /**
+   * The metadata details.
+   */
+  lens: AppMetadataDetails;
+  /**
+   * A cryptographic signature of the `lens` data.
+   */
+  signature?: Signature;
+};
 
 export type AppMetadataDetails = {
   /**
@@ -65,7 +90,8 @@ const AppMetadataDetailsSchema = z.object({
   privacyPolicy: UriSchema.nullable().optional().describe('The privacy policy for the app.'),
 });
 
-export const AppMetadataSchema = marketplaceMetadataSchemaWith({
-  schema: z.literal(AppMetadataSchemaId),
+export const AppMetadataSchema = z.object({
+  schema: z.literal(AppMetadataSchemaId.LATEST),
   lens: AppMetadataDetailsSchema,
+  signature: SignatureSchema.optional(),
 });

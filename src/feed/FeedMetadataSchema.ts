@@ -1,8 +1,22 @@
 import { z } from 'zod';
 
 import { FeedMetadataSchemaId } from './FeedMetadataSchemaId';
-import { marketplaceMetadataSchemaWith } from '../marketplace';
-import { NonEmptyStringSchema } from '../primitives';
+import { NonEmptyStringSchema, SignatureSchema, Signature } from '../primitives';
+
+export type FeedMetadata = {
+  /**
+   * The schema id.
+   */
+  $schema: FeedMetadataSchemaId.LATEST;
+  /**
+   * The metadata details.
+   */
+  lens: FeedMetadataDetails;
+  /**
+   * A cryptographic signature of the `lens` data.
+   */
+  signature?: Signature;
+};
 
 export type FeedMetadataDetails = {
   /**
@@ -27,7 +41,8 @@ const FeedMetadataDetailsSchema = z.object({
   ),
 });
 
-export const FeedMetadataSchema = marketplaceMetadataSchemaWith({
-  schema: z.literal(FeedMetadataSchemaId),
+export const FeedMetadataSchema = z.object({
+  schema: z.literal(FeedMetadataSchemaId.LATEST),
   lens: FeedMetadataDetailsSchema,
+  signature: SignatureSchema.optional(),
 });

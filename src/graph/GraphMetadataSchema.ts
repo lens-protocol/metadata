@@ -1,8 +1,22 @@
 import { z } from 'zod';
 
 import { GraphMetadataSchemaId } from './GraphMetadataSchemaId';
-import { marketplaceMetadataSchemaWith } from '../marketplace';
-import { NonEmptyStringSchema } from '../primitives';
+import { NonEmptyStringSchema, Signature } from '../primitives';
+
+export type GraphMetadata = {
+  /**
+   * The schema id.
+   */
+  $schema: GraphMetadataSchemaId.LATEST;
+  /**
+   * The metadata details.
+   */
+  lens: GraphMetadataDetails;
+  /**
+   * A cryptographic signature of the `lens` data.
+   */
+  signature?: Signature;
+};
 
 export type GraphMetadataDetails = {
   /**
@@ -27,7 +41,7 @@ const GraphMetadataDetailsSchema = z.object({
   ),
 });
 
-export const GraphMetadataSchema = marketplaceMetadataSchemaWith({
-  schema: z.literal(GraphMetadataSchemaId),
+export const GraphMetadataSchema = z.object({
+  schema: z.literal(GraphMetadataSchemaId.LATEST),
   lens: GraphMetadataDetailsSchema,
 });
