@@ -64,8 +64,13 @@ import {
   EncryptableStringSchema,
   UriSchema,
   MarkdownSchema,
+  ModuleMetadataSchema,
+  AppMetadataSchema,
+  GraphMetadataSchema,
+  FeedMetadataSchema,
+  CommunityMetadataSchema,
+  UsernameMetadataSchema,
 } from '../src';
-import { ModuleMetadataSchema } from '../src/module';
 
 const outputDir = 'jsonschemas';
 
@@ -250,8 +255,13 @@ async function generateUmbrellaSchema() {
       TransactionMetadata: TransactionSchema,
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
-      ProfileMetadata: ProfileMetadataSchema,
+      AccountMetadata: ProfileMetadataSchema,
       ModuleMetadata: ModuleMetadataSchema,
+      AppMetadata: AppMetadataSchema,
+      GraphMetadata: GraphMetadataSchema,
+      FeedMetadata: FeedMetadataSchema,
+      CommunityMetadata: CommunityMetadataSchema,
+      UsernameMetadata: UsernameMetadataSchema,
     },
   });
 
