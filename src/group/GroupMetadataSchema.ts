@@ -1,24 +1,24 @@
 import { z } from 'zod';
 
-import { CommunityMetadataSchemaId } from './CommunityMetadataSchemaId';
+import { GroupMetadataSchemaId } from './GroupMetadataSchemaId';
 import { NonEmptyStringSchema, Signature, SignatureSchema, UriSchema } from '../primitives';
 
-export type CommunityMetadata = {
+export type GroupMetadata = {
   /**
    * The schema id.
    */
-  $schema: CommunityMetadataSchemaId.LATEST;
+  $schema: GroupMetadataSchemaId.LATEST;
   /**
    * The metadata details.
    */
-  lens: CommunityMetadataDetails;
+  lens: GroupMetadataDetails;
   /**
    * A cryptographic signature of the `lens` data.
    */
   signature?: Signature;
 };
 
-export type CommunityMetadataDetails = {
+export type GroupMetadataDetails = {
   /**
    * The name of the Community.
    */
@@ -38,7 +38,7 @@ export type CommunityMetadataDetails = {
   icon?: string | null;
 };
 
-export const CommunityMetadataDetailsSchema = z.object({
+export const GroupMetadataDetailsSchema = z.object({
   name: NonEmptyStringSchema.describe('The name of the Community.'),
   slug: NonEmptyStringSchema.describe('The slug for the Community.'),
   description: NonEmptyStringSchema.optional().describe(
@@ -47,8 +47,8 @@ export const CommunityMetadataDetailsSchema = z.object({
   icon: UriSchema.nullable().optional().describe("Optional uri of the Community's icon."),
 });
 
-export const CommunityMetadataSchema = z.object({
-  schema: z.literal(CommunityMetadataSchemaId.LATEST),
-  lens: CommunityMetadataDetailsSchema,
+export const GroupMetadataSchema = z.object({
+  schema: z.literal(GroupMetadataSchemaId.LATEST),
+  lens: GroupMetadataDetailsSchema,
   signature: SignatureSchema.optional(),
 });

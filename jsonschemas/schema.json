@@ -259,6 +259,27 @@
       ],
       "additionalProperties": false
     },
+    "MainContentFocus": {
+      "type": "string",
+      "enum": [
+        "VIDEO",
+        "IMAGE",
+        "ARTICLE",
+        "TEXT_ONLY",
+        "AUDIO",
+        "LINK",
+        "EMBED",
+        "CHECKING_IN",
+        "EVENT",
+        "MINT",
+        "TRANSACTION",
+        "LIVESTREAM",
+        "SHORT_VIDEO",
+        "3D",
+        "STORY",
+        "SPACE"
+      ]
+    },
     "Amount": {
       "type": "object",
       "properties": {
@@ -4123,7 +4144,7 @@
       ],
       "additionalProperties": false
     },
-    "CommunityMetadata": {
+    "GroupMetadata": {
       "type": "object",
       "properties": {
         "schema": {

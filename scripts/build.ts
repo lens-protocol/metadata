@@ -68,8 +68,9 @@ import {
   AppMetadataSchema,
   GraphMetadataSchema,
   FeedMetadataSchema,
-  CommunityMetadataSchema,
+  GroupMetadataSchema,
   UsernameMetadataSchema,
+  PublicationMainFocusSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -206,6 +207,7 @@ async function generateUmbrellaSchema() {
       Uri: UriSchema,
       AccessCondition: AccessConditionSchema,
       AdvancedContractCondition: AdvancedContractConditionSchema,
+      MainContentFocus: PublicationMainFocusSchema,
       Amount: AmountSchema,
       AppId: AppIdSchema,
       AnyMedia: AnyMediaSchema,
@@ -260,7 +262,7 @@ async function generateUmbrellaSchema() {
       AppMetadata: AppMetadataSchema,
       GraphMetadata: GraphMetadataSchema,
       FeedMetadata: FeedMetadataSchema,
-      CommunityMetadata: CommunityMetadataSchema,
+      GroupMetadata: GroupMetadataSchema,
       UsernameMetadata: UsernameMetadataSchema,
     },
   });
