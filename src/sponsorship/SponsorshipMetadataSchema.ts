@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
 import { SponsorshipMetadataSchemaId } from './SponsorshipMetadataSchemaId';
-import { Eip7572, Eip7572Schema } from '../eip7572';
 import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
 
-export type SponsorshipMetadata = Eip7572 & {
+export type SponsorshipMetadata = {
   schema: SponsorshipMetadataSchemaId.LATEST;
   lens: SponsorshipMetadataDetails;
   signature?: Signature;
@@ -28,7 +27,7 @@ const SponsorshipMetadataDetailsSchema = z.object({
     .describe('An optional description of the Username collection.'),
 });
 
-export const SponsorshipMetadataSchema = Eip7572Schema.extend({
+export const SponsorshipMetadataSchema = z.object({
   schema: z.literal(SponsorshipMetadataSchemaId.LATEST),
   lens: SponsorshipMetadataDetailsSchema,
   signature: SignatureSchema.optional(),

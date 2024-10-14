@@ -4198,41 +4198,6 @@
     "SponsorshipMetadata": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "The name of the contract."
-        },
-        "symbol": {
-          "type": "string",
-          "description": "The symbol of the contract."
-        },
-        "description": {
-          "type": "string",
-          "description": "The description of the contract."
-        },
-        "image": {
-          "$ref": "#/$defs/Uri",
-          "description": "A URI pointing to a resource with mime type image/* that represents the contract, typically displayed as a profile picture for the contract."
-        },
-        "banner_image": {
-          "$ref": "#/$defs/Uri",
-          "description": "A URI pointing to a resource with mime type image/* that represents the contract, displayed as a banner image for the contract."
-        },
-        "featured_image": {
-          "$ref": "#/$defs/Uri",
-          "description": "A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section."
-        },
-        "external_link": {
-          "$ref": "#/$defs/Uri",
-          "description": "The external link of the contract."
-        },
-        "collaborators": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Uri"
-          },
-          "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
-        },
         "schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/sponsorship/1.0.0.json"
@@ -4267,14 +4232,6 @@
         }
       },
       "required": [
-        "name",
-        "symbol",
-        "description",
-        "image",
-        "banner_image",
-        "featured_image",
-        "external_link",
-        "collaborators",
         "schema",
         "lens"
       ],
@@ -4284,28 +4241,39 @@
       "type": "object",
       "properties": {
         "name": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/name"
+          "type": "string",
+          "description": "The name of the contract."
         },
         "symbol": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/symbol"
+          "type": "string",
+          "description": "The symbol of the contract."
         },
         "description": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/description"
+          "type": "string",
+          "description": "The description of the contract."
         },
         "image": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/image"
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the contract, typically displayed as a profile picture for the contract."
         },
         "banner_image": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/banner_image"
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the contract, displayed as a banner image for the contract."
         },
         "featured_image": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/featured_image"
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section."
         },
         "external_link": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/external_link"
+          "$ref": "#/$defs/Uri",
+          "description": "The external link of the contract."
         },
         "collaborators": {
-          "$ref": "#/$defs/SponsorshipMetadata/properties/collaborators"
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Uri"
+          },
+          "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
         },
         "schema": {
           "type": "string",

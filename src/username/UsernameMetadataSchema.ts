@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { UsernameMetadataSchemaId } from './UsernameMetadataSchemaId';
-import { Eip7572, Eip7572Schema } from '../eip7572';
+import { Eip7572, eip7572SchemaWith } from '../eip7572';
 import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
 
 export type UsernameMetadata = Eip7572 & {
@@ -23,7 +23,7 @@ const UsernameMetadataDetailsSchema = z.object({
     .describe('An optional description of the Username collection.'),
 });
 
-export const UsernameMetadataSchema = Eip7572Schema.extend({
+export const UsernameMetadataSchema = eip7572SchemaWith({
   schema: z.literal(UsernameMetadataSchemaId.LATEST),
   lens: UsernameMetadataDetailsSchema,
   signature: SignatureSchema.optional(),
