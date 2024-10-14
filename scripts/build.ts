@@ -71,6 +71,7 @@ import {
   GroupMetadataSchema,
   UsernameMetadataSchema,
   PublicationMainFocusSchema,
+  SponsorshipMetadataSchema,
 } from '../src';
 
 const outputDir = 'jsonschemas';
@@ -263,6 +264,7 @@ async function generateUmbrellaSchema() {
       GraphMetadata: GraphMetadataSchema,
       FeedMetadata: FeedMetadataSchema,
       GroupMetadata: GroupMetadataSchema,
+      SponsorshipMetadata: SponsorshipMetadataSchema,
       UsernameMetadata: UsernameMetadataSchema,
     },
   });

@@ -4149,7 +4149,7 @@
       "properties": {
         "schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/community/1.0.0.json"
+          "const": "https://json-schemas.lens.dev/group/1.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -4195,7 +4195,7 @@
       ],
       "additionalProperties": false
     },
-    "UsernameMetadata": {
+    "SponsorshipMetadata": {
       "type": "object",
       "properties": {
         "name": {
@@ -4232,6 +4232,80 @@
             "$ref": "#/$defs/Uri"
           },
           "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
+        },
+        "schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/sponsorship/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The name of the Sponsorship."
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/NonEmptyString"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An optional description of the Username collection."
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "name",
+        "symbol",
+        "description",
+        "image",
+        "banner_image",
+        "featured_image",
+        "external_link",
+        "collaborators",
+        "schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "UsernameMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/name"
+        },
+        "symbol": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/symbol"
+        },
+        "description": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/description"
+        },
+        "image": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/image"
+        },
+        "banner_image": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/banner_image"
+        },
+        "featured_image": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/featured_image"
+        },
+        "external_link": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/external_link"
+        },
+        "collaborators": {
+          "$ref": "#/$defs/SponsorshipMetadata/properties/collaborators"
         },
         "schema": {
           "type": "string",
