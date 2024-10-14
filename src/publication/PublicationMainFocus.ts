@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 /**
  * The main focus of a publication.
  */
@@ -19,3 +21,5 @@ export enum PublicationMainFocus {
   STORY = 'STORY',
   SPACE = 'SPACE',
 }
+
+export const PublicationMainFocusSchema = z.nativeEnum(PublicationMainFocus);

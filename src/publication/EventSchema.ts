@@ -10,24 +10,24 @@ import {
   TimezoneIdSchema,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
 import {
   PhysicalAddressSchema,
-  encryptableDateTimeSchema,
   EncryptableUriSchema,
-  encryptableStringSchema,
   EncryptableURI,
   EncryptableString,
   EncryptableGeoURI,
   PhysicalAddress,
   EncryptableDateTime,
   EncryptableMarkdown,
-  encryptableGeoUriSchema,
   Signature,
-  nonEmptyStringSchema,
+  EncryptableDateTimeSchema,
+  NonEmptyStringSchema,
+  EncryptableMarkdownSchema,
+  EncryptableStringSchema,
+  EncryptableGeoURISchema,
 } from '../primitives.js';
 
 /**
@@ -117,26 +117,28 @@ export type EventMetadataDetails = PublicationMetadataCommon & {
 
 const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, object> =
   metadataDetailsWith({
-    title: nonEmptyStringSchema().describe('The title of the event.').optional(),
+    title: NonEmptyStringSchema.describe('The title of the event.').optional(),
 
     mainContentFocus: mainContentFocus(PublicationMainFocus.EVENT),
 
     location: z
       .union([
         EncryptableUriSchema.describe('A virtual location.'),
-        encryptableStringSchema('The event location (free form text).'),
+        EncryptableStringSchema.describe('The event location (free form text).'),
       ])
       .describe('The location of the event.'),
 
-    position: encryptableGeoUriSchema('The geographic position of the event.').optional(),
+    position: EncryptableGeoURISchema.describe('The geographic position of the event.').optional(),
 
     address: PhysicalAddressSchema.optional().describe('The address of the event.'),
 
-    startsAt: encryptableDateTimeSchema(
+    startsAt: EncryptableDateTimeSchema.describe(
       'The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: encryptableDateTimeSchema('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
+    endsAt: EncryptableDateTimeSchema.describe(
+      'The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
+    ),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
@@ -148,7 +150,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
       .optional()
       .describe('The links you want to include with it.'),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

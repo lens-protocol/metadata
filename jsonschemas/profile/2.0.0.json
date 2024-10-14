@@ -9,30 +9,23 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
         "name": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The profile display name."
         },
         "bio": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The profile bio as markdown."
         },
         "picture": {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "The profile picture."
         },
         "coverPicture": {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "The profile cover picture."
         },
         "attributes": {
@@ -68,6 +61,19 @@
   ],
   "additionalProperties": false,
   "$defs": {
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier. "
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
+    },
     "MetadataAttribute": {
       "anyOf": [
         {
@@ -78,8 +84,7 @@
               "const": "Boolean"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -106,8 +111,7 @@
               "const": "Date"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -131,13 +135,11 @@
               "const": "Number"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
             }
           },
@@ -156,14 +158,12 @@
               "const": "String"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A string value."
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Any string value."
             }
           },
           "required": [
@@ -181,13 +181,11 @@
               "const": "JSON"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },

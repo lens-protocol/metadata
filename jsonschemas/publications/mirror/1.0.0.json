@@ -39,6 +39,19 @@
   ],
   "additionalProperties": false,
   "$defs": {
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier. "
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
+    },
     "MetadataAttribute": {
       "anyOf": [
         {
@@ -49,8 +62,7 @@
               "const": "Boolean"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -77,8 +89,7 @@
               "const": "Date"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -102,13 +113,11 @@
               "const": "Number"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
             }
           },
@@ -127,14 +136,12 @@
               "const": "String"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A string value."
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Any string value."
             }
           },
           "required": [
@@ -152,13 +159,11 @@
               "const": "JSON"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },

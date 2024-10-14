@@ -11,15 +11,15 @@ import {
   MetadataLicenseType,
   MetadataLicenseTypeSchema,
   publicationWith,
-  optionalContentSchema,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
-  nonEmptyStringSchema,
   Signature,
   URI,
-  uriSchema,
+  EncryptableMarkdownSchema,
+  NonEmptyStringSchema,
+  UriSchema,
 } from '../primitives.js';
 
 /**
@@ -61,11 +61,11 @@ export type ThreeDAsset = {
  * @internal
  */
 export const ThreeDAssetSchema: z.ZodType<ThreeDAsset, z.ZodTypeDef, object> = z.object({
-  uri: uriSchema('The URI of the 3D asset zip file.'),
-  zipPath: nonEmptyStringSchema()
-    .optional()
-    .describe('Path in extracted zip. Relative. 3D start point, MUST be 3D file type.'),
-  playerUrl: uriSchema(
+  uri: UriSchema.describe('The URI of the 3D asset zip file.'),
+  zipPath: NonEmptyStringSchema.optional().describe(
+    'Path in extracted zip. Relative. 3D start point, MUST be 3D file type.',
+  ),
+  playerUrl: UriSchema.describe(
     'The URL of the recommended web based 3D player to use to view the 3D asset.',
   ),
   format: z.nativeEnum(ThreeDFormat).describe('The 3D format of the asset.'),
@@ -98,7 +98,7 @@ const ThreeDMetadataDetailsSchema: z.ZodType<ThreeDMetadataDetails, z.ZodTypeDef
 
     assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

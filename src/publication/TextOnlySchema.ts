@@ -9,13 +9,7 @@ import {
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
-import {
-  EncryptableMarkdown,
-  Signature,
-  encryptable,
-  markdown,
-  nonEmptyStringSchema,
-} from '../primitives.js';
+import { EncryptableMarkdown, Signature, EncryptableMarkdownSchema } from '../primitives.js';
 
 export type TextOnlyMetadataDetails = PublicationMetadataCommon & {
   /**
@@ -32,9 +26,7 @@ const TextOnlyMetadataDetailsSchema: z.ZodType<TextOnlyMetadataDetails, z.ZodTyp
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.TEXT_ONLY),
 
-    content: encryptable(
-      markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
-    ),
+    content: EncryptableMarkdownSchema,
   });
 
 /**

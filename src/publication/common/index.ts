@@ -5,7 +5,7 @@ import {
   PublicationEncryptionStrategySchema,
 } from './encryption.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import { MarketplaceMetadataSchema } from '../../marketplace.js';
+import { marketplaceMetadataSchemaWith } from '../../marketplace.js';
 import {
   AppIdSchema,
   LocaleSchema,
@@ -15,8 +15,6 @@ import {
   AppId,
   Locale,
   Tag,
-  encryptable,
-  markdown,
 } from '../../primitives.js';
 import { PublicationMainFocus } from '../PublicationMainFocus.js';
 
@@ -30,6 +28,14 @@ export enum PublicationContentWarning {
   SENSITIVE = 'SENSITIVE',
   SPOILER = 'SPOILER',
 }
+
+export const MetadataIdSchema = nonEmptyStringSchema(
+  'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
+);
+
+export const PublicationContentWarningSchema = z.nativeEnum(PublicationContentWarning, {
+  description: 'Specify a content warning.',
+});
 
 /**
  * Common fields of a Lens primary publication.
@@ -76,65 +82,6 @@ export type PublicationMetadataCommon = {
   contentWarning?: PublicationContentWarning;
 };
 
-const PublicationMetadataCommonSchema = z.object({
-  id: nonEmptyStringSchema(
-    'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
-  ),
-
-  appId: AppIdSchema.optional().describe('The App Id that this publication belongs to.'),
-
-  hideFromFeed: z
-    .boolean({
-      description: 'Determine if the publication should not be shown in any feed.',
-    })
-    .optional(),
-
-  attributes: MetadataAttributeSchema.array()
-    .min(1)
-    .max(20)
-    .optional()
-    .describe(
-      'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-        'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
-    ),
-
-  locale: LocaleSchema,
-
-  encryptedWith: PublicationEncryptionStrategySchema.optional(),
-
-  tags: z
-    .set(TagSchema) // z.set(...) sets uniqueItems: true in generated JSON Schemas
-    .max(20)
-    .catch((ctx) => ctx.input as Set<Tag>)
-    .superRefine((input, ctx) => {
-      // but needs to be corrected in code
-      const result = z.array(TagSchema).max(20).safeParse(input);
-
-      if (result.success) {
-        const uniqueTags = [...new Set(result.data)];
-        if (result.data.length > uniqueTags.length) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            fatal: true,
-            message: `Duplicate tags are not allowed: ${result.data.join(', ')}`,
-          });
-        }
-        return z.NEVER;
-      }
-
-      result.error.issues.forEach((issue) => {
-        ctx.addIssue(issue);
-      });
-    })
-    .transform((value) => [...value]) // type coercion
-    .optional()
-    .describe('An arbitrary list of tags.'),
-
-  contentWarning: z
-    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
-    .optional(),
-});
-
 /**
  * Ok, ok, don't! It's really not meant to be used outside.
  * Don't have Kenny say you we told you so.
@@ -148,7 +95,62 @@ export function metadataDetailsWith<
       | z.ZodUnion<[z.ZodLiteral<PublicationMainFocus>, ...z.ZodLiteral<PublicationMainFocus>[]]>;
   },
 >(augmentation: Augmentation) {
-  return PublicationMetadataCommonSchema.extend(augmentation);
+  return z
+    .object({
+      id: MetadataIdSchema,
+
+      appId: AppIdSchema.optional().describe('The App Id that this publication belongs to.'),
+
+      hideFromFeed: z
+        .boolean({
+          description: 'Determine if the publication should not be shown in any feed.',
+        })
+        .optional(),
+
+      attributes: MetadataAttributeSchema.array()
+        .min(1)
+        .max(20)
+        .optional()
+        .describe(
+          'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
+            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+        ),
+
+      locale: LocaleSchema,
+
+      encryptedWith: PublicationEncryptionStrategySchema.optional(),
+
+      tags: z
+        .set(TagSchema) // z.set(...) sets uniqueItems: true in generated JSON Schemas
+        .max(20)
+        .catch((ctx) => ctx.input as Set<Tag>)
+        .superRefine((input, ctx) => {
+          // but needs to be corrected in code
+          const result = z.array(TagSchema).max(20).safeParse(input);
+
+          if (result.success) {
+            const uniqueTags = [...new Set(result.data)];
+            if (result.data.length > uniqueTags.length) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                fatal: true,
+                message: `Duplicate tags are not allowed: ${result.data.join(', ')}`,
+              });
+            }
+            return z.NEVER;
+          }
+
+          result.error.issues.forEach((issue) => {
+            ctx.addIssue(issue);
+          });
+        })
+        .transform((value) => [...value]) // type coercion
+        .optional()
+        .describe('An arbitrary list of tags.'),
+
+      contentWarning: PublicationContentWarningSchema.optional(),
+    })
+    .extend(augmentation);
 }
 
 /**
@@ -163,7 +165,7 @@ export function publicationWith<
     lens: ReturnType<typeof metadataDetailsWith>;
   },
 >(augmentation: Augmentation) {
-  return MarketplaceMetadataSchema.extend({
+  return marketplaceMetadataSchemaWith({
     signature: SignatureSchema.optional(),
     ...augmentation,
   });
@@ -190,11 +192,4 @@ export function mainContentFocus(...focuses: [PublicationMainFocus, ...Publicati
     return z.union(literals, { description });
   }
   return z.literal(focuses[0], { description });
-}
-
-/**
- * @internal
- */
-export function optionalContentSchema() {
-  return encryptable(markdown(z.string({ description: 'Optional markdown content.' }))).optional();
 }

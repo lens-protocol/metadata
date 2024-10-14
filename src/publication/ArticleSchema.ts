@@ -14,9 +14,8 @@ import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
   Signature,
-  encryptable,
-  markdown,
-  nonEmptyStringSchema,
+  EncryptableMarkdownSchema,
+  NonEmptyStringSchema,
 } from '../primitives.js';
 
 export type ArticleMetadataDetails = PublicationMetadataCommon & {
@@ -41,11 +40,9 @@ const ArticleMetadataDetailsSchema: z.ZodType<ArticleMetadataDetails, z.ZodTypeD
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.ARTICLE),
 
-    content: encryptable(
-      markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
-    ),
+    content: EncryptableMarkdownSchema,
 
-    title: nonEmptyStringSchema('The optional article title.').optional(),
+    title: NonEmptyStringSchema.describe('The optional article title.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

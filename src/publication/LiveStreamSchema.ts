@@ -8,7 +8,6 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common/index.js';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -17,9 +16,10 @@ import {
   EncryptableMarkdown,
   EncryptableURI,
   Signature,
-  encryptableDateTimeSchema,
   EncryptableUriSchema,
-  nonEmptyStringSchema,
+  NonEmptyStringSchema,
+  EncryptableDateTimeSchema,
+  EncryptableMarkdownSchema,
 } from '../primitives.js';
 
 export type LiveStreamMetadataDetails = PublicationMetadataCommon & {
@@ -82,13 +82,13 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.LIVESTREAM),
 
-    title: nonEmptyStringSchema().optional().describe('The livestream title.'),
+    title: NonEmptyStringSchema.optional().describe('The livestream title.'),
 
-    startsAt: encryptableDateTimeSchema(
+    startsAt: EncryptableDateTimeSchema.describe(
       'The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: encryptableDateTimeSchema(
+    endsAt: EncryptableDateTimeSchema.describe(
       'The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)',
     ).optional(),
 
@@ -106,7 +106,7 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
       'The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.',
     ).optional(),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)
