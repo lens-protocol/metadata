@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute';
-import { EncryptedStringSchema } from '../primitives';
+import { EncryptableStringSchema, NonEmptyStringSchema } from '../primitives';
 import { AnyMediaSchema } from '../publication';
 
 describe(`Given the zod-to-json-schema package`, () => {
@@ -12,18 +12,28 @@ describe(`Given the zod-to-json-schema package`, () => {
         target: 'jsonSchema7',
         definitionPath: '$defs',
         definitions: {
+          EncryptableString: EncryptableStringSchema,
+          NonEmptyString: NonEmptyStringSchema,
           MetadataAttribute: MetadataAttributeSchema,
-          EncryptedString: EncryptedStringSchema,
         },
       });
 
       expect(jsonSchema).toMatchInlineSnapshot(`
         {
           "$defs": {
-            "EncryptedString": {
-              "description": "An encrypted value.",
-              "pattern": "^\\S+$",
-              "type": "string",
+            "EncryptableString": {
+              "anyOf": [
+                {
+                  "minLength": 1,
+                  "type": "string",
+                },
+                {
+                  "description": "An encrypted value.",
+                  "pattern": "^\\S+$",
+                  "type": "string",
+                },
+              ],
+              "description": "An encrypted value or its decrypted version.",
             },
             "MetadataAttribute": {
               "anyOf": [
@@ -31,9 +41,8 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "additionalProperties": false,
                   "properties": {
                     "key": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "The attribute's unique identifier.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                     "type": {
                       "const": "Boolean",
@@ -59,9 +68,8 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "additionalProperties": false,
                   "properties": {
                     "key": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "The attribute's unique identifier.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                     "type": {
                       "const": "Date",
@@ -84,18 +92,16 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "additionalProperties": false,
                   "properties": {
                     "key": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "The attribute's unique identifier.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                     "type": {
                       "const": "Number",
                       "type": "string",
                     },
                     "value": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "A valid JS number serialized as string. It's consumer responsibility to parse it.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                   },
                   "required": [
@@ -109,18 +115,16 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "additionalProperties": false,
                   "properties": {
                     "key": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "The attribute's unique identifier.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                     "type": {
                       "const": "String",
                       "type": "string",
                     },
                     "value": {
-                      "description": "A string value.",
-                      "minLength": 1,
-                      "type": "string",
+                      "$ref": "#/$defs/NonEmptyString",
+                      "description": "Any string value.",
                     },
                   },
                   "required": [
@@ -134,18 +138,16 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "additionalProperties": false,
                   "properties": {
                     "key": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "The attribute's unique identifier.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                     "type": {
                       "const": "JSON",
                       "type": "string",
                     },
                     "value": {
+                      "$ref": "#/$defs/NonEmptyString",
                       "description": "A JSON string. It's consumer responsibility to validate and parse it.",
-                      "minLength": 1,
-                      "type": "string",
                     },
                   },
                   "required": [
@@ -157,6 +159,10 @@ describe(`Given the zod-to-json-schema package`, () => {
                 },
               ],
             },
+            "NonEmptyString": {
+              "minLength": 1,
+              "type": "string",
+            },
           },
           "$schema": "http://json-schema.org/draft-07/schema#",
           "anyOf": [
@@ -164,17 +170,8 @@ describe(`Given the zod-to-json-schema package`, () => {
               "additionalProperties": false,
               "properties": {
                 "artist": {
-                  "anyOf": [
-                    {
-                      "description": "The name of the artist.",
-                      "minLength": 1,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The name of the artist.",
                 },
                 "attributes": {
                   "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.",
@@ -188,17 +185,8 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "$ref": "#/anyOf/0/properties/item",
                 },
                 "credits": {
-                  "anyOf": [
-                    {
-                      "description": "The credits for the audio.",
-                      "minLength": 1,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The credits for the audio.",
                 },
                 "duration": {
                   "description": "How long the the audio is in seconds.",
@@ -206,17 +194,8 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "integer",
                 },
                 "genre": {
-                  "anyOf": [
-                    {
-                      "description": "The genre of the audio",
-                      "minLength": 1,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The genre of the audio",
                 },
                 "item": {
                   "anyOf": [
@@ -227,7 +206,7 @@ describe(`Given the zod-to-json-schema package`, () => {
                       "type": "string",
                     },
                     {
-                      "$ref": "#/$defs/EncryptedString",
+                      "$ref": "#/$defs/EncryptableString/anyOf/1",
                     },
                   ],
                   "description": "An encrypted value or its decrypted version.",
@@ -290,17 +269,8 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "$ref": "#/anyOf/0/properties/item",
                 },
                 "recordLabel": {
-                  "anyOf": [
-                    {
-                      "description": "The record label for the audio.",
-                      "minLength": 1,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The record label for the audio.",
                 },
                 "type": {
                   "description": "The mime type of the audio file.",
@@ -327,17 +297,8 @@ describe(`Given the zod-to-json-schema package`, () => {
               "additionalProperties": false,
               "properties": {
                 "altTag": {
-                  "anyOf": [
-                    {
-                      "description": "The alt tag for accessibility",
-                      "minLength": 1,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The alt tag for accessibility",
                 },
                 "attributes": {
                   "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.",
@@ -380,17 +341,8 @@ describe(`Given the zod-to-json-schema package`, () => {
               "additionalProperties": false,
               "properties": {
                 "altTag": {
-                  "anyOf": [
-                    {
-                      "description": "The alt tag for accessibility",
-                      "minLength": 1,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptedString",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/EncryptableString",
+                  "description": "The alt tag for accessibility",
                 },
                 "attributes": {
                   "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.",
