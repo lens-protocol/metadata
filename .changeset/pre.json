@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@lens-protocol/metadata": "2.0.0"
+  },
+  "changesets": []
+}
