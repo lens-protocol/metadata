@@ -38,7 +38,7 @@ const LocaleRegexSchema = z
   .regex(
     localeRegex,
     'Should be a valid Locale Identifier. Expected `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). ' +
-      '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
+    '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
   );
 
 /**
@@ -302,7 +302,7 @@ export const GeoURISchema = z
   .string()
   .describe(
     'A Geographic coordinate as subset of Geo URI (RFC 5870). ' +
-      'Currently only supports the `geo:lat,lng` format.',
+    'Currently only supports the `geo:lat,lng` format.',
   )
   .regex(geoUriRegex, 'Should be a Geo URI. Expected `geo:lat,lng`.')
   .superRefine((val, ctx): val is GeoURI => {
@@ -449,7 +449,7 @@ export const PhysicalAddressSchema: z.ZodType<PhysicalAddress, z.ZodTypeDef, obj
   ).optional(),
   streetAddress: EncryptableStringSchema.describe(
     'The street address including house number, street name, P.O. Box, ' +
-      'apartment or unit number and extended multi-line address information.',
+    'apartment or unit number and extended multi-line address information.',
   ).optional(),
   locality: EncryptableStringSchema.describe('The city or locality.'),
   region: EncryptableStringSchema.describe('The state or region.').optional(),

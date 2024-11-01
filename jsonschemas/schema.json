@@ -312,12 +312,6 @@
       "additionalProperties": false,
       "description": "An amount of a specific asset."
     },
-    "AppId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 200,
-      "description": "A Lens App identifier."
-    },
     "AnyMedia": {
       "anyOf": [
         {
@@ -1109,14 +1103,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -1256,14 +1242,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -1408,14 +1386,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -1566,14 +1536,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -1715,14 +1677,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -1763,12 +1717,16 @@
             "location": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/EncryptableUri",
+                  "$ref": "#/$defs/Uri",
                   "description": "A virtual location."
                 },
                 {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The event location (free form text)."
+                },
+                {
+                  "$ref": "#/$defs/EncryptedString",
+                  "description": "The encrypted event location."
                 }
               ],
               "description": "The location of the event."
@@ -2352,14 +2310,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -2504,14 +2454,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -2652,14 +2594,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -2824,14 +2758,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -2972,14 +2898,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -3132,14 +3050,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -3267,14 +3177,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -3408,14 +3310,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -3572,14 +3466,6 @@
           "properties": {
             "id": {
               "$ref": "#/$defs/MetadataId"
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
             },
             "attributes": {
               "type": "array",
@@ -3760,14 +3646,6 @@
             "id": {
               "$ref": "#/$defs/MetadataId"
             },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this post belongs to."
-            },
-            "hideFromFeed": {
-              "type": "boolean",
-              "description": "Determine if the post should not be shown in any feed."
-            },
             "attributes": {
               "type": "array",
               "items": {
@@ -3876,10 +3754,6 @@
               },
               "minItems": 1,
               "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
-            },
-            "appId": {
-              "$ref": "#/$defs/AppId",
-              "description": "The App Id that this Account data refers to. If omitted the data is considered to be the global Account data."
             }
           },
           "required": [
@@ -4236,13 +4110,13 @@
           "type": "string",
           "description": "The name of the contract."
         },
-        "symbol": {
-          "type": "string",
-          "description": "The symbol of the contract."
-        },
         "description": {
           "type": "string",
           "description": "The description of the contract."
+        },
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the contract."
         },
         "image": {
           "$ref": "#/$defs/Uri",
@@ -4263,7 +4137,7 @@
         "collaborators": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/Uri"
+            "$ref": "#/$defs/EvmAddress"
           },
           "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
         },
@@ -4295,13 +4169,6 @@
       },
       "required": [
         "name",
-        "symbol",
-        "description",
-        "image",
-        "banner_image",
-        "featured_image",
-        "external_link",
-        "collaborators",
         "schema",
         "lens"
       ],

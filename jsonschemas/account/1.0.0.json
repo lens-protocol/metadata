@@ -35,12 +35,6 @@
           },
           "minItems": 1,
           "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
-        },
-        "appId": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 200,
-          "description": "The App Id that this Account data refers to. If omitted the data is considered to be the global Account data."
         }
       },
       "required": [

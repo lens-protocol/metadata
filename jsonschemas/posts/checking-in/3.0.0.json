@@ -76,16 +76,6 @@
           "$ref": "#/$defs/NonEmptyString",
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
-        "appId": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 200,
-          "description": "The App Id that this post belongs to."
-        },
-        "hideFromFeed": {
-          "type": "boolean",
-          "description": "Determine if the post should not be shown in any feed."
-        },
         "attributes": {
           "type": "array",
           "items": {
