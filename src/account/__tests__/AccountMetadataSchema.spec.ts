@@ -8,7 +8,7 @@ describe(`Given the AccountMetadataSchema`, () => {
     it(`then it should flag the missing fields`, () => {
       expectResult(() =>
         AccountMetadataSchema.safeParse({
-          $schema: 'https://json-schemas.lens.dev/account/2.0.0.json',
+          $schema: 'https://json-schemas.lens.dev/account/1.0.0.json',
           lens: {
             name: 42,
 

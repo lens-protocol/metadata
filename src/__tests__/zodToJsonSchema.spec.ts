@@ -24,8 +24,7 @@ describe(`Given the zod-to-json-schema package`, () => {
             "EncryptableString": {
               "anyOf": [
                 {
-                  "minLength": 1,
-                  "type": "string",
+                  "$ref": "#/$defs/NonEmptyString",
                 },
                 {
                   "description": "An encrypted value.",
@@ -200,7 +199,7 @@ describe(`Given the zod-to-json-schema package`, () => {
                 "item": {
                   "anyOf": [
                     {
-                      "description": "A Uniform Resource Identifier. ",
+                      "description": "A Uniform Resource Identifier.",
                       "format": "uri",
                       "minLength": 6,
                       "type": "string",
