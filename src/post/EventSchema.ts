@@ -55,14 +55,14 @@ export const SchedulingAdjustmentsSchema: z.ZodType<SchedulingAdjustments, z.Zod
   z.object({
     timezoneId: TimezoneIdSchema.describe(
       'Indicates a reference timezone for the event start and end times. ' +
-      'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
+        'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
     ),
     timezoneOffset: z
       .number()
       .describe(
         'Indicates the reference timezone offset with respect to UTC timezone a the time of event creation. ' +
-        'The difference in minutes between the reference timezone time and UTC time ' +
-        '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
+          'The difference in minutes between the reference timezone time and UTC time ' +
+          '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
       ),
   });
 
@@ -142,7 +142,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
-      'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
+        'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
     links: EncryptableUriSchema.array()

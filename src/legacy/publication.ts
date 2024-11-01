@@ -15,7 +15,10 @@ import { Brand, hasTwoOrMore } from '../utils.js';
 // re-export under legacy namespace
 export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
 export { NftMetadataAttributeDisplayType as MarketplaceMetadataAttributeDisplayType } from '../tokens/eip721.js';
-export type { NftMetadataAttribute as MarketplaceMetadataAttribute, NftMetadata as MarketplaceMetadata } from '../tokens/eip721.js';
+export type {
+  NftMetadataAttribute as MarketplaceMetadataAttribute,
+  NftMetadata as MarketplaceMetadata,
+} from '../tokens/eip721.js';
 export type * from '../primitives.js';
 
 export enum PublicationMetadataVersion {

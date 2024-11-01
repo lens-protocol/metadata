@@ -27,17 +27,14 @@ export type NftMetadataAttribute = {
 /**
  * @internal
  */
-export const Nft721MetadataAttributeSchema: z.ZodType<
-  NftMetadataAttribute,
-  z.ZodTypeDef,
-  object
-> = z
-  .object({
-    display_type: z.nativeEnum(NftMetadataAttributeDisplayType).optional(),
-    trait_type: NonEmptyStringSchema.optional().describe('The name of the trait.'),
-    value: z.union([z.string(), z.number()]).optional(),
-  })
-  .passthrough(); // make it more loose to allow for future marketplace extensions
+export const Nft721MetadataAttributeSchema: z.ZodType<NftMetadataAttribute, z.ZodTypeDef, object> =
+  z
+    .object({
+      display_type: z.nativeEnum(NftMetadataAttributeDisplayType).optional(),
+      trait_type: NonEmptyStringSchema.optional().describe('The name of the trait.'),
+      value: z.union([z.string(), z.number()]).optional(),
+    })
+    .passthrough(); // make it more loose to allow for future marketplace extensions
 
 /**
  * An NFT metadata standard for interoperability with NFT marketplaces and wallets.
@@ -96,7 +93,7 @@ export function nftMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
 
       external_url: UriSchema.describe(
         `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-        'and will allow users to leave OpenSea and view the item on the site.',
+          'and will allow users to leave OpenSea and view the item on the site.',
       )
         .nullable()
         .optional()
@@ -118,9 +115,9 @@ export function nftMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
 
       animation_url: UriSchema.describe(
         'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
-        'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
-        'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
-        'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
+          'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
+          'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
+          'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
       )
         .nullable()
         .optional()
