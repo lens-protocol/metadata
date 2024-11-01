@@ -10,7 +10,7 @@ import {
   AppIdSchema,
   LocaleSchema,
   TagSchema,
-  nonEmptyStringSchema,
+  NonEmptyStringSchema,
   SignatureSchema,
   AppId,
   Locale,
@@ -29,7 +29,7 @@ export enum PublicationContentWarning {
   SPOILER = 'SPOILER',
 }
 
-export const MetadataIdSchema = nonEmptyStringSchema(
+export const MetadataIdSchema = NonEmptyStringSchema.describe(
   'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
 );
 

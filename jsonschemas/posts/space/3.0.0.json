@@ -73,8 +73,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
         "appId": {
@@ -150,8 +149,7 @@
         "content": {
           "anyOf": [
             {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The content for the publication as markdown."
             },
             {
@@ -487,8 +485,7 @@
     "EncryptableString": {
       "anyOf": [
         {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/NonEmptyString"
         },
         {
           "$ref": "#/$defs/EncryptedString"

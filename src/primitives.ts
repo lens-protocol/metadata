@@ -93,10 +93,8 @@ export const EncryptedStringSchema = z
 
 /**
  * Modifies a schema to accept an encrypted string value as well as its decrypted version.
- *
- * @internal
  */
-export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, unknown>) {
+function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, unknown>) {
   const options = [schema, EncryptedStringSchema] as const;
   return z
     .union(options)
@@ -118,7 +116,7 @@ export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef,
 /**
  * @internal
  */
-export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, unknown> {
+export function nonEmptySchema(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, unknown> {
   return z.preprocess((val, ctx) => {
     const result = z.string().safeParse(val);
 
@@ -148,18 +146,12 @@ export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, u
 /**
  * @internal
  */
-export const NonEmptyStringSchema = nonEmpty(z.string());
-/**
- * @internal
- */
-export function nonEmptyStringSchema(description?: string) {
-  return nonEmpty(z.string({ description }));
-}
+export const NonEmptyStringSchema = nonEmptySchema(z.string());
 
 /**
  * @internal
  */
-export const EncryptableStringSchema = encryptable(nonEmptyStringSchema());
+export const EncryptableStringSchema = encryptable(NonEmptyStringSchema);
 
 /**
  * An arbitrary string or its encrypted version.
@@ -240,10 +232,7 @@ export function toMarkdown(value: string): Markdown {
   return value as Markdown;
 }
 
-/**
- * @internal
- */
-export function markdown(
+function markdownSchema(
   schema: z.ZodType<string, z.ZodTypeDef, unknown>,
 ): z.ZodType<Markdown, z.ZodTypeDef, unknown> {
   return schema.transform(toMarkdown);
@@ -253,7 +242,7 @@ export function markdown(
  * @internal
  */
 export const EncryptableMarkdownSchema = encryptable(
-  markdown(nonEmptyStringSchema('The content for the publication as markdown.')),
+  markdownSchema(NonEmptyStringSchema.describe('The content for the publication as markdown.')),
 );
 
 /**
@@ -281,7 +270,6 @@ export type URI = Brand<string, 'URI'>;
 export function toUri(value: string): URI {
   return value as URI;
 }
-
 
 /**
  * @internal
@@ -429,12 +417,6 @@ export function geoPoint(value: GeoURI): GeoPoint {
   const [, lat = '', lng = ''] = match;
   return GeoPointSchema.parse({ lat, lng });
 }
-/**
- * @internal
- */
-export function encryptableGeoUriSchema(description: string) {
-  return encryptable(GeoURISchema.describe(description));
-}
 
 /**
  * @internal
@@ -508,17 +490,12 @@ export function toDateTime(value: string): DateTime {
 /**
  * @internal
  */
-export function datetimeSchema(description?: string): z.ZodType<DateTime, z.ZodTypeDef, unknown> {
-  return z.string({ description }).datetime().transform(toDateTime);
-}
+export const DateTimeSchema = z.string().datetime().transform(toDateTime);
+
 /**
  * @internal
  */
-export function encryptableDateTimeSchema(description: string) {
-  return encryptable(datetimeSchema(description));
-}
-
-export const EncryptableDateTimeSchema = encryptable(datetimeSchema());
+export const EncryptableDateTimeSchema = encryptable(DateTimeSchema);
 
 /**
  * A DateTime or its encrypted version.

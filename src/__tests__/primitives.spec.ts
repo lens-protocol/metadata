@@ -8,12 +8,12 @@ import {
   geoPoint,
   geoUri,
   LocaleSchema,
-  nonEmpty,
+  nonEmptySchema,
 } from '../primitives.js';
 
 describe(`Given the primitives schemas`, () => {
-  describe(`when parsing a string with a schema defined with ${nonEmpty.name} modifier`, () => {
-    const Schema = nonEmpty(z.string());
+  describe(`when parsing a string with a schema defined with ${nonEmptySchema.name} modifier`, () => {
+    const Schema = nonEmptySchema(z.string());
 
     it('then it should preprocess the string trimming all "whitespace" characters', () => {
       [
