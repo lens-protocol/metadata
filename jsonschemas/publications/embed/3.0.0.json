@@ -1046,11 +1046,10 @@
             "encryptedPaths": {
               "type": "array",
               "items": {
-                "type": "string",
-                "minLength": 1,
-                "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+                "$ref": "#/$defs/NonEmptyString"
               },
-              "minItems": 1
+              "minItems": 1,
+              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
             }
           },
           "required": [
