@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.0
+
+### Major Changes
+
+- a0dc87a: Define metadata standard for Lens v3
+
 ## 1.2.0
 
 ### Minor Changes

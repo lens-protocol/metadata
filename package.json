@@ -1,6 +1,6 @@
 {
   "name": "@lens-protocol/metadata",
-  "version": "2.0.0",
+  "version": "2.0.0-next.0",
   "description": "Lens Protocol Metadata Standards",
   "type": "module",
   "main": "./dist/index.cjs",
