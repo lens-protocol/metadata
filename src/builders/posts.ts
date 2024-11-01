@@ -62,7 +62,7 @@ export const DEFAULT_LOCALE = 'en';
  * @private
  * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
  */
-type MarketplaceDetails = RecursiveUnbrand<NftMetadata>;
+type NftDetails = RecursiveUnbrand<NftMetadata>;
 
 /**
  * @private
@@ -79,7 +79,7 @@ export type ArticleOptions = ArticleDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid ArticleMetadata.
@@ -145,7 +145,7 @@ export type AudioOptions = AudioDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid AudioMetadata.
@@ -229,7 +229,7 @@ export type CheckingInOptions = CheckingInDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid CheckingInMetadata.
@@ -300,7 +300,7 @@ export type EmbedOptions = EmbedDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid EmbedMetadata.
@@ -350,7 +350,7 @@ export type EventOptions = EventDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid EventMetadata.
@@ -425,7 +425,7 @@ export type ImageOptions = ImageDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid ImageMetadata.
@@ -511,7 +511,7 @@ export type LinkOptions = LinkDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid LinkMetadata.
@@ -562,7 +562,7 @@ export type LiveStreamOptions = LiveStreamDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid LivestreamMetadata.
@@ -615,7 +615,7 @@ export type MintOptions = MintDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid MintMetadata.
@@ -667,7 +667,7 @@ export type SpaceOptions = SpaceDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid SpaceMetadata.
@@ -719,7 +719,7 @@ export type StoryOptions = StoryDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid StoryMetadata.
@@ -775,7 +775,7 @@ export type TextOnlyOptions = TextOnlyDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid TextOnlyMetadata.
@@ -825,7 +825,7 @@ export type ThreeDOptions = ThreeDDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid ThreeDMetadata.
@@ -884,7 +884,7 @@ export type TransactionOptions = TransactionDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid TransactionMetadata.
@@ -937,7 +937,7 @@ export type VideoOptions = VideoDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid VideoMetadata.
@@ -1019,7 +1019,7 @@ export type ShortVideoOptions = VideoDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: MarketplaceDetails;
+  marketplace?: NftDetails;
 };
 /**
  * Creates a valid VideoMetadata for a short.
