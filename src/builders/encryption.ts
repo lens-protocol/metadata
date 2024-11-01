@@ -1,5 +1,4 @@
 import { evaluate } from './ValidationError';
-import { NetworkAddressDetails, amount } from '../primitives';
 import {
   AccessCondition,
   AccessConditionSchema,
@@ -27,7 +26,8 @@ import {
   refineNftOwnershipCondition,
   AdvancedContractCondition,
   AdvancedContractConditionSchema,
-} from '../publication';
+} from '../post';
+import { NetworkAddressDetails, amount } from '../primitives';
 
 export type CollectConditionDetails = {
   /**

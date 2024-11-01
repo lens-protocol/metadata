@@ -30,14 +30,14 @@ export enum PublicationMetadataVersion {
 }
 
 export enum PublicationMainFocus {
-  ARTICLE = latest.PublicationMainFocus.ARTICLE,
-  AUDIO = latest.PublicationMainFocus.AUDIO,
-  EMBED = latest.PublicationMainFocus.EMBED,
-  IMAGE = latest.PublicationMainFocus.IMAGE,
-  LINK = latest.PublicationMainFocus.LINK,
-  SHORT_VIDEO = latest.PublicationMainFocus.SHORT_VIDEO,
-  TEXT_ONLY = latest.PublicationMainFocus.TEXT_ONLY,
-  VIDEO = latest.PublicationMainFocus.VIDEO,
+  ARTICLE = latest.PostMainFocus.ARTICLE,
+  AUDIO = latest.PostMainFocus.AUDIO,
+  EMBED = latest.PostMainFocus.EMBED,
+  IMAGE = latest.PostMainFocus.IMAGE,
+  LINK = latest.PostMainFocus.LINK,
+  SHORT_VIDEO = latest.PostMainFocus.SHORT_VIDEO,
+  TEXT_ONLY = latest.PostMainFocus.TEXT_ONLY,
+  VIDEO = latest.PostMainFocus.VIDEO,
 }
 
 export enum AudioMimeType {

@@ -2,8 +2,8 @@ import { describe, expect, it } from '@jest/globals';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute';
+import { AnyMediaSchema } from '../post';
 import { EncryptableStringSchema, NonEmptyStringSchema } from '../primitives';
-import { AnyMediaSchema } from '../publication';
 
 describe(`Given the zod-to-json-schema package`, () => {
   describe('when converting a schema that uses AnyMediaSchema', () => {

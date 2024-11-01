@@ -40,9 +40,11 @@ export const MarketplaceMetadataAttributeSchema: z.ZodType<
   .passthrough(); // make it more loose to allow for future marketplace extensions
 
 /**
- * The metadata standard for marketplace(s).
+ * An NFT metadata standard for interoperability with NFT marketplaces and wallets.
  *
  * @see https://docs.opensea.io/docs/metadata-standards#metadata-structure
+ * @see https://github.com/ethereum/ercs/blob/master/ERCS/erc-721.md
+ * @see https://github.com/ethereum/ercs/blob/master/ERCS/erc-1155.md
  */
 export type MarketplaceMetadata = {
   /**
@@ -94,7 +96,7 @@ export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape
 
       external_url: UriSchema.describe(
         `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-          'and will allow users to leave OpenSea and view the item on the site.',
+        'and will allow users to leave OpenSea and view the item on the site.',
       )
         .nullable()
         .optional()
@@ -116,9 +118,9 @@ export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape
 
       animation_url: UriSchema.describe(
         'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
-          'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
-          'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
-          'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
+        'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
+        'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
+        'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
       )
         .nullable()
         .optional()

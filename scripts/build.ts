@@ -30,7 +30,7 @@ import {
   MintSchema,
   NetworkAddressSchema,
   NftOwnershipConditionSchema,
-  ProfileMetadataSchema,
+  AccountMetadataSchema,
   ProfileOwnershipConditionSchema,
   PublicationEncryptionStrategySchema,
   SpaceSchema,
@@ -45,14 +45,13 @@ import {
   PublicationIdSchema,
   AmountSchema,
   TagSchema,
-  MirrorMetadataSchema,
   GeoURISchema,
   PhysicalAddressSchema,
   EncryptedStringSchema,
   EncryptableUriSchema,
   EncryptableGeoURISchema,
   ChainIdSchema,
-  PublicationMetadataSchema,
+  PostMetadataSchema,
   AppIdSchema,
   SignatureSchema,
   LocaleSchema,
@@ -70,7 +69,7 @@ import {
   FeedMetadataSchema,
   GroupMetadataSchema,
   UsernameMetadataSchema,
-  PublicationMainFocusSchema,
+  PostMainFocusSchema,
   SponsorshipMetadataSchema,
 } from '../src';
 
@@ -78,23 +77,23 @@ const outputDir = 'jsonschemas';
 
 await fs.ensureDir(outputDir);
 
-// Publication schemas
+// Post schemas
 const schemas = new Map<string, z.ZodSchema<unknown>>([
-  ['publications/3d/3.0.0.json', ThreeDSchema],
-  ['publications/article/3.0.0.json', ArticleSchema],
-  ['publications/audio/3.0.0.json', AudioSchema],
-  ['publications/checking-in/3.0.0.json', CheckingInSchema],
-  ['publications/embed/3.0.0.json', EmbedSchema],
-  ['publications/event/3.0.0.json', EventSchema],
-  ['publications/image/3.0.0.json', ImageSchema],
-  ['publications/link/3.0.0.json', LinkSchema],
-  ['publications/livestream/3.0.0.json', LiveStreamSchema],
-  ['publications/mint/3.0.0.json', MintSchema],
-  ['publications/space/3.0.0.json', SpaceSchema],
-  ['publications/story/3.0.0.json', StorySchema],
-  ['publications/text-only/3.0.0.json', TextOnlySchema],
-  ['publications/transaction/3.0.0.json', TransactionSchema],
-  ['publications/video/3.0.0.json', VideoSchema],
+  ['post/3d/3.0.0.json', ThreeDSchema],
+  ['post/article/3.0.0.json', ArticleSchema],
+  ['post/audio/3.0.0.json', AudioSchema],
+  ['post/checking-in/3.0.0.json', CheckingInSchema],
+  ['post/embed/3.0.0.json', EmbedSchema],
+  ['post/event/3.0.0.json', EventSchema],
+  ['post/image/3.0.0.json', ImageSchema],
+  ['post/link/3.0.0.json', LinkSchema],
+  ['post/livestream/3.0.0.json', LiveStreamSchema],
+  ['post/mint/3.0.0.json', MintSchema],
+  ['post/space/3.0.0.json', SpaceSchema],
+  ['post/story/3.0.0.json', StorySchema],
+  ['post/text-only/3.0.0.json', TextOnlySchema],
+  ['post/transaction/3.0.0.json', TransactionSchema],
+  ['post/video/3.0.0.json', VideoSchema],
 ]);
 
 for (const [path, Schema] of schemas) {
@@ -146,10 +145,9 @@ for (const [path, Schema] of schemas) {
 // Umbrella schema
 await generateUmbrellaSchema();
 
-// Profile schema
+// Other schemas
 const others = new Map<string, z.ZodSchema<unknown>>([
-  ['profile/2.0.0.json', ProfileMetadataSchema],
-  ['publications/mirror/1.0.0.json', MirrorMetadataSchema],
+  ['account/1.0.0.json', AccountMetadataSchema],
 ]);
 
 for (const [path, Schema] of others) {
@@ -198,7 +196,7 @@ async function generateUmbrellaSchema() {
 
   await fs.ensureFile(outputFile);
 
-  const jsonSuperSchema = zodToJsonSchema(PublicationMetadataSchema, {
+  const jsonSuperSchema = zodToJsonSchema(PostMetadataSchema, {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     $refStrategy: 'root',
@@ -208,7 +206,7 @@ async function generateUmbrellaSchema() {
       Uri: UriSchema,
       AccessCondition: AccessConditionSchema,
       AdvancedContractCondition: AdvancedContractConditionSchema,
-      MainContentFocus: PublicationMainFocusSchema,
+      MainContentFocus: PostMainFocusSchema,
       Amount: AmountSchema,
       AppId: AppIdSchema,
       AnyMedia: AnyMediaSchema,
@@ -258,7 +256,7 @@ async function generateUmbrellaSchema() {
       TransactionMetadata: TransactionSchema,
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
-      AccountMetadata: ProfileMetadataSchema,
+      AccountMetadata: AccountMetadataSchema,
       ModuleMetadata: ModuleMetadataSchema,
       AppMetadata: AppMetadataSchema,
       GraphMetadata: GraphMetadataSchema,

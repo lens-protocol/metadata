@@ -4,20 +4,18 @@ Schema validation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs
 
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Documentation](#documentation)
   - [Compose](#compose)
-    - [Publication metadata](#publication-metadata)
-    - [Mirror metadata](#mirror-metadata)
-    - [Profile metadata](#profile-metadata)
+    - [Post metadata](#post-metadata)
+    - [Account metadata](#account-metadata)
   - [Parse](#parse)
-    - [Publication metadata](#publication-metadata-1)
-    - [Mirror metadata](#mirror-metadata-1)
-    - [Profile metadata](#profile-metadata-1)
+    - [Post metadata](#post-metadata-1)
+    - [Account metadata](#account-metadata-1)
   - [Extract version number](#extract-version-number)
   - [Format validation error](#format-validation-error)
 - [Types](#types)
   - [Narrowing types](#narrowing-types)
-    - [`PublicationMetadata`](#publicationmetadata)
+    - [`PostMetadata`](#postmetadata)
     - [`AccessCondition`](#accesscondition)
     - [`MetadataAttribute`](#metadataattribute)
   - [Other useful types](#other-useful-types)
@@ -52,13 +50,15 @@ pnpm add @lens-protocol/metadata zod
 > [!NOTE]  
 > `zod` is marked as optional peer dependency, so if you all you need is the JSON Schema definitions, you can install `@lens-protocol/metadata` without `zod`.
 
-## Usage
+## Documentation
+
+See [https://lens-protocol.github.io/metadata/](https://lens-protocol.github.io/metadata/).
 
 ### Compose
 
-#### Publication metadata
+#### Post metadata
 
-You can create compliant `PublicationMetadata` objects via the following builder functions:
+You can create compliant `PostMetadata` objects via the following builder functions:
 
 ```ts
 import {
@@ -98,29 +98,14 @@ const uri = geoUri({
 });
 ```
 
-#### Mirror metadata
+#### Account metadata
 
-You can create compliant `MirrorMetadata` objects via the following builder function:
-
-```ts
-import { mirror } from '@lens-protocol/metadata';
-
-const json = mirror({
-  appId: 'foobar-app',
-});
-```
-
-> [!NOTE]
-> Use the type definitions to explore the available properties and their types. The builder will throw a `ValidationError` with instructions on how to fix the error if the object is not compliant with the schema.
-
-#### Profile metadata
-
-You can create compliant `ProfileMetadata` objects via the following builder function:
+You can create compliant `AccountMetadata` objects via the following builder function:
 
 ```ts
-import { profile } from '@lens-protocol/metadata';
+import { account } from '@lens-protocol/metadata';
 
-const json = profile({
+const json = account({
   name: 'Bob',
 
   bio: 'I am a Lens user',
@@ -143,59 +128,39 @@ const invalid = {
 };
 ```
 
-#### Publication metadata
+#### Post metadata
 
-Publication metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc. but NOT [`MirrorMetadata`](#mirror-metadata)).
+Post metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc.
 
-Use it to parse the metadata referenced by `contentURI` of `Comment`, `Mirror`, and `Quote` publications.
+Use it to parse the metadata referenced by `contentURI` of Lens Post.
 
 ```ts
-import { PublicationMetadataSchema } from '@lens-protocol/metadata';
+import { PostMetadataSchema } from '@lens-protocol/metadata';
 
-PublicationMetadataSchema.parse(valid); // => PublicationMetadata
-PublicationMetadataSchema.parse(invalid); // => throws ZodError
+PostMetadataSchema.parse(valid); // => PostMetadata
+PostMetadataSchema.parse(invalid); // => throws ZodError
 
 // OR
 
-PublicationMetadataSchema.safeParse(valid);
-// => { success: true, data: PublicationMetadata }
-PublicationMetadataSchema.safeParse(invalid);
+PostMetadataSchema.safeParse(valid);
+// => { success: true, data: PostMetadata }
+PostMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
-#### Mirror metadata
-
-Mirror metadata schema serve the purpose allowing mirrors be associated to a given Lens app (via the `appId`) as well as specify some operational flags (e.g. `hideFromFeed` and `globalReach`).
-
-Use it to parse the metadata referenced by `metadataURI` of `Mirror` publications.
+#### Account metadata
 
 ```ts
-import { MirrorMetadataSchema } from '@lens-protocol/metadata';
+import { AccountMetadataSchema } from '@lens-protocol/metadata';
 
-MirrorMetadataSchema.parse(valid); // => MirrorMetadata
-MirrorMetadataSchema.parse(invalid); // => throws ZodError
+AccountMetadataSchema.parse(valid); // => AccountMetadata
+AccountMetadataSchema.parse(invalid); // => throws ZodError
 
 // OR
 
-MirrorMetadataSchema.safeParse(valid);
-// => { success: true, data: MirrorMetadata }
-MirrorMetadataSchema.safeParse(invalid);
-// => { success: false, error: ZodError }
-```
-
-#### Profile metadata
-
-```ts
-import { ProfileMetadataSchema } from '@lens-protocol/metadata';
-
-ProfileMetadataSchema.parse(valid); // => ProfileMetadata
-ProfileMetadataSchema.parse(invalid); // => throws ZodError
-
-// OR
-
-ProfileMetadataSchema.safeParse(valid);
-// => { success: true, data: ProfileMetadata }
-ProfileMetadataSchema.safeParse(invalid);
+AccountMetadataSchema.safeParse(valid);
+// => { success: true, data: AccountMetadata }
+AccountMetadataSchema.safeParse(invalid);
 // => { success: false, error: ZodError }
 ```
 
@@ -204,19 +169,15 @@ ProfileMetadataSchema.safeParse(invalid);
 A convenience `extractVersion` function is available to extract the version from a parsed `PublicationMetadata` or `ProfileMetadata`.
 
 ```ts
-import {
-  extractVersion,
-  PublicationMetadataSchema,
-  ProfileMetadataSchema,
-} from '@lens-protocol/metadata';
+import { extractVersion, PostMetadataSchema, AccountMetadataSchema } from '@lens-protocol/metadata';
 
-const publicationMetadata = PublicationMetadataSchema.parse(valid);
+const postMetadata = PostMetadataSchema.parse(valid);
 
-extractVersion(publicationMetadata); // => '3.0.0'
+extractVersion(postMetadata); // => '3.0.0'
 
-const profileMetadata = ProfileMetadataSchema.parse(valid);
+const accountMetadata = AccountMetadataSchema.parse(valid);
 
-extractVersion(profileMetadata); // => '2.0.0'
+extractVersion(accountMetadata); // => '1.0.0'
 ```
 
 ### Format validation error
@@ -224,9 +185,9 @@ extractVersion(profileMetadata); // => '2.0.0'
 `ZodError` contains all the information needed to inform you about the validation error, but it's not very user friendly. You can use `formatZodError` to get a more readable error message.
 
 ```ts
-import { PublicationMetadataSchema, formatZodError } from '@lens-protocol/metadata';
+import { PostMetadataSchema, formatZodError } from '@lens-protocol/metadata';
 
-const result = PublicationMetadataSchema.safeParse(invalid);
+const result = PostMetadataSchema.safeParse(invalid);
 
 if (!result.success) {
   console.log(formatZodError(result.error));
@@ -239,29 +200,25 @@ if (!result.success) {
 
 Every time you have a discriminated union, you can use the discriminant to narrow the type. See few examples below.
 
-#### `PublicationMetadata`
+#### `PostMetadata`
 
 ```ts
-import {
-  PublicationMetadata,
-  PublicationMetadataSchema,
-  PublicationSchemaId,
-} from '@lens-protocol/metadata';
+import { PostMetadata, PostMetadataSchema, PostSchemaId } from '@lens-protocol/metadata';
 
-const publicationMetadata = PublicationMetadataSchema.parse(valid);
+const metadata = PostMetadataSchema.parse(valid);
 
-switch (publicationMetadata.$schema) {
-  case PublicationSchemaId.ARTICLE_LATEST:
-    // publicationMetadata is ArticleMetadata
+switch (metadata.$schema) {
+  case PostSchemaId.ARTICLE_LATEST:
+    // metadata is ArticleMetadata
     break;
-  case PublicationSchemaId.AUDIO_LATEST:
-    // publicationMetadata is AudioMetadata
+  case PostSchemaId.AUDIO_LATEST:
+    // metadata is AudioMetadata
     break;
-  case PublicationSchemaId.IMAGE_LATEST:
-    // publicationMetadata is ImageMetadata
+  case PostSchemaId.IMAGE_LATEST:
+    // metadata is ImageMetadata
     break;
-  case PublicationSchemaId.TEXT_ONLY_LATEST:
-    // publicationMetadata is TextOnlyMetadata
+  case PostSchemaId.TEXT_ONLY_LATEST:
+    // metadata is TextOnlyMetadata
     break;
 
   // ...
@@ -271,11 +228,11 @@ switch (publicationMetadata.$schema) {
 #### `AccessCondition`
 
 ```ts
-import { AccessCondition, ConditionType, PublicationMetadataSchema } from '@lens-protocol/metadata';
+import { AccessCondition, ConditionType, PostMetadataSchema } from '@lens-protocol/metadata';
 
-const publicationMetadata = PublicationMetadataSchema.parse(valid);
+const metadata = PostMetadataSchema.parse(valid);
 
-switch (publicationMetadata.encryptedWith?.accessCondition.type) {
+switch (metadata.encryptedWith?.accessCondition.type) {
   case ConditionType.AND:
     // accessCondition is AndCondition
     break;
@@ -338,7 +295,7 @@ import {
   MediaImageMimeType,
   MediaVideoMimeType,
   MetadataAttributeType,
-  PublicationMainFocus,
+  PostMainFocus,
   ThreeDFormat,
 
   // main types
@@ -526,13 +483,13 @@ import {
 Importing JSON schema in TypeScript is a simple as:
 
 ```ts
-import audio from '@lens-protocol/metadata/jsonschemas/publications/audio/3.0.0.json' assert { type: 'json' };
+import audio from '@lens-protocol/metadata/jsonschemas/post/audio/3.0.0.json' assert { type: 'json' };
 
-import audio from '@lens-protocol/metadata/jsonschemas/publications/article/3.0.0.json' assert { type: 'json' };
+import audio from '@lens-protocol/metadata/jsonschemas/post/article/3.0.0.json' assert { type: 'json' };
 
-import mirror from '@lens-protocol/metadata/jsonschemas/publications/mirror/1.0.0.json' assert { type: 'json' };
+import mirror from '@lens-protocol/metadata/jsonschemas/post/mirror/1.0.0.json' assert { type: 'json' };
 
-import profile from '@lens-protocol/metadata/jsonschemas/profile/2.0.0.json' assert { type: 'json' };
+import profile from '@lens-protocol/metadata/jsonschemas/account/1.0.0.json' assert { type: 'json' };
 ```
 
 You can the use them in your JSON Schema validator of choice, for example [ajv](https://ajv.js.org/).
@@ -543,7 +500,7 @@ The Lens Protocol Metadata Standards use a **self-describing JSON format**. All 
 
 ```json
 {
-  "$schema": "https://json-schemas.lens.dev/publications/article/3.0.0.json",
+  "$schema": "https://json-schemas.lens.dev/post/article/3.0.0.json",
 
   "lens": {
     "id": "b3d7f1a0-1f75-11ec-9621-0242ac130002",
@@ -563,24 +520,24 @@ The `$schema` property is a URI that identify the schema type and its version.
 
 Future changes should aim to be backwards compatible as much as possible.
 
-When adding a new version of a schema, the previous version should be kept for a reasonable amount of time to allow consumers to migrate and to support existing publications.
+When adding a new version of a schema, the previous version should be kept for a reasonable amount of time to allow consumers to migrate and to support the new specification.
 
 ### Adding a new schema
 
 In this example we will add a new version of the `AudioSchema` schema, but the same process applies to all the other schemas.
 
-- create a new `PublicationSchemaId` enum entry with value of `PublicationSchemaId.AUDIO_LATEST`. Name it after the current schema version (e.g. `AUDIO_V1_0_0`).
-- rename the existing `AudioSchema` into `AudioV1_0_0Schema` and update the `$schema` value to `PublicationSchemaId.AUDIO_V1_0_0`
-- increase the version number of the `PublicationSchemaId.AUDIO_LATEST` based on the nature of your changes. **Remember to follow semver rules.**
-- create a new `AudioSchema` with the new schema definition and use the `PublicationSchemaId.AUDIO_LATEST` as `$schema` value
-- update the `scripts/build.ts` script to include the new schema and old schema files under the correct version file name in the `jsonschemas/publications/audio` folder
+- create a new `PostSchemaId` enum entry with value of `PostSchemaId.AUDIO_LATEST`. Name it after the current schema version (e.g. `AUDIO_V1_0_0`).
+- rename the existing `AudioSchema` into `AudioV1_0_0Schema` and update the `$schema` value to `PostSchemaId.AUDIO_V1_0_0`
+- increase the version number of the `PostSchemaId.AUDIO_LATEST` based on the nature of your changes. **Remember to follow semver rules.**
+- create a new `AudioSchema` with the new schema definition and use the `PostSchemaId.AUDIO_LATEST` as `$schema` value
+- update the `scripts/build.ts` script to include the new schema and old schema files under the correct version file name in the `jsonschemas/post/audio` folder
 - release a new version of this package according to the nature of the changes (new major version of a schema = new major version of the package, etc.)
 
 In case the changes are backwards compatible, you could create a single `AudioMetadataDetailsSchema` definition and just declare 2 schemas out of it, one for the old version and one for the new version. For example:
 
 ```ts
 export const AudioMetadataDetailsSchema = metadataDetailsWith({
-  mainContentFocus: mainContentFocus(PublicationMainFocus.AUDIO),
+  mainContentFocus: mainContentFocus(PostMainFocus.AUDIO),
 
   audio: MediaAudioSchema,
 
@@ -593,14 +550,14 @@ export const AudioMetadataDetailsSchema = metadataDetailsWith({
 });
 export type AudioMetadataDetails = z.infer<typeof AudioMetadataDetailsSchema>;
 
-export const AudioSchema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.AUDIO_LATEST),
+export const AudioSchema = postWith({
+  $schema: z.literal(PostSchemaId.AUDIO_LATEST),
   lens: AudioMetadataDetailsSchema,
 });
 export type AudioMetadata = z.infer<typeof AudioSchema>;
 
-export const AudioV1Schema = publicationWith({
-  $schema: z.literal(PublicationSchemaId.AUDIO_V1_0_0),
+export const AudioV1Schema = postWith({
+  $schema: z.literal(PostSchemaId.AUDIO_V1_0_0),
   lens: AudioMetadataDetailsSchema,
 });
 export type AudioV1Metadata = z.infer<typeof AudioV1Schema>;
@@ -609,10 +566,10 @@ export type AudioV1Metadata = z.infer<typeof AudioV1Schema>;
 In this case consumers of this package can take advantage of the structural likeness and just do the following:
 
 ```ts
-switch (publicationMetadata.$schema) {
-  case PublicationSchemaId.AUDIO_V1_0_0:
-  case PublicationSchemaId.AUDIO_LATEST:
-    // publicationMetadata.lens is AudioMetadataDetails
+switch (metadata.$schema) {
+  case PostSchemaId.AUDIO_V1_0_0:
+  case PostSchemaId.AUDIO_LATEST:
+    // metadata.lens is AudioMetadataDetails
     break;
   // ...
 }

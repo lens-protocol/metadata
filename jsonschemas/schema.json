@@ -58,7 +58,7 @@
       "type": "string",
       "minLength": 6,
       "format": "uri",
-      "description": "A Uniform Resource Identifier. "
+      "description": "A Uniform Resource Identifier."
     },
     "AccessCondition": {
       "type": "object",
@@ -219,8 +219,7 @@
           "description": "The name of the function you want to call"
         },
         "abi": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
         },
         "params": {
@@ -408,10 +407,7 @@
     "EncryptableUri": {
       "anyOf": [
         {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
-          "description": "A Uniform Resource Identifier. "
+          "$ref": "#/$defs/Uri"
         },
         {
           "$ref": "#/$defs/EncryptedString"
@@ -999,11 +995,10 @@
             "encryptedPaths": {
               "type": "array",
               "items": {
-                "type": "string",
-                "minLength": 1,
-                "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+                "$ref": "#/$defs/NonEmptyString"
               },
-              "minItems": 1
+              "minItems": 1,
+              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
             }
           },
           "required": [
@@ -1156,7 +1151,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "ARTICLE",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "content": {
               "$ref": "#/$defs/EncryptableMarkdown"
@@ -1304,7 +1299,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "AUDIO",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "audio": {
               "$ref": "#/$defs/MediaAudio"
@@ -1456,7 +1451,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "CHECKING_IN",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "location": {
               "$ref": "#/$defs/EncryptableString",
@@ -1613,7 +1608,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "EMBED",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "embed": {
               "$ref": "#/$defs/EncryptableUri",
@@ -1766,7 +1761,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "EVENT",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "location": {
               "anyOf": [
@@ -2399,7 +2394,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "IMAGE",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "image": {
               "$ref": "#/$defs/MediaImage"
@@ -2551,7 +2546,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "LINK",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "sharingLink": {
               "$ref": "#/$defs/EncryptableUri",
@@ -2700,7 +2695,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "LIVESTREAM",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "title": {
               "$ref": "#/$defs/NonEmptyString",
@@ -2871,7 +2866,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "MINT",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "mintLink": {
               "$ref": "#/$defs/EncryptableUri",
@@ -3020,7 +3015,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "SPACE",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "title": {
               "$ref": "#/$defs/NonEmptyString",
@@ -3179,7 +3174,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "TEXT_ONLY",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "content": {
               "$ref": "#/$defs/EncryptableMarkdown"
@@ -3315,7 +3310,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "STORY",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "asset": {
               "$ref": "#/$defs/AnyMedia",
@@ -3456,7 +3451,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "TRANSACTION",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "txHash": {
               "$ref": "#/$defs/EncryptableString",
@@ -3620,7 +3615,7 @@
             "mainContentFocus": {
               "type": "string",
               "const": "3D",
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "assets": {
               "type": "array",
@@ -3810,7 +3805,7 @@
                 "SHORT_VIDEO",
                 "VIDEO"
               ],
-              "description": "The main focus of the publication."
+              "description": "The main focus of the post."
             },
             "video": {
               "$ref": "#/$defs/MediaVideo"
@@ -3852,7 +3847,7 @@
       "properties": {
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/profile/2.0.0.json"
+          "const": "https://json-schemas.lens.dev/account/1.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -3863,19 +3858,19 @@
             },
             "name": {
               "$ref": "#/$defs/NonEmptyString",
-              "description": "The profile display name."
+              "description": "The Account display name."
             },
             "bio": {
               "$ref": "#/$defs/NonEmptyString",
-              "description": "The profile bio as markdown."
+              "description": "The Account bio as markdown."
             },
             "picture": {
               "$ref": "#/$defs/Uri",
-              "description": "The profile picture."
+              "description": "The Account picture."
             },
             "coverPicture": {
               "$ref": "#/$defs/Uri",
-              "description": "The profile cover picture."
+              "description": "The Account cover picture."
             },
             "attributes": {
               "type": "array",
@@ -3887,7 +3882,7 @@
             },
             "appId": {
               "$ref": "#/$defs/AppId",
-              "description": "The App Id that this Profile data refers to. If omitted the data is considered to be the global Profile data."
+              "description": "The App Id that this Account data refers to. If omitted the data is considered to be the global Account data."
             }
           },
           "required": [

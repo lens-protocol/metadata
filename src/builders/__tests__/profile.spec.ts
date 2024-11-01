@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { MetadataAttributeType } from '../../MetadataAttribute.js';
-import { profile } from '../profile.js';
+import { profile } from '../account.js';
 
 describe(`Given the "${profile.name}" metadata builder`, () => {
   describe(`when using it`, () => {

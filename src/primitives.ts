@@ -38,7 +38,7 @@ const LocaleRegexSchema = z
   .regex(
     localeRegex,
     'Should be a valid Locale Identifier. Expected `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). ' +
-      '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
+    '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
   );
 
 /**
@@ -160,12 +160,6 @@ export function nonEmptyStringSchema(description?: string) {
  * @internal
  */
 export const EncryptableStringSchema = encryptable(nonEmptyStringSchema());
-/**
- * @internal
- */
-export function encryptableStringSchema(description: string) {
-  return encryptable(nonEmptyStringSchema(description));
-}
 
 /**
  * An arbitrary string or its encrypted version.
@@ -287,28 +281,21 @@ export type URI = Brand<string, 'URI'>;
 export function toUri(value: string): URI {
   return value as URI;
 }
-/**
- * @internal
- */
-export function uriSchema(
-  description: string = 'A Uniform Resource Identifier. ',
-): z.ZodType<URI, z.ZodTypeDef, unknown> {
-  return z
-    .string({ description })
-    .min(6) // [ar://.]
-    .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
-    .transform(toUri);
-}
+
 
 /**
  * @internal
  */
-export const UriSchema = uriSchema();
+export const UriSchema = z
+  .string({ description: 'A Uniform Resource Identifier.' })
+  .min(6) // [ar://.]
+  .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
+  .transform(toUri);
 
 /**
  * @internal
  */
-export const EncryptableUriSchema = encryptable(uriSchema());
+export const EncryptableUriSchema = encryptable(UriSchema);
 
 /**
  * A URI or its encrypted version.
@@ -347,7 +334,7 @@ export const GeoURISchema = z
   .string()
   .describe(
     'A Geographic coordinate as subset of Geo URI (RFC 5870). ' +
-      'Currently only supports the `geo:lat,lng` format.',
+    'Currently only supports the `geo:lat,lng` format.',
   )
   .regex(geoUriRegex, 'Should be a Geo URI. Expected `geo:lat,lng`.')
   .superRefine((val, ctx): val is GeoURI => {
@@ -500,7 +487,7 @@ export const PhysicalAddressSchema: z.ZodType<PhysicalAddress, z.ZodTypeDef, obj
   ).optional(),
   streetAddress: EncryptableStringSchema.describe(
     'The street address including house number, street name, P.O. Box, ' +
-      'apartment or unit number and extended multi-line address information.',
+    'apartment or unit number and extended multi-line address information.',
   ).optional(),
   locality: EncryptableStringSchema.describe('The city or locality.'),
   region: EncryptableStringSchema.describe('The state or region.').optional(),
