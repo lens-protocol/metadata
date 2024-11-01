@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/image/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/checking-in/3.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -124,15 +124,27 @@
         },
         "mainContentFocus": {
           "type": "string",
-          "const": "IMAGE",
+          "const": "CHECKING_IN",
           "description": "The main focus of the post."
         },
-        "image": {
-          "$ref": "#/$defs/MediaImage"
+        "location": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "Where you checking in from (free form text)."
         },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The optional image title."
+        "position": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GeoURI"
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "The optional geographic position of the location."
+        },
+        "address": {
+          "$ref": "#/$defs/PhysicalAddress",
+          "description": "The optional address of the location."
         },
         "content": {
           "anyOf": [
@@ -160,7 +172,7 @@
         "id",
         "locale",
         "mainContentFocus",
-        "image"
+        "location"
       ],
       "additionalProperties": false
     }

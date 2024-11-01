@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/mint/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/video/3.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -124,12 +124,18 @@
         },
         "mainContentFocus": {
           "type": "string",
-          "const": "MINT",
+          "enum": [
+            "SHORT_VIDEO",
+            "VIDEO"
+          ],
           "description": "The main focus of the post."
         },
-        "mintLink": {
-          "$ref": "#/$defs/EncryptableUri",
-          "description": "The mint item it can be a URL of the known provider like opensea https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata"
+        "video": {
+          "$ref": "#/$defs/MediaVideo"
+        },
+        "title": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The optional video title."
         },
         "content": {
           "anyOf": [
@@ -157,7 +163,7 @@
         "id",
         "locale",
         "mainContentFocus",
-        "mintLink"
+        "video"
       ],
       "additionalProperties": false
     }

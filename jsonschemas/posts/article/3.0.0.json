@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/article/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/article/3.0.0.json"
     },
     "lens": {
       "type": "object",

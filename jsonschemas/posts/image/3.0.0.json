@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/livestream/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/image/3.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -124,40 +124,15 @@
         },
         "mainContentFocus": {
           "type": "string",
-          "const": "LIVESTREAM",
+          "const": "IMAGE",
           "description": "The main focus of the post."
+        },
+        "image": {
+          "$ref": "#/$defs/MediaImage"
         },
         "title": {
           "$ref": "#/$defs/NonEmptyString",
-          "description": "The livestream title."
-        },
-        "startsAt": {
-          "anyOf": [
-            {
-              "type": "string",
-              "format": "date-time"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
-        },
-        "endsAt": {
-          "$ref": "#/properties/lens/properties/startsAt",
-          "description": "The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)"
-        },
-        "playbackUrl": {
-          "$ref": "#/$defs/EncryptableUri",
-          "description": "Some livestream platforms have the playback url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
-        },
-        "liveUrl": {
-          "$ref": "#/$defs/EncryptableUri",
-          "description": "Some livestream platforms have the live url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
-        },
-        "checkLiveAPI": {
-          "$ref": "#/$defs/EncryptableUri",
-          "description": "The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check."
+          "description": "The optional image title."
         },
         "content": {
           "anyOf": [
@@ -185,9 +160,7 @@
         "id",
         "locale",
         "mainContentFocus",
-        "startsAt",
-        "playbackUrl",
-        "liveUrl"
+        "image"
       ],
       "additionalProperties": false
     }

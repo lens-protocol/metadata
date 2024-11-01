@@ -79,21 +79,21 @@ await fs.ensureDir(outputDir);
 
 // Post schemas
 const schemas = new Map<string, z.ZodSchema<unknown>>([
-  ['post/3d/3.0.0.json', ThreeDSchema],
-  ['post/article/3.0.0.json', ArticleSchema],
-  ['post/audio/3.0.0.json', AudioSchema],
-  ['post/checking-in/3.0.0.json', CheckingInSchema],
-  ['post/embed/3.0.0.json', EmbedSchema],
-  ['post/event/3.0.0.json', EventSchema],
-  ['post/image/3.0.0.json', ImageSchema],
-  ['post/link/3.0.0.json', LinkSchema],
-  ['post/livestream/3.0.0.json', LiveStreamSchema],
-  ['post/mint/3.0.0.json', MintSchema],
-  ['post/space/3.0.0.json', SpaceSchema],
-  ['post/story/3.0.0.json', StorySchema],
-  ['post/text-only/3.0.0.json', TextOnlySchema],
-  ['post/transaction/3.0.0.json', TransactionSchema],
-  ['post/video/3.0.0.json', VideoSchema],
+  ['posts/3d/3.0.0.json', ThreeDSchema],
+  ['posts/article/3.0.0.json', ArticleSchema],
+  ['posts/audio/3.0.0.json', AudioSchema],
+  ['posts/checking-in/3.0.0.json', CheckingInSchema],
+  ['posts/embed/3.0.0.json', EmbedSchema],
+  ['posts/event/3.0.0.json', EventSchema],
+  ['posts/image/3.0.0.json', ImageSchema],
+  ['posts/link/3.0.0.json', LinkSchema],
+  ['posts/livestream/3.0.0.json', LiveStreamSchema],
+  ['posts/mint/3.0.0.json', MintSchema],
+  ['posts/space/3.0.0.json', SpaceSchema],
+  ['posts/story/3.0.0.json', StorySchema],
+  ['posts/text-only/3.0.0.json', TextOnlySchema],
+  ['posts/transaction/3.0.0.json', TransactionSchema],
+  ['posts/video/3.0.0.json', VideoSchema],
 ]);
 
 for (const [path, Schema] of schemas) {

@@ -1,6 +1,6 @@
 import { SchemasRoot } from '../constants';
 
-const location = `${SchemasRoot}/publications`;
+const location = `${SchemasRoot}/posts`;
 
 /**
  * A list of all the post schema ids (past and present).

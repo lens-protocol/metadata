@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/link/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/space/3.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -124,12 +124,28 @@
         },
         "mainContentFocus": {
           "type": "string",
-          "const": "LINK",
+          "const": "SPACE",
           "description": "The main focus of the post."
         },
-        "sharingLink": {
+        "title": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The space title."
+        },
+        "link": {
           "$ref": "#/$defs/EncryptableUri",
-          "description": "The sharing link url."
+          "description": "The space join link."
+        },
+        "startsAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "$ref": "#/$defs/EncryptedString"
+            }
+          ],
+          "description": "The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
         },
         "content": {
           "anyOf": [
@@ -157,7 +173,9 @@
         "id",
         "locale",
         "mainContentFocus",
-        "sharingLink"
+        "title",
+        "link",
+        "startsAt"
       ],
       "additionalProperties": false
     }

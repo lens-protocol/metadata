@@ -1104,7 +1104,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/article/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/article/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -1252,7 +1252,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/audio/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/audio/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -1404,7 +1404,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/checking-in/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/checking-in/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -1561,7 +1561,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/embed/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/embed/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -1710,7 +1710,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/event/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/event/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -2347,7 +2347,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/image/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/image/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -2499,7 +2499,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/link/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/link/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -2648,7 +2648,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/livestream/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/livestream/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -2819,7 +2819,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/mint/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/mint/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -2968,7 +2968,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/space/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/space/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -3127,7 +3127,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/text-only/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/text-only/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -3263,7 +3263,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/story/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/story/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -3404,7 +3404,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/transaction/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/transaction/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -3568,7 +3568,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/3d/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/3d/3.0.0.json"
         },
         "lens": {
           "type": "object",
@@ -3755,7 +3755,7 @@
         },
         "$schema": {
           "type": "string",
-          "const": "https://json-schemas.lens.dev/publications/video/3.0.0.json"
+          "const": "https://json-schemas.lens.dev/posts/video/3.0.0.json"
         },
         "lens": {
           "type": "object",

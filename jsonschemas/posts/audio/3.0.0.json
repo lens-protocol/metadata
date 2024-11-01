@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/story/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/audio/3.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -124,12 +124,15 @@
         },
         "mainContentFocus": {
           "type": "string",
-          "const": "STORY",
+          "const": "AUDIO",
           "description": "The main focus of the post."
         },
-        "asset": {
-          "$ref": "#/$defs/AnyMedia",
-          "description": "The story asset."
+        "audio": {
+          "$ref": "#/$defs/MediaAudio"
+        },
+        "title": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The optional audio title."
         },
         "content": {
           "anyOf": [
@@ -143,13 +146,21 @@
             }
           ],
           "description": "Optional markdown content."
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnyMedia"
+          },
+          "minItems": 1,
+          "description": "The other attachments you want to include with it."
         }
       },
       "required": [
         "id",
         "locale",
         "mainContentFocus",
-        "asset"
+        "audio"
       ],
       "additionalProperties": false
     }

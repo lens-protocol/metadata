@@ -67,7 +67,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/publications/audio/3.0.0.json"
+      "const": "https://json-schemas.lens.dev/posts/link/3.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -124,15 +124,12 @@
         },
         "mainContentFocus": {
           "type": "string",
-          "const": "AUDIO",
+          "const": "LINK",
           "description": "The main focus of the post."
         },
-        "audio": {
-          "$ref": "#/$defs/MediaAudio"
-        },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The optional audio title."
+        "sharingLink": {
+          "$ref": "#/$defs/EncryptableUri",
+          "description": "The sharing link url."
         },
         "content": {
           "anyOf": [
@@ -160,7 +157,7 @@
         "id",
         "locale",
         "mainContentFocus",
-        "audio"
+        "sharingLink"
       ],
       "additionalProperties": false
     }
