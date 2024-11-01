@@ -10,7 +10,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import { EncryptableMarkdown, EncryptableMarkdownSchema, Signature } from '../primitives.js';
 
 export type StoryMetadataDetails = PostMetadataCommon & {
@@ -40,7 +40,7 @@ const StoryMetadataDetailsSchema: z.ZodType<StoryMetadataDetails, z.ZodTypeDef, 
 /**
  * Use this to model an Instagram-like story.
  */
-export type StoryMetadata = MarketplaceMetadata & {
+export type StoryMetadata = NftMetadata & {
   /**
    * The schema id.
    */

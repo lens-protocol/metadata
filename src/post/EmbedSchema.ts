@@ -17,7 +17,7 @@ import {
   EncryptableUriSchema,
   EncryptableMarkdownSchema,
 } from '../primitives.js';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type EmbedMetadataDetails = PostMetadataCommon & {
   /**
@@ -55,7 +55,7 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
 /**
  * Use this to model a post that embeds a resource such as a micro-app, a game, etc.
  */
-export type EmbedMetadata = MarketplaceMetadata & {
+export type EmbedMetadata = NftMetadata & {
   /**
    * The schema id.
    */

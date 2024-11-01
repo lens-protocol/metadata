@@ -10,7 +10,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import {
   ChainId,
   ChainIdSchema,
@@ -81,7 +81,7 @@ const TransactionMetadataDetailsSchema: z.ZodType<
 /**
  * Use this to model a post where a transaction is the main focus.
  */
-export type TransactionMetadata = MarketplaceMetadata & {
+export type TransactionMetadata = NftMetadata & {
   /**
    * The schema id.
    */

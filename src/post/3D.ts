@@ -12,7 +12,7 @@ import {
   MetadataLicenseTypeSchema,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import {
   EncryptableMarkdown,
   Signature,
@@ -109,7 +109,7 @@ const ThreeDMetadataDetailsSchema: z.ZodType<ThreeDMetadataDetails, z.ZodTypeDef
 /**
  * Use this to share a 3D piece of art.
  */
-export type ThreeDMetadata = MarketplaceMetadata & {
+export type ThreeDMetadata = NftMetadata & {
   /**
    * The schema id.
    */

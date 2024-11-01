@@ -10,7 +10,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import {
   EncryptableMarkdown,
   EncryptableURI,
@@ -55,7 +55,7 @@ const LinkMetadataDetailsSchema: z.ZodType<LinkMetadataDetails, z.ZodTypeDef, ob
 /**
  * Use this to share a link to something you want to share.
  */
-export type LinkMetadata = MarketplaceMetadata & {
+export type LinkMetadata = NftMetadata & {
   /**
    * The schema id.
    */

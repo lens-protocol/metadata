@@ -10,7 +10,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import {
   EncryptableMarkdown,
   EncryptableURI,
@@ -50,9 +50,9 @@ const MintMetadataDetailsSchema: z.ZodType<MintMetadataDetails, z.ZodTypeDef, ob
 
     mintLink: EncryptableUriSchema.describe(
       'The mint item it can be a URL of the known provider like opensea ' +
-        'https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 ' +
-        'or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. ' +
-        'The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata',
+      'https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 ' +
+      'or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. ' +
+      'The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata',
     ),
 
     content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
@@ -66,7 +66,7 @@ const MintMetadataDetailsSchema: z.ZodType<MintMetadataDetails, z.ZodTypeDef, ob
 /**
  * Use this to share a link to mint an NFT.
  */
-export type MintMetadata = MarketplaceMetadata & {
+export type MintMetadata = NftMetadata & {
   /**
    * The schema id.
    */

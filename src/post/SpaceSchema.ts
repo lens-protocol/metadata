@@ -10,7 +10,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import {
   EncryptableDateTime,
   EncryptableMarkdown,
@@ -72,7 +72,7 @@ export const SpaceMetadataDetailsSchema: z.ZodType<SpaceMetadataDetails, z.ZodTy
 /**
  * Use this to notify your community about a space you are hosting.
  */
-export type SpaceMetadata = MarketplaceMetadata & {
+export type SpaceMetadata = NftMetadata & {
   /**
    * The schema id.
    */

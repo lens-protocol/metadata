@@ -16,7 +16,7 @@ import {
   EncryptableMarkdownSchema,
   NonEmptyStringSchema,
 } from '../primitives.js';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type ArticleMetadataDetails = PostMetadataCommon & {
   /**
@@ -53,7 +53,7 @@ const ArticleMetadataDetailsSchema: z.ZodType<ArticleMetadataDetails, z.ZodTypeD
 /**
  * Use this model an article-like post (e.g. blog, news, etc.)
  */
-export type ArticleMetadata = MarketplaceMetadata & {
+export type ArticleMetadata = NftMetadata & {
   /**
    * The schema id.
    */

@@ -7,7 +7,7 @@ import { Markdown, URI, NonEmptyStringSchema, MarkdownSchema, UriSchema } from '
  *
  * @see https://docs.opensea.io/docs/metadata-standards#attributes
  */
-export enum MarketplaceMetadataAttributeDisplayType {
+export enum NftMetadataAttributeDisplayType {
   NUMBER = 'number',
   STRING = 'string',
   DATE = 'date',
@@ -18,22 +18,22 @@ export enum MarketplaceMetadataAttributeDisplayType {
  *
  * @see https://docs.opensea.io/docs/metadata-standards#attributes
  */
-export type MarketplaceMetadataAttribute = {
+export type NftMetadataAttribute = {
   value?: string | number | undefined;
-  display_type?: MarketplaceMetadataAttributeDisplayType | undefined;
+  display_type?: NftMetadataAttributeDisplayType | undefined;
   trait_type?: string | undefined;
 };
 
 /**
  * @internal
  */
-export const MarketplaceMetadataAttributeSchema: z.ZodType<
-  MarketplaceMetadataAttribute,
+export const Nft721MetadataAttributeSchema: z.ZodType<
+  NftMetadataAttribute,
   z.ZodTypeDef,
   object
 > = z
   .object({
-    display_type: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
+    display_type: z.nativeEnum(NftMetadataAttributeDisplayType).optional(),
     trait_type: NonEmptyStringSchema.optional().describe('The name of the trait.'),
     value: z.union([z.string(), z.number()]).optional(),
   })
@@ -46,7 +46,7 @@ export const MarketplaceMetadataAttributeSchema: z.ZodType<
  * @see https://github.com/ethereum/ercs/blob/master/ERCS/erc-721.md
  * @see https://github.com/ethereum/ercs/blob/master/ERCS/erc-1155.md
  */
-export type MarketplaceMetadata = {
+export type NftMetadata = {
   /**
    * A human-readable description of the item. It could be plain text or markdown.
    */
@@ -65,7 +65,7 @@ export type MarketplaceMetadata = {
    *
    * @see https://docs.opensea.io/docs/metadata-standards#attributes
    */
-  attributes?: MarketplaceMetadataAttribute[];
+  attributes?: NftMetadataAttribute[];
   /**
    * Marketplaces will store any NFT image here.
    */
@@ -82,7 +82,7 @@ export type MarketplaceMetadata = {
 /**
  * @internal
  */
-export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
+export function nftMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
   augmentation: Augmentation,
 ) {
   return z
@@ -96,7 +96,7 @@ export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape
 
       external_url: UriSchema.describe(
         `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-          'and will allow users to leave OpenSea and view the item on the site.',
+        'and will allow users to leave OpenSea and view the item on the site.',
       )
         .nullable()
         .optional()
@@ -104,7 +104,7 @@ export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape
 
       name: z.string({ description: 'Name of the NFT item.' }).optional(),
 
-      attributes: MarketplaceMetadataAttributeSchema.array()
+      attributes: Nft721MetadataAttributeSchema.array()
         .optional()
         .describe(
           'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
@@ -118,9 +118,9 @@ export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape
 
       animation_url: UriSchema.describe(
         'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
-          'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
-          'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
-          'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
+        'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
+        'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
+        'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
       )
         .nullable()
         .optional()

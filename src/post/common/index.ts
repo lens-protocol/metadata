@@ -5,7 +5,7 @@ import {
   PublicationEncryptionStrategySchema,
 } from './encryption.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import { marketplaceMetadataSchemaWith } from '../../tokens/eip721.js';
+import { nftMetadataSchemaWith } from '../../tokens/eip721.js';
 import {
   LocaleSchema,
   TagSchema,
@@ -85,8 +85,8 @@ export type PostMetadataCommon = {
 export function metadataDetailsWith<
   Augmentation extends {
     mainContentFocus:
-      | z.ZodLiteral<PostMainFocus>
-      | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
+    | z.ZodLiteral<PostMainFocus>
+    | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
   },
 >(augmentation: Augmentation) {
   return z
@@ -99,7 +99,7 @@ export function metadataDetailsWith<
         .optional()
         .describe(
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
 
       locale: LocaleSchema,
@@ -151,7 +151,7 @@ export function postWith<
     lens: ReturnType<typeof metadataDetailsWith>;
   },
 >(augmentation: Augmentation) {
-  return marketplaceMetadataSchemaWith({
+  return nftMetadataSchemaWith({
     signature: SignatureSchema.optional(),
     ...augmentation,
   });

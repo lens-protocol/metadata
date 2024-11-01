@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import { PostMetadataCommon, mainContentFocus, metadataDetailsWith, postWith } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import { EncryptableMarkdown, Signature, EncryptableMarkdownSchema } from '../primitives.js';
 
 export type TextOnlyMetadataDetails = PostMetadataCommon & {
@@ -29,7 +29,7 @@ const TextOnlyMetadataDetailsSchema: z.ZodType<TextOnlyMetadataDetails, z.ZodTyp
  *
  * Most comments will fall into this category.
  */
-export type TextOnlyMetadata = MarketplaceMetadata & {
+export type TextOnlyMetadata = NftMetadata & {
   /**
    * The schema id.
    */

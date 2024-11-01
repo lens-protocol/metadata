@@ -18,7 +18,7 @@ import {
   NonEmptyStringSchema,
   Signature,
 } from '../primitives.js';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type ImageMetadataDetails = PostMetadataCommon & {
   /**
@@ -64,7 +64,7 @@ const ImageMetadataDetailsSchema: z.ZodType<ImageMetadataDetails, z.ZodTypeDef, 
  *
  * Use the `lens.attachments` to include more images.
  */
-export type ImageMetadata = MarketplaceMetadata & {
+export type ImageMetadata = NftMetadata & {
   /**
    * The schema id.
    */

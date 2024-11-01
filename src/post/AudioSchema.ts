@@ -18,7 +18,7 @@ import {
   Signature,
   NonEmptyStringSchema,
 } from '../primitives.js';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type AudioMetadataDetails = PostMetadataCommon & {
   /**
@@ -64,7 +64,7 @@ const AudioMetadataDetailsSchema: z.ZodType<AudioMetadataDetails, z.ZodTypeDef, 
  *
  * Use the `lens.attachments` to include more media.
  */
-export type AudioMetadata = MarketplaceMetadata & {
+export type AudioMetadata = NftMetadata & {
   /**
    * The schema id.
    */

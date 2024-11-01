@@ -12,7 +12,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 import {
   EncryptableMarkdown,
   Signature,
@@ -64,7 +64,7 @@ const VideoMetadataDetailsSchema: z.ZodType<VideoMetadataDetails, z.ZodTypeDef, 
  *
  * Use the `lens.attachments` to include more media.
  */
-export type VideoMetadata = MarketplaceMetadata & {
+export type VideoMetadata = NftMetadata & {
   /**
    * The schema id.
    */

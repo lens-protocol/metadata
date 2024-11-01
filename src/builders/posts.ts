@@ -51,7 +51,7 @@ import {
   ArticleMetadata,
   ArticleSchema,
 } from '../post';
-import { MarketplaceMetadata } from '../tokens/eip721';
+import { NftMetadata } from '../tokens/eip721';
 
 /**
  * The default locale used by the builder helpers.
@@ -62,7 +62,7 @@ export const DEFAULT_LOCALE = 'en';
  * @private
  * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
  */
-type MarketplaceDetails = RecursiveUnbrand<MarketplaceMetadata>;
+type MarketplaceDetails = RecursiveUnbrand<NftMetadata>;
 
 /**
  * @private
@@ -77,7 +77,7 @@ type ArticleDetails = InputForPostMetadataDetails<ArticleMetadataDetails>;
  */
 export type ArticleOptions = ArticleDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -143,7 +143,7 @@ type AudioDetails = InputForPostMetadataDetails<AudioMetadataDetails>;
  */
 export type AudioOptions = AudioDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -227,7 +227,7 @@ type CheckingInDetails = InputForPostMetadataDetails<CheckingInMetadataDetails>;
  */
 export type CheckingInOptions = CheckingInDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -298,7 +298,7 @@ type EmbedDetails = InputForPostMetadataDetails<EmbedMetadataDetails>;
  */
 export type EmbedOptions = EmbedDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -348,7 +348,7 @@ type EventDetails = InputForPostMetadataDetails<EventMetadataDetails>;
  */
 export type EventOptions = EventDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -423,7 +423,7 @@ type ImageDetails = InputForPostMetadataDetails<ImageMetadataDetails>;
  */
 export type ImageOptions = ImageDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -509,7 +509,7 @@ type LinkDetails = InputForPostMetadataDetails<LinkMetadataDetails>;
  */
 export type LinkOptions = LinkDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -560,7 +560,7 @@ type LiveStreamDetails = InputForPostMetadataDetails<LiveStreamMetadataDetails>;
  */
 export type LiveStreamOptions = LiveStreamDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -613,7 +613,7 @@ type MintDetails = InputForPostMetadataDetails<MintMetadataDetails>;
  */
 export type MintOptions = MintDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -665,7 +665,7 @@ type SpaceDetails = InputForPostMetadataDetails<SpaceMetadataDetails>;
  */
 export type SpaceOptions = SpaceDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -717,7 +717,7 @@ type StoryDetails = InputForPostMetadataDetails<StoryMetadataDetails>;
  */
 export type StoryOptions = StoryDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -773,7 +773,7 @@ type TextOnlyDetails = InputForPostMetadataDetails<TextOnlyMetadataDetails>;
  */
 export type TextOnlyOptions = TextOnlyDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -823,7 +823,7 @@ type ThreeDDetails = InputForPostMetadataDetails<ThreeDMetadataDetails>;
  */
 export type ThreeDOptions = ThreeDDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -882,7 +882,7 @@ type TransactionDetails = InputForPostMetadataDetails<TransactionMetadataDetails
  */
 export type TransactionOptions = TransactionDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -935,7 +935,7 @@ type VideoDetails = InputForPostMetadataDetails<VideoMetadataDetails>;
  */
 export type VideoOptions = VideoDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };
@@ -1017,7 +1017,7 @@ export function video({
  */
 export type ShortVideoOptions = VideoDetails & {
   /**
-   * All the {@link MarketplaceMetadata} fields.
+   * All the {@link NftMetadata} fields.
    */
   marketplace?: MarketplaceDetails;
 };

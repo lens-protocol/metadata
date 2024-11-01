@@ -21,7 +21,7 @@ import {
   EncryptableStringSchema,
   EncryptableGeoURISchema,
 } from '../primitives.js';
-import { MarketplaceMetadata } from '../tokens/eip721.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
@@ -73,7 +73,7 @@ const CheckingInMetadataDetailsSchema: z.ZodType<CheckingInMetadataDetails, z.Zo
 /**
  * Use this to notify your community that you are checking in from a location.
  */
-export type CheckingInMetadata = MarketplaceMetadata & {
+export type CheckingInMetadata = NftMetadata & {
   /**
    * The schema id.
    */

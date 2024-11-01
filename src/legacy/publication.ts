@@ -9,13 +9,13 @@ import {
   PublicationContentWarning,
 } from '../post/common';
 import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
-import { marketplaceMetadataSchemaWith } from '../tokens/eip721.js';
+import { nftMetadataSchemaWith } from '../tokens/eip721.js';
 import { Brand, hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
 export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
-export { MarketplaceMetadataAttributeDisplayType } from '../tokens/eip721.js';
-export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../tokens/eip721.js';
+export { NftMetadataAttributeDisplayType as MarketplaceMetadataAttributeDisplayType } from '../tokens/eip721.js';
+export type { NftMetadataAttribute as MarketplaceMetadataAttribute, NftMetadata as MarketplaceMetadata } from '../tokens/eip721.js';
 export type * from '../primitives.js';
 
 export enum PublicationMetadataVersion {
@@ -191,7 +191,7 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
   return isNullish(value) || value.length === 0;
 }
 
-const PublicationCommonSchema = marketplaceMetadataSchemaWith({
+const PublicationCommonSchema = nftMetadataSchemaWith({
   metadata_id: z
     .string({
       description:
