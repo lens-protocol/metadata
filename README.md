@@ -582,7 +582,7 @@ To contribute to the Lens Protocol Metadata Standards, please fork this reposito
 To run the unit tests, run:
 
 ```bash
-pnpm test:unit
+pnpm test
 ```
 
 **Pro-tip:** you can run `pnpm test:unit --watch` to run the tests in watch mode.

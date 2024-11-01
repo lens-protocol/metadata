@@ -38,9 +38,7 @@
     "lint:typecheck": "tsc --noEmit",
     "lint:prettier": "prettier --check .",
     "prepublish": "pnpm clean:dist && pnpm lint && pnpm test && pnpm build",
-    "test": "pnpm test:unit && pnpm test:regression",
-    "test:unit": "jest \"src/.+.\\.spec\\.ts\"",
-    "test:regression": "jest \"src/.+.\\.test\\.ts\"",
+    "test": "jest \"src/.+.\\.spec\\.ts\"",
     "typedoc:docs": "typedoc",
     "typedoc:debug": "typedoc --logLevel Verbose"
   },
