@@ -156,7 +156,7 @@ export const EncryptableStringSchema = encryptable(NonEmptyStringSchema);
 /**
  * An arbitrary string or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableString = string | EncryptedString;
 
@@ -242,7 +242,7 @@ function markdownSchema(
  * @internal
  */
 export const EncryptableMarkdownSchema = encryptable(
-  markdownSchema(NonEmptyStringSchema.describe('The content for the publication as markdown.')),
+  markdownSchema(NonEmptyStringSchema.describe('The content for the post as markdown.')),
 );
 
 /**
@@ -253,7 +253,7 @@ export const MarkdownSchema = NonEmptyStringSchema.transform(toMarkdown);
 /**
  * A markdown text or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableMarkdown = Markdown | EncryptedString;
 
@@ -288,7 +288,7 @@ export const EncryptableUriSchema = encryptable(UriSchema);
 /**
  * A URI or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableURI = URI | EncryptedString;
 
@@ -426,7 +426,7 @@ export const EncryptableGeoURISchema = encryptable(GeoURISchema);
 /**
  * A Geo URI or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableGeoURI = GeoURI | EncryptedString;
 
@@ -500,7 +500,7 @@ export const EncryptableDateTimeSchema = encryptable(DateTimeSchema);
 /**
  * A DateTime or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableDateTime = DateTime | EncryptedString;
 
@@ -674,49 +674,47 @@ export function amount(input: AmountDetails): Amount {
 }
 
 /**
- * A Lens Profile identifier.
+ * A Legacy Lens Profile identifier.
  *
  * @example
  * ```
  * 0x01
  * ```
  */
-export type ProfileId = Brand<string, 'ProfileId'>;
+export type LegacyProfileId = Brand<string, 'ProfileId'>;
 /**
  * @internal
  */
-export function toProfileId(value: string): ProfileId {
-  return value as ProfileId;
+export function toProfileId(value: string): LegacyProfileId {
+  return value as LegacyProfileId;
 }
 /**
  * @internal
  */
-export const ProfileIdSchema: z.ZodType<ProfileId, z.ZodTypeDef, unknown> = z
+export const LegacyProfileIdSchema: z.ZodType<LegacyProfileId, z.ZodTypeDef, unknown> = z
   .string()
   .min(4)
   .transform(toProfileId);
 
 /**
- * A Lens Publication identifier.
- *
- * No Momoka publications for now.
+ * A Legacy on-chain Lens Publication identifier.
  *
  * @example
  * ```
  * 0x01-0x01
  * ```
  */
-export type PublicationId = Brand<string, 'PublicationId'>;
+export type LegacyPublicationId = Brand<string, 'PublicationId'>;
 /**
  * @internal
  */
-export function toPublicationId(value: string): PublicationId {
-  return value as PublicationId;
+export function toLegacyPublicationId(value: string): LegacyPublicationId {
+  return value as LegacyPublicationId;
 }
 /**
  * @internal
  */
-export const PublicationIdSchema: z.ZodType<PublicationId, z.ZodTypeDef, unknown> = z
+export const LegacyPublicationIdSchema: z.ZodType<LegacyPublicationId, z.ZodTypeDef, unknown> = z
   .string()
   .min(9)
-  .transform(toPublicationId);
+  .transform(toLegacyPublicationId);

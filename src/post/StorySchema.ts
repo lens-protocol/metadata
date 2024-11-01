@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -13,7 +13,7 @@ import {
 import { MarketplaceMetadata } from '../marketplace.js';
 import { EncryptableMarkdown, EncryptableMarkdownSchema, Signature } from '../primitives.js';
 
-export type StoryMetadataDetails = PublicationMetadataCommon & {
+export type StoryMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */

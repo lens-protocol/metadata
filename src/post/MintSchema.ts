@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -21,7 +21,7 @@ import {
 
 // TODO validate the mint link using the allow list
 
-export type MintMetadataDetails = PublicationMetadataCommon & {
+export type MintMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */

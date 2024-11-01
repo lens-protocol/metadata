@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -19,7 +19,7 @@ import {
   EncryptableMarkdownSchema,
 } from '../primitives.js';
 
-export type LinkMetadataDetails = PublicationMetadataCommon & {
+export type LinkMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */

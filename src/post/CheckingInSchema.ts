@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -23,7 +23,7 @@ import {
   EncryptableGeoURISchema,
 } from '../primitives.js';
 
-export type CheckingInMetadataDetails = PublicationMetadataCommon & {
+export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */

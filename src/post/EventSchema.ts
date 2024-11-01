@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   TimezoneId,
   TimezoneIdSchema,
   mainContentFocus,
@@ -66,7 +66,7 @@ export const SchedulingAdjustmentsSchema: z.ZodType<SchedulingAdjustments, z.Zod
       ),
   });
 
-export type EventMetadataDetails = PublicationMetadataCommon & {
+export type EventMetadataDetails = PostMetadataCommon & {
   /**
    * The title of the event.
    */

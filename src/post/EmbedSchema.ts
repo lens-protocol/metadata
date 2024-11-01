@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -19,7 +19,7 @@ import {
   EncryptableMarkdownSchema,
 } from '../primitives.js';
 
-export type EmbedMetadataDetails = PublicationMetadataCommon & {
+export type EmbedMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
@@ -53,7 +53,7 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
   });
 
 /**
- * Use this to model a publication that embeds a resource such as a micro-app, a game, etc.
+ * Use this to model a post that embeds a resource such as a micro-app, a game, etc.
  */
 export type EmbedMetadata = MarketplaceMetadata & {
   /**

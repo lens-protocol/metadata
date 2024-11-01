@@ -80,11 +80,11 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 200,
-          "description": "The App Id that this publication belongs to."
+          "description": "The App Id that this post belongs to."
         },
         "hideFromFeed": {
           "type": "boolean",
-          "description": "Determine if the publication should not be shown in any feed."
+          "description": "Determine if the post should not be shown in any feed."
         },
         "attributes": {
           "type": "array",
@@ -149,7 +149,7 @@
           "anyOf": [
             {
               "$ref": "#/$defs/NonEmptyString",
-              "description": "The content for the publication as markdown."
+              "description": "The content for the post as markdown."
             },
             {
               "$ref": "#/$defs/EncryptedString"
@@ -450,7 +450,7 @@
           "const": "COLLECT"
         },
         "publicationId": {
-          "$ref": "#/$defs/PublicationId"
+          "$ref": "#/$defs/LegacyPublicationId"
         },
         "thisPublication": {
           "type": "boolean",
@@ -550,7 +550,7 @@
           "const": "FOLLOW"
         },
         "follow": {
-          "$ref": "#/$defs/ProfileId"
+          "$ref": "#/$defs/LegacyProfileId"
         }
       },
       "required": [
@@ -563,6 +563,14 @@
       "type": "string",
       "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
       "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
+    },
+    "LegacyProfileId": {
+      "type": "string",
+      "minLength": 4
+    },
+    "LegacyPublicationId": {
+      "type": "string",
+      "minLength": 9
     },
     "MarketplaceMetadataAttribute": {
       "type": "object",
@@ -1013,10 +1021,6 @@
       ],
       "additionalProperties": false
     },
-    "ProfileId": {
-      "type": "string",
-      "minLength": 4
-    },
     "ProfileOwnershipCondition": {
       "type": "object",
       "properties": {
@@ -1025,7 +1029,7 @@
           "const": "PROFILE_OWNERSHIP"
         },
         "profileId": {
-          "$ref": "#/$defs/ProfileId"
+          "$ref": "#/$defs/LegacyProfileId"
         }
       },
       "required": [
@@ -1071,10 +1075,6 @@
           "description": "Publication encryption strategy powered by the LIT Protocol."
         }
       ]
-    },
-    "PublicationId": {
-      "type": "string",
-      "minLength": 9
     },
     "Tag": {
       "type": "string",

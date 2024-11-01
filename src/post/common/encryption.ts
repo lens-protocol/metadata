@@ -8,10 +8,10 @@ import {
   EvmAddressSchema,
   NetworkAddress,
   NetworkAddressSchema,
-  ProfileId,
-  ProfileIdSchema,
-  PublicationId,
-  PublicationIdSchema,
+  LegacyProfileId,
+  LegacyProfileIdSchema,
+  LegacyPublicationId,
+  LegacyPublicationIdSchema,
   TokenId,
   TokenIdSchema,
   NonEmptyStringSchema,
@@ -117,31 +117,31 @@ export const EoaOwnershipConditionSchema = z.object({
 
 export type ProfileOwnershipCondition = {
   type: ConditionType.PROFILE_OWNERSHIP;
-  profileId: ProfileId;
+  profileId: LegacyProfileId;
 };
 /**
  * @internal
  */
 export const ProfileOwnershipConditionSchema = z.object({
   type: z.literal(ConditionType.PROFILE_OWNERSHIP),
-  profileId: ProfileIdSchema,
+  profileId: LegacyProfileIdSchema,
 });
 
 export type FollowCondition = {
   type: ConditionType.FOLLOW;
-  follow: ProfileId;
+  follow: LegacyProfileId;
 };
 /**
  * @internal
  */
 export const FollowConditionSchema = z.object({
   type: z.literal(ConditionType.FOLLOW),
-  follow: ProfileIdSchema,
+  follow: LegacyProfileIdSchema,
 });
 
 export type CollectCondition = {
   type: ConditionType.COLLECT;
-  publicationId: PublicationId;
+  publicationId: LegacyPublicationId;
   thisPublication: boolean;
 };
 /**
@@ -149,7 +149,7 @@ export type CollectCondition = {
  */
 export const CollectConditionSchema = z.object({
   type: z.literal(ConditionType.COLLECT),
-  publicationId: PublicationIdSchema, // TODO check on-chain publication ID
+  publicationId: LegacyPublicationIdSchema, // TODO check on-chain publication ID
   thisPublication: z.boolean().optional().default(false),
 });
 

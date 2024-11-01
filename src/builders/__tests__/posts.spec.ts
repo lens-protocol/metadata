@@ -30,8 +30,8 @@ import {
   shortVideo,
 } from '../posts.js';
 
-describe(`Given the publication metadata builders`, () => {
-  describe('when setting tags on any publication metadata', () => {
+describe(`Given the post metadata builders`, () => {
+  describe('when setting tags on any post metadata', () => {
     it('should ensure they at 20 at most', () => {
       expect(() =>
         article({

@@ -3,13 +3,13 @@ import { faker } from '@faker-js/faker';
 import {
   EvmAddress,
   NetworkAddress,
-  ProfileId,
+  LegacyProfileId,
   toChainId,
   toEvmAddress,
   toProfileId,
 } from '../primitives';
 
-export function mockProfileId(): ProfileId {
+export function mockProfileId(): LegacyProfileId {
   return toProfileId(faker.string.hexadecimal({ length: 2 }));
 }
 

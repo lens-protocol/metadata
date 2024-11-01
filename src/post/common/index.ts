@@ -38,9 +38,9 @@ export const PublicationContentWarningSchema = z.nativeEnum(PublicationContentWa
 });
 
 /**
- * Common fields of a Lens primary publication.
+ * Common fields of a Lens post.
  */
-export type PublicationMetadataCommon = {
+export type PostMetadataCommon = {
   /**
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
    *
@@ -48,11 +48,11 @@ export type PublicationMetadataCommon = {
    */
   id: string;
   /**
-   * The App Id that this publication belongs to.
+   * The App Id that this post belongs to.
    */
   appId?: AppId;
   /**
-   * Determine if the publication should not be shown in any feed.
+   * Determine if the post should not be shown in any feed.
    *
    * @defaultValue false
    */
@@ -67,9 +67,9 @@ export type PublicationMetadataCommon = {
    */
   locale: Locale;
   /**
-   * The encryption strategy used to encrypt the publication.
+   * The encryption strategy used to encrypt the post.
    *
-   * If not present, the publication is presumed to be unencrypted.
+   * If not present, the post is presumed to be unencrypted.
    */
   encryptedWith?: PublicationEncryptionStrategy;
   /**
@@ -99,11 +99,11 @@ export function metadataDetailsWith<
     .object({
       id: MetadataIdSchema,
 
-      appId: AppIdSchema.optional().describe('The App Id that this publication belongs to.'),
+      appId: AppIdSchema.optional().describe('The App Id that this post belongs to.'),
 
       hideFromFeed: z
         .boolean({
-          description: 'Determine if the publication should not be shown in any feed.',
+          description: 'Determine if the post should not be shown in any feed.',
         })
         .optional(),
 

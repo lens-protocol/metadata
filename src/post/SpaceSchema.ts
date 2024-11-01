@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -22,7 +22,7 @@ import {
   NonEmptyStringSchema,
 } from '../primitives.js';
 
-export type SpaceMetadataDetails = PublicationMetadataCommon & {
+export type SpaceMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */

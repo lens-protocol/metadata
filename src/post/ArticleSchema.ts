@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -18,7 +18,7 @@ import {
   NonEmptyStringSchema,
 } from '../primitives.js';
 
-export type ArticleMetadataDetails = PublicationMetadataCommon & {
+export type ArticleMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
@@ -51,7 +51,7 @@ const ArticleMetadataDetailsSchema: z.ZodType<ArticleMetadataDetails, z.ZodTypeD
   });
 
 /**
- * Use this model an article-like publication (e.g. blog, news, etc.)
+ * Use this model an article-like post (e.g. blog, news, etc.)
  */
 export type ArticleMetadata = MarketplaceMetadata & {
   /**

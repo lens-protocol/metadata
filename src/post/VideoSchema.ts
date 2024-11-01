@@ -7,7 +7,7 @@ import {
   AnyMediaSchema,
   MediaVideo,
   MediaVideoSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -20,7 +20,7 @@ import {
   EncryptableMarkdownSchema,
 } from '../primitives.js';
 
-export type VideoMetadataDetails = PublicationMetadataCommon & {
+export type VideoMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
@@ -63,7 +63,7 @@ const VideoMetadataDetailsSchema: z.ZodType<VideoMetadataDetails, z.ZodTypeDef, 
   });
 
 /**
- * Use this to model a publication where a video is the main focus.
+ * Use this to model a post where a video is the main focus.
  *
  * Use the `lens.attachments` to include more media.
  */

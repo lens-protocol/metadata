@@ -3,7 +3,6 @@ export * from './app/index.js';
 export * from './builders/index.js';
 export * from './constants.js';
 export * from './group/index.js';
-export * from './extractVersion.js';
 export * from './feed/index.js';
 export * from './formatters.js';
 export * from './graph/index.js';

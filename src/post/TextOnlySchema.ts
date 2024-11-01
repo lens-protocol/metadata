@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -11,13 +11,13 @@ import {
 import { MarketplaceMetadata } from '../marketplace.js';
 import { EncryptableMarkdown, Signature, EncryptableMarkdownSchema } from '../primitives.js';
 
-export type TextOnlyMetadataDetails = PublicationMetadataCommon & {
+export type TextOnlyMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
   mainContentFocus: PostMainFocus.TEXT_ONLY;
   /**
-   * The content for the publication as markdown.
+   * The content for the post as markdown.
    */
   content: EncryptableMarkdown;
 };
@@ -30,7 +30,7 @@ const TextOnlyMetadataDetailsSchema: z.ZodType<TextOnlyMetadataDetails, z.ZodTyp
   });
 
 /**
- * Use this for a text-only publication.
+ * Use this for a text-only post.
  *
  * Most comments will fall into this category.
  */

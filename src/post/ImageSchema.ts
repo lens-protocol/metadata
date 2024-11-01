@@ -7,7 +7,7 @@ import {
   AnyMediaSchema,
   MediaImage,
   MediaImageSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -20,7 +20,7 @@ import {
   Signature,
 } from '../primitives.js';
 
-export type ImageMetadataDetails = PublicationMetadataCommon & {
+export type ImageMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
@@ -60,7 +60,7 @@ const ImageMetadataDetailsSchema: z.ZodType<ImageMetadataDetails, z.ZodTypeDef, 
   });
 
 /**
- * Use this to model a publication where an image is the main focus.
+ * Use this to model a post where an image is the main focus.
  *
  * Use the `lens.attachments` to include more images.
  */

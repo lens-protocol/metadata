@@ -9,7 +9,7 @@ import {
   MediaAudio,
   MediaAudioSchema,
   metadataDetailsWith,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   postWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -20,7 +20,7 @@ import {
   NonEmptyStringSchema,
 } from '../primitives.js';
 
-export type AudioMetadataDetails = PublicationMetadataCommon & {
+export type AudioMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
@@ -60,7 +60,7 @@ const AudioMetadataDetailsSchema: z.ZodType<AudioMetadataDetails, z.ZodTypeDef, 
   });
 
 /**
- * Use this to model a publication where an audio is the main focus.
+ * Use this to model a post where an audio is the main focus.
  *
  * Use the `lens.attachments` to include more media.
  */

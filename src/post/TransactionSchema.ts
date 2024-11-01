@@ -5,7 +5,7 @@ import { PostSchemaId } from './PostSchemaId.js';
 import {
   AnyMedia,
   AnyMediaSchema,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
@@ -30,7 +30,7 @@ export enum MetadataTransactionType {
   OTHER = 'OTHER',
 }
 
-export type TransactionMetadataDetails = PublicationMetadataCommon & {
+export type TransactionMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
@@ -79,7 +79,7 @@ const TransactionMetadataDetailsSchema: z.ZodType<
 });
 
 /**
- * Use this to model a publication where a transaction is the main focus.
+ * Use this to model a post where a transaction is the main focus.
  */
 export type TransactionMetadata = MarketplaceMetadata & {
   /**

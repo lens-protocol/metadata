@@ -1,4 +1,4 @@
-import { PublicationMetadata } from '../publication';
+import { PostMetadata } from '../post';
 import { Brand, Overwrite } from '../utils.js';
 
 /**
@@ -12,8 +12,8 @@ type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
 export type RecursiveUnbrand<T> = T extends Brand<infer R, BrandOf<T>>
   ? R
   : {
-      [K in keyof T]: RecursiveUnbrand<T[K]>;
-    };
+    [K in keyof T]: RecursiveUnbrand<T[K]>;
+  };
 /**
  * @internal
  */
@@ -25,7 +25,7 @@ type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
 /**
  * @internal
  */
-type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> = Overwrite<
+type PublicationDefaults<Details extends ExtractLensSpec<PostMetadata>> = Overwrite<
   Details,
   {
     /**
@@ -35,7 +35,7 @@ type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> =
      */
     id?: string;
     /**
-     * The language of the publication.
+     * The language of the post.
      *
      * It's a locale string in the format of `<language>-<region>` or just `<language>`, where:
      * - `language` is a two-letter ISO 639-1 language code, e.g. `en` or `it`
@@ -52,5 +52,5 @@ type PublicationDefaults<Details extends ExtractLensSpec<PublicationMetadata>> =
 /**
  * @internal
  */
-export type InputForPublicationMetadataDetails<T extends PublicationMetadata['lens']> =
+export type InputForPostMetadataDetails<T extends PostMetadata['lens']> =
   RecursiveUnbrand<OmitInferredPublicationFields<PublicationDefaults<T>>>;

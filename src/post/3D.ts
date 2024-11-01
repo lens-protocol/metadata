@@ -6,7 +6,7 @@ import {
   AnyMedia,
   AnyMediaSchema,
   mainContentFocus,
-  PublicationMetadataCommon,
+  PostMetadataCommon,
   metadataDetailsWith,
   MetadataLicenseType,
   MetadataLicenseTypeSchema,
@@ -74,7 +74,7 @@ export const ThreeDAssetSchema: z.ZodType<ThreeDAsset, z.ZodTypeDef, object> = z
   ),
 });
 
-export type ThreeDMetadataDetails = PublicationMetadataCommon & {
+export type ThreeDMetadataDetails = PostMetadataCommon & {
   /**
    * The main focus of the post.
    */
