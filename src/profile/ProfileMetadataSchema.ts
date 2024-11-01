@@ -9,9 +9,9 @@ import {
   Signature,
   SignatureSchema,
   URI,
-  markdown,
-  nonEmptyStringSchema,
-  uriSchema,
+  NonEmptyStringSchema,
+  UriSchema,
+  MarkdownSchema,
 } from '../primitives.js';
 
 export type ProfileMetadataDetails = {
@@ -53,17 +53,17 @@ export type ProfileMetadataDetails = {
 const ProfileMetadataDetailsSchema: z.ZodType<ProfileMetadataDetails, z.ZodTypeDef, object> =
   z.object(
     {
-      id: nonEmptyStringSchema(
+      id: NonEmptyStringSchema.describe(
         'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
       ),
 
-      name: nonEmptyStringSchema('The profile display name.').optional(),
+      name: NonEmptyStringSchema.describe('The profile display name.').optional(),
 
-      bio: markdown(nonEmptyStringSchema('The profile bio as markdown.')).optional(),
+      bio: MarkdownSchema.describe('The profile bio as markdown.').optional(),
 
-      picture: uriSchema('The profile picture.').optional(),
+      picture: UriSchema.describe('The profile picture.').optional(),
 
-      coverPicture: uriSchema('The profile cover picture.').optional(),
+      coverPicture: UriSchema.describe('The profile cover picture.').optional(),
 
       attributes: MetadataAttributeSchema.array()
         .min(1)

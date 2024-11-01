@@ -8,7 +8,6 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -16,9 +15,10 @@ import {
   ChainId,
   ChainIdSchema,
   EncryptableMarkdown,
+  EncryptableMarkdownSchema,
   EncryptableString,
   Signature,
-  encryptableStringSchema,
+  EncryptableStringSchema,
 } from '../primitives.js';
 
 /**
@@ -64,13 +64,13 @@ const TransactionMetadataDetailsSchema: z.ZodType<
 > = metadataDetailsWith({
   mainContentFocus: mainContentFocus(PublicationMainFocus.TRANSACTION),
 
-  txHash: encryptableStringSchema('The transaction hash.'),
+  txHash: EncryptableStringSchema.describe('The transaction hash.'),
 
   type: z.nativeEnum(MetadataTransactionType).describe('The type of transaction.'),
 
   chainId: ChainIdSchema.describe('The Chain Id.'),
 
-  content: optionalContentSchema(),
+  content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
   attachments: AnyMediaSchema.array()
     .min(1)

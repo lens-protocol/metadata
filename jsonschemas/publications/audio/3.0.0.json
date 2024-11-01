@@ -4,7 +4,7 @@
     "description": {
       "anyOf": [
         {
-          "type": "string",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "A human-readable description of the item. It could be plain text or markdown."
         },
         {
@@ -16,9 +16,7 @@
     "external_url": {
       "anyOf": [
         {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
         },
         {
@@ -41,9 +39,7 @@
     "image": {
       "anyOf": [
         {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "Marketplaces will store any NFT image here."
         },
         {
@@ -55,9 +51,7 @@
     "animation_url": {
       "anyOf": [
         {
-          "type": "string",
-          "minLength": 6,
-          "format": "uri",
+          "$ref": "#/$defs/Uri",
           "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
         },
         {
@@ -137,21 +131,21 @@
           "$ref": "#/$defs/MediaAudio"
         },
         "title": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The optional audio title."
         },
         "content": {
           "anyOf": [
             {
               "type": "string",
-              "description": "Optional markdown content."
+              "minLength": 1,
+              "description": "The content for the publication as markdown."
             },
             {
               "$ref": "#/$defs/EncryptedString"
             }
           ],
-          "description": "An encrypted value or its decrypted version."
+          "description": "Optional markdown content."
         },
         "attachments": {
           "type": "array",
@@ -177,6 +171,19 @@
   ],
   "additionalProperties": true,
   "$defs": {
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
+    },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier. "
+    },
     "AccessCondition": {
       "type": "object",
       "properties": {
@@ -398,8 +405,7 @@
           "additionalProperties": false
         },
         "value": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
         }
       },
@@ -466,6 +472,18 @@
       "type": "string",
       "pattern": "^\\S+$",
       "description": "An encrypted value."
+    },
+    "EncryptableString": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
     },
     "EoaOwnershipCondition": {
       "type": "object",
@@ -553,8 +571,7 @@
           ]
         },
         "trait_type": {
-          "type": "string",
-          "minLength": 1,
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the trait."
         },
         "value": {
@@ -607,56 +624,20 @@
           "description": "The license for the audio."
         },
         "credits": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The credits for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The credits for the audio."
         },
         "artist": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The name of the artist."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The name of the artist."
         },
         "genre": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The genre of the audio"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The genre of the audio"
         },
         "recordLabel": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The record label for the audio."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The record label for the audio."
         },
         "kind": {
           "type": "string",
@@ -710,17 +691,8 @@
           "description": "The mime type of the image"
         },
         "altTag": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The alt tag for accessibility"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The alt tag for accessibility"
         },
         "license": {
           "$ref": "#/$defs/MetadataLicenseType",
@@ -764,17 +736,8 @@
           "description": "The mime type of the video"
         },
         "altTag": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The alt tag for accessibility"
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The alt tag for accessibility"
         },
         "cover": {
           "$ref": "#/$defs/EncryptableUri"
@@ -805,8 +768,7 @@
               "const": "Boolean"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -833,8 +795,7 @@
               "const": "Date"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
@@ -858,13 +819,11 @@
               "const": "Number"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
             }
           },
@@ -883,14 +842,12 @@
               "const": "String"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
-              "description": "A string value."
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Any string value."
             }
           },
           "required": [
@@ -908,13 +865,11 @@
               "const": "JSON"
             },
             "key": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "The attribute's unique identifier."
             },
             "value": {
-              "type": "string",
-              "minLength": 1,
+              "$ref": "#/$defs/NonEmptyString",
               "description": "A JSON string. It's consumer responsibility to validate and parse it."
             }
           },
@@ -1023,82 +978,28 @@
       "type": "object",
       "properties": {
         "formatted": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The full mailing address formatted for display."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The full mailing address formatted for display."
         },
         "streetAddress": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
         },
         "locality": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The city or locality."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The city or locality."
         },
         "region": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The state or region."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The state or region."
         },
         "postalCode": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The zip or postal code."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The zip or postal code."
         },
         "country": {
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "The country name component."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
-          "description": "An encrypted value or its decrypted version."
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The country name component."
         }
       },
       "required": [

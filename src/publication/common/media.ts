@@ -5,8 +5,8 @@ import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttrib
 import {
   EncryptableString,
   EncryptableURI,
-  encryptableStringSchema,
   EncryptableUriSchema,
+  EncryptableStringSchema,
 } from '../../primitives.js';
 
 function mediaCommonSchema<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
@@ -113,10 +113,10 @@ export const MediaAudioSchema = mediaCommonSchema({
     .int()
     .optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the audio.'),
-  credits: encryptableStringSchema('The credits for the audio.').optional(),
-  artist: encryptableStringSchema('The name of the artist.').optional(),
-  genre: encryptableStringSchema('The genre of the audio').optional(),
-  recordLabel: encryptableStringSchema('The record label for the audio.').optional(),
+  credits: EncryptableStringSchema.describe('The credits for the audio.').optional(),
+  artist: EncryptableStringSchema.describe('The name of the artist.').optional(),
+  genre: EncryptableStringSchema.describe('The genre of the audio').optional(),
+  recordLabel: EncryptableStringSchema.describe('The record label for the audio.').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio.' }).optional(),
   lyrics: EncryptableUriSchema.optional(),
 });
@@ -165,7 +165,7 @@ export type MediaImage = {
  */
 export const MediaImageSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaImageMimeType, { description: 'The mime type of the image' }),
-  altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
+  altTag: EncryptableStringSchema.describe('The alt tag for accessibility').optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the image'),
 });
 
@@ -222,7 +222,7 @@ export type MediaVideo = {
  */
 export const MediaVideoSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
-  altTag: encryptableStringSchema('The alt tag for accessibility').optional(),
+  altTag: EncryptableStringSchema.describe('The alt tag for accessibility').optional(),
   cover: EncryptableUriSchema.optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })

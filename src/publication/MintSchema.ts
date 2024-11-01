@@ -8,7 +8,6 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -17,6 +16,7 @@ import {
   EncryptableURI,
   Signature,
   EncryptableUriSchema,
+  EncryptableMarkdownSchema,
 } from '../primitives.js';
 
 // TODO validate the mint link using the allow list
@@ -55,7 +55,7 @@ const MintMetadataDetailsSchema: z.ZodType<MintMetadataDetails, z.ZodTypeDef, ob
         'The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata',
     ),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

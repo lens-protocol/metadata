@@ -2,13 +2,13 @@
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
-import { MarketplaceMetadataSchema } from '../marketplace.js';
+import { marketplaceMetadataSchemaWith } from '../marketplace.js';
 import {
   LocaleSchema,
   Markdown,
-  nonEmptyStringSchema,
   toAppId,
   toMarkdown,
+  NonEmptyStringSchema,
 } from '../primitives.js';
 import * as latest from '../publication';
 import {
@@ -151,13 +151,13 @@ const AnimationUrlSchema = z.string({
  */
 export const MediaSchema = z
   .object({
-    item: nonEmptyStringSchema('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
+    item: NonEmptyStringSchema.describe('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
     altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
     cover: z
       .string() // it can be `This publication is gated.`
       .describe('The cover for any video or audio media.')
-      .optional()
       .nullable()
+      .optional()
       .catch(null),
     type: z.string().optional().nullable().describe('This is the mime type of the media.'),
   })
@@ -186,7 +186,7 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
   return isNullish(value) || value.length === 0;
 }
 
-const PublicationCommonSchema = MarketplaceMetadataSchema.extend({
+const PublicationCommonSchema = marketplaceMetadataSchemaWith({
   metadata_id: z
     .string({
       description:
@@ -383,7 +383,7 @@ export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 const EncryptedMediaWithWrongShapeSchema = z
   .object({
     original: z.object({
-      url: nonEmptyStringSchema(),
+      url: NonEmptyStringSchema,
       cover: z.string().nullable().optional().catch(null),
       altTag: z.string().nullable().optional().catch(null),
       mimeType: z.string().nullable().optional().catch(null),

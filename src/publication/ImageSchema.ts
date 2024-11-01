@@ -10,11 +10,15 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
-import { EncryptableMarkdown, Signature, nonEmptyStringSchema } from '../primitives.js';
+import {
+  EncryptableMarkdown,
+  EncryptableMarkdownSchema,
+  NonEmptyStringSchema,
+  Signature,
+} from '../primitives.js';
 
 export type ImageMetadataDetails = PublicationMetadataCommon & {
   /**
@@ -45,9 +49,9 @@ const ImageMetadataDetailsSchema: z.ZodType<ImageMetadataDetails, z.ZodTypeDef, 
 
     image: MediaImageSchema,
 
-    title: nonEmptyStringSchema('The optional image title.').optional(),
+    title: NonEmptyStringSchema.describe('The optional image title.').optional(),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

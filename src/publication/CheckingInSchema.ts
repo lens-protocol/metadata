@@ -8,19 +8,19 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableGeoURI,
   EncryptableMarkdown,
+  EncryptableMarkdownSchema,
   EncryptableString,
   PhysicalAddress,
   PhysicalAddressSchema,
   Signature,
-  encryptableGeoUriSchema,
-  encryptableStringSchema,
+  EncryptableStringSchema,
+  EncryptableGeoURISchema,
 } from '../primitives.js';
 
 export type CheckingInMetadataDetails = PublicationMetadataCommon & {
@@ -54,15 +54,15 @@ const CheckingInMetadataDetailsSchema: z.ZodType<CheckingInMetadataDetails, z.Zo
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PublicationMainFocus.CHECKING_IN),
 
-    location: encryptableStringSchema('Where you checking in from (free form text).'),
+    location: EncryptableStringSchema.describe('Where you checking in from (free form text).'),
 
-    position: encryptableGeoUriSchema(
+    position: EncryptableGeoURISchema.describe(
       'The optional geographic position of the location.',
     ).optional(),
 
     address: PhysicalAddressSchema.optional().describe('The optional address of the location.'),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { Markdown, URI, markdown, nonEmptyStringSchema, uriSchema } from './primitives.js';
+import { Markdown, URI, NonEmptyStringSchema, MarkdownSchema, UriSchema } from './primitives.js';
 
 /**
  * The display type of a marketplace metadata attribute.
@@ -34,7 +34,7 @@ export const MarketplaceMetadataAttributeSchema: z.ZodType<
 > = z
   .object({
     display_type: z.nativeEnum(MarketplaceMetadataAttributeDisplayType).optional(),
-    trait_type: nonEmptyStringSchema('The name of the trait.').optional(),
+    trait_type: NonEmptyStringSchema.optional().describe('The name of the trait.'),
     value: z.union([z.string(), z.number()]).optional(),
   })
   .passthrough(); // make it more loose to allow for future marketplace extensions
@@ -80,48 +80,50 @@ export type MarketplaceMetadata = {
 /**
  * @internal
  */
-export const MarketplaceMetadataSchema = z
-  .object({
-    description: markdown(
-      z.string({
-        description:
-          'A human-readable description of the item. It could be plain text or markdown.',
-      }),
-    )
-      .nullable()
-      .optional()
-      .catch(null),
-
-    external_url: uriSchema(
-      `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
-        'and will allow users to leave OpenSea and view the item on the site.',
-    )
-      .nullable()
-      .optional()
-      .catch(null),
-
-    name: z.string({ description: 'Name of the NFT item.' }).optional(),
-
-    attributes: MarketplaceMetadataAttributeSchema.array()
-      .optional()
-      .describe(
-        'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
+export function marketplaceMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
+  augmentation: Augmentation,
+) {
+  return z
+    .object({
+      description: MarkdownSchema.describe(
+        'A human-readable description of the item. It could be plain text or markdown.',
       )
-      .catch([]),
+        .nullable()
+        .optional()
+        .catch(null),
 
-    image: uriSchema('Marketplaces will store any NFT image here.')
-      .nullable()
-      .optional()
-      .catch(null),
+      external_url: UriSchema.describe(
+        `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
+          'and will allow users to leave OpenSea and view the item on the site.',
+      )
+        .nullable()
+        .optional()
+        .catch(null),
 
-    animation_url: uriSchema(
-      'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
-        'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
-        'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
-        'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
-    )
-      .nullable()
-      .optional()
-      .catch(null),
-  })
-  .passthrough(); // loose validation for any unknown fields;
+      name: z.string({ description: 'Name of the NFT item.' }).optional(),
+
+      attributes: MarketplaceMetadataAttributeSchema.array()
+        .optional()
+        .describe(
+          'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
+        )
+        .catch([]),
+
+      image: UriSchema.describe('Marketplaces will store any NFT image here.')
+        .nullable()
+        .optional()
+        .catch(null),
+
+      animation_url: UriSchema.describe(
+        'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
+          'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
+          'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
+          'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
+      )
+        .nullable()
+        .optional()
+        .catch(null),
+    })
+    .extend(augmentation)
+    .passthrough(); // loose validation for any unknown fields;
+}

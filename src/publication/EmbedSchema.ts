@@ -8,7 +8,6 @@ import {
   PublicationMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
-  optionalContentSchema,
   publicationWith,
 } from './common';
 import { MarketplaceMetadata } from '../marketplace.js';
@@ -17,6 +16,7 @@ import {
   EncryptableURI,
   Signature,
   EncryptableUriSchema,
+  EncryptableMarkdownSchema,
 } from '../primitives.js';
 
 export type EmbedMetadataDetails = PublicationMetadataCommon & {
@@ -44,7 +44,7 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
 
     embed: EncryptableUriSchema.describe('The embed URL.'),
 
-    content: optionalContentSchema(),
+    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)
