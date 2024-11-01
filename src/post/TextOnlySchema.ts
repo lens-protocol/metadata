@@ -2,13 +2,8 @@ import { z } from 'zod';
 
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
-import {
-  PostMetadataCommon,
-  mainContentFocus,
-  metadataDetailsWith,
-  postWith,
-} from './common';
-import { MarketplaceMetadata } from '../marketplace.js';
+import { PostMetadataCommon, mainContentFocus, metadataDetailsWith, postWith } from './common';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 import { EncryptableMarkdown, Signature, EncryptableMarkdownSchema } from '../primitives.js';
 
 export type TextOnlyMetadataDetails = PostMetadataCommon & {

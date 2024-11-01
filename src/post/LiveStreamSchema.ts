@@ -10,7 +10,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common/index.js';
-import { MarketplaceMetadata } from '../marketplace.js';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 import {
   EncryptableDateTime,
   EncryptableMarkdown,
@@ -94,12 +94,12 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
 
     playbackUrl: EncryptableUriSchema.describe(
       'Some livestream platforms have the playback url as a separate url. ' +
-      'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
+        'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
     liveUrl: EncryptableUriSchema.describe(
       'Some livestream platforms have the live url as a separate url. ' +
-      'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
+        'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
     checkLiveAPI: EncryptableUriSchema.describe(

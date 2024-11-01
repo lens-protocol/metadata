@@ -1,12 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { MetadataAttributeType } from '../../MetadataAttribute.js';
-import { profile } from '../account.js';
+import { account } from '../account.js';
 
-describe(`Given the "${profile.name}" metadata builder`, () => {
+describe(`Given the "${account.name}" metadata builder`, () => {
   describe(`when using it`, () => {
-    it('should return a valid ProfileMetadata', () => {
-      const metadata = profile({
+    it('should return a valid AccountMetadata', () => {
+      const metadata = account({
         name: 'John Doe',
         bio: `
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.

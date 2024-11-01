@@ -12,13 +12,13 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
   EncryptableMarkdownSchema,
   NonEmptyStringSchema,
   Signature,
 } from '../primitives.js';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 
 export type ImageMetadataDetails = PostMetadataCommon & {
   /**

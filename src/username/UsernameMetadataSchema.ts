@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 import { UsernameMetadataSchemaId } from './UsernameMetadataSchemaId';
-import { Eip7572, eip7572SchemaWith } from '../eip7572';
 import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
+import { Eip7572, eip7572SchemaWith } from '../tokens/eip7572';
 
 export type UsernameMetadata = Eip7572 & {
   schema: UsernameMetadataSchemaId.LATEST;

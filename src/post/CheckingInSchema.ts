@@ -10,7 +10,6 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableGeoURI,
   EncryptableMarkdown,
@@ -22,6 +21,7 @@ import {
   EncryptableStringSchema,
   EncryptableGeoURISchema,
 } from '../primitives.js';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 
 export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**

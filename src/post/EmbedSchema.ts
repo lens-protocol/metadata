@@ -10,7 +10,6 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
   EncryptableURI,
@@ -18,6 +17,7 @@ import {
   EncryptableUriSchema,
   EncryptableMarkdownSchema,
 } from '../primitives.js';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 
 export type EmbedMetadataDetails = PostMetadataCommon & {
   /**

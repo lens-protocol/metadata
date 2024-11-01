@@ -2,25 +2,20 @@
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
-import { marketplaceMetadataSchemaWith } from '../marketplace.js';
 import * as latest from '../post';
 import {
   ConditionComparisonOperator,
   NftContractType,
   PublicationContentWarning,
 } from '../post/common';
-import {
-  LocaleSchema,
-  Markdown,
-  toMarkdown,
-  NonEmptyStringSchema,
-} from '../primitives.js';
+import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
+import { marketplaceMetadataSchemaWith } from '../tokens/eip721.js';
 import { Brand, hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
 export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
-export { MarketplaceMetadataAttributeDisplayType } from '../marketplace.js';
-export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../marketplace.js';
+export { MarketplaceMetadataAttributeDisplayType } from '../tokens/eip721.js';
+export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../tokens/eip721.js';
 export type * from '../primitives.js';
 
 export enum PublicationMetadataVersion {
@@ -557,9 +552,7 @@ const PublicationMetadataV2ShortVideoSchema = PublicationMetadataV2BaseVideoSche
   mainContentFocus: z.literal(PublicationMainFocus.SHORT_VIDEO),
 });
 
-export type PublicationMetadataV2Video =
-  | z.infer<typeof PublicationMetadataV2VideoSchema>
-  | z.infer<typeof PublicationMetadataV2ShortVideoSchema>;
+export type PublicationMetadataV2Video = z.infer<typeof PublicationMetadataV2VideoSchema>;
 
 /**
  * @internal

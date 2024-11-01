@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { expectResult } from '../__helpers__/assertions.js';
 import {
   GeoURISchema,
-  datetimeSchema,
+  DateTimeSchema,
   geoPoint,
   geoUri,
   LocaleSchema,
@@ -92,9 +92,9 @@ describe(`Given the primitives schemas`, () => {
 
   describe(`when parsing a datetime value`, () => {
     it(`then it should support ISO 8601 UTC datetime strings`, () => {
-      expectResult(() =>
-        datetimeSchema('not used').safeParse('2023-05-16T18:43:35Z'),
-      ).toMatchInlineSnapshot(`"2023-05-16T18:43:35Z"`);
+      expectResult(() => DateTimeSchema.safeParse('2023-05-16T18:43:35Z')).toMatchInlineSnapshot(
+        `"2023-05-16T18:43:35Z"`,
+      );
     });
   });
 

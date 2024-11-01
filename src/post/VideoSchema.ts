@@ -12,7 +12,7 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../marketplace.js';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 import {
   EncryptableMarkdown,
   Signature,
@@ -45,10 +45,7 @@ export type VideoMetadataDetails = PostMetadataCommon & {
 
 const VideoMetadataDetailsSchema: z.ZodType<VideoMetadataDetails, z.ZodTypeDef, object> =
   metadataDetailsWith({
-    mainContentFocus: mainContentFocus(
-      PostMainFocus.SHORT_VIDEO,
-      PostMainFocus.VIDEO,
-    ),
+    mainContentFocus: mainContentFocus(PostMainFocus.SHORT_VIDEO, PostMainFocus.VIDEO),
 
     video: MediaVideoSchema,
 

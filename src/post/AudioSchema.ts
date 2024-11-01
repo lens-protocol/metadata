@@ -12,13 +12,13 @@ import {
   PostMetadataCommon,
   postWith,
 } from './common';
-import { MarketplaceMetadata } from '../marketplace.js';
 import {
   EncryptableMarkdown,
   EncryptableMarkdownSchema,
   Signature,
   NonEmptyStringSchema,
 } from '../primitives.js';
+import { MarketplaceMetadata } from '../tokens/eip721.js';
 
 export type AudioMetadataDetails = PostMetadataCommon & {
   /**

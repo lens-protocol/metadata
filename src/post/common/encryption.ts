@@ -76,7 +76,7 @@ export const NftOwnershipConditionSchema = z.object({
     .optional()
     .describe(
       'A list of token IDs you want to check ownership of. The list is optional for ERC721, ' +
-      'you MUST provide a list of token IDs for ERC1155.',
+        'you MUST provide a list of token IDs for ERC1155.',
     ),
 });
 
@@ -172,16 +172,16 @@ export const AdvancedContractConditionSchema = z.object({
   functionName: z.string().min(1).describe('The name of the function you want to call'),
   abi: NonEmptyStringSchema.describe(
     'The contract ABI. Has to be in human readable ' +
-    'single string format containing the signature of the function you want to call. See ' +
-    'https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info',
+      'single string format containing the signature of the function you want to call. See ' +
+      'https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info',
   ),
   params: z
     .string()
     .array()
     .describe(
       'The parameters to pass to the function. Must be ' +
-      'exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to ' +
-      'represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays.',
+        'exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to ' +
+        'represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays.',
     ),
   comparison: z
     .nativeEnum(ConditionComparisonOperator)
@@ -353,7 +353,7 @@ export const EncryptedPaths = NonEmptyStringSchema.array()
   .min(1)
   .describe(
     'An encrypted path is a string of keys separated by . that describe ' +
-    'a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content).',
+      'a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content).',
   );
 export type EncryptedPaths = z.infer<typeof EncryptedPaths>;
 

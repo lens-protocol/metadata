@@ -1,8 +1,7 @@
 import { v4 } from 'uuid';
 
-import { evaluate } from './ValidationError';
-import { RecursiveUnbrand, InputForPublicationMetadataDetails } from './utils';
-import { MarketplaceMetadata } from '../marketplace';
+import { evaluate } from './ValidationError.js';
+import { RecursiveUnbrand, InputForPostMetadataDetails } from './utils.js';
 import {
   ThreeDMetadata,
   ThreeDSchema,
@@ -52,6 +51,7 @@ import {
   ArticleMetadata,
   ArticleSchema,
 } from '../post';
+import { MarketplaceMetadata } from '../tokens/eip721';
 
 /**
  * The default locale used by the builder helpers.
@@ -68,7 +68,7 @@ type MarketplaceDetails = RecursiveUnbrand<MarketplaceMetadata>;
  * @private
  * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
  */
-type ArticleDetails = InputForPublicationMetadataDetails<ArticleMetadataDetails>;
+type ArticleDetails = InputForPostMetadataDetails<ArticleMetadataDetails>;
 /**
  * All {@link ArticleMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -134,7 +134,7 @@ export function article({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
  */
-type AudioDetails = InputForPublicationMetadataDetails<AudioMetadataDetails>;
+type AudioDetails = InputForPostMetadataDetails<AudioMetadataDetails>;
 /**
  * All {@link AudioMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -218,7 +218,7 @@ export function audio({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docsRemarks MUST stay very @private to produce usable docs
  */
-type CheckingInDetails = InputForPublicationMetadataDetails<CheckingInMetadataDetails>;
+type CheckingInDetails = InputForPostMetadataDetails<CheckingInMetadataDetails>;
 /**
  * All {@link CheckingInMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -289,7 +289,7 @@ export function checkingIn({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type EmbedDetails = InputForPublicationMetadataDetails<EmbedMetadataDetails>;
+type EmbedDetails = InputForPostMetadataDetails<EmbedMetadataDetails>;
 /**
  * All {@link EmbedMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -339,7 +339,7 @@ export function embed({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type EventDetails = InputForPublicationMetadataDetails<EventMetadataDetails>;
+type EventDetails = InputForPostMetadataDetails<EventMetadataDetails>;
 /**
  * All {@link EventMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -414,7 +414,7 @@ export function event({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type ImageDetails = InputForPublicationMetadataDetails<ImageMetadataDetails>;
+type ImageDetails = InputForPostMetadataDetails<ImageMetadataDetails>;
 /**
  * All {@link ImageMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -500,7 +500,7 @@ export function image({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type LinkDetails = InputForPublicationMetadataDetails<LinkMetadataDetails>;
+type LinkDetails = InputForPostMetadataDetails<LinkMetadataDetails>;
 /**
  * All {@link LinkMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -551,7 +551,7 @@ export function link({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type LiveStreamDetails = InputForPublicationMetadataDetails<LiveStreamMetadataDetails>;
+type LiveStreamDetails = InputForPostMetadataDetails<LiveStreamMetadataDetails>;
 /**
  * All {@link LiveStreamMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -604,7 +604,7 @@ export function liveStream({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type MintDetails = InputForPublicationMetadataDetails<MintMetadataDetails>;
+type MintDetails = InputForPostMetadataDetails<MintMetadataDetails>;
 /**
  * All {@link MintMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -656,7 +656,7 @@ export function mint({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type SpaceDetails = InputForPublicationMetadataDetails<SpaceMetadataDetails>;
+type SpaceDetails = InputForPostMetadataDetails<SpaceMetadataDetails>;
 /**
  * All {@link SpaceMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -708,7 +708,7 @@ export function space({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type StoryDetails = InputForPublicationMetadataDetails<StoryMetadataDetails>;
+type StoryDetails = InputForPostMetadataDetails<StoryMetadataDetails>;
 /**
  * All {@link StoryMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -764,7 +764,7 @@ export function story({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type TextOnlyDetails = InputForPublicationMetadataDetails<TextOnlyMetadataDetails>;
+type TextOnlyDetails = InputForPostMetadataDetails<TextOnlyMetadataDetails>;
 /**
  * All {@link TextOnlyMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -814,7 +814,7 @@ export function textOnly({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type ThreeDDetails = InputForPublicationMetadataDetails<ThreeDMetadataDetails>;
+type ThreeDDetails = InputForPostMetadataDetails<ThreeDMetadataDetails>;
 /**
  * All {@link ThreeDMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -873,7 +873,7 @@ export function threeD({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type TransactionDetails = InputForPublicationMetadataDetails<TransactionMetadataDetails>;
+type TransactionDetails = InputForPostMetadataDetails<TransactionMetadataDetails>;
 /**
  * All {@link TransactionMetadataDetails} fields with:
  * - `id` defaults to a UUID
@@ -926,7 +926,7 @@ export function transaction({
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type VideoDetails = InputForPublicationMetadataDetails<VideoMetadataDetails>;
+type VideoDetails = InputForPostMetadataDetails<VideoMetadataDetails>;
 /**
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID

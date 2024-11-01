@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-import { EvmAddress, EvmAddressSchema, URI, UriSchema } from './primitives';
-
+import { EvmAddress, EvmAddressSchema, URI, UriSchema } from '../primitives';
 
 export type Eip7572 = {
   name: string;
@@ -17,9 +16,7 @@ export type Eip7572 = {
 /**
  * @internal
  */
-export function eip7572SchemaWith<Augmentation extends z.ZodRawShape>(
-  augmentation: Augmentation,
-) {
+export function eip7572SchemaWith<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
   return z
     .object({
       name: z.string().describe('The name of the contract.'),
@@ -35,9 +32,11 @@ export function eip7572SchemaWith<Augmentation extends z.ZodRawShape>(
         'A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section.',
       ),
       external_link: UriSchema.optional().describe('The external link of the contract.'),
-      collaborators: EvmAddressSchema.array().optional().describe(
-        'An array of Ethereum addresses representing collaborators (authorized editors) of the contract.',
-      ),
+      collaborators: EvmAddressSchema.array()
+        .optional()
+        .describe(
+          'An array of Ethereum addresses representing collaborators (authorized editors) of the contract.',
+        ),
     })
     .extend(augmentation);
-};
+}
