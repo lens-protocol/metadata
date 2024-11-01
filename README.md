@@ -585,7 +585,7 @@ To run the unit tests, run:
 pnpm test
 ```
 
-**Pro-tip:** you can run `pnpm test:unit --watch` to run the tests in watch mode.
+**Pro-tip:** you can run `pnpm test --watch` to run the tests in watch mode.
 
 To build the project, run:
 
