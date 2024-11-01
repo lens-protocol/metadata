@@ -14,7 +14,7 @@ import {
   PublicationIdSchema,
   TokenId,
   TokenIdSchema,
-  nonEmptyStringSchema,
+  NonEmptyStringSchema,
 } from '../../primitives.js';
 import { hasTwoOrMore, Brand, TwoAtLeastArray } from '../../utils.js';
 
@@ -170,14 +170,11 @@ export const AdvancedContractConditionSchema = z.object({
   type: z.literal(ConditionType.ADVANCED_CONTRACT),
   contract: NetworkAddressSchema.describe('The contract address and chain id'),
   functionName: z.string().min(1).describe('The name of the function you want to call'),
-  abi: z
-    .string()
-    .min(1)
-    .describe(
-      'The contract ABI. Has to be in human readable ' +
-        'single string format containing the signature of the function you want to call. See ' +
-        'https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info',
-    ),
+  abi: NonEmptyStringSchema.describe(
+    'The contract ABI. Has to be in human readable ' +
+      'single string format containing the signature of the function you want to call. See ' +
+      'https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info',
+  ),
   params: z
     .string()
     .array()
@@ -352,12 +349,12 @@ export const LitEncryptionKeySchema: z.Schema<LitEncryptionKey, z.ZodTypeDef, st
 /**
  * @internal
  */
-export const EncryptedPaths = nonEmptyStringSchema(
-  'An encrypted path is a string of keys separated by . that describe ' +
-    'a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content).',
-)
-  .array()
-  .min(1);
+export const EncryptedPaths = NonEmptyStringSchema.array()
+  .min(1)
+  .describe(
+    'An encrypted path is a string of keys separated by . that describe ' +
+      'a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content).',
+  );
 export type EncryptedPaths = z.infer<typeof EncryptedPaths>;
 
 export type LitEncryptionStrategy = {
