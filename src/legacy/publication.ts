@@ -3,20 +3,19 @@ import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import { marketplaceMetadataSchemaWith } from '../marketplace.js';
-import {
-  LocaleSchema,
-  Markdown,
-  toAppId,
-  toMarkdown,
-  NonEmptyStringSchema,
-} from '../primitives.js';
-import * as latest from '../publication';
+import * as latest from '../post';
 import {
   ConditionComparisonOperator,
   NftContractType,
   PublicationContentWarning,
-} from '../publication/common';
-import { hasTwoOrMore } from '../utils.js';
+} from '../post/common';
+import {
+  LocaleSchema,
+  Markdown,
+  toMarkdown,
+  NonEmptyStringSchema,
+} from '../primitives.js';
+import { Brand, hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
 export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
@@ -103,6 +102,17 @@ const AnimationUrlSchema = z.string({
     'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +
     'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
 });
+
+/**
+ * A unique Lens App identifier.
+ */
+export type AppId = Brand<string, 'AppId'>;
+/**
+ * @internal
+ */
+export function toAppId(value: string): AppId {
+  return value as AppId;
+}
 
 // const OpenSeaSchema = z
 //   .object({
@@ -205,7 +215,6 @@ const PublicationCommonSchema = marketplaceMetadataSchemaWith({
     .nullable()
     .describe('This is lens supported attached media items to the publication.'),
 
-  // bespoke z.string() instead of AppIdSchema to emulate past behavior
   appId: z
     .string()
     .max(200)

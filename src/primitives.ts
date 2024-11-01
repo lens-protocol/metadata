@@ -183,26 +183,6 @@ export const TagSchema: z.ZodType<Tag, z.ZodTypeDef, string> = z
   .transform((value) => toTag(value.toLowerCase()));
 
 /**
- * A unique Lens App identifier.
- */
-export type AppId = Brand<string, 'AppId'>;
-/**
- * @internal
- */
-export function toAppId(value: string): AppId {
-  return value as AppId;
-}
-/**
- * @internal
- */
-export const AppIdSchema: z.ZodType<AppId, z.ZodTypeDef, string> = z
-  .string()
-  .describe('A Lens App identifier.')
-  .min(1)
-  .max(200)
-  .transform(toAppId);
-
-/**
  * A cryptographic signature.
  */
 export type Signature = Brand<string, 'Signature'>;

@@ -3,8 +3,6 @@ import { z } from 'zod';
 import { AccountSchemaId } from './AccountSchemaId.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
 import {
-  AppId,
-  AppIdSchema,
   Markdown,
   Signature,
   SignatureSchema,
@@ -19,12 +17,6 @@ export type AccountMetadataDetails = {
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.
    */
   id: string;
-  /**
-   * The App Id that this Account details are relevant for.
-   *
-   * If omitted the data is considered to be the global Account data.
-   */
-  appId?: AppId;
   /**
    * The Account display name.
    */
@@ -72,11 +64,6 @@ const AccountMetadataDetailsSchema: z.ZodType<AccountMetadataDetails, z.ZodTypeD
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
           'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
-
-      appId: AppIdSchema.optional().describe(
-        'The App Id that this Account data refers to. ' +
-        'If omitted the data is considered to be the global Account data.',
-      ),
     },
     { description: 'The Lens specific metadata details.' },
   );

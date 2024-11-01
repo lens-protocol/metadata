@@ -33,7 +33,6 @@ export type AccountOptions = AccountDetails & {
  * @param input - Use your IDE suggestions for an enhanced development experience
  *
  * @example
- * Global Account (no `appId`):
  * ```ts
  * const metadata = account({
  *   name: 'John Doe',
@@ -43,15 +42,6 @@ export type AccountOptions = AccountDetails & {
  *   - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  *   - Donec a diam lectus.
  *   `,
- * });
- * ```
- *
- * @example
- * App specific Account (with `appId`):
- * ```ts
- * const metadata = account({
- *   appId: 'com.example.app',
- *   name: 'John Doe',
  * });
  * ```
  *

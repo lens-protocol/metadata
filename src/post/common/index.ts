@@ -7,12 +7,10 @@ import {
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import { marketplaceMetadataSchemaWith } from '../../marketplace.js';
 import {
-  AppIdSchema,
   LocaleSchema,
   TagSchema,
   NonEmptyStringSchema,
   SignatureSchema,
-  AppId,
   Locale,
   Tag,
 } from '../../primitives.js';
@@ -47,10 +45,6 @@ export type PostMetadataCommon = {
    * Use a UUID if unsure.
    */
   id: string;
-  /**
-   * The App Id that this post belongs to.
-   */
-  appId?: AppId;
   /**
    * Determine if the post should not be shown in any feed.
    *
@@ -98,14 +92,6 @@ export function metadataDetailsWith<
   return z
     .object({
       id: MetadataIdSchema,
-
-      appId: AppIdSchema.optional().describe('The App Id that this post belongs to.'),
-
-      hideFromFeed: z
-        .boolean({
-          description: 'Determine if the post should not be shown in any feed.',
-        })
-        .optional(),
 
       attributes: MetadataAttributeSchema.array()
         .min(1)
