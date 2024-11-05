@@ -72,11 +72,9 @@ export enum Platform {
 
 const AppMetadataDetailsSchema = z.object({
   name: NonEmptyStringSchema.describe('The name of the app.'),
-  description: MarkdownSchema
-    .optional()
-    .describe(
-      'An optional short and detailed description of the app, explaining its features and purpose.',
-    ),
+  description: MarkdownSchema.optional().describe(
+    'An optional short and detailed description of the app, explaining its features and purpose.',
+  ),
   logo: UriSchema.optional().describe('The Logo icon for the app.'),
   url: UriSchema.describe('The url of the app.'),
   developer: NonEmptyStringSchema.describe('The Developer of the app.'),

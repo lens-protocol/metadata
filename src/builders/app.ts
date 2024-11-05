@@ -3,7 +3,6 @@ import { v4 } from 'uuid';
 import { evaluate } from './ValidationError';
 import { AppMetadata, AppMetadataSchema, AppMetadataSchemaId, Platform } from '../app';
 
-
 export type AppOptions = {
   /**
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
@@ -12,7 +11,7 @@ export type AppOptions = {
    */
   id?: string;
   /**
-  * The name of the app.
+   * The name of the app.
    */
   name: string;
   /**
@@ -52,14 +51,14 @@ export type AppOptions = {
  *   name: 'XYZ',
  *   description: 'The next big thing',
  *   logo: 'lens://bafybeigdyrzt5sfp7udm7hu76u…',
- *   developer: 'John Doe <john.does@email.com>', 
+ *   developer: 'John Doe <john.does@email.com>',
  *   url: 'https://example.com',
  *   termsOfService: 'https://example.com/terms',
  *   privacyPolicy: 'https://example.com/privacy',
  *   platforms: ['web', 'ios', 'android'],
  * });
  * ```
- * 
+ *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
  */
