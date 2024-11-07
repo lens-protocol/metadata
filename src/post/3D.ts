@@ -12,7 +12,6 @@ import {
   MetadataLicenseTypeSchema,
   postWith,
 } from './common';
-import { NftMetadata } from '../tokens/eip721.js';
 import {
   EncryptableMarkdown,
   Signature,
@@ -21,6 +20,7 @@ import {
   NonEmptyStringSchema,
   UriSchema,
 } from '../primitives.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * The 3D format type.
@@ -80,7 +80,7 @@ export type ThreeDMetadataDetails = PostMetadataCommon & {
    */
   mainContentFocus: PostMainFocus.THREE_D;
   /**
-   * The 3D items for the publication.
+   * The 3D items for the post.
    */
   assets: ThreeDAsset[];
   /**
@@ -96,7 +96,7 @@ const ThreeDMetadataDetailsSchema: z.ZodType<ThreeDMetadataDetails, z.ZodTypeDef
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.THREE_D),
 
-    assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the publication'),
+    assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the post'),
 
     content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
 

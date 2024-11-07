@@ -85,16 +85,15 @@ function formatZodIssue(issue: z.ZodIssue): string {
  *
  * The formatting is tailored to the Lens Protocol Metadata use case. It may not be suitable for other use cases.
  *
- * @category Helpers
- *
- * @example
  * ```ts
- * const result = PublicationMetadataSchema.safeParse(invalid);
+ * const result = PostMetadataSchema.safeParse(invalid);
  *
  * if (!result.success) {
  *   throw new Error(formatZodError(result.error));
  * }
  * ```
+ * 
+ * @category Helpers
  */
 export function formatZodError(zodError: z.ZodError): string {
   const reason = zodError.errors

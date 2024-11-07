@@ -5,7 +5,6 @@ import {
   PublicationEncryptionStrategySchema,
 } from './encryption.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import { nftMetadataSchemaWith } from '../../tokens/eip721.js';
 import {
   LocaleSchema,
   TagSchema,
@@ -14,6 +13,7 @@ import {
   Locale,
   Tag,
 } from '../../primitives.js';
+import { nftMetadataSchemaWith } from '../../tokens/eip721.js';
 import { PostMainFocus } from '../PostMainFocus.js';
 
 export * from './encryption.js';
@@ -21,7 +21,7 @@ export * from './license.js';
 export * from './media.js';
 export * from './timezones.js';
 
-export enum PublicationContentWarning {
+export enum ContentWarning {
   NSFW = 'NSFW',
   SENSITIVE = 'SENSITIVE',
   SPOILER = 'SPOILER',
@@ -31,7 +31,7 @@ export const MetadataIdSchema = NonEmptyStringSchema.describe(
   'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
 );
 
-export const PublicationContentWarningSchema = z.nativeEnum(PublicationContentWarning, {
+export const ContentWarningSchema = z.nativeEnum(ContentWarning, {
   description: 'Specify a content warning.',
 });
 
@@ -73,7 +73,7 @@ export type PostMetadataCommon = {
   /**
    * Specify a content warning.
    */
-  contentWarning?: PublicationContentWarning;
+  contentWarning?: ContentWarning;
 };
 
 /**
@@ -85,8 +85,8 @@ export type PostMetadataCommon = {
 export function metadataDetailsWith<
   Augmentation extends {
     mainContentFocus:
-      | z.ZodLiteral<PostMainFocus>
-      | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
+    | z.ZodLiteral<PostMainFocus>
+    | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
   },
 >(augmentation: Augmentation) {
   return z
@@ -99,7 +99,7 @@ export function metadataDetailsWith<
         .optional()
         .describe(
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
 
       locale: LocaleSchema,
@@ -134,7 +134,7 @@ export function metadataDetailsWith<
         .optional()
         .describe('An arbitrary list of tags.'),
 
-      contentWarning: PublicationContentWarningSchema.optional(),
+      contentWarning: ContentWarningSchema.optional(),
     })
     .extend(augmentation);
 }

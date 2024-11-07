@@ -73,7 +73,7 @@ type ArticleDetails = InputForPostMetadataDetails<ArticleMetadataDetails>;
  * All {@link ArticleMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.ARTICLE_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.ARTICLE_LATEST`
  */
 export type ArticleOptions = ArticleDetails & {
   /**
@@ -139,7 +139,7 @@ type AudioDetails = InputForPostMetadataDetails<AudioMetadataDetails>;
  * All {@link AudioMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.AUDIO_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.AUDIO_LATEST`
  */
 export type AudioOptions = AudioDetails & {
   /**
@@ -223,7 +223,7 @@ type CheckingInDetails = InputForPostMetadataDetails<CheckingInMetadataDetails>;
  * All {@link CheckingInMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.CHECKING_IN_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.CHECKING_IN_LATEST`
  */
 export type CheckingInOptions = CheckingInDetails & {
   /**
@@ -294,7 +294,7 @@ type EmbedDetails = InputForPostMetadataDetails<EmbedMetadataDetails>;
  * All {@link EmbedMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.EMBED_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.EMBED_LATEST`
  */
 export type EmbedOptions = EmbedDetails & {
   /**
@@ -344,7 +344,7 @@ type EventDetails = InputForPostMetadataDetails<EventMetadataDetails>;
  * All {@link EventMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.EVENT_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.EVENT_LATEST`
  */
 export type EventOptions = EventDetails & {
   /**
@@ -419,7 +419,7 @@ type ImageDetails = InputForPostMetadataDetails<ImageMetadataDetails>;
  * All {@link ImageMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.IMAGE_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.IMAGE_LATEST`
  */
 export type ImageOptions = ImageDetails & {
   /**
@@ -505,7 +505,7 @@ type LinkDetails = InputForPostMetadataDetails<LinkMetadataDetails>;
  * All {@link LinkMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.LINK_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.LINK_LATEST`
  */
 export type LinkOptions = LinkDetails & {
   /**
@@ -556,7 +556,7 @@ type LiveStreamDetails = InputForPostMetadataDetails<LiveStreamMetadataDetails>;
  * All {@link LiveStreamMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.LIVESTREAM_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.LIVESTREAM_LATEST`
  */
 export type LiveStreamOptions = LiveStreamDetails & {
   /**
@@ -609,7 +609,7 @@ type MintDetails = InputForPostMetadataDetails<MintMetadataDetails>;
  * All {@link MintMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.MINT_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.MINT_LATEST`
  */
 export type MintOptions = MintDetails & {
   /**
@@ -661,7 +661,7 @@ type SpaceDetails = InputForPostMetadataDetails<SpaceMetadataDetails>;
  * All {@link SpaceMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.SPACE_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.SPACE_LATEST`
  */
 export type SpaceOptions = SpaceDetails & {
   /**
@@ -713,7 +713,7 @@ type StoryDetails = InputForPostMetadataDetails<StoryMetadataDetails>;
  * All {@link StoryMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.STORY_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.STORY_LATEST`
  */
 export type StoryOptions = StoryDetails & {
   /**
@@ -769,7 +769,7 @@ type TextOnlyDetails = InputForPostMetadataDetails<TextOnlyMetadataDetails>;
  * All {@link TextOnlyMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.TEXT_ONLY_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.TEXT_ONLY_LATEST`
  */
 export type TextOnlyOptions = TextOnlyDetails & {
   /**
@@ -819,7 +819,7 @@ type ThreeDDetails = InputForPostMetadataDetails<ThreeDMetadataDetails>;
  * All {@link ThreeDMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.THREE_D_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.THREE_D_LATEST`
  */
 export type ThreeDOptions = ThreeDDetails & {
   /**
@@ -878,7 +878,7 @@ type TransactionDetails = InputForPostMetadataDetails<TransactionMetadataDetails
  * All {@link TransactionMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.TRANSACTION_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.TRANSACTION_LATEST`
  */
 export type TransactionOptions = TransactionDetails & {
   /**
@@ -931,7 +931,7 @@ type VideoDetails = InputForPostMetadataDetails<VideoMetadataDetails>;
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.VIDEO_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.VIDEO_LATEST`
  */
 export type VideoOptions = VideoDetails & {
   /**
@@ -1013,7 +1013,7 @@ export function video({
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.SHORT_VIDEO`
+ * - `mainContentFocus` automatically set to `PostSchemaId.SHORT_VIDEO`
  */
 export type ShortVideoOptions = VideoDetails & {
   /**

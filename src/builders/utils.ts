@@ -12,8 +12,8 @@ type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
 export type RecursiveUnbrand<T> = T extends Brand<infer R, BrandOf<T>>
   ? R
   : {
-      [K in keyof T]: RecursiveUnbrand<T[K]>;
-    };
+    [K in keyof T]: RecursiveUnbrand<T[K]>;
+  };
 /**
  * @internal
  */
@@ -21,11 +21,11 @@ type ExtractLensSpec<T extends { lens: unknown }> = T['lens'];
 /**
  * @internal
  */
-type OmitInferredPublicationFields<T> = Omit<T, 'mainContentFocus'>;
+type OmitInferredPostFields<T> = Omit<T, 'mainContentFocus'>;
 /**
  * @internal
  */
-type PublicationDefaults<Details extends ExtractLensSpec<PostMetadata>> = Overwrite<
+type PostDefaults<Details extends ExtractLensSpec<PostMetadata>> = Overwrite<
   Details,
   {
     /**
@@ -53,5 +53,5 @@ type PublicationDefaults<Details extends ExtractLensSpec<PostMetadata>> = Overwr
  * @internal
  */
 export type InputForPostMetadataDetails<T extends PostMetadata['lens']> = RecursiveUnbrand<
-  OmitInferredPublicationFields<PublicationDefaults<T>>
+  OmitInferredPostFields<PostDefaults<T>>
 >;

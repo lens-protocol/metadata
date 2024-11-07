@@ -6,14 +6,14 @@ import * as latest from '../post';
 import {
   ConditionComparisonOperator,
   NftContractType,
-  PublicationContentWarning,
+  ContentWarning,
 } from '../post/common';
 import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
 import { nftMetadataSchemaWith } from '../tokens/eip721.js';
 import { Brand, hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
-export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
+export { ConditionComparisonOperator, NftContractType, ContentWarning as PublicationContentWarning };
 export { NftMetadataAttributeDisplayType as MarketplaceMetadataAttributeDisplayType } from '../tokens/eip721.js';
 export type {
   NftMetadataAttribute as MarketplaceMetadataAttribute,
@@ -454,7 +454,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   content: ContentSchema.transform(toMarkdown).optional().nullable(),
 
   contentWarning: z
-    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
+    .nativeEnum(ContentWarning, { description: 'Specify a content warning.' })
     .optional()
     .nullable()
     .catch(null),
