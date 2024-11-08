@@ -147,6 +147,12 @@ await generateUmbrellaSchema();
 // Other schemas
 const others = new Map<string, z.ZodSchema<unknown>>([
   ['account/1.0.0.json', AccountMetadataSchema],
+  ['app/1.0.0.json', AppMetadataSchema],
+  ['graph/1.0.0.json', GraphMetadataSchema],
+  ['feed/1.0.0.json', FeedMetadataSchema],
+  ['group/1.0.0.json', GroupMetadataSchema],
+  ['sponsorship/1.0.0.json', SponsorshipMetadataSchema],
+  ['username/1.0.0.json', UsernameMetadataSchema],
 ]);
 
 for (const [path, Schema] of others) {

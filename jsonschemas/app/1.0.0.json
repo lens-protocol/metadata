@@ -1,0 +1,211 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://json-schemas.lens.dev/app/1.0.0.json"
+    },
+    "lens": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The name of the app."
+        },
+        "description": {
+          "$ref": "#/$defs/Markdown",
+          "description": "An optional short and detailed description of the app, explaining its features and purpose."
+        },
+        "logo": {
+          "$ref": "#/$defs/Uri",
+          "description": "The Logo icon for the app."
+        },
+        "url": {
+          "$ref": "#/$defs/Uri",
+          "description": "The url of the app."
+        },
+        "developer": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The Developer of the app."
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "web",
+              "ios",
+              "android"
+            ]
+          },
+          "description": "The platforms supported by the app."
+        },
+        "termsOfService": {
+          "$ref": "#/$defs/Uri",
+          "description": "The terms of service for the app."
+        },
+        "privacyPolicy": {
+          "$ref": "#/$defs/Uri",
+          "description": "The privacy policy for the app."
+        }
+      },
+      "required": [
+        "name",
+        "url",
+        "developer",
+        "platforms"
+      ],
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic signature of the Lens metadata."
+    }
+  },
+  "required": [
+    "$schema",
+    "lens"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier."
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
+    },
+    "MetadataAttribute": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Boolean"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "description": "A JS boolean value serialized as string. It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Date"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "format": "date-time",
+              "description": "A valid ISO 8601 date string.  It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Number"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "String"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Any string value."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "JSON"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A JSON string. It's consumer responsibility to validate and parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

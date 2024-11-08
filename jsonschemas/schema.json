@@ -3994,13 +3994,17 @@
     "GroupMetadata": {
       "type": "object",
       "properties": {
-        "schema": {
+        "$schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/group/1.0.0.json"
         },
         "lens": {
           "type": "object",
           "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
             "name": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the Community."
@@ -4026,6 +4030,7 @@
             }
           },
           "required": [
+            "id",
             "name",
             "slug"
           ],
@@ -4037,7 +4042,7 @@
         }
       },
       "required": [
-        "schema",
+        "$schema",
         "lens"
       ],
       "additionalProperties": false
@@ -4045,13 +4050,17 @@
     "SponsorshipMetadata": {
       "type": "object",
       "properties": {
-        "schema": {
+        "$schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/sponsorship/1.0.0.json"
         },
         "lens": {
           "type": "object",
           "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
             "name": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the Sponsorship."
@@ -4069,6 +4078,7 @@
             }
           },
           "required": [
+            "id",
             "name"
           ],
           "additionalProperties": false
@@ -4079,7 +4089,7 @@
         }
       },
       "required": [
-        "schema",
+        "$schema",
         "lens"
       ],
       "additionalProperties": false
