@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { Markdown, URI, NonEmptyStringSchema, MarkdownSchema, UriSchema } from '../primitives.js';
 
 /**
- * The display type of a marketplace metadata attribute.
+ * The display type of a NFT metadata attribute.
  *
  * @see https://docs.opensea.io/docs/metadata-standards#attributes
  */
@@ -14,7 +14,7 @@ export enum NftMetadataAttributeDisplayType {
 }
 
 /**
- * A marketplace metadata attribute.
+ * An NFT metadata attribute.
  *
  * @see https://docs.opensea.io/docs/metadata-standards#attributes
  */
@@ -34,7 +34,7 @@ export const Nft721MetadataAttributeSchema: z.ZodType<NftMetadataAttribute, z.Zo
       trait_type: NonEmptyStringSchema.optional().describe('The name of the trait.'),
       value: z.union([z.string(), z.number()]).optional(),
     })
-    .passthrough(); // make it more loose to allow for future marketplace extensions
+    .passthrough(); // make it more loose to allow for future NFT metadata extensions
 
 /**
  * An NFT metadata standard for interoperability with NFT marketplaces and wallets.
@@ -64,7 +64,7 @@ export type NftMetadata = {
    */
   attributes?: NftMetadataAttribute[];
   /**
-   * Marketplaces will store any NFT image here.
+   * NFT will store any image here.
    */
   image?: URI | null;
   /**
@@ -108,10 +108,7 @@ export function nftMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
         )
         .catch([]),
 
-      image: UriSchema.describe('Marketplaces will store any NFT image here.')
-        .nullable()
-        .optional()
-        .catch(null),
+      image: UriSchema.describe('NFT will store any image here.').nullable().optional().catch(null),
 
       animation_url: UriSchema.describe(
         'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +

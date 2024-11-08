@@ -92,7 +92,7 @@ function formatZodIssue(issue: z.ZodIssue): string {
  *   throw new Error(formatZodError(result.error));
  * }
  * ```
- * 
+ *
  * @category Helpers
  */
 export function formatZodError(zodError: z.ZodError): string {

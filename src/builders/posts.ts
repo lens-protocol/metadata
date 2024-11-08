@@ -79,7 +79,7 @@ export type ArticleOptions = ArticleDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid ArticleMetadata.
@@ -111,7 +111,7 @@ export type ArticleOptions = ArticleDetails & {
  * ```
  */
 export function article({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -119,7 +119,7 @@ export function article({
   return evaluate(
     ArticleSchema.safeParse({
       $schema: PostSchemaId.ARTICLE_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -145,7 +145,7 @@ export type AudioOptions = AudioDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid AudioMetadata.
@@ -195,7 +195,7 @@ export type AudioOptions = AudioDetails & {
  * ```
  */
 export function audio({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -203,7 +203,7 @@ export function audio({
   return evaluate(
     AudioSchema.safeParse({
       $schema: PostSchemaId.AUDIO_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -229,7 +229,7 @@ export type CheckingInOptions = CheckingInDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid CheckingInMetadata.
@@ -266,7 +266,7 @@ export type CheckingInOptions = CheckingInDetails & {
  * ```
  */
 export function checkingIn({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -274,7 +274,7 @@ export function checkingIn({
   return evaluate(
     CheckingInSchema.safeParse({
       $schema: PostSchemaId.CHECKING_IN_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -300,7 +300,7 @@ export type EmbedOptions = EmbedDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid EmbedMetadata.
@@ -316,7 +316,7 @@ export type EmbedOptions = EmbedDetails & {
  * ```
  */
 export function embed({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -324,7 +324,7 @@ export function embed({
   return evaluate(
     EmbedSchema.safeParse({
       $schema: PostSchemaId.EMBED_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -350,7 +350,7 @@ export type EventOptions = EventDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid EventMetadata.
@@ -391,7 +391,7 @@ export type EventOptions = EventDetails & {
  * ```
  */
 export function event({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -399,7 +399,7 @@ export function event({
   return evaluate(
     EventSchema.safeParse({
       $schema: PostSchemaId.EVENT_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -425,7 +425,7 @@ export type ImageOptions = ImageDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid ImageMetadata.
@@ -477,7 +477,7 @@ export type ImageOptions = ImageDetails & {
  * ```
  */
 export function image({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -485,7 +485,7 @@ export function image({
   return evaluate(
     ImageSchema.safeParse({
       $schema: PostSchemaId.IMAGE_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -511,7 +511,7 @@ export type LinkOptions = LinkDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid LinkMetadata.
@@ -528,7 +528,7 @@ export type LinkOptions = LinkDetails & {
  * ```
  */
 export function link({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -536,7 +536,7 @@ export function link({
   return evaluate(
     LinkSchema.safeParse({
       $schema: PostSchemaId.LINK_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -562,7 +562,7 @@ export type LiveStreamOptions = LiveStreamDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid LivestreamMetadata.
@@ -581,7 +581,7 @@ export type LiveStreamOptions = LiveStreamDetails & {
  * ```
  */
 export function liveStream({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -589,7 +589,7 @@ export function liveStream({
   return evaluate(
     LiveStreamSchema.safeParse({
       $schema: PostSchemaId.LIVESTREAM_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -615,7 +615,7 @@ export type MintOptions = MintDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid MintMetadata.
@@ -633,7 +633,7 @@ export type MintOptions = MintDetails & {
  * ```
  */
 export function mint({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -641,7 +641,7 @@ export function mint({
   return evaluate(
     MintSchema.safeParse({
       $schema: PostSchemaId.MINT_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -667,7 +667,7 @@ export type SpaceOptions = SpaceDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid SpaceMetadata.
@@ -685,7 +685,7 @@ export type SpaceOptions = SpaceDetails & {
  * ```
  */
 export function space({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -693,7 +693,7 @@ export function space({
   return evaluate(
     SpaceSchema.safeParse({
       $schema: PostSchemaId.SPACE_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -719,7 +719,7 @@ export type StoryOptions = StoryDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid StoryMetadata.
@@ -741,7 +741,7 @@ export type StoryOptions = StoryDetails & {
  * ```
  */
 export function story({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -749,7 +749,7 @@ export function story({
   return evaluate(
     StorySchema.safeParse({
       $schema: PostSchemaId.STORY_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -775,7 +775,7 @@ export type TextOnlyOptions = TextOnlyDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid TextOnlyMetadata.
@@ -791,7 +791,7 @@ export type TextOnlyOptions = TextOnlyDetails & {
  * ```
  */
 export function textOnly({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -799,7 +799,7 @@ export function textOnly({
   return evaluate(
     TextOnlySchema.safeParse({
       $schema: PostSchemaId.TEXT_ONLY_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -825,7 +825,7 @@ export type ThreeDOptions = ThreeDDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid ThreeDMetadata.
@@ -850,7 +850,7 @@ export type ThreeDOptions = ThreeDDetails & {
  * ```
  */
 export function threeD({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -858,7 +858,7 @@ export function threeD({
   return evaluate(
     ThreeDSchema.safeParse({
       $schema: PostSchemaId.THREE_D_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -884,7 +884,7 @@ export type TransactionOptions = TransactionDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid TransactionMetadata.
@@ -903,7 +903,7 @@ export type TransactionOptions = TransactionDetails & {
  * ```
  */
 export function transaction({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -911,7 +911,7 @@ export function transaction({
   return evaluate(
     TransactionSchema.safeParse({
       $schema: PostSchemaId.TRANSACTION_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -937,7 +937,7 @@ export type VideoOptions = VideoDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid VideoMetadata.
@@ -990,7 +990,7 @@ export type VideoOptions = VideoDetails & {
  * ```
  */
 export function video({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -998,7 +998,7 @@ export function video({
   return evaluate(
     VideoSchema.safeParse({
       $schema: PostSchemaId.VIDEO_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -1019,7 +1019,7 @@ export type ShortVideoOptions = VideoDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid VideoMetadata for a short.
@@ -1043,7 +1043,7 @@ export type ShortVideoOptions = VideoDetails & {
  * ```
  */
 export function shortVideo({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -1051,7 +1051,7 @@ export function shortVideo({
   return evaluate(
     VideoSchema.safeParse({
       $schema: PostSchemaId.VIDEO_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,

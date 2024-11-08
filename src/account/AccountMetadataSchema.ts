@@ -68,9 +68,6 @@ const AccountMetadataDetailsSchema: z.ZodType<AccountMetadataDetails, z.ZodTypeD
     { description: 'The Lens specific metadata details.' },
   );
 
-/**
- * Use this to create Account metadata objects.
- */
 export type AccountMetadata = {
   /**
    * The schema id.

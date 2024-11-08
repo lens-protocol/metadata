@@ -12,8 +12,8 @@ type BrandOf<A> = [A] extends [Brand<unknown, infer R>] ? R : never;
 export type RecursiveUnbrand<T> = T extends Brand<infer R, BrandOf<T>>
   ? R
   : {
-    [K in keyof T]: RecursiveUnbrand<T[K]>;
-  };
+      [K in keyof T]: RecursiveUnbrand<T[K]>;
+    };
 /**
  * @internal
  */
