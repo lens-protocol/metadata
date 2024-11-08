@@ -40,13 +40,13 @@
       "anyOf": [
         {
           "$ref": "#/$defs/Uri",
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         {
           "type": "null"
         }
       ],
-      "description": "Marketplaces will store any NFT image here."
+      "description": "NFT will store any image here."
     },
     "animation_url": {
       "anyOf": [
@@ -156,7 +156,7 @@
             "additionalProperties": false
           },
           "minItems": 1,
-          "description": "The 3D items for the publication"
+          "description": "The 3D items for the post"
         },
         "content": {
           "anyOf": [

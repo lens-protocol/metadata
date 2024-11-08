@@ -1069,13 +1069,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -1209,13 +1209,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -1353,13 +1353,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -1502,13 +1502,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -1643,13 +1643,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -2276,13 +2276,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -2420,13 +2420,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -2561,13 +2561,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -2724,13 +2724,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -2865,13 +2865,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -3016,13 +3016,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -3144,13 +3144,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -3277,13 +3277,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -3433,13 +3433,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -3540,7 +3540,7 @@
                 "additionalProperties": false
               },
               "minItems": 1,
-              "description": "The 3D items for the publication"
+              "description": "The 3D items for the post"
             },
             "content": {
               "$ref": "#/$defs/EncryptableMarkdown",
@@ -3612,13 +3612,13 @@
           "anyOf": [
             {
               "$ref": "#/$defs/Uri",
-              "description": "Marketplaces will store any NFT image here."
+              "description": "NFT will store any image here."
             },
             {
               "type": "null"
             }
           ],
-          "description": "Marketplaces will store any NFT image here."
+          "description": "NFT will store any image here."
         },
         "animation_url": {
           "anyOf": [
@@ -3838,7 +3838,7 @@
     "AppMetadata": {
       "type": "object",
       "properties": {
-        "schema": {
+        "$schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/app/1.0.0.json"
         },
@@ -3850,30 +3850,15 @@
               "description": "The name of the app."
             },
             "description": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/Markdown"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "$ref": "#/$defs/Markdown",
               "description": "An optional short and detailed description of the app, explaining its features and purpose."
             },
             "logo": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/Uri"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "$ref": "#/$defs/Uri",
               "description": "The Logo icon for the app."
             },
             "url": {
-              "type": "string",
-              "format": "uri",
+              "$ref": "#/$defs/Uri",
               "description": "The url of the app."
             },
             "developer": {
@@ -3893,25 +3878,11 @@
               "description": "The platforms supported by the app."
             },
             "termsOfService": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/Uri"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "$ref": "#/$defs/Uri",
               "description": "The terms of service for the app."
             },
             "privacyPolicy": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/Uri"
-                },
-                {
-                  "type": "null"
-                }
-              ],
+              "$ref": "#/$defs/Uri",
               "description": "The privacy policy for the app."
             }
           },
@@ -3929,7 +3900,7 @@
         }
       },
       "required": [
-        "schema",
+        "$schema",
         "lens"
       ],
       "additionalProperties": false
@@ -3937,13 +3908,17 @@
     "GraphMetadata": {
       "type": "object",
       "properties": {
-        "schema": {
+        "$schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/graph/1.0.0.json"
         },
         "lens": {
           "type": "object",
           "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
             "name": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the graph."
@@ -3958,6 +3933,7 @@
             }
           },
           "required": [
+            "id",
             "name",
             "title"
           ],
@@ -3965,7 +3941,7 @@
         }
       },
       "required": [
-        "schema",
+        "$schema",
         "lens"
       ],
       "additionalProperties": false
@@ -3973,13 +3949,17 @@
     "FeedMetadata": {
       "type": "object",
       "properties": {
-        "schema": {
+        "$schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/feed/1.0.0.json"
         },
         "lens": {
           "type": "object",
           "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
             "name": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the Feed."
@@ -3994,6 +3974,7 @@
             }
           },
           "required": [
+            "id",
             "name",
             "title"
           ],
@@ -4005,7 +3986,7 @@
         }
       },
       "required": [
-        "schema",
+        "$schema",
         "lens"
       ],
       "additionalProperties": false
@@ -4141,13 +4122,17 @@
           },
           "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
         },
-        "schema": {
+        "$schema": {
           "type": "string",
           "const": "https://json-schemas.lens.dev/username/1.0.0.json"
         },
         "lens": {
           "type": "object",
           "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
             "description": {
               "anyOf": [
                 {
@@ -4160,6 +4145,9 @@
               "description": "An optional description of the Username collection."
             }
           },
+          "required": [
+            "id"
+          ],
           "additionalProperties": false
         },
         "signature": {
@@ -4169,7 +4157,7 @@
       },
       "required": [
         "name",
-        "schema",
+        "$schema",
         "lens"
       ],
       "additionalProperties": false
