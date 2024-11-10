@@ -14,7 +14,7 @@ describe(`Given the "${module.name}" metadata builder`, () => {
           {
             key: 'twitter',
             type: MetadataAttributeType.STRING,
-            value: 'https://twitter.com/johndoe',
+            value: 'https://x.com/johndoe',
           },
           {
             key: 'dob',

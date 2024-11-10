@@ -89,7 +89,7 @@ export function hasTwoOrMore<T>(items: ReadonlyArray<T>): items is TwoAtLeastArr
 /**
  * Beautify the  readout of all of the members of that intersection.
  *
- * As seen on tv: https://twitter.com/mattpocockuk/status/1622730173446557697
+ * As seen on tv: https://x.com/mattpocockuk/status/1622730173446557697
  *
  * @internal
  */

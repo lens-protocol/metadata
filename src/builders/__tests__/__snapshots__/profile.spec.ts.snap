@@ -8,7 +8,7 @@ exports[`Given the "profile" metadata builder when using it should return a vali
       {
         "key": "twitter",
         "type": "String",
-        "value": "https://twitter.com/johndoe",
+        "value": "https://x.com/johndoe",
       },
       {
         "key": "dob",

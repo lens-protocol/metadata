@@ -63,7 +63,7 @@ export type ProfileOptions = ProfileDetails & {
  *   picture: 'https://example.com/picture.png',
  *   attributes: [
  *     {
- *       key: 'twitter',
+ *       key: '',
  *       type: MetadataAttributeType.STRING,
  *       value: 'https://twitter.com/johndoe',
  *     },
