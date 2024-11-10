@@ -65,7 +65,7 @@ export type ProfileOptions = ProfileDetails & {
  *     {
  *       key: 'twitter',
  *       type: MetadataAttributeType.STRING,
- *       value: 'https://twitter.com/johndoe',
+ *       value: 'https://x.com/johndoe',
  *     },
  *     {
  *       key: 'dob',

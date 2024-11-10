@@ -7,7 +7,7 @@ exports[`Given the "module" metadata builder when using it should return a valid
     {
       "key": "twitter",
       "type": "String",
-      "value": "https://twitter.com/johndoe",
+      "value": "https://x.com/johndoe",
     },
     {
       "key": "dob",
