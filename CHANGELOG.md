@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.1
+
+### Patch Changes
+
+- c63c726: fix: adds missing builders
+
 ## 2.0.0-next.0
 
 ### Major Changes
