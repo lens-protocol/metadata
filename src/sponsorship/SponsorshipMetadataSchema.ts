@@ -3,13 +3,11 @@ import { z } from 'zod';
 import { SponsorshipMetadataSchemaId } from './SponsorshipMetadataSchemaId';
 import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
 
-export type SponsorshipMetadata = {
-  schema: SponsorshipMetadataSchemaId.LATEST;
-  lens: SponsorshipMetadataDetails;
-  signature?: Signature;
-};
-
 export type SponsorshipMetadataDetails = {
+  /**
+   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.
+   */
+  id: string;
   /**
    * The name of the Sponsorship.
    */
@@ -20,15 +18,29 @@ export type SponsorshipMetadataDetails = {
   description?: string | null;
 };
 
-const SponsorshipMetadataDetailsSchema = z.object({
+const SponsorshipMetadataDetailsSchema: z.ZodType<
+  SponsorshipMetadataDetails,
+  z.ZodTypeDef,
+  object
+> = z.object({
+  id: NonEmptyStringSchema.describe(
+    'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
+  ),
   name: NonEmptyStringSchema.describe('The name of the Sponsorship.'),
   description: NonEmptyStringSchema.nullable()
     .optional()
     .describe('An optional description of the Username collection.'),
 });
 
-export const SponsorshipMetadataSchema = z.object({
-  schema: z.literal(SponsorshipMetadataSchemaId.LATEST),
-  lens: SponsorshipMetadataDetailsSchema,
-  signature: SignatureSchema.optional(),
-});
+export type SponsorshipMetadata = {
+  $schema: SponsorshipMetadataSchemaId.LATEST;
+  lens: SponsorshipMetadataDetails;
+  signature?: Signature;
+};
+
+export const SponsorshipMetadataSchema: z.ZodType<SponsorshipMetadata, z.ZodTypeDef, object> =
+  z.object({
+    $schema: z.literal(SponsorshipMetadataSchemaId.LATEST),
+    lens: SponsorshipMetadataDetailsSchema,
+    signature: SignatureSchema.optional(),
+  });

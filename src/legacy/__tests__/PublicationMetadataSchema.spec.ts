@@ -430,7 +430,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       });
     });
 
-    it('then it should support `number` as marketplace `attributes[n].value`', () => {
+    it('then it should support `number` as NFT `attributes[n].value`', () => {
       PublicationMetadataSchema.parse({
         version: '1.0.0',
         metadata_id: '9f490668-82fb-4b83-b980-afd79d016003',

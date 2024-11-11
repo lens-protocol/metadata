@@ -3,22 +3,19 @@ import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import * as latest from '../post';
-import {
-  ConditionComparisonOperator,
-  NftContractType,
-  PublicationContentWarning,
-} from '../post/common';
+import { ConditionComparisonOperator, NftContractType, ContentWarning } from '../post/common';
 import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
 import { nftMetadataSchemaWith } from '../tokens/eip721.js';
 import { Brand, hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
-export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
-export { NftMetadataAttributeDisplayType as MarketplaceMetadataAttributeDisplayType } from '../tokens/eip721.js';
-export type {
-  NftMetadataAttribute as MarketplaceMetadataAttribute,
-  NftMetadata as MarketplaceMetadata,
-} from '../tokens/eip721.js';
+export {
+  ConditionComparisonOperator,
+  NftContractType,
+  ContentWarning as PublicationContentWarning,
+};
+export { NftMetadataAttributeDisplayType } from '../tokens/eip721.js';
+export type { NftMetadataAttribute, NftMetadata } from '../tokens/eip721.js';
 export type * from '../primitives.js';
 
 export enum PublicationMetadataVersion {
@@ -134,7 +131,7 @@ export function toAppId(value: string): AppId {
 
 //     name: z.string({ description: 'Name of the NFT item.' }),
 
-//     attributes: MarketplaceMetadataAttributeSchema.array()
+//     attributes: NftMetadataAttributeSchema.array()
 //       .describe(
 //         'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
 //       )
@@ -454,7 +451,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   content: ContentSchema.transform(toMarkdown).optional().nullable(),
 
   contentWarning: z
-    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
+    .nativeEnum(ContentWarning, { description: 'Specify a content warning.' })
     .optional()
     .nullable()
     .catch(null),

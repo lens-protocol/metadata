@@ -37,6 +37,7 @@
     "lint:eslint": "pnpm eslint",
     "lint:typecheck": "tsc --noEmit",
     "lint:prettier": "prettier --check .",
+    "lint:prettier:fix": "prettier --check --w .",
     "prepublish": "pnpm clean:dist && pnpm lint && pnpm test && pnpm build",
     "test": "jest \"src/.+.\\.spec\\.ts\"",
     "typedoc:docs": "typedoc",

@@ -44,7 +44,7 @@ import { ShapeCheck } from '../utils';
  * ```ts
  * const metadata: PostMetadata = ...
  *
- * if (metadata.$schema === PublicationSchemaId.ARTICLE_LATEST) {
+ * if (metadata.$schema === PostSchemaId.ARTICLE_LATEST) {
  *   // metadata is ArticleMetadata
  *   metadata.content; // => always string, not undefined
  * }
@@ -56,16 +56,16 @@ import { ShapeCheck } from '../utils';
  * const metadata: PostMetadata = ...
  *
  * switch (metadata.$schema) {
- *   case PublicationSchemaId.ARTICLE_LATEST:
+ *   case PostSchemaId.ARTICLE_LATEST:
  *     // metadata is ArticleMetadata
  *     break;
- *   case PublicationSchemaId.AUDIO_LATEST:
+ *   case PostSchemaId.AUDIO_LATEST:
  *     // metadata is AudioMetadata
  *     break;
- *   case PublicationSchemaId.IMAGE_LATEST:
+ *   case PostSchemaId.IMAGE_LATEST:
  *     // metadata is ImageMetadata
  *     break;
- *   case PublicationSchemaId.TEXT_ONLY_LATEST:
+ *   case PostSchemaId.TEXT_ONLY_LATEST:
  *     // metadata is TextOnlyMetadata
  *     break;
  *   // ...

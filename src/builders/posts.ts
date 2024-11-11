@@ -73,13 +73,13 @@ type ArticleDetails = InputForPostMetadataDetails<ArticleMetadataDetails>;
  * All {@link ArticleMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.ARTICLE_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.ARTICLE_LATEST`
  */
 export type ArticleOptions = ArticleDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid ArticleMetadata.
@@ -111,7 +111,7 @@ export type ArticleOptions = ArticleDetails & {
  * ```
  */
 export function article({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -119,7 +119,7 @@ export function article({
   return evaluate(
     ArticleSchema.safeParse({
       $schema: PostSchemaId.ARTICLE_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -139,13 +139,13 @@ type AudioDetails = InputForPostMetadataDetails<AudioMetadataDetails>;
  * All {@link AudioMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.AUDIO_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.AUDIO_LATEST`
  */
 export type AudioOptions = AudioDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid AudioMetadata.
@@ -195,7 +195,7 @@ export type AudioOptions = AudioDetails & {
  * ```
  */
 export function audio({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -203,7 +203,7 @@ export function audio({
   return evaluate(
     AudioSchema.safeParse({
       $schema: PostSchemaId.AUDIO_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -223,13 +223,13 @@ type CheckingInDetails = InputForPostMetadataDetails<CheckingInMetadataDetails>;
  * All {@link CheckingInMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.CHECKING_IN_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.CHECKING_IN_LATEST`
  */
 export type CheckingInOptions = CheckingInDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid CheckingInMetadata.
@@ -266,7 +266,7 @@ export type CheckingInOptions = CheckingInDetails & {
  * ```
  */
 export function checkingIn({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -274,7 +274,7 @@ export function checkingIn({
   return evaluate(
     CheckingInSchema.safeParse({
       $schema: PostSchemaId.CHECKING_IN_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -294,13 +294,13 @@ type EmbedDetails = InputForPostMetadataDetails<EmbedMetadataDetails>;
  * All {@link EmbedMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.EMBED_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.EMBED_LATEST`
  */
 export type EmbedOptions = EmbedDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid EmbedMetadata.
@@ -316,7 +316,7 @@ export type EmbedOptions = EmbedDetails & {
  * ```
  */
 export function embed({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -324,7 +324,7 @@ export function embed({
   return evaluate(
     EmbedSchema.safeParse({
       $schema: PostSchemaId.EMBED_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -344,13 +344,13 @@ type EventDetails = InputForPostMetadataDetails<EventMetadataDetails>;
  * All {@link EventMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.EVENT_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.EVENT_LATEST`
  */
 export type EventOptions = EventDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid EventMetadata.
@@ -391,7 +391,7 @@ export type EventOptions = EventDetails & {
  * ```
  */
 export function event({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -399,7 +399,7 @@ export function event({
   return evaluate(
     EventSchema.safeParse({
       $schema: PostSchemaId.EVENT_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -419,13 +419,13 @@ type ImageDetails = InputForPostMetadataDetails<ImageMetadataDetails>;
  * All {@link ImageMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.IMAGE_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.IMAGE_LATEST`
  */
 export type ImageOptions = ImageDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid ImageMetadata.
@@ -477,7 +477,7 @@ export type ImageOptions = ImageDetails & {
  * ```
  */
 export function image({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -485,7 +485,7 @@ export function image({
   return evaluate(
     ImageSchema.safeParse({
       $schema: PostSchemaId.IMAGE_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -505,13 +505,13 @@ type LinkDetails = InputForPostMetadataDetails<LinkMetadataDetails>;
  * All {@link LinkMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.LINK_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.LINK_LATEST`
  */
 export type LinkOptions = LinkDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid LinkMetadata.
@@ -528,7 +528,7 @@ export type LinkOptions = LinkDetails & {
  * ```
  */
 export function link({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -536,7 +536,7 @@ export function link({
   return evaluate(
     LinkSchema.safeParse({
       $schema: PostSchemaId.LINK_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -556,13 +556,13 @@ type LiveStreamDetails = InputForPostMetadataDetails<LiveStreamMetadataDetails>;
  * All {@link LiveStreamMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.LIVESTREAM_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.LIVESTREAM_LATEST`
  */
 export type LiveStreamOptions = LiveStreamDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid LivestreamMetadata.
@@ -581,7 +581,7 @@ export type LiveStreamOptions = LiveStreamDetails & {
  * ```
  */
 export function liveStream({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -589,7 +589,7 @@ export function liveStream({
   return evaluate(
     LiveStreamSchema.safeParse({
       $schema: PostSchemaId.LIVESTREAM_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -609,13 +609,13 @@ type MintDetails = InputForPostMetadataDetails<MintMetadataDetails>;
  * All {@link MintMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.MINT_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.MINT_LATEST`
  */
 export type MintOptions = MintDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid MintMetadata.
@@ -633,7 +633,7 @@ export type MintOptions = MintDetails & {
  * ```
  */
 export function mint({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -641,7 +641,7 @@ export function mint({
   return evaluate(
     MintSchema.safeParse({
       $schema: PostSchemaId.MINT_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -661,13 +661,13 @@ type SpaceDetails = InputForPostMetadataDetails<SpaceMetadataDetails>;
  * All {@link SpaceMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.SPACE_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.SPACE_LATEST`
  */
 export type SpaceOptions = SpaceDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid SpaceMetadata.
@@ -685,7 +685,7 @@ export type SpaceOptions = SpaceDetails & {
  * ```
  */
 export function space({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -693,7 +693,7 @@ export function space({
   return evaluate(
     SpaceSchema.safeParse({
       $schema: PostSchemaId.SPACE_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -713,13 +713,13 @@ type StoryDetails = InputForPostMetadataDetails<StoryMetadataDetails>;
  * All {@link StoryMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.STORY_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.STORY_LATEST`
  */
 export type StoryOptions = StoryDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid StoryMetadata.
@@ -741,7 +741,7 @@ export type StoryOptions = StoryDetails & {
  * ```
  */
 export function story({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -749,7 +749,7 @@ export function story({
   return evaluate(
     StorySchema.safeParse({
       $schema: PostSchemaId.STORY_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -769,13 +769,13 @@ type TextOnlyDetails = InputForPostMetadataDetails<TextOnlyMetadataDetails>;
  * All {@link TextOnlyMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.TEXT_ONLY_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.TEXT_ONLY_LATEST`
  */
 export type TextOnlyOptions = TextOnlyDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid TextOnlyMetadata.
@@ -791,7 +791,7 @@ export type TextOnlyOptions = TextOnlyDetails & {
  * ```
  */
 export function textOnly({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -799,7 +799,7 @@ export function textOnly({
   return evaluate(
     TextOnlySchema.safeParse({
       $schema: PostSchemaId.TEXT_ONLY_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -819,13 +819,13 @@ type ThreeDDetails = InputForPostMetadataDetails<ThreeDMetadataDetails>;
  * All {@link ThreeDMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.THREE_D_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.THREE_D_LATEST`
  */
 export type ThreeDOptions = ThreeDDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid ThreeDMetadata.
@@ -850,7 +850,7 @@ export type ThreeDOptions = ThreeDDetails & {
  * ```
  */
 export function threeD({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -858,7 +858,7 @@ export function threeD({
   return evaluate(
     ThreeDSchema.safeParse({
       $schema: PostSchemaId.THREE_D_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -878,13 +878,13 @@ type TransactionDetails = InputForPostMetadataDetails<TransactionMetadataDetails
  * All {@link TransactionMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.TRANSACTION_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.TRANSACTION_LATEST`
  */
 export type TransactionOptions = TransactionDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid TransactionMetadata.
@@ -903,7 +903,7 @@ export type TransactionOptions = TransactionDetails & {
  * ```
  */
 export function transaction({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -911,7 +911,7 @@ export function transaction({
   return evaluate(
     TransactionSchema.safeParse({
       $schema: PostSchemaId.TRANSACTION_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -931,13 +931,13 @@ type VideoDetails = InputForPostMetadataDetails<VideoMetadataDetails>;
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.VIDEO_LATEST`
+ * - `mainContentFocus` automatically set to `PostSchemaId.VIDEO_LATEST`
  */
 export type VideoOptions = VideoDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid VideoMetadata.
@@ -990,7 +990,7 @@ export type VideoOptions = VideoDetails & {
  * ```
  */
 export function video({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -998,7 +998,7 @@ export function video({
   return evaluate(
     VideoSchema.safeParse({
       $schema: PostSchemaId.VIDEO_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
@@ -1013,13 +1013,13 @@ export function video({
  * All {@link VideoMetadataDetails} fields with:
  * - `id` defaults to a UUID
  * - `locale` defaults to `en`
- * - `mainContentFocus` automatically set to `PublicationSchemaId.SHORT_VIDEO`
+ * - `mainContentFocus` automatically set to `PostSchemaId.SHORT_VIDEO`
  */
 export type ShortVideoOptions = VideoDetails & {
   /**
    * All the {@link NftMetadata} fields.
    */
-  marketplace?: NftDetails;
+  nft?: NftDetails;
 };
 /**
  * Creates a valid VideoMetadata for a short.
@@ -1043,7 +1043,7 @@ export type ShortVideoOptions = VideoDetails & {
  * ```
  */
 export function shortVideo({
-  marketplace,
+  nft,
   locale = DEFAULT_LOCALE,
   id = v4(),
   ...others
@@ -1051,7 +1051,7 @@ export function shortVideo({
   return evaluate(
     VideoSchema.safeParse({
       $schema: PostSchemaId.VIDEO_LATEST,
-      ...marketplace,
+      ...nft,
       lens: {
         id,
         locale,
