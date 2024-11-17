@@ -1,6 +1,6 @@
 {
   "name": "@lens-protocol/metadata",
-  "version": "1.2.0",
+  "version": "2.0.0-next.1",
   "description": "Lens Protocol Metadata Standards",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -28,19 +28,17 @@
   "scripts": {
     "build": "pnpm build:jsonschemas && pnpm build:dist",
     "build:dist": "tsup",
-    "build:jsonschemas": "ts-node-esm --experimental-specifier-resolution=node scripts/build.ts",
-    "clean:all": "pnpm clean:dist && pnpm clean:docs && pnpm clean:jsonschemas",
+    "build:jsonschemas": "scripts/build.ts",
+    "clean:all": "pnpm clean:dist && pnpm clean:jsonschemas",
     "clean:jsonschemas": "rimraf jsonschemas",
     "clean:dist": "rimraf dist",
-    "clean:docs": "rimraf docs",
     "lint": "pnpm lint:prettier && pnpm lint:eslint && pnpm lint:typecheck",
     "lint:eslint": "pnpm eslint",
     "lint:typecheck": "tsc --noEmit",
     "lint:prettier": "prettier --check .",
+    "lint:prettier:fix": "prettier --check --w .",
     "prepublish": "pnpm clean:dist && pnpm lint && pnpm test && pnpm build",
-    "test": "pnpm test:unit && pnpm test:regression",
-    "test:unit": "jest \"src/.+.\\.spec\\.ts\"",
-    "test:regression": "jest \"src/.+.\\.test\\.ts\"",
+    "test": "jest \"src/.+.\\.spec\\.ts\"",
     "typedoc:docs": "typedoc",
     "typedoc:debug": "typedoc --logLevel Verbose"
   },
@@ -67,7 +65,7 @@
     "@changesets/cli": "^2.26.2",
     "@faker-js/faker": "^8.0.2",
     "@jest/globals": "^29.7.0",
-    "@lens-protocol/client": "2.0.0-alpha.25",
+    "@lens-protocol/client": "^2.3.1",
     "@types/fs-extra": "^11.0.1",
     "@types/json-stable-stringify": "^1.0.36",
     "@types/node": "^20.5.0",
@@ -87,11 +85,12 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "tsup": "^7.2.0",
+    "tsx": "^4.19.1",
     "typedoc": "^0.25.1",
     "typedoc-plugin-zod": "^1.1.0",
     "typescript": "^5.1.6",
-    "zod": "^3.22.4",
-    "zod-to-json-schema": "^3.21.4",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.3",
     "zod-validation-error": "^1.3.1"
   },
   "peerDependencies": {
@@ -105,7 +104,7 @@
   "engines": {
     "node": ">=18 <21"
   },
-  "packageManager": "pnpm@8.2.0",
+  "packageManager": "pnpm@8.15.9",
   "dependencies": {
     "json-stable-stringify": "^1.1.1",
     "uuid": "^9.0.1"

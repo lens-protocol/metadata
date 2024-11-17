@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given the "account" metadata builder when using it should return a valid AccountMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/account/1.0.0.json",
+  "lens": {
+    "attributes": [
+      {
+        "key": "twitter",
+        "type": "String",
+        "value": "https://twitter.com/johndoe",
+      },
+      {
+        "key": "dob",
+        "type": "Date",
+        "value": "1990-01-01T00:00:00Z",
+      },
+      {
+        "key": "enabled",
+        "type": "Boolean",
+        "value": "true",
+      },
+      {
+        "key": "height",
+        "type": "Number",
+        "value": "1.8",
+      },
+      {
+        "key": "settings",
+        "type": "JSON",
+        "value": "{"theme": "dark"}",
+      },
+    ],
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.
+
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        - Donec a diam lectus.",
+    "coverPicture": "https://example.com/cover.png",
+    "id": Any<String>,
+    "name": "John Doe",
+    "picture": "https://example.com/picture.png",
+  },
+}
+`;

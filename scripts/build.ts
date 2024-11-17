@@ -1,3 +1,5 @@
+#!/usr/bin/env -S npx tsx
+
 import { join } from 'path';
 
 import fs from 'fs-extra';
@@ -19,7 +21,7 @@ import {
   ImageSchema,
   LinkSchema,
   LiveStreamSchema,
-  MarketplaceMetadataAttributeSchema,
+  Nft721MetadataAttributeSchema,
   MediaAudioSchema,
   MediaImageSchema,
   MediaVideoSchema,
@@ -28,7 +30,7 @@ import {
   MintSchema,
   NetworkAddressSchema,
   NftOwnershipConditionSchema,
-  ProfileMetadataSchema,
+  AccountMetadataSchema,
   ProfileOwnershipConditionSchema,
   PublicationEncryptionStrategySchema,
   SpaceSchema,
@@ -37,40 +39,60 @@ import {
   ThreeDSchema,
   TransactionSchema,
   VideoSchema,
-  ProfileIdSchema,
+  LegacyProfileIdSchema,
   EvmAddressSchema,
   AccessConditionSchema,
-  PublicationIdSchema,
+  LegacyPublicationIdSchema,
   AmountSchema,
   TagSchema,
-  MirrorMetadataSchema,
   GeoURISchema,
   PhysicalAddressSchema,
   EncryptedStringSchema,
+  EncryptableUriSchema,
+  EncryptableGeoURISchema,
+  ChainIdSchema,
+  PostMetadataSchema,
+  SignatureSchema,
+  LocaleSchema,
+  EncryptableMarkdownSchema,
+  MetadataIdSchema,
+  ContentWarningSchema,
+  EncryptableDateTimeSchema,
+  NonEmptyStringSchema,
+  EncryptableStringSchema,
+  UriSchema,
+  MarkdownSchema,
+  ModuleMetadataSchema,
+  AppMetadataSchema,
+  GraphMetadataSchema,
+  FeedMetadataSchema,
+  GroupMetadataSchema,
+  UsernameMetadataSchema,
+  PostMainFocusSchema,
+  SponsorshipMetadataSchema,
 } from '../src';
-import { ModuleMetadataSchema } from '../src/module';
 
 const outputDir = 'jsonschemas';
 
 await fs.ensureDir(outputDir);
 
-// Publication schemas
+// Post schemas
 const schemas = new Map<string, z.ZodSchema<unknown>>([
-  ['publications/3d/3.0.0.json', ThreeDSchema],
-  ['publications/article/3.0.0.json', ArticleSchema],
-  ['publications/audio/3.0.0.json', AudioSchema],
-  ['publications/checking-in/3.0.0.json', CheckingInSchema],
-  ['publications/embed/3.0.0.json', EmbedSchema],
-  ['publications/event/3.0.0.json', EventSchema],
-  ['publications/image/3.0.0.json', ImageSchema],
-  ['publications/link/3.0.0.json', LinkSchema],
-  ['publications/livestream/3.0.0.json', LiveStreamSchema],
-  ['publications/mint/3.0.0.json', MintSchema],
-  ['publications/space/3.0.0.json', SpaceSchema],
-  ['publications/story/3.0.0.json', StorySchema],
-  ['publications/text-only/3.0.0.json', TextOnlySchema],
-  ['publications/transaction/3.0.0.json', TransactionSchema],
-  ['publications/video/3.0.0.json', VideoSchema],
+  ['posts/3d/3.0.0.json', ThreeDSchema],
+  ['posts/article/3.0.0.json', ArticleSchema],
+  ['posts/audio/3.0.0.json', AudioSchema],
+  ['posts/checking-in/3.0.0.json', CheckingInSchema],
+  ['posts/embed/3.0.0.json', EmbedSchema],
+  ['posts/event/3.0.0.json', EventSchema],
+  ['posts/image/3.0.0.json', ImageSchema],
+  ['posts/link/3.0.0.json', LinkSchema],
+  ['posts/livestream/3.0.0.json', LiveStreamSchema],
+  ['posts/mint/3.0.0.json', MintSchema],
+  ['posts/space/3.0.0.json', SpaceSchema],
+  ['posts/story/3.0.0.json', StorySchema],
+  ['posts/text-only/3.0.0.json', TextOnlySchema],
+  ['posts/transaction/3.0.0.json', TransactionSchema],
+  ['posts/video/3.0.0.json', VideoSchema],
 ]);
 
 for (const [path, Schema] of schemas) {
@@ -82,19 +104,26 @@ for (const [path, Schema] of schemas) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
-      AdvancedContractCondition: AdvancedContractConditionSchema,
+      NonEmptyString: NonEmptyStringSchema,
+      Markdown: MarkdownSchema,
+      Uri: UriSchema,
       AccessCondition: AccessConditionSchema,
-      PhysicalAddress: PhysicalAddressSchema,
+      AdvancedContractCondition: AdvancedContractConditionSchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
+      ChainId: ChainIdSchema,
       CollectCondition: CollectConditionSchema,
+      EncryptableUri: EncryptableUriSchema,
       EncryptedString: EncryptedStringSchema,
+      EncryptableString: EncryptableStringSchema,
       EoaOwnershipCondition: EoaOwnershipConditionSchema,
       Erc20OwnershipCondition: Erc20OwnershipConditionSchema,
       EvmAddress: EvmAddressSchema,
       FollowCondition: FollowConditionSchema,
       GeoURI: GeoURISchema,
-      MarketplaceMetadataAttribute: MarketplaceMetadataAttributeSchema,
+      LegacyProfileId: LegacyProfileIdSchema,
+      LegacyPublicationId: LegacyPublicationIdSchema,
+      MarketplaceMetadataAttribute: Nft721MetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,
       MediaVideo: MediaVideoSchema,
@@ -102,10 +131,9 @@ for (const [path, Schema] of schemas) {
       MetadataLicenseType: MetadataLicenseTypeSchema,
       NetworkAddress: NetworkAddressSchema,
       NftOwnershipCondition: NftOwnershipConditionSchema,
-      ProfileId: ProfileIdSchema,
+      PhysicalAddress: PhysicalAddressSchema,
       ProfileOwnershipCondition: ProfileOwnershipConditionSchema,
       PublicationEncryptionStrategy: PublicationEncryptionStrategySchema,
-      PublicationId: PublicationIdSchema,
       Tag: TagSchema,
     },
   });
@@ -113,10 +141,18 @@ for (const [path, Schema] of schemas) {
   await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
 }
 
-// Profile schema
+// Umbrella schema
+await generateUmbrellaSchema();
+
+// Other schemas
 const others = new Map<string, z.ZodSchema<unknown>>([
-  ['profile/2.0.0.json', ProfileMetadataSchema],
-  ['publications/mirror/1.0.0.json', MirrorMetadataSchema],
+  ['account/1.0.0.json', AccountMetadataSchema],
+  ['app/1.0.0.json', AppMetadataSchema],
+  ['graph/1.0.0.json', GraphMetadataSchema],
+  ['feed/1.0.0.json', FeedMetadataSchema],
+  ['group/1.0.0.json', GroupMetadataSchema],
+  ['sponsorship/1.0.0.json', SponsorshipMetadataSchema],
+  ['username/1.0.0.json', UsernameMetadataSchema],
 ]);
 
 for (const [path, Schema] of others) {
@@ -128,6 +164,9 @@ for (const [path, Schema] of others) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
+      NonEmptyString: NonEmptyStringSchema,
+      Uri: UriSchema,
+      Markdown: MarkdownSchema,
       MetadataAttribute: MetadataAttributeSchema,
     },
   });
@@ -149,9 +188,88 @@ for (const [path, Schema] of openActions) {
     target: 'jsonSchema7',
     definitionPath: '$defs',
     definitions: {
+      NonEmptyString: NonEmptyStringSchema,
       MetadataAttribute: MetadataAttributeSchema,
     },
   });
 
   await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
+}
+
+async function generateUmbrellaSchema() {
+  const outputFile = join(outputDir, 'schema.json');
+
+  await fs.ensureFile(outputFile);
+
+  const jsonSuperSchema = zodToJsonSchema(PostMetadataSchema, {
+    target: 'jsonSchema7',
+    definitionPath: '$defs',
+    $refStrategy: 'root',
+    definitions: {
+      NonEmptyString: NonEmptyStringSchema,
+      Markdown: MarkdownSchema,
+      Uri: UriSchema,
+      AccessCondition: AccessConditionSchema,
+      AdvancedContractCondition: AdvancedContractConditionSchema,
+      MainContentFocus: PostMainFocusSchema,
+      Amount: AmountSchema,
+      AnyMedia: AnyMediaSchema,
+      ChainId: ChainIdSchema,
+      CollectCondition: CollectConditionSchema,
+      EncryptableDateTime: EncryptableDateTimeSchema,
+      EncryptableGeoURI: EncryptableGeoURISchema,
+      EncryptableMarkdown: EncryptableMarkdownSchema,
+      EncryptableString: EncryptableStringSchema,
+      EncryptableUri: EncryptableUriSchema,
+      EncryptedString: EncryptedStringSchema,
+      EoaOwnershipCondition: EoaOwnershipConditionSchema,
+      Erc20OwnershipCondition: Erc20OwnershipConditionSchema,
+      EvmAddress: EvmAddressSchema,
+      FollowCondition: FollowConditionSchema,
+      GeoURI: GeoURISchema,
+      LegacyProfileId: LegacyProfileIdSchema,
+      LegacyPublicationId: LegacyPublicationIdSchema,
+      Locale: LocaleSchema,
+      MarketplaceMetadataAttribute: Nft721MetadataAttributeSchema,
+      MediaAudio: MediaAudioSchema,
+      MediaImage: MediaImageSchema,
+      MediaVideo: MediaVideoSchema,
+      MetadataAttribute: MetadataAttributeSchema,
+      MetadataId: MetadataIdSchema,
+      MetadataLicenseType: MetadataLicenseTypeSchema,
+      NetworkAddress: NetworkAddressSchema,
+      NftOwnershipCondition: NftOwnershipConditionSchema,
+      PhysicalAddress: PhysicalAddressSchema,
+      ProfileOwnershipCondition: ProfileOwnershipConditionSchema,
+      PublicationEncryptionStrategy: PublicationEncryptionStrategySchema,
+      ContentWarning: ContentWarningSchema,
+      Signature: SignatureSchema,
+      Tag: TagSchema,
+      ArticleMetadata: ArticleSchema,
+      AudioMetadata: AudioSchema,
+      CheckingInMetadata: CheckingInSchema,
+      EmbedMetadata: EmbedSchema,
+      EventMetadata: EventSchema,
+      ImageMetadata: ImageSchema,
+      LinkMetadata: LinkSchema,
+      LiveStreamMetadata: LiveStreamSchema,
+      MintMetadata: MintSchema,
+      SpaceMetadata: SpaceSchema,
+      TextOnlyMetadata: TextOnlySchema,
+      StoryMetadata: StorySchema,
+      TransactionMetadata: TransactionSchema,
+      ThreeDMetadata: ThreeDSchema,
+      VideoMetadata: VideoSchema,
+      AccountMetadata: AccountMetadataSchema,
+      ModuleMetadata: ModuleMetadataSchema,
+      AppMetadata: AppMetadataSchema,
+      GraphMetadata: GraphMetadataSchema,
+      FeedMetadata: FeedMetadataSchema,
+      GroupMetadata: GroupMetadataSchema,
+      SponsorshipMetadata: SponsorshipMetadataSchema,
+      UsernameMetadata: UsernameMetadataSchema,
+    },
+  });
+
+  await fs.writeJSON(outputFile, jsonSuperSchema, { spaces: 2 });
 }

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { nonEmptyStringSchema } from './primitives.js';
+import { NonEmptyStringSchema } from './primitives.js';
 
 /**
  * The type of a metadata attribute.
@@ -32,7 +32,7 @@ export type BooleanAttribute = {
  */
 export const BooleanAttributeSchema = z.object({
   type: z.literal(MetadataAttributeType.BOOLEAN),
-  key: nonEmptyStringSchema("The attribute's unique identifier."),
+  key: NonEmptyStringSchema.describe("The attribute's unique identifier."),
   value: z
     .enum(['true', 'false'])
     .describe("A JS boolean value serialized as string. It's consumer responsibility to parse it."),
@@ -57,7 +57,7 @@ export type DateAttribute = {
  */
 export const DateAttributeSchema = z.object({
   type: z.literal(MetadataAttributeType.DATE),
-  key: nonEmptyStringSchema("The attribute's unique identifier."),
+  key: NonEmptyStringSchema.describe("The attribute's unique identifier."),
   value: z
     .string()
     .datetime()
@@ -92,8 +92,8 @@ export type NumberAttribute = {
  */
 export const NumberAttributeSchema = z.object({
   type: z.literal(MetadataAttributeType.NUMBER),
-  key: nonEmptyStringSchema("The attribute's unique identifier."), // TODO generalize and share
-  value: nonEmptyStringSchema(
+  key: NonEmptyStringSchema.describe("The attribute's unique identifier."), // TODO generalize and share
+  value: NonEmptyStringSchema.describe(
     "A valid JS number serialized as string. It's consumer responsibility to parse it.",
   ),
 });
@@ -117,8 +117,8 @@ export type StringAttribute = {
  */
 export const StringAttributeSchema = z.object({
   type: z.literal(MetadataAttributeType.STRING),
-  key: nonEmptyStringSchema("The attribute's unique identifier."),
-  value: nonEmptyStringSchema('A string value.'),
+  key: NonEmptyStringSchema.describe("The attribute's unique identifier."),
+  value: NonEmptyStringSchema.describe('Any string value.'),
 });
 
 export type JSONAttribute = {
@@ -143,8 +143,8 @@ export type JSONAttribute = {
  */
 export const JSONAttributeSchema = z.object({
   type: z.literal(MetadataAttributeType.JSON),
-  key: nonEmptyStringSchema("The attribute's unique identifier."),
-  value: nonEmptyStringSchema(
+  key: NonEmptyStringSchema.describe("The attribute's unique identifier."),
+  value: NonEmptyStringSchema.describe(
     "A JSON string. It's consumer responsibility to validate and parse it.",
   ),
 });

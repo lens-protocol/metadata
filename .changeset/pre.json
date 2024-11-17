@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@lens-protocol/metadata": "1.2.0"
+  },
+  "changesets": [
+    "great-hairs-breathe",
+    "honest-peas-cough"
+  ]
+}

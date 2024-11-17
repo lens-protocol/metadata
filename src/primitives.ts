@@ -93,13 +93,12 @@ export const EncryptedStringSchema = z
 
 /**
  * Modifies a schema to accept an encrypted string value as well as its decrypted version.
- *
- * @internal
  */
-export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, unknown>) {
+function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, unknown>) {
   const options = [schema, EncryptedStringSchema] as const;
   return z
     .union(options)
+    .describe('An encrypted value or its decrypted version.')
     .catch((ctx) => ctx.input as T)
     .superRefine((val, ctx): val is T | EncryptedString => {
       const results = options.map((s) => s.safeParse(val));
@@ -117,13 +116,14 @@ export function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef,
 /**
  * @internal
  */
-export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, unknown> {
+export function nonEmptySchema(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, unknown> {
   return z.preprocess((val, ctx) => {
     const result = z.string().safeParse(val);
 
     if (!result.success) {
       result.error.issues.forEach((issue) => {
-        ctx.addIssue(issue);
+        // why fatal = true? see: https://github.com/colinhacks/zod/pull/2912#issuecomment-2010989328
+        ctx.addIssue({ ...issue, fatal: true });
       });
       return z.NEVER;
     }
@@ -142,23 +142,21 @@ export function nonEmpty(schema: z.ZodString): z.ZodType<string, z.ZodTypeDef, u
       .trim();
   }, schema.min(1));
 }
+
 /**
  * @internal
  */
-export function nonEmptyStringSchema(description?: string) {
-  return nonEmpty(z.string({ description }));
-}
+export const NonEmptyStringSchema = nonEmptySchema(z.string());
+
 /**
  * @internal
  */
-export function encryptableStringSchema(description: string) {
-  return encryptable(nonEmptyStringSchema(description));
-}
+export const EncryptableStringSchema = encryptable(NonEmptyStringSchema);
 
 /**
  * An arbitrary string or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableString = string | EncryptedString;
 
@@ -183,26 +181,6 @@ export const TagSchema: z.ZodType<Tag, z.ZodTypeDef, string> = z
   .min(1)
   .max(50)
   .transform((value) => toTag(value.toLowerCase()));
-
-/**
- * A unique Lens App identifier.
- */
-export type AppId = Brand<string, 'AppId'>;
-/**
- * @internal
- */
-export function toAppId(value: string): AppId {
-  return value as AppId;
-}
-/**
- * @internal
- */
-export const AppIdSchema: z.ZodType<AppId, z.ZodTypeDef, string> = z
-  .string()
-  .describe('A Lens App identifier.')
-  .min(1)
-  .max(200)
-  .transform(toAppId);
 
 /**
  * A cryptographic signature.
@@ -234,19 +212,28 @@ export function toMarkdown(value: string): Markdown {
   return value as Markdown;
 }
 
-/**
- * @internal
- */
-export function markdown(
+function markdownSchema(
   schema: z.ZodType<string, z.ZodTypeDef, unknown>,
 ): z.ZodType<Markdown, z.ZodTypeDef, unknown> {
   return schema.transform(toMarkdown);
 }
 
 /**
+ * @internal
+ */
+export const EncryptableMarkdownSchema = encryptable(
+  markdownSchema(NonEmptyStringSchema.describe('The content for the post as markdown.')),
+);
+
+/**
+ * @internal
+ */
+export const MarkdownSchema = NonEmptyStringSchema.transform(toMarkdown);
+
+/**
  * A markdown text or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableMarkdown = Markdown | EncryptedString;
 
@@ -263,29 +250,25 @@ export type URI = Brand<string, 'URI'>;
 export function toUri(value: string): URI {
   return value as URI;
 }
+
 /**
  * @internal
  */
-export function uriSchema(
-  description: string = 'A Uniform Resource Identifier. ',
-): z.ZodType<URI, z.ZodTypeDef, unknown> {
-  return z
-    .string({ description })
-    .min(6) // [ar://.]
-    .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
-    .transform(toUri);
-}
+export const UriSchema = z
+  .string({ description: 'A Uniform Resource Identifier.' })
+  .min(6) // [ar://.]
+  .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
+  .transform(toUri);
+
 /**
  * @internal
  */
-export function encryptableUriSchema(description?: string) {
-  return encryptable(uriSchema(description));
-}
+export const EncryptableUriSchema = encryptable(UriSchema);
 
 /**
  * A URI or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableURI = URI | EncryptedString;
 
@@ -414,17 +397,16 @@ export function geoPoint(value: GeoURI): GeoPoint {
   const [, lat = '', lng = ''] = match;
   return GeoPointSchema.parse({ lat, lng });
 }
+
 /**
  * @internal
  */
-export function encryptableGeoUriSchema(description: string) {
-  return encryptable(GeoURISchema.describe(description));
-}
+export const EncryptableGeoURISchema = encryptable(GeoURISchema);
 
 /**
  * A Geo URI or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableGeoURI = GeoURI | EncryptedString;
 
@@ -462,15 +444,17 @@ export type PhysicalAddress = {
  * @internal
  */
 export const PhysicalAddressSchema: z.ZodType<PhysicalAddress, z.ZodTypeDef, object> = z.object({
-  formatted: encryptableStringSchema('The full mailing address formatted for display.').optional(),
-  streetAddress: encryptableStringSchema(
+  formatted: EncryptableStringSchema.describe(
+    'The full mailing address formatted for display.',
+  ).optional(),
+  streetAddress: EncryptableStringSchema.describe(
     'The street address including house number, street name, P.O. Box, ' +
       'apartment or unit number and extended multi-line address information.',
   ).optional(),
-  locality: encryptableStringSchema('The city or locality.'),
-  region: encryptableStringSchema('The state or region.').optional(),
-  postalCode: encryptableStringSchema('The zip or postal code.').optional(),
-  country: encryptableStringSchema('The country name component.'),
+  locality: EncryptableStringSchema.describe('The city or locality.'),
+  region: EncryptableStringSchema.describe('The state or region.').optional(),
+  postalCode: EncryptableStringSchema.describe('The zip or postal code.').optional(),
+  country: EncryptableStringSchema.describe('The country name component.'),
 });
 
 /**
@@ -486,20 +470,17 @@ export function toDateTime(value: string): DateTime {
 /**
  * @internal
  */
-export function datetimeSchema(description: string): z.ZodType<DateTime, z.ZodTypeDef, unknown> {
-  return z.string({ description }).datetime().transform(toDateTime);
-}
+export const DateTimeSchema = z.string().datetime().transform(toDateTime);
+
 /**
  * @internal
  */
-export function encryptableDateTimeSchema(description: string) {
-  return encryptable(datetimeSchema(description));
-}
+export const EncryptableDateTimeSchema = encryptable(DateTimeSchema);
 
 /**
  * A DateTime or its encrypted version.
  *
- * For example in the context of a token-gated publication, fields of this type are encrypted.
+ * For example in the context of a token-gated post, fields of this type are encrypted.
  */
 export type EncryptableDateTime = DateTime | EncryptedString;
 
@@ -634,7 +615,7 @@ export type Amount = {
 export const AmountSchema: z.ZodType<Amount, z.ZodTypeDef, unknown> = z.object(
   {
     asset: AssetSchema,
-    value: nonEmptyStringSchema(
+    value: NonEmptyStringSchema.describe(
       'The amount in the smallest unit of the given asset (e.g. wei for ETH).',
     ),
   },
@@ -673,49 +654,47 @@ export function amount(input: AmountDetails): Amount {
 }
 
 /**
- * A Lens Profile identifier.
+ * A Legacy Lens Profile identifier.
  *
  * @example
  * ```
  * 0x01
  * ```
  */
-export type ProfileId = Brand<string, 'ProfileId'>;
+export type LegacyProfileId = Brand<string, 'ProfileId'>;
 /**
  * @internal
  */
-export function toProfileId(value: string): ProfileId {
-  return value as ProfileId;
+export function toProfileId(value: string): LegacyProfileId {
+  return value as LegacyProfileId;
 }
 /**
  * @internal
  */
-export const ProfileIdSchema: z.ZodType<ProfileId, z.ZodTypeDef, unknown> = z
+export const LegacyProfileIdSchema: z.ZodType<LegacyProfileId, z.ZodTypeDef, unknown> = z
   .string()
   .min(4)
   .transform(toProfileId);
 
 /**
- * A Lens Publication identifier.
- *
- * No Momoka publications for now.
+ * A Legacy on-chain Lens Publication identifier.
  *
  * @example
  * ```
  * 0x01-0x01
  * ```
  */
-export type PublicationId = Brand<string, 'PublicationId'>;
+export type LegacyPublicationId = Brand<string, 'PublicationId'>;
 /**
  * @internal
  */
-export function toPublicationId(value: string): PublicationId {
-  return value as PublicationId;
+export function toLegacyPublicationId(value: string): LegacyPublicationId {
+  return value as LegacyPublicationId;
 }
 /**
  * @internal
  */
-export const PublicationIdSchema: z.ZodType<PublicationId, z.ZodTypeDef, unknown> = z
+export const LegacyPublicationIdSchema: z.ZodType<LegacyPublicationId, z.ZodTypeDef, unknown> = z
   .string()
   .min(9)
-  .transform(toPublicationId);
+  .transform(toLegacyPublicationId);

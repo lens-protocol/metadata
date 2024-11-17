@@ -2,26 +2,20 @@
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
-import { MarketplaceMetadataSchema } from '../marketplace.js';
-import {
-  LocaleSchema,
-  Markdown,
-  nonEmptyStringSchema,
-  toAppId,
-  toMarkdown,
-} from '../primitives.js';
-import * as latest from '../publication';
-import {
-  ConditionComparisonOperator,
-  NftContractType,
-  PublicationContentWarning,
-} from '../publication/common';
-import { hasTwoOrMore } from '../utils.js';
+import * as latest from '../post';
+import { ConditionComparisonOperator, NftContractType, ContentWarning } from '../post/common';
+import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
+import { nftMetadataSchemaWith } from '../tokens/eip721.js';
+import { Brand, hasTwoOrMore } from '../utils.js';
 
 // re-export under legacy namespace
-export { ConditionComparisonOperator, NftContractType, PublicationContentWarning };
-export { MarketplaceMetadataAttributeDisplayType } from '../marketplace.js';
-export type { MarketplaceMetadataAttribute, MarketplaceMetadata } from '../marketplace.js';
+export {
+  ConditionComparisonOperator,
+  NftContractType,
+  ContentWarning as PublicationContentWarning,
+};
+export { NftMetadataAttributeDisplayType } from '../tokens/eip721.js';
+export type { NftMetadataAttribute, NftMetadata } from '../tokens/eip721.js';
 export type * from '../primitives.js';
 
 export enum PublicationMetadataVersion {
@@ -30,14 +24,14 @@ export enum PublicationMetadataVersion {
 }
 
 export enum PublicationMainFocus {
-  ARTICLE = latest.PublicationMainFocus.ARTICLE,
-  AUDIO = latest.PublicationMainFocus.AUDIO,
-  EMBED = latest.PublicationMainFocus.EMBED,
-  IMAGE = latest.PublicationMainFocus.IMAGE,
-  LINK = latest.PublicationMainFocus.LINK,
-  SHORT_VIDEO = latest.PublicationMainFocus.SHORT_VIDEO,
-  TEXT_ONLY = latest.PublicationMainFocus.TEXT_ONLY,
-  VIDEO = latest.PublicationMainFocus.VIDEO,
+  ARTICLE = latest.PostMainFocus.ARTICLE,
+  AUDIO = latest.PostMainFocus.AUDIO,
+  EMBED = latest.PostMainFocus.EMBED,
+  IMAGE = latest.PostMainFocus.IMAGE,
+  LINK = latest.PostMainFocus.LINK,
+  SHORT_VIDEO = latest.PostMainFocus.SHORT_VIDEO,
+  TEXT_ONLY = latest.PostMainFocus.TEXT_ONLY,
+  VIDEO = latest.PostMainFocus.VIDEO,
 }
 
 export enum AudioMimeType {
@@ -104,6 +98,17 @@ const AnimationUrlSchema = z.string({
     'WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.',
 });
 
+/**
+ * A unique Lens App identifier.
+ */
+export type AppId = Brand<string, 'AppId'>;
+/**
+ * @internal
+ */
+export function toAppId(value: string): AppId {
+  return value as AppId;
+}
+
 // const OpenSeaSchema = z
 //   .object({
 //     description: z
@@ -126,7 +131,7 @@ const AnimationUrlSchema = z.string({
 
 //     name: z.string({ description: 'Name of the NFT item.' }),
 
-//     attributes: MarketplaceMetadataAttributeSchema.array()
+//     attributes: NftMetadataAttributeSchema.array()
 //       .describe(
 //         'These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item.',
 //       )
@@ -151,13 +156,13 @@ const AnimationUrlSchema = z.string({
  */
 export const MediaSchema = z
   .object({
-    item: nonEmptyStringSchema('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
+    item: NonEmptyStringSchema.describe('Marketplaces will store any NFT image here.'), // it can be `This publication is gated.`
     altTag: z.string().optional().nullable().describe('The alt tag for accessibility.'),
     cover: z
       .string() // it can be `This publication is gated.`
       .describe('The cover for any video or audio media.')
-      .optional()
       .nullable()
+      .optional()
       .catch(null),
     type: z.string().optional().nullable().describe('This is the mime type of the media.'),
   })
@@ -186,7 +191,7 @@ function isEmptyString(value: string | null | undefined): value is '' | null | u
   return isNullish(value) || value.length === 0;
 }
 
-const PublicationCommonSchema = MarketplaceMetadataSchema.extend({
+const PublicationCommonSchema = nftMetadataSchemaWith({
   metadata_id: z
     .string({
       description:
@@ -205,7 +210,6 @@ const PublicationCommonSchema = MarketplaceMetadataSchema.extend({
     .nullable()
     .describe('This is lens supported attached media items to the publication.'),
 
-  // bespoke z.string() instead of AppIdSchema to emulate past behavior
   appId: z
     .string()
     .max(200)
@@ -383,7 +387,7 @@ export type AccessCondition = z.infer<typeof AccessConditionSchema>;
 const EncryptedMediaWithWrongShapeSchema = z
   .object({
     original: z.object({
-      url: nonEmptyStringSchema(),
+      url: NonEmptyStringSchema,
       cover: z.string().nullable().optional().catch(null),
       altTag: z.string().nullable().optional().catch(null),
       mimeType: z.string().nullable().optional().catch(null),
@@ -447,7 +451,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   content: ContentSchema.transform(toMarkdown).optional().nullable(),
 
   contentWarning: z
-    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
+    .nativeEnum(ContentWarning, { description: 'Specify a content warning.' })
     .optional()
     .nullable()
     .catch(null),
@@ -548,9 +552,7 @@ const PublicationMetadataV2ShortVideoSchema = PublicationMetadataV2BaseVideoSche
   mainContentFocus: z.literal(PublicationMainFocus.SHORT_VIDEO),
 });
 
-export type PublicationMetadataV2Video =
-  | z.infer<typeof PublicationMetadataV2VideoSchema>
-  | z.infer<typeof PublicationMetadataV2ShortVideoSchema>;
+export type PublicationMetadataV2Video = z.infer<typeof PublicationMetadataV2VideoSchema>;
 
 /**
  * @internal

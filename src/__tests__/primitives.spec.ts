@@ -4,16 +4,16 @@ import { z } from 'zod';
 import { expectResult } from '../__helpers__/assertions.js';
 import {
   GeoURISchema,
-  datetimeSchema,
+  DateTimeSchema,
   geoPoint,
   geoUri,
   LocaleSchema,
-  nonEmpty,
+  nonEmptySchema,
 } from '../primitives.js';
 
 describe(`Given the primitives schemas`, () => {
-  describe(`when parsing a string with a schema defined with ${nonEmpty.name} modifier`, () => {
-    const Schema = nonEmpty(z.string());
+  describe(`when parsing a string with a schema defined with ${nonEmptySchema.name} modifier`, () => {
+    const Schema = nonEmptySchema(z.string());
 
     it('then it should preprocess the string trimming all "whitespace" characters', () => {
       [
@@ -92,9 +92,9 @@ describe(`Given the primitives schemas`, () => {
 
   describe(`when parsing a datetime value`, () => {
     it(`then it should support ISO 8601 UTC datetime strings`, () => {
-      expectResult(() =>
-        datetimeSchema('not used').safeParse('2023-05-16T18:43:35Z'),
-      ).toMatchInlineSnapshot(`"2023-05-16T18:43:35Z"`);
+      expectResult(() => DateTimeSchema.safeParse('2023-05-16T18:43:35Z')).toMatchInlineSnapshot(
+        `"2023-05-16T18:43:35Z"`,
+      );
     });
   });
 

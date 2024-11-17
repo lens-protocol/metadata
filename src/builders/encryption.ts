@@ -1,5 +1,4 @@
 import { evaluate } from './ValidationError';
-import { NetworkAddressDetails, amount } from '../primitives';
 import {
   AccessCondition,
   AccessConditionSchema,
@@ -27,11 +26,12 @@ import {
   refineNftOwnershipCondition,
   AdvancedContractCondition,
   AdvancedContractConditionSchema,
-} from '../publication';
+} from '../post';
+import { NetworkAddressDetails, amount } from '../primitives';
 
 export type CollectConditionDetails = {
   /**
-   * The Publication Id that needs to be collected to fulfill the condition.
+   * The Legacy Publication Id that needs to be collected to fulfill the condition.
    */
   publicationId: string;
   /**

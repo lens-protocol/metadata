@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { ModuleSchemaId } from './ModuleSchemaId';
 import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute';
-import { nonEmptyStringSchema, Markdown, markdown, nonEmpty } from '../primitives';
+import { Markdown, nonEmptySchema, NonEmptyStringSchema, MarkdownSchema } from '../primitives';
 
 function isValidJsonString(str: string) {
   try {
@@ -77,9 +77,9 @@ export type ModuleMetadata = {
 };
 
 export const ModuleMetadataSchema: z.ZodType<ModuleMetadata, z.ZodTypeDef, object> = z.object({
-  name: nonEmpty(z.string().max(200)).describe('The name of the module.'),
-  title: nonEmptyStringSchema('The human-friendly title for the module.'),
-  description: markdown(nonEmptyStringSchema('Markdown formatted description of the module.')),
+  name: nonEmptySchema(z.string().max(200)).describe('The name of the module.'),
+  title: NonEmptyStringSchema.describe('The human-friendly title for the module.'),
+  description: MarkdownSchema.describe('Markdown formatted description of the module.'),
   authors: z
     .array(z.string().email('Authors list should only contain valid emails'))
     .min(1, 'You must supply at least one author')

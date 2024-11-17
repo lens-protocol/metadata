@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { ConditionComparisonOperator } from '../../publication/index.js';
+import { ConditionComparisonOperator } from '../../post/index.js';
 import { ValidationError } from '../ValidationError.js';
 import {
   andCondition,

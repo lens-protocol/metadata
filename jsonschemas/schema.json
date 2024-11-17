@@ -1,0 +1,4177 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ArticleMetadata"
+    },
+    {
+      "$ref": "#/$defs/AudioMetadata"
+    },
+    {
+      "$ref": "#/$defs/CheckingInMetadata"
+    },
+    {
+      "$ref": "#/$defs/EmbedMetadata"
+    },
+    {
+      "$ref": "#/$defs/EventMetadata"
+    },
+    {
+      "$ref": "#/$defs/ImageMetadata"
+    },
+    {
+      "$ref": "#/$defs/LinkMetadata"
+    },
+    {
+      "$ref": "#/$defs/LiveStreamMetadata"
+    },
+    {
+      "$ref": "#/$defs/MintMetadata"
+    },
+    {
+      "$ref": "#/$defs/SpaceMetadata"
+    },
+    {
+      "$ref": "#/$defs/TextOnlyMetadata"
+    },
+    {
+      "$ref": "#/$defs/StoryMetadata"
+    },
+    {
+      "$ref": "#/$defs/TransactionMetadata"
+    },
+    {
+      "$ref": "#/$defs/ThreeDMetadata"
+    },
+    {
+      "$ref": "#/$defs/VideoMetadata"
+    }
+  ],
+  "$defs": {
+    "NonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Markdown": {
+      "$ref": "#/$defs/NonEmptyString"
+    },
+    "Uri": {
+      "type": "string",
+      "minLength": 6,
+      "format": "uri",
+      "description": "A Uniform Resource Identifier."
+    },
+    "AccessCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "OR"
+        },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "AND"
+                  },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/NftOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/Erc20OwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/EoaOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/ProfileOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/FollowCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AdvancedContractCondition"
+                        }
+                      ]
+                    },
+                    "maxItems": 5
+                  }
+                },
+                "required": [
+                  "type",
+                  "criteria"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/$defs/CollectCondition"
+              },
+              {
+                "$ref": "#/$defs/AdvancedContractCondition"
+              },
+              {
+                "$ref": "#/$defs/EoaOwnershipCondition"
+              },
+              {
+                "$ref": "#/$defs/Erc20OwnershipCondition"
+              },
+              {
+                "$ref": "#/$defs/FollowCondition"
+              },
+              {
+                "$ref": "#/$defs/NftOwnershipCondition"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "OR"
+                  },
+                  "criteria": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/NftOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/Erc20OwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/EoaOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/ProfileOwnershipCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/FollowCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/CollectCondition"
+                        },
+                        {
+                          "$ref": "#/$defs/AdvancedContractCondition"
+                        }
+                      ]
+                    },
+                    "maxItems": 5
+                  }
+                },
+                "required": [
+                  "type",
+                  "criteria"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/$defs/ProfileOwnershipCondition"
+              }
+            ]
+          },
+          "maxItems": 5
+        }
+      },
+      "required": [
+        "type",
+        "criteria"
+      ],
+      "additionalProperties": false
+    },
+    "AdvancedContractCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ADVANCED_CONTRACT"
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "chainId": {
+              "$ref": "#/$defs/ChainId"
+            },
+            "address": {
+              "$ref": "#/$defs/EvmAddress"
+            }
+          },
+          "required": [
+            "chainId",
+            "address"
+          ],
+          "additionalProperties": false,
+          "description": "The contract address and chain id"
+        },
+        "functionName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of the function you want to call"
+        },
+        "abi": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
+        },
+        "params": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
+        },
+        "comparison": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ],
+          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^(true|false|\\d{1,70})$",
+          "description": "The comparison value. Accepts 'true', 'false' or a number"
+        }
+      },
+      "required": [
+        "type",
+        "contract",
+        "functionName",
+        "abi",
+        "params",
+        "comparison",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "MainContentFocus": {
+      "type": "string",
+      "enum": [
+        "VIDEO",
+        "IMAGE",
+        "ARTICLE",
+        "TEXT_ONLY",
+        "AUDIO",
+        "LINK",
+        "EMBED",
+        "CHECKING_IN",
+        "EVENT",
+        "MINT",
+        "TRANSACTION",
+        "LIVESTREAM",
+        "SHORT_VIDEO",
+        "3D",
+        "STORY",
+        "SPACE"
+      ]
+    },
+    "Amount": {
+      "type": "object",
+      "properties": {
+        "asset": {
+          "type": "object",
+          "properties": {
+            "contract": {
+              "$ref": "#/$defs/NetworkAddress"
+            },
+            "decimals": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "The number of decimals of the asset."
+            }
+          },
+          "required": [
+            "contract",
+            "decimals"
+          ],
+          "additionalProperties": false
+        },
+        "value": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
+        }
+      },
+      "required": [
+        "asset",
+        "value"
+      ],
+      "additionalProperties": false,
+      "description": "An amount of a specific asset."
+    },
+    "AnyMedia": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MediaAudio"
+        },
+        {
+          "$ref": "#/$defs/MediaImage"
+        },
+        {
+          "$ref": "#/$defs/MediaVideo"
+        }
+      ]
+    },
+    "ChainId": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "CollectCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "COLLECT"
+        },
+        "publicationId": {
+          "$ref": "#/$defs/LegacyPublicationId"
+        },
+        "thisPublication": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "type",
+        "publicationId"
+      ],
+      "additionalProperties": false
+    },
+    "EncryptableDateTime": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableGeoURI": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GeoURI"
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableMarkdown": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The content for the post as markdown."
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableString": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/NonEmptyString"
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptableUri": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Uri"
+        },
+        {
+          "$ref": "#/$defs/EncryptedString"
+        }
+      ],
+      "description": "An encrypted value or its decrypted version."
+    },
+    "EncryptedString": {
+      "type": "string",
+      "pattern": "^\\S+$",
+      "description": "An encrypted value."
+    },
+    "EoaOwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "EOA_OWNERSHIP"
+        },
+        "address": {
+          "$ref": "#/$defs/EvmAddress"
+        }
+      },
+      "required": [
+        "type",
+        "address"
+      ],
+      "additionalProperties": false
+    },
+    "Erc20OwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "ERC20_OWNERSHIP"
+        },
+        "amount": {
+          "$ref": "#/$defs/Amount"
+        },
+        "condition": {
+          "type": "string",
+          "enum": [
+            "EQUAL",
+            "NOT_EQUAL",
+            "GREATER_THAN",
+            "GREATER_THAN_OR_EQUAL",
+            "LESS_THAN",
+            "LESS_THAN_OR_EQUAL"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "amount",
+        "condition"
+      ],
+      "additionalProperties": false
+    },
+    "EvmAddress": {
+      "type": "string",
+      "minLength": 42,
+      "maxLength": 42,
+      "description": "An EVM compatible address."
+    },
+    "FollowCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "FOLLOW"
+        },
+        "follow": {
+          "$ref": "#/$defs/LegacyProfileId"
+        }
+      },
+      "required": [
+        "type",
+        "follow"
+      ],
+      "additionalProperties": false
+    },
+    "GeoURI": {
+      "type": "string",
+      "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
+      "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
+    },
+    "LegacyProfileId": {
+      "type": "string",
+      "minLength": 4
+    },
+    "LegacyPublicationId": {
+      "type": "string",
+      "minLength": 9
+    },
+    "Locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(?:-[a-zA-Z]{2})?$",
+      "description": "A Locale Identifier in the `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). [language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format."
+    },
+    "MarketplaceMetadataAttribute": {
+      "type": "object",
+      "properties": {
+        "display_type": {
+          "type": "string",
+          "enum": [
+            "number",
+            "string",
+            "date"
+          ]
+        },
+        "trait_type": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The name of the trait."
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "MediaAudio": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/$defs/EncryptableUri"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "audio/wav",
+            "audio/vnd.wave",
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/mp4",
+            "audio/aac",
+            "audio/webm",
+            "audio/flac"
+          ],
+          "description": "The mime type of the audio file."
+        },
+        "cover": {
+          "$ref": "#/$defs/EncryptableUri"
+        },
+        "duration": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "How long the the audio is in seconds."
+        },
+        "license": {
+          "$ref": "#/$defs/MetadataLicenseType",
+          "description": "The license for the audio."
+        },
+        "credits": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The credits for the audio."
+        },
+        "artist": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The name of the artist."
+        },
+        "genre": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The genre of the audio"
+        },
+        "recordLabel": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The record label for the audio."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "MUSIC",
+            "PODCAST",
+            "AUDIOBOOK",
+            "VOICE_NOTE",
+            "SOUND",
+            "OTHER"
+          ],
+          "description": "The type of audio."
+        },
+        "lyrics": {
+          "$ref": "#/$defs/EncryptableUri"
+        }
+      },
+      "required": [
+        "item",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MediaImage": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/$defs/EncryptableUri"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "image/bmp",
+            "image/gif",
+            "image/heic",
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/tiff",
+            "image/webp",
+            "image/x-ms-bmp"
+          ],
+          "description": "The mime type of the image"
+        },
+        "altTag": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The alt tag for accessibility"
+        },
+        "license": {
+          "$ref": "#/$defs/MetadataLicenseType",
+          "description": "The license for the image"
+        }
+      },
+      "required": [
+        "item",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MediaVideo": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "$ref": "#/$defs/EncryptableUri"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "minItems": 1,
+          "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "model/gltf+json",
+            "model/gltf-binary",
+            "video/x-m4v",
+            "video/mov",
+            "video/mp4",
+            "video/mpeg",
+            "video/ogg",
+            "video/ogv",
+            "video/quicktime",
+            "video/webm"
+          ],
+          "description": "The mime type of the video"
+        },
+        "altTag": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The alt tag for accessibility"
+        },
+        "cover": {
+          "$ref": "#/$defs/EncryptableUri"
+        },
+        "duration": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "description": "How long the the video is in seconds"
+        },
+        "license": {
+          "$ref": "#/$defs/MetadataLicenseType",
+          "description": "The license for the video"
+        }
+      },
+      "required": [
+        "item",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MetadataAttribute": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Boolean"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "description": "A JS boolean value serialized as string. It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Date"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "type": "string",
+              "format": "date-time",
+              "description": "A valid ISO 8601 date string.  It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Number"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A valid JS number serialized as string. It's consumer responsibility to parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "String"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Any string value."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "JSON"
+            },
+            "key": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The attribute's unique identifier."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A JSON string. It's consumer responsibility to validate and parse it."
+            }
+          },
+          "required": [
+            "type",
+            "key",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "MetadataId": {
+      "$ref": "#/$defs/NonEmptyString",
+      "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+    },
+    "MetadataLicenseType": {
+      "type": "string",
+      "enum": [
+        "CCO",
+        "CC BY",
+        "CC BY-ND",
+        "CC BY-NC",
+        "TBNL-C-D-PL-Legal",
+        "TBNL-C-DT-PL-Legal",
+        "TBNL-C-ND-PL-Legal",
+        "TBNL-C-D-NPL-Legal",
+        "TBNL-C-DT-NPL-Legal",
+        "TBNL-C-DTSA-PL-Legal",
+        "TBNL-C-DTSA-NPL-Legal",
+        "TBNL-C-ND-NPL-Legal",
+        "TBNL-C-D-PL-Ledger",
+        "TBNL-C-DT-PL-Ledger",
+        "TBNL-C-ND-PL-Ledger",
+        "TBNL-C-D-NPL-Ledger",
+        "TBNL-C-DT-NPL-Ledger",
+        "TBNL-C-DTSA-PL-Ledger",
+        "TBNL-C-DTSA-NPL-Ledger",
+        "TBNL-C-ND-NPL-Ledger",
+        "TBNL-NC-D-PL-Legal",
+        "TBNL-NC-DT-PL-Legal",
+        "TBNL-NC-ND-PL-Legal",
+        "TBNL-NC-D-NPL-Legal",
+        "TBNL-NC-DT-NPL-Legal",
+        "TBNL-NC-DTSA-PL-Legal",
+        "TBNL-NC-DTSA-NPL-Legal",
+        "TBNL-NC-ND-NPL-Legal",
+        "TBNL-NC-D-PL-Ledger",
+        "TBNL-NC-DT-PL-Ledger",
+        "TBNL-NC-ND-PL-Ledger",
+        "TBNL-NC-D-NPL-Ledger",
+        "TBNL-NC-DT-NPL-Ledger",
+        "TBNL-NC-DTSA-PL-Ledger",
+        "TBNL-NC-DTSA-NPL-Ledger",
+        "TBNL-NC-ND-NPL-Ledger"
+      ]
+    },
+    "NetworkAddress": {
+      "type": "object",
+      "properties": {
+        "chainId": {
+          "$ref": "#/$defs/ChainId"
+        },
+        "address": {
+          "$ref": "#/$defs/EvmAddress"
+        }
+      },
+      "required": [
+        "chainId",
+        "address"
+      ],
+      "additionalProperties": false,
+      "description": "An EVM compatible address on a specific chain."
+    },
+    "NftOwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "NFT_OWNERSHIP"
+        },
+        "contract": {
+          "$ref": "#/$defs/NetworkAddress"
+        },
+        "contractType": {
+          "type": "string",
+          "enum": [
+            "ERC721",
+            "ERC1155"
+          ]
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "description": "A list of token IDs you want to check ownership of. The list is optional for ERC721, you MUST provide a list of token IDs for ERC1155."
+        }
+      },
+      "required": [
+        "type",
+        "contract",
+        "contractType"
+      ],
+      "additionalProperties": false
+    },
+    "PhysicalAddress": {
+      "type": "object",
+      "properties": {
+        "formatted": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The full mailing address formatted for display."
+        },
+        "streetAddress": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
+        },
+        "locality": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The city or locality."
+        },
+        "region": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The state or region."
+        },
+        "postalCode": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The zip or postal code."
+        },
+        "country": {
+          "$ref": "#/$defs/EncryptableString",
+          "description": "The country name component."
+        }
+      },
+      "required": [
+        "locality",
+        "country"
+      ],
+      "additionalProperties": false
+    },
+    "ProfileOwnershipCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "PROFILE_OWNERSHIP"
+        },
+        "profileId": {
+          "$ref": "#/$defs/LegacyProfileId"
+        }
+      },
+      "required": [
+        "type",
+        "profileId"
+      ],
+      "additionalProperties": false
+    },
+    "PublicationEncryptionStrategy": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "const": "LIT_PROTOCOL"
+            },
+            "encryptionKey": {
+              "type": "string",
+              "minLength": 368,
+              "maxLength": 368,
+              "description": "A symmetric encryption key."
+            },
+            "accessCondition": {
+              "$ref": "#/$defs/AccessCondition"
+            },
+            "encryptedPaths": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/NonEmptyString"
+              },
+              "minItems": 1,
+              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
+            }
+          },
+          "required": [
+            "provider",
+            "encryptionKey",
+            "accessCondition",
+            "encryptedPaths"
+          ],
+          "additionalProperties": false,
+          "description": "Publication encryption strategy powered by the LIT Protocol."
+        }
+      ]
+    },
+    "ContentWarning": {
+      "type": "string",
+      "enum": [
+        "NSFW",
+        "SENSITIVE",
+        "SPOILER"
+      ],
+      "description": "Specify a content warning."
+    },
+    "Signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic signature of the Lens metadata."
+    },
+    "Tag": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "description": "An arbitrary tag."
+    },
+    "ArticleMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/article/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "ARTICLE",
+              "description": "The main focus of the post."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown"
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The optional article title."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "Any attachment you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "content"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "AudioMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/audio/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "AUDIO",
+              "description": "The main focus of the post."
+            },
+            "audio": {
+              "$ref": "#/$defs/MediaAudio"
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The optional audio title."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "audio"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "CheckingInMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/checking-in/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "CHECKING_IN",
+              "description": "The main focus of the post."
+            },
+            "location": {
+              "$ref": "#/$defs/EncryptableString",
+              "description": "Where you checking in from (free form text)."
+            },
+            "position": {
+              "$ref": "#/$defs/EncryptableGeoURI",
+              "description": "The optional geographic position of the location."
+            },
+            "address": {
+              "$ref": "#/$defs/PhysicalAddress",
+              "description": "The optional address of the location."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "location"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "EmbedMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/embed/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "EMBED",
+              "description": "The main focus of the post."
+            },
+            "embed": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "The embed URL."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "embed"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "EventMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/event/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The title of the event."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "EVENT",
+              "description": "The main focus of the post."
+            },
+            "location": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Uri",
+                  "description": "A virtual location."
+                },
+                {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The event location (free form text)."
+                },
+                {
+                  "$ref": "#/$defs/EncryptedString",
+                  "description": "The encrypted event location."
+                }
+              ],
+              "description": "The location of the event."
+            },
+            "position": {
+              "$ref": "#/$defs/EncryptableGeoURI",
+              "description": "The geographic position of the event."
+            },
+            "address": {
+              "$ref": "#/$defs/PhysicalAddress",
+              "description": "The address of the event."
+            },
+            "startsAt": {
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
+            },
+            "endsAt": {
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
+            },
+            "schedulingAdjustments": {
+              "type": "object",
+              "properties": {
+                "timezoneId": {
+                  "type": "string",
+                  "enum": [
+                    "Africa/Abidjan",
+                    "Africa/Accra",
+                    "Africa/Addis_Ababa",
+                    "Africa/Algiers",
+                    "Africa/Asmera",
+                    "Africa/Bamako",
+                    "Africa/Bangui",
+                    "Africa/Banjul",
+                    "Africa/Bissau",
+                    "Africa/Blantyre",
+                    "Africa/Brazzaville",
+                    "Africa/Bujumbura",
+                    "Africa/Cairo",
+                    "Africa/Casablanca",
+                    "Africa/Ceuta",
+                    "Africa/Conakry",
+                    "Africa/Dakar",
+                    "Africa/Dar_es_Salaam",
+                    "Africa/Djibouti",
+                    "Africa/Douala",
+                    "Africa/El_Aaiun",
+                    "Africa/Freetown",
+                    "Africa/Gaborone",
+                    "Africa/Harare",
+                    "Africa/Johannesburg",
+                    "Africa/Juba",
+                    "Africa/Kampala",
+                    "Africa/Khartoum",
+                    "Africa/Kigali",
+                    "Africa/Kinshasa",
+                    "Africa/Lagos",
+                    "Africa/Libreville",
+                    "Africa/Lome",
+                    "Africa/Luanda",
+                    "Africa/Lubumbashi",
+                    "Africa/Lusaka",
+                    "Africa/Malabo",
+                    "Africa/Maputo",
+                    "Africa/Maseru",
+                    "Africa/Mbabane",
+                    "Africa/Mogadishu",
+                    "Africa/Monrovia",
+                    "Africa/Nairobi",
+                    "Africa/Ndjamena",
+                    "Africa/Niamey",
+                    "Africa/Nouakchott",
+                    "Africa/Ouagadougou",
+                    "Africa/Porto-Novo",
+                    "Africa/Sao_Tome",
+                    "Africa/Tripoli",
+                    "Africa/Tunis",
+                    "Africa/Windhoek",
+                    "America/Adak",
+                    "America/Anchorage",
+                    "America/Anguilla",
+                    "America/Antigua",
+                    "America/Araguaina",
+                    "America/Argentina/La_Rioja",
+                    "America/Argentina/Rio_Gallegos",
+                    "America/Argentina/Salta",
+                    "America/Argentina/San_Juan",
+                    "America/Argentina/San_Luis",
+                    "America/Argentina/Tucuman",
+                    "America/Argentina/Ushuaia",
+                    "America/Aruba",
+                    "America/Asuncion",
+                    "America/Bahia",
+                    "America/Bahia_Banderas",
+                    "America/Barbados",
+                    "America/Belem",
+                    "America/Belize",
+                    "America/Blanc-Sablon",
+                    "America/Boa_Vista",
+                    "America/Bogota",
+                    "America/Boise",
+                    "America/Buenos_Aires",
+                    "America/Cambridge_Bay",
+                    "America/Campo_Grande",
+                    "America/Cancun",
+                    "America/Caracas",
+                    "America/Catamarca",
+                    "America/Cayenne",
+                    "America/Cayman",
+                    "America/Chicago",
+                    "America/Chihuahua",
+                    "America/Ciudad_Juarez",
+                    "America/Coral_Harbour",
+                    "America/Cordoba",
+                    "America/Costa_Rica",
+                    "America/Creston",
+                    "America/Cuiaba",
+                    "America/Curacao",
+                    "America/Danmarkshavn",
+                    "America/Dawson",
+                    "America/Dawson_Creek",
+                    "America/Denver",
+                    "America/Detroit",
+                    "America/Dominica",
+                    "America/Edmonton",
+                    "America/Eirunepe",
+                    "America/El_Salvador",
+                    "America/Fort_Nelson",
+                    "America/Fortaleza",
+                    "America/Glace_Bay",
+                    "America/Godthab",
+                    "America/Goose_Bay",
+                    "America/Grand_Turk",
+                    "America/Grenada",
+                    "America/Guadeloupe",
+                    "America/Guatemala",
+                    "America/Guayaquil",
+                    "America/Guyana",
+                    "America/Halifax",
+                    "America/Havana",
+                    "America/Hermosillo",
+                    "America/Indiana/Knox",
+                    "America/Indiana/Marengo",
+                    "America/Indiana/Petersburg",
+                    "America/Indiana/Tell_City",
+                    "America/Indiana/Vevay",
+                    "America/Indiana/Vincennes",
+                    "America/Indiana/Winamac",
+                    "America/Indianapolis",
+                    "America/Inuvik",
+                    "America/Iqaluit",
+                    "America/Jamaica",
+                    "America/Jujuy",
+                    "America/Juneau",
+                    "America/Kentucky/Monticello",
+                    "America/Kralendijk",
+                    "America/La_Paz",
+                    "America/Lima",
+                    "America/Los_Angeles",
+                    "America/Louisville",
+                    "America/Lower_Princes",
+                    "America/Maceio",
+                    "America/Managua",
+                    "America/Manaus",
+                    "America/Marigot",
+                    "America/Martinique",
+                    "America/Matamoros",
+                    "America/Mazatlan",
+                    "America/Mendoza",
+                    "America/Menominee",
+                    "America/Merida",
+                    "America/Metlakatla",
+                    "America/Mexico_City",
+                    "America/Miquelon",
+                    "America/Moncton",
+                    "America/Monterrey",
+                    "America/Montevideo",
+                    "America/Montserrat",
+                    "America/Nassau",
+                    "America/New_York",
+                    "America/Nipigon",
+                    "America/Nome",
+                    "America/Noronha",
+                    "America/North_Dakota/Beulah",
+                    "America/North_Dakota/Center",
+                    "America/North_Dakota/New_Salem",
+                    "America/Ojinaga",
+                    "America/Panama",
+                    "America/Pangnirtung",
+                    "America/Paramaribo",
+                    "America/Phoenix",
+                    "America/Port-au-Prince",
+                    "America/Port_of_Spain",
+                    "America/Porto_Velho",
+                    "America/Puerto_Rico",
+                    "America/Punta_Arenas",
+                    "America/Rainy_River",
+                    "America/Rankin_Inlet",
+                    "America/Recife",
+                    "America/Regina",
+                    "America/Resolute",
+                    "America/Rio_Branco",
+                    "America/Santa_Isabel",
+                    "America/Santarem",
+                    "America/Santiago",
+                    "America/Santo_Domingo",
+                    "America/Sao_Paulo",
+                    "America/Scoresbysund",
+                    "America/Sitka",
+                    "America/St_Barthelemy",
+                    "America/St_Johns",
+                    "America/St_Kitts",
+                    "America/St_Lucia",
+                    "America/St_Thomas",
+                    "America/St_Vincent",
+                    "America/Swift_Current",
+                    "America/Tegucigalpa",
+                    "America/Thule",
+                    "America/Thunder_Bay",
+                    "America/Tijuana",
+                    "America/Toronto",
+                    "America/Tortola",
+                    "America/Vancouver",
+                    "America/Whitehorse",
+                    "America/Winnipeg",
+                    "America/Yakutat",
+                    "America/Yellowknife",
+                    "Antarctica/Casey",
+                    "Antarctica/Davis",
+                    "Antarctica/DumontDUrville",
+                    "Antarctica/Macquarie",
+                    "Antarctica/Mawson",
+                    "Antarctica/McMurdo",
+                    "Antarctica/Palmer",
+                    "Antarctica/Rothera",
+                    "Antarctica/Syowa",
+                    "Antarctica/Troll",
+                    "Antarctica/Vostok",
+                    "Arctic/Longyearbyen",
+                    "Asia/Aden",
+                    "Asia/Almaty",
+                    "Asia/Amman",
+                    "Asia/Anadyr",
+                    "Asia/Aqtau",
+                    "Asia/Aqtobe",
+                    "Asia/Ashgabat",
+                    "Asia/Atyrau",
+                    "Asia/Baghdad",
+                    "Asia/Bahrain",
+                    "Asia/Baku",
+                    "Asia/Bangkok",
+                    "Asia/Barnaul",
+                    "Asia/Beirut",
+                    "Asia/Bishkek",
+                    "Asia/Brunei",
+                    "Asia/Calcutta",
+                    "Asia/Chita",
+                    "Asia/Choibalsan",
+                    "Asia/Colombo",
+                    "Asia/Damascus",
+                    "Asia/Dhaka",
+                    "Asia/Dili",
+                    "Asia/Dubai",
+                    "Asia/Dushanbe",
+                    "Asia/Famagusta",
+                    "Asia/Gaza",
+                    "Asia/Hebron",
+                    "Asia/Hong_Kong",
+                    "Asia/Hovd",
+                    "Asia/Irkutsk",
+                    "Asia/Jakarta",
+                    "Asia/Jayapura",
+                    "Asia/Jerusalem",
+                    "Asia/Kabul",
+                    "Asia/Kamchatka",
+                    "Asia/Karachi",
+                    "Asia/Katmandu",
+                    "Asia/Khandyga",
+                    "Asia/Krasnoyarsk",
+                    "Asia/Kuala_Lumpur",
+                    "Asia/Kuching",
+                    "Asia/Kuwait",
+                    "Asia/Macau",
+                    "Asia/Magadan",
+                    "Asia/Makassar",
+                    "Asia/Manila",
+                    "Asia/Muscat",
+                    "Asia/Nicosia",
+                    "Asia/Novokuznetsk",
+                    "Asia/Novosibirsk",
+                    "Asia/Omsk",
+                    "Asia/Oral",
+                    "Asia/Phnom_Penh",
+                    "Asia/Pontianak",
+                    "Asia/Pyongyang",
+                    "Asia/Qatar",
+                    "Asia/Qostanay",
+                    "Asia/Qyzylorda",
+                    "Asia/Rangoon",
+                    "Asia/Riyadh",
+                    "Asia/Saigon",
+                    "Asia/Sakhalin",
+                    "Asia/Samarkand",
+                    "Asia/Seoul",
+                    "Asia/Shanghai",
+                    "Asia/Singapore",
+                    "Asia/Srednekolymsk",
+                    "Asia/Taipei",
+                    "Asia/Tashkent",
+                    "Asia/Tbilisi",
+                    "Asia/Tehran",
+                    "Asia/Thimphu",
+                    "Asia/Tokyo",
+                    "Asia/Tomsk",
+                    "Asia/Ulaanbaatar",
+                    "Asia/Urumqi",
+                    "Asia/Ust-Nera",
+                    "Asia/Vientiane",
+                    "Asia/Vladivostok",
+                    "Asia/Yakutsk",
+                    "Asia/Yekaterinburg",
+                    "Asia/Yerevan",
+                    "Atlantic/Azores",
+                    "Atlantic/Bermuda",
+                    "Atlantic/Canary",
+                    "Atlantic/Cape_Verde",
+                    "Atlantic/Faeroe",
+                    "Atlantic/Madeira",
+                    "Atlantic/Reykjavik",
+                    "Atlantic/South_Georgia",
+                    "Atlantic/St_Helena",
+                    "Atlantic/Stanley",
+                    "Australia/Adelaide",
+                    "Australia/Brisbane",
+                    "Australia/Broken_Hill",
+                    "Australia/Currie",
+                    "Australia/Darwin",
+                    "Australia/Eucla",
+                    "Australia/Hobart",
+                    "Australia/Lindeman",
+                    "Australia/Lord_Howe",
+                    "Australia/Melbourne",
+                    "Australia/Perth",
+                    "Australia/Sydney",
+                    "Europe/Amsterdam",
+                    "Europe/Andorra",
+                    "Europe/Astrakhan",
+                    "Europe/Athens",
+                    "Europe/Belgrade",
+                    "Europe/Berlin",
+                    "Europe/Bratislava",
+                    "Europe/Brussels",
+                    "Europe/Bucharest",
+                    "Europe/Budapest",
+                    "Europe/Busingen",
+                    "Europe/Chisinau",
+                    "Europe/Copenhagen",
+                    "Europe/Dublin",
+                    "Europe/Gibraltar",
+                    "Europe/Guernsey",
+                    "Europe/Helsinki",
+                    "Europe/Isle_of_Man",
+                    "Europe/Istanbul",
+                    "Europe/Jersey",
+                    "Europe/Kaliningrad",
+                    "Europe/Kiev",
+                    "Europe/Kirov",
+                    "Europe/Lisbon",
+                    "Europe/Ljubljana",
+                    "Europe/London",
+                    "Europe/Luxembourg",
+                    "Europe/Madrid",
+                    "Europe/Malta",
+                    "Europe/Mariehamn",
+                    "Europe/Minsk",
+                    "Europe/Monaco",
+                    "Europe/Moscow",
+                    "Europe/Oslo",
+                    "Europe/Paris",
+                    "Europe/Podgorica",
+                    "Europe/Prague",
+                    "Europe/Riga",
+                    "Europe/Rome",
+                    "Europe/Samara",
+                    "Europe/San_Marino",
+                    "Europe/Sarajevo",
+                    "Europe/Saratov",
+                    "Europe/Simferopol",
+                    "Europe/Skopje",
+                    "Europe/Sofia",
+                    "Europe/Stockholm",
+                    "Europe/Tallinn",
+                    "Europe/Tirane",
+                    "Europe/Ulyanovsk",
+                    "Europe/Uzhgorod",
+                    "Europe/Vaduz",
+                    "Europe/Vatican",
+                    "Europe/Vienna",
+                    "Europe/Vilnius",
+                    "Europe/Volgograd",
+                    "Europe/Warsaw",
+                    "Europe/Zagreb",
+                    "Europe/Zaporozhye",
+                    "Europe/Zurich",
+                    "Indian/Antananarivo",
+                    "Indian/Chagos",
+                    "Indian/Christmas",
+                    "Indian/Cocos",
+                    "Indian/Comoro",
+                    "Indian/Kerguelen",
+                    "Indian/Mahe",
+                    "Indian/Maldives",
+                    "Indian/Mauritius",
+                    "Indian/Mayotte",
+                    "Indian/Reunion",
+                    "Pacific/Apia",
+                    "Pacific/Auckland",
+                    "Pacific/Bougainville",
+                    "Pacific/Chatham",
+                    "Pacific/Easter",
+                    "Pacific/Efate",
+                    "Pacific/Enderbury",
+                    "Pacific/Fakaofo",
+                    "Pacific/Fiji",
+                    "Pacific/Funafuti",
+                    "Pacific/Galapagos",
+                    "Pacific/Gambier",
+                    "Pacific/Guadalcanal",
+                    "Pacific/Guam",
+                    "Pacific/Honolulu",
+                    "Pacific/Johnston",
+                    "Pacific/Kiritimati",
+                    "Pacific/Kosrae",
+                    "Pacific/Kwajalein",
+                    "Pacific/Majuro",
+                    "Pacific/Marquesas",
+                    "Pacific/Midway",
+                    "Pacific/Nauru",
+                    "Pacific/Niue",
+                    "Pacific/Norfolk",
+                    "Pacific/Noumea",
+                    "Pacific/Pago_Pago",
+                    "Pacific/Palau",
+                    "Pacific/Pitcairn",
+                    "Pacific/Ponape",
+                    "Pacific/Port_Moresby",
+                    "Pacific/Rarotonga",
+                    "Pacific/Saipan",
+                    "Pacific/Tahiti",
+                    "Pacific/Tarawa",
+                    "Pacific/Tongatapu",
+                    "Pacific/Truk",
+                    "Pacific/Wake",
+                    "Pacific/Wallis"
+                  ],
+                  "description": "Indicates a reference timezone for the event start and end times. If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer."
+                },
+                "timezoneOffset": {
+                  "type": "number",
+                  "description": "Indicates the reference timezone offset with respect to UTC timezone a the time of event creation. The difference in minutes between the reference timezone time and UTC time (e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0)."
+                }
+              },
+              "required": [
+                "timezoneId",
+                "timezoneOffset"
+              ],
+              "additionalProperties": false,
+              "description": "Captures extra criteria to recompute correctly future start and end times.See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events"
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/EncryptableUri"
+              },
+              "minItems": 1,
+              "description": "The links you want to include with it."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "location",
+            "startsAt",
+            "endsAt"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "ImageMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/image/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "IMAGE",
+              "description": "The main focus of the post."
+            },
+            "image": {
+              "$ref": "#/$defs/MediaImage"
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The optional image title."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "image"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "LinkMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/link/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "LINK",
+              "description": "The main focus of the post."
+            },
+            "sharingLink": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "The sharing link url."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "sharingLink"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "LiveStreamMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/livestream/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "LIVESTREAM",
+              "description": "The main focus of the post."
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The livestream title."
+            },
+            "startsAt": {
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
+            },
+            "endsAt": {
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)"
+            },
+            "playbackUrl": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "Some livestream platforms have the playback url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
+            },
+            "liveUrl": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "Some livestream platforms have the live url as a separate url. If not your case make sure `liveUrl` and `playbackUrl` are the same."
+            },
+            "checkLiveAPI": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "startsAt",
+            "playbackUrl",
+            "liveUrl"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "MintMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/mint/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "MINT",
+              "description": "The main focus of the post."
+            },
+            "mintLink": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "The mint item it can be a URL of the known provider like opensea https://opensea.io/assets/ethereum/0xfaa2471e93bd1cee3b0ab381c242ada8e1d1a759/299 or https://zora.co/collect/0x9d90669665607f08005cae4a7098143f554c59ef/39626. The Lens API has an allow list of providers and if the domain does not match it will mark it as failed metadata"
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "mintLink"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "SpaceMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/space/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "SPACE",
+              "description": "The main focus of the post."
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The space title."
+            },
+            "link": {
+              "$ref": "#/$defs/EncryptableUri",
+              "description": "The space join link."
+            },
+            "startsAt": {
+              "$ref": "#/$defs/EncryptableDateTime",
+              "description": "The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "title",
+            "link",
+            "startsAt"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "TextOnlyMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/text-only/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "TEXT_ONLY",
+              "description": "The main focus of the post."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown"
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "content"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "StoryMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/story/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "STORY",
+              "description": "The main focus of the post."
+            },
+            "asset": {
+              "$ref": "#/$defs/AnyMedia",
+              "description": "The story asset."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "asset"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "TransactionMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/transaction/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "TRANSACTION",
+              "description": "The main focus of the post."
+            },
+            "txHash": {
+              "$ref": "#/$defs/EncryptableString",
+              "description": "The transaction hash."
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "ERC721",
+                "ERC20",
+                "OTHER"
+              ],
+              "description": "The type of transaction."
+            },
+            "chainId": {
+              "$ref": "#/$defs/ChainId",
+              "description": "The Chain Id."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "txHash",
+            "type",
+            "chainId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "ThreeDMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/3d/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "3D",
+              "description": "The main focus of the post."
+            },
+            "assets": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "$ref": "#/$defs/Uri",
+                    "description": "The URI of the 3D asset zip file."
+                  },
+                  "zipPath": {
+                    "$ref": "#/$defs/NonEmptyString",
+                    "description": "Path in extracted zip. Relative. 3D start point, MUST be 3D file type."
+                  },
+                  "playerUrl": {
+                    "$ref": "#/$defs/Uri",
+                    "description": "The URL of the recommended web based 3D player to use to view the 3D asset."
+                  },
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "gLTF/GLB",
+                      "FBX",
+                      "VRM",
+                      "OBJ"
+                    ],
+                    "description": "The 3D format of the asset."
+                  },
+                  "license": {
+                    "$ref": "#/$defs/MetadataLicenseType",
+                    "description": "The license regulating the use of the 3D asset."
+                  }
+                },
+                "required": [
+                  "uri",
+                  "playerUrl",
+                  "format"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "description": "The 3D items for the post"
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "assets"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "VideoMetadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uri",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/video/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "encryptedWith": {
+              "$ref": "#/$defs/PublicationEncryptionStrategy"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "enum": [
+                "SHORT_VIDEO",
+                "VIDEO"
+              ],
+              "description": "The main focus of the post."
+            },
+            "video": {
+              "$ref": "#/$defs/MediaVideo"
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The optional video title."
+            },
+            "content": {
+              "$ref": "#/$defs/EncryptableMarkdown",
+              "description": "Optional markdown content."
+            },
+            "attachments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/AnyMedia"
+              },
+              "minItems": 1,
+              "description": "The other attachments you want to include with it."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "video"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
+    },
+    "AccountMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/account/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The Account display name."
+            },
+            "bio": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The Account bio as markdown."
+            },
+            "picture": {
+              "$ref": "#/$defs/Uri",
+              "description": "The Account picture."
+            },
+            "coverPicture": {
+              "$ref": "#/$defs/Uri",
+              "description": "The Account cover picture."
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "description": "The Lens specific metadata details."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "ModuleMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1,
+          "description": "The name of the module."
+        },
+        "title": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The human-friendly title for the module."
+        },
+        "description": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "Markdown formatted description of the module."
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "email"
+          },
+          "minItems": 1,
+          "description": "List of authors email addresses."
+        },
+        "initializeCalldataABI": {
+          "type": "string",
+          "description": "The Solidity JSON ABI as JSON-string describing the initialization function calldata."
+        },
+        "initializeResultDataABI": {
+          "type": "string",
+          "description": "The Solidity JSON ABI as JSON-string describing the initialization result data."
+        },
+        "processCalldataABI": {
+          "type": "string",
+          "description": "The Solidity JSON ABI as JSON-string describing the process function calldata."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MetadataAttribute"
+          },
+          "description": "An arbitrary bag of attributes."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/modules/1.0.0.json"
+        }
+      },
+      "required": [
+        "name",
+        "title",
+        "description",
+        "authors",
+        "initializeCalldataABI",
+        "processCalldataABI",
+        "attributes",
+        "$schema"
+      ],
+      "additionalProperties": false
+    },
+    "AppMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/app/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The name of the app."
+            },
+            "description": {
+              "$ref": "#/$defs/Markdown",
+              "description": "An optional short and detailed description of the app, explaining its features and purpose."
+            },
+            "logo": {
+              "$ref": "#/$defs/Uri",
+              "description": "The Logo icon for the app."
+            },
+            "url": {
+              "$ref": "#/$defs/Uri",
+              "description": "The url of the app."
+            },
+            "developer": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The Developer of the app."
+            },
+            "platforms": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "web",
+                  "ios",
+                  "android"
+                ]
+              },
+              "description": "The platforms supported by the app."
+            },
+            "termsOfService": {
+              "$ref": "#/$defs/Uri",
+              "description": "The terms of service for the app."
+            },
+            "privacyPolicy": {
+              "$ref": "#/$defs/Uri",
+              "description": "The privacy policy for the app."
+            }
+          },
+          "required": [
+            "name",
+            "url",
+            "developer",
+            "platforms"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "GraphMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/graph/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The name of the graph."
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The human-friendly title for the graph."
+            },
+            "description": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Optional markdown formatted description of the graph."
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "title"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "FeedMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/feed/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The name of the Feed."
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The human-friendly title for the Feed."
+            },
+            "description": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Optional markdown formatted description of the Feed."
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "GroupMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/group/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The name of the Community."
+            },
+            "slug": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The slug for the Community."
+            },
+            "description": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Optional markdown formatted description of the Community."
+            },
+            "icon": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Uri"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional uri of the Community's icon."
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "slug"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "SponsorshipMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/sponsorship/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The name of the Sponsorship."
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/NonEmptyString"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An optional description of the Username collection."
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "UsernameMetadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the contract."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the contract."
+        },
+        "symbol": {
+          "type": "string",
+          "description": "The symbol of the contract."
+        },
+        "image": {
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the contract, typically displayed as a profile picture for the contract."
+        },
+        "banner_image": {
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the contract, displayed as a banner image for the contract."
+        },
+        "featured_image": {
+          "$ref": "#/$defs/Uri",
+          "description": "A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section."
+        },
+        "external_link": {
+          "$ref": "#/$defs/Uri",
+          "description": "The external link of the contract."
+        },
+        "collaborators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvmAddress"
+          },
+          "description": "An array of Ethereum addresses representing collaborators (authorized editors) of the contract."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/username/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/NonEmptyString"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An optional description of the Username collection."
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "name",
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

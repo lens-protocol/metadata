@@ -1,7 +1,7 @@
 import stringify from 'json-stable-stringify';
 
-import { ProfileMetadata } from './profile';
-import { MirrorMetadata, PublicationMetadata } from './publication';
+import { AccountMetadata } from './account';
+import { PostMetadata } from './post';
 
 /**
  * Returns a deterministic message from the `metadata.lens` object.
@@ -11,9 +11,7 @@ import { MirrorMetadata, PublicationMetadata } from './publication';
  * @param metadata - the metadata object
  * @returns the message
  */
-export function lensMessage(
-  metadata: MirrorMetadata | ProfileMetadata | PublicationMetadata,
-): string {
+export function lensMessage(metadata: AccountMetadata | PostMetadata): string {
   return stringify(metadata.lens);
 }
 
@@ -23,15 +21,19 @@ export function lensMessage(
 export type SignMessage = (message: string) => Promise<string>;
 
 /**
+ *
  * Signs a Lens metadata object using the provided `signMessage` function.
  *
  * @param metadata - the metadata object
  * @param signMessage - the function that signs a message
  * @returns the signed Lens Metadata object
+ *
+ * @deprecated Use on-chain 'source signatures' instead.
  */
-export async function signMetadata<
-  TMetadata extends MirrorMetadata | ProfileMetadata | PublicationMetadata,
->(metadata: TMetadata, signMessage: SignMessage): Promise<TMetadata> {
+export async function signMetadata<TMetadata extends AccountMetadata | PostMetadata>(
+  metadata: TMetadata,
+  signMessage: SignMessage,
+): Promise<TMetadata> {
   const message = lensMessage(metadata);
 
   return {
