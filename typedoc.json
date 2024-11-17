@@ -10,7 +10,7 @@
   "gitRevision": "main",
   "hideGenerator": true,
   "name": "Lens Protocol Metadata Standards",
-  "out": "docs",
+  "out": "docs/1.x",
   "readme": "none",
   "categoryOrder": ["Compose", "Parse", "Helpers", "Other"],
   // "sort": ["source-order", "enum-value-ascending"],
