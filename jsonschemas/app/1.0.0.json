@@ -12,6 +12,10 @@
           "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the app."
         },
+        "tagline": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "A memorable phrase to capture the essence of the app."
+        },
         "description": {
           "$ref": "#/$defs/Markdown",
           "description": "An optional short and detailed description of the app, explaining its features and purpose."

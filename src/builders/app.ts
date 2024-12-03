@@ -15,6 +15,10 @@ export type AppOptions = {
    */
   name: string;
   /**
+   * A memorable phrase to capture the essence of the app.
+   */
+  tagline?: string;
+  /**
    * An optional short and detailed description of the app, explaining its features and purpose.
    */
   description?: string;
