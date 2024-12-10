@@ -1,5 +1,12 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.2
+
+### Patch Changes
+
+- 04ff6ef: **fix:** adds missing App tagline
+- 7acb7d7: **fix:** removes group slug, adds group cover, adds app tagline, adds group name regexp. Fixes many optional types
+
 ## 2.0.0-next.1
 
 ### Patch Changes
