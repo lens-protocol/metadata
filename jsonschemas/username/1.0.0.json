@@ -51,14 +51,7 @@
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
         "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "$ref": "#/$defs/NonEmptyString",
           "description": "An optional description of the Username collection."
         }
       },

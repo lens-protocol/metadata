@@ -21,7 +21,7 @@ export type GraphOptions = {
   /**
    * Optional markdown formatted description of the Graph.
    */
-  description?: string | null;
+  description?: string;
 };
 
 /**

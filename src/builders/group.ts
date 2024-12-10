@@ -11,22 +11,21 @@ export type GroupOptions = {
    */
   id?: string;
   /**
-   * The name of the Community.
+   * The name of the Group.
    */
   name: string;
   /**
-   * The slug for the Community.
+   * Optional markdown formatted description of the Group.
    */
-  slug: string;
+  description?: string;
   /**
-   * Optional markdown formatted description of the Community.
+   * Optional uri of the Group's icon.
    */
-  description?: string | null;
-
+  icon?: string;
   /**
-   * Optional uri of the Community's icon.
+   * Optional uri of the Group's cover picture.
    */
-  icon?: string | null;
+  coverPicture?: string;
 };
 
 /**
@@ -38,6 +37,7 @@ export type GroupOptions = {
  *   slug: 'xyz',
  *   description: 'Bringing you one step closer to achieving absolutely nothing, but in style!',
  *   icon: 'lens://BsdfA...',
+ *   coverPicture: 'lens://BsdfA...',
  * });
  * ```
  *

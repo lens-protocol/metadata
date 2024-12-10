@@ -21,7 +21,7 @@ export type SponsorshipOptions = {
   /**
    * An optional description of the Sponsorship.
    */
-  description?: string | null;
+  description?: string;
 };
 
 /**

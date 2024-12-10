@@ -13,33 +13,26 @@
           "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
         },
         "name": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The name of the Community."
-        },
-        "slug": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The slug for the Community."
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9-]{1,50}$",
+          "description": "The name of the Group."
         },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
-          "description": "Optional markdown formatted description of the Community."
+          "description": "Optional markdown formatted description of the Group."
         },
         "icon": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Uri"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Optional uri of the Community's icon."
+          "$ref": "#/$defs/Uri",
+          "description": "Optional uri of the Group's icon."
+        },
+        "coverPicture": {
+          "$ref": "#/$defs/Uri",
+          "description": "Optional uri of the Group's cover picture."
         }
       },
       "required": [
         "id",
-        "name",
-        "slug"
+        "name"
       ],
       "additionalProperties": false
     },
