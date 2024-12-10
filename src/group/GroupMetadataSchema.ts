@@ -9,22 +9,21 @@ export type GroupMetadataDetails = {
    */
   id: string;
   /**
-   * The name of the Community.
+   * The name of the Group.
    */
   name: string;
   /**
-   * The slug for the Community.
+   * Optional markdown formatted description of the Group.
    */
-  slug: string;
+  description?: string;
   /**
-   * Optional markdown formatted description of the Community.
+   * Optional uri of the Group's icon.
    */
-  description?: string | null;
-
+  icon?: string;
   /**
-   * Optional uri of the Community's icon.
+   * Optional uri of the Group's cover picture.
    */
-  icon?: string | null;
+  coverPicture?: string;
 };
 
 export const GroupMetadataDetailsSchema: z.ZodType<GroupMetadataDetails, z.ZodTypeDef, object> =
@@ -32,12 +31,17 @@ export const GroupMetadataDetailsSchema: z.ZodType<GroupMetadataDetails, z.ZodTy
     id: NonEmptyStringSchema.describe(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
-    name: NonEmptyStringSchema.describe('The name of the Community.'),
-    slug: NonEmptyStringSchema.describe('The slug for the Community.'),
+    name: z
+      .string({ description: 'The name of the Group.' })
+      .regex(
+        /^[a-zA-Z0-9-]{1,50}$/,
+        'Group name must be between 1 and 50 characters long and contain only alphanumeric characters and hyphens.',
+      ),
     description: NonEmptyStringSchema.optional().describe(
-      'Optional markdown formatted description of the Community.',
+      'Optional markdown formatted description of the Group.',
     ),
-    icon: UriSchema.nullable().optional().describe("Optional uri of the Community's icon."),
+    icon: UriSchema.optional().describe("Optional uri of the Group's icon."),
+    coverPicture: UriSchema.optional().describe("Optional uri of the Group's cover picture."),
   });
 
 export type GroupMetadata = {

@@ -12,7 +12,7 @@ export type UsernameMetadataDetails = {
   /**
    * An optional description of the Username collection.
    */
-  description?: string | null;
+  description?: string;
 };
 
 const UsernameMetadataDetailsSchema: z.ZodType<UsernameMetadataDetails, z.ZodTypeDef, object> =
@@ -20,9 +20,9 @@ const UsernameMetadataDetailsSchema: z.ZodType<UsernameMetadataDetails, z.ZodTyp
     id: NonEmptyStringSchema.describe(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
-    description: NonEmptyStringSchema.nullable()
-      .optional()
-      .describe('An optional description of the Username collection.'),
+    description: NonEmptyStringSchema.optional().describe(
+      'An optional description of the Username collection.',
+    ),
   });
 
 export type UsernameMetadata = Eip7572 & {

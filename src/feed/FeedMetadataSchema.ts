@@ -19,7 +19,7 @@ export type FeedMetadataDetails = {
   /**
    * Optional markdown formatted description of the Feed.
    */
-  description?: string | null;
+  description?: string;
 };
 
 const FeedMetadataDetailsSchema: z.ZodType<FeedMetadataDetails, z.ZodTypeDef, object> = z.object({

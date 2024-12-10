@@ -21,7 +21,7 @@ export type UsernameOptions = {
   /**
    * Optional markdown formatted description of the Username.
    */
-  description?: string | null;
+  description?: string;
 
   /**
    * All the {@link Eip7572} fields.

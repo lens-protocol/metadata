@@ -15,7 +15,7 @@ export type SponsorshipMetadataDetails = {
   /**
    * An optional description of the Sponsorship.
    */
-  description?: string | null;
+  description?: string;
 };
 
 const SponsorshipMetadataDetailsSchema: z.ZodType<
@@ -27,9 +27,9 @@ const SponsorshipMetadataDetailsSchema: z.ZodType<
     'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
   ),
   name: NonEmptyStringSchema.describe('The name of the Sponsorship.'),
-  description: NonEmptyStringSchema.nullable()
-    .optional()
-    .describe('An optional description of the Username collection.'),
+  description: NonEmptyStringSchema.optional().describe(
+    'An optional description of the Username collection.',
+  ),
 });
 
 export type SponsorshipMetadata = {

@@ -17,14 +17,7 @@
           "description": "The name of the Sponsorship."
         },
         "description": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString"
-            },
-            {
-              "type": "null"
-            }
-          ],
+          "$ref": "#/$defs/NonEmptyString",
           "description": "An optional description of the Username collection."
         }
       },

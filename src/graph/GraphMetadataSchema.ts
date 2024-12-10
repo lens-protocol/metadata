@@ -19,7 +19,7 @@ export type GraphMetadataDetails = {
   /**
    * Optional markdown formatted description of the graph.
    */
-  description?: string | null;
+  description?: string;
 };
 
 const GraphMetadataDetailsSchema: z.ZodType<GraphMetadataDetails, z.ZodTypeDef, object> = z.object({

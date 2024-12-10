@@ -21,7 +21,7 @@ export type FeedOptions = {
   /**
    * Optional markdown formatted description of the Feed.
    */
-  description?: string | null;
+  description?: string;
 };
 
 /**
