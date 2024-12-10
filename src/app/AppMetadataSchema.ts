@@ -35,6 +35,10 @@ export type AppMetadataDetails = {
    */
   name: string;
   /**
+   * A memorable phrase to capture the essence of the app.
+   */
+  tagline?: string;
+  /**
    * An optional short and detailed description of the app, explaining its features and purpose.
    */
   description?: Markdown;
@@ -72,6 +76,9 @@ export enum Platform {
 
 const AppMetadataDetailsSchema = z.object({
   name: NonEmptyStringSchema.describe('The name of the app.'),
+  tagline: NonEmptyStringSchema.optional().describe(
+    'A memorable phrase to capture the essence of the app.',
+  ),
   description: MarkdownSchema.optional().describe(
     'An optional short and detailed description of the app, explaining its features and purpose.',
   ),
