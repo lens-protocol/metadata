@@ -198,7 +198,7 @@ if (!result.success) {
 
 ### Narrowing types
 
-Every time you have a discriminated union, you can use the discriminant to narrow the type. See few examples below.
+Every time you have a discriminated union, you can use the discriminant to narrow the type. See a few examples below.
 
 #### `PostMetadata`
 
