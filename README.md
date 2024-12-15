@@ -48,7 +48,7 @@ pnpm add @lens-protocol/metadata zod
 ```
 
 > [!NOTE]  
-> `zod` is marked as optional peer dependency, so if you all you need is the JSON Schema definitions, you can install `@lens-protocol/metadata` without `zod`.
+> `zod` is marked as optional peer dependency, so if all you need is the JSON Schema definitions, you can install `@lens-protocol/metadata` without `zod`.
 
 ## Documentation
 
@@ -130,7 +130,7 @@ const invalid = {
 
 #### Post metadata
 
-Post metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc.
+Post metadata schema is a union of all _content_ schemas (e.g. `ArticleMetadata`, `AudioMetadata`, etc.).
 
 Use it to parse the metadata referenced by `contentURI` of Lens Post.
 
@@ -476,7 +476,7 @@ import {
 ```
 
 > [!NOTE]
-> If you find yourself in a position of importing from both `@lens-protocol/metadata` and `@lens-protocol/metadata/legacy` entrypoints in the same module. You can you can use ESModule aliasing to avoid conflicts: `import * as legacy from '@lens-protocol/metadata/legacy'` and then use the legacy types, enums, and parsers under `legacy.*`.
+> If you find yourself in a position of importing from both `@lens-protocol/metadata` and `@lens-protocol/metadata/legacy` entrypoints in the same module. You can use ESModule aliasing to avoid conflicts: `import * as legacy from '@lens-protocol/metadata/legacy'` and then use the legacy types, enums, and parsers under `legacy.*`.
 
 ## JSON schemas
 
