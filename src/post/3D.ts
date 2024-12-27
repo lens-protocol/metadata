@@ -13,12 +13,12 @@ import {
   postWith,
 } from './common';
 import {
-  EncryptableMarkdown,
   Signature,
   URI,
-  EncryptableMarkdownSchema,
+  MarkdownSchema,
   NonEmptyStringSchema,
   UriSchema,
+  Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
 
@@ -86,7 +86,7 @@ export type ThreeDMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -98,7 +98,7 @@ const ThreeDMetadataDetailsSchema: z.ZodType<ThreeDMetadataDetails, z.ZodTypeDef
 
     assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the post'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -38,7 +38,7 @@ const LocaleRegexSchema = z
   .regex(
     localeRegex,
     'Should be a valid Locale Identifier. Expected `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). ' +
-      '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
+    '[language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format.',
   );
 
 /**
@@ -66,52 +66,6 @@ export const LocaleSchema: z.ZodType<Locale, z.ZodTypeDef, unknown> = LocaleRege
   })
   .transform(toLocale);
 
-/**
- * A base64 encoded encrypted string value.
- */
-export type EncryptedString = Brand<string, 'EncryptedValue'>;
-function toEncryptedString(value: string): EncryptedString {
-  return value as EncryptedString;
-}
-
-function allFailed<Input>(
-  results: z.SafeParseReturnType<Input, unknown>[],
-): results is z.SafeParseError<Input>[] {
-  return results.every((r) => !r.success);
-}
-/**
- * @internal
- */
-export const EncryptedStringSchema = z
-  .string()
-  .describe('An encrypted value.')
-  .regex(
-    /^\S+$/, // Approximation of Lit Encrypted value
-    'Should be a valid encrypted value.',
-  )
-  .transform(toEncryptedString);
-
-/**
- * Modifies a schema to accept an encrypted string value as well as its decrypted version.
- */
-function encryptable<T extends string>(schema: z.ZodType<T, z.ZodTypeDef, unknown>) {
-  const options = [schema, EncryptedStringSchema] as const;
-  return z
-    .union(options)
-    .describe('An encrypted value or its decrypted version.')
-    .catch((ctx) => ctx.input as T)
-    .superRefine((val, ctx): val is T | EncryptedString => {
-      const results = options.map((s) => s.safeParse(val));
-
-      if (allFailed(results)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.invalid_union,
-          unionErrors: results.map((r) => r.error),
-        });
-      }
-      return z.NEVER;
-    });
-}
 
 /**
  * @internal
@@ -147,18 +101,6 @@ export function nonEmptySchema(schema: z.ZodString): z.ZodType<string, z.ZodType
  * @internal
  */
 export const NonEmptyStringSchema = nonEmptySchema(z.string());
-
-/**
- * @internal
- */
-export const EncryptableStringSchema = encryptable(NonEmptyStringSchema);
-
-/**
- * An arbitrary string or its encrypted version.
- *
- * For example in the context of a token-gated post, fields of this type are encrypted.
- */
-export type EncryptableString = string | EncryptedString;
 
 /**
  * An arbitrary label.
@@ -212,30 +154,11 @@ export function toMarkdown(value: string): Markdown {
   return value as Markdown;
 }
 
-function markdownSchema(
-  schema: z.ZodType<string, z.ZodTypeDef, unknown>,
-): z.ZodType<Markdown, z.ZodTypeDef, unknown> {
-  return schema.transform(toMarkdown);
-}
-
 /**
  * @internal
  */
-export const EncryptableMarkdownSchema = encryptable(
-  markdownSchema(NonEmptyStringSchema.describe('The content for the post as markdown.')),
-);
-
-/**
- * @internal
- */
-export const MarkdownSchema = NonEmptyStringSchema.transform(toMarkdown);
-
-/**
- * A markdown text or its encrypted version.
- *
- * For example in the context of a token-gated post, fields of this type are encrypted.
- */
-export type EncryptableMarkdown = Markdown | EncryptedString;
+export const MarkdownSchema: z.ZodType<Markdown, z.ZodTypeDef, unknown> = NonEmptyStringSchema
+  .transform(toMarkdown);
 
 /**
  * A Uniform Resource Identifier.
@@ -259,18 +182,6 @@ export const UriSchema = z
   .min(6) // [ar://.]
   .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
   .transform(toUri);
-
-/**
- * @internal
- */
-export const EncryptableUriSchema = encryptable(UriSchema);
-
-/**
- * A URI or its encrypted version.
- *
- * For example in the context of a token-gated post, fields of this type are encrypted.
- */
-export type EncryptableURI = URI | EncryptedString;
 
 const geoUriRegex = /^geo:(-?\d+\.?\d*),(-?\d+\.?\d*)$/;
 
@@ -302,7 +213,7 @@ export const GeoURISchema = z
   .string()
   .describe(
     'A Geographic coordinate as subset of Geo URI (RFC 5870). ' +
-      'Currently only supports the `geo:lat,lng` format.',
+    'Currently only supports the `geo:lat,lng` format.',
   )
   .regex(geoUriRegex, 'Should be a Geo URI. Expected `geo:lat,lng`.')
   .superRefine((val, ctx): val is GeoURI => {
@@ -399,62 +310,50 @@ export function geoPoint(value: GeoURI): GeoPoint {
 }
 
 /**
- * @internal
- */
-export const EncryptableGeoURISchema = encryptable(GeoURISchema);
-
-/**
- * A Geo URI or its encrypted version.
- *
- * For example in the context of a token-gated post, fields of this type are encrypted.
- */
-export type EncryptableGeoURI = GeoURI | EncryptedString;
-
-/**
  * The address of a physical location.
  */
 export type PhysicalAddress = {
   /**
    * The full mailing address formatted for display.
    */
-  formatted?: EncryptableString;
+  formatted?: string;
   /**
    * The street address including house number, street name, P.O. Box,
    * apartment or unit number and extended multi-line address information.
    */
-  streetAddress?: EncryptableString;
+  streetAddress?: string;
   /**
    * The city or locality.
    */
-  locality: EncryptableString;
+  locality: string;
   /**
    * The state or region.
    */
-  region?: EncryptableString;
+  region?: string;
   /**
    * The zip or postal code.
    */
-  postalCode?: EncryptableString;
+  postalCode?: string;
   /**
    * The country name component.
    */
-  country: EncryptableString;
+  country: string;
 };
 /**
  * @internal
  */
 export const PhysicalAddressSchema: z.ZodType<PhysicalAddress, z.ZodTypeDef, object> = z.object({
-  formatted: EncryptableStringSchema.describe(
+  formatted: NonEmptyStringSchema.describe(
     'The full mailing address formatted for display.',
   ).optional(),
-  streetAddress: EncryptableStringSchema.describe(
+  streetAddress: NonEmptyStringSchema.describe(
     'The street address including house number, street name, P.O. Box, ' +
-      'apartment or unit number and extended multi-line address information.',
+    'apartment or unit number and extended multi-line address information.',
   ).optional(),
-  locality: EncryptableStringSchema.describe('The city or locality.'),
-  region: EncryptableStringSchema.describe('The state or region.').optional(),
-  postalCode: EncryptableStringSchema.describe('The zip or postal code.').optional(),
-  country: EncryptableStringSchema.describe('The country name component.'),
+  locality: NonEmptyStringSchema.describe('The city or locality.'),
+  region: NonEmptyStringSchema.describe('The state or region.').optional(),
+  postalCode: NonEmptyStringSchema.describe('The zip or postal code.').optional(),
+  country: NonEmptyStringSchema.describe('The country name component.'),
 });
 
 /**
@@ -471,18 +370,6 @@ export function toDateTime(value: string): DateTime {
  * @internal
  */
 export const DateTimeSchema = z.string().datetime().transform(toDateTime);
-
-/**
- * @internal
- */
-export const EncryptableDateTimeSchema = encryptable(DateTimeSchema);
-
-/**
- * A DateTime or its encrypted version.
- *
- * For example in the context of a token-gated post, fields of this type are encrypted.
- */
-export type EncryptableDateTime = DateTime | EncryptedString;
 
 /**
  * An EVM compatible address.

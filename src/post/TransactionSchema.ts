@@ -10,16 +10,15 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { NftMetadata } from '../tokens/eip721.js';
 import {
   ChainId,
   ChainIdSchema,
-  EncryptableMarkdown,
-  EncryptableMarkdownSchema,
-  EncryptableString,
+  Markdown,
+  MarkdownSchema,
   Signature,
-  EncryptableStringSchema,
+  NonEmptyStringSchema,
 } from '../primitives.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * A way to classify the type of transaction.
@@ -38,7 +37,7 @@ export type TransactionMetadataDetails = PostMetadataCommon & {
   /**
    * The transaction hash.
    */
-  txHash: EncryptableString;
+  txHash: string;
   /**
    * The type of transaction.
    */
@@ -50,7 +49,7 @@ export type TransactionMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -64,13 +63,13 @@ const TransactionMetadataDetailsSchema: z.ZodType<
 > = metadataDetailsWith({
   mainContentFocus: mainContentFocus(PostMainFocus.TRANSACTION),
 
-  txHash: EncryptableStringSchema.describe('The transaction hash.'),
+  txHash: NonEmptyStringSchema.describe('The transaction hash.'),
 
   type: z.nativeEnum(MetadataTransactionType).describe('The type of transaction.'),
 
   chainId: ChainIdSchema.describe('The Chain Id.'),
 
-  content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+  content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
   attachments: AnyMediaSchema.array()
     .min(1)

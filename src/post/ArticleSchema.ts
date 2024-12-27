@@ -11,10 +11,10 @@ import {
   postWith,
 } from './common';
 import {
-  EncryptableMarkdown,
   Signature,
-  EncryptableMarkdownSchema,
   NonEmptyStringSchema,
+  MarkdownSchema,
+  Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
 
@@ -26,7 +26,7 @@ export type ArticleMetadataDetails = PostMetadataCommon & {
   /**
    * Markdown content.
    */
-  content: EncryptableMarkdown;
+  content: Markdown;
   /**
    * The optional article title.
    */
@@ -40,7 +40,7 @@ const ArticleMetadataDetailsSchema: z.ZodType<ArticleMetadataDetails, z.ZodTypeD
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.ARTICLE),
 
-    content: EncryptableMarkdownSchema,
+    content: MarkdownSchema,
 
     title: NonEmptyStringSchema.describe('The optional article title.').optional(),
 

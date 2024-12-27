@@ -13,10 +13,10 @@ import {
   postWith,
 } from './common';
 import {
-  EncryptableMarkdown,
-  EncryptableMarkdownSchema,
   Signature,
   NonEmptyStringSchema,
+  MarkdownSchema,
+  Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
 
@@ -36,7 +36,7 @@ export type AudioMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -51,7 +51,7 @@ const AudioMetadataDetailsSchema: z.ZodType<AudioMetadataDetails, z.ZodTypeDef, 
 
     title: NonEmptyStringSchema.describe('The optional audio title.').optional(),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

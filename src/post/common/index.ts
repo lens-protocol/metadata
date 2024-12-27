@@ -1,9 +1,5 @@
 import { z } from 'zod';
 
-import {
-  PublicationEncryptionStrategy,
-  PublicationEncryptionStrategySchema,
-} from './encryption.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import {
   LocaleSchema,
@@ -16,7 +12,6 @@ import {
 import { nftMetadataSchemaWith } from '../../tokens/eip721.js';
 import { PostMainFocus } from '../PostMainFocus.js';
 
-export * from './encryption.js';
 export * from './license.js';
 export * from './media.js';
 export * from './timezones.js';
@@ -46,12 +41,6 @@ export type PostMetadataCommon = {
    */
   id: string;
   /**
-   * Determine if the post should not be shown in any feed.
-   *
-   * @defaultValue false
-   */
-  hideFromFeed?: boolean;
-  /**
    * A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.
    * Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.
    */
@@ -60,12 +49,6 @@ export type PostMetadataCommon = {
    * The locale of the metadata.
    */
   locale: Locale;
-  /**
-   * The encryption strategy used to encrypt the post.
-   *
-   * If not present, the post is presumed to be unencrypted.
-   */
-  encryptedWith?: PublicationEncryptionStrategy;
   /**
    * An arbitrary list of tags.
    */
@@ -85,8 +68,8 @@ export type PostMetadataCommon = {
 export function metadataDetailsWith<
   Augmentation extends {
     mainContentFocus:
-      | z.ZodLiteral<PostMainFocus>
-      | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
+    | z.ZodLiteral<PostMainFocus>
+    | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
   },
 >(augmentation: Augmentation) {
   return z
@@ -99,12 +82,10 @@ export function metadataDetailsWith<
         .optional()
         .describe(
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
 
       locale: LocaleSchema,
-
-      encryptedWith: PublicationEncryptionStrategySchema.optional(),
 
       tags: z
         .set(TagSchema) // z.set(...) sets uniqueItems: true in generated JSON Schemas

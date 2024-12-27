@@ -10,17 +10,17 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { NftMetadata } from '../tokens/eip721.js';
 import {
-  EncryptableDateTime,
-  EncryptableMarkdown,
-  EncryptableURI,
+  DateTime,
+  Markdown,
+  URI,
   Signature,
-  EncryptableUriSchema,
-  EncryptableDateTimeSchema,
-  EncryptableMarkdownSchema,
+  UriSchema,
+  DateTimeSchema,
+  MarkdownSchema,
   NonEmptyStringSchema,
 } from '../primitives.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type SpaceMetadataDetails = PostMetadataCommon & {
   /**
@@ -34,15 +34,15 @@ export type SpaceMetadataDetails = PostMetadataCommon & {
   /**
    * The space join link.
    */
-  link: EncryptableURI;
+  link: URI;
   /**
    * The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  startsAt: EncryptableDateTime;
+  startsAt: DateTime;
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -55,13 +55,13 @@ export const SpaceMetadataDetailsSchema: z.ZodType<SpaceMetadataDetails, z.ZodTy
 
     title: NonEmptyStringSchema.describe('The space title.'),
 
-    link: EncryptableUriSchema.describe('The space join link.'),
+    link: UriSchema.describe('The space join link.'),
 
-    startsAt: EncryptableDateTimeSchema.describe(
+    startsAt: DateTimeSchema.describe(
       'The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -11,15 +11,14 @@ import {
   postWith,
 } from './common';
 import {
-  EncryptableGeoURI,
-  EncryptableMarkdown,
-  EncryptableMarkdownSchema,
-  EncryptableString,
+  GeoURI,
   PhysicalAddress,
   PhysicalAddressSchema,
   Signature,
-  EncryptableStringSchema,
-  EncryptableGeoURISchema,
+  GeoURISchema,
+  NonEmptyStringSchema,
+  MarkdownSchema,
+  Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
 
@@ -31,11 +30,11 @@ export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
    * Where you checking in from (free form text).
    */
-  location: EncryptableString;
+  location: string;
   /**
    * The optional geographic position of the location.
    */
-  position?: EncryptableGeoURI;
+  position?: GeoURI;
   /**
    * The optional address of the location.
    */
@@ -43,7 +42,7 @@ export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -54,15 +53,15 @@ const CheckingInMetadataDetailsSchema: z.ZodType<CheckingInMetadataDetails, z.Zo
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.CHECKING_IN),
 
-    location: EncryptableStringSchema.describe('Where you checking in from (free form text).'),
+    location: NonEmptyStringSchema.describe('Where you checking in from (free form text).'),
 
-    position: EncryptableGeoURISchema.describe(
+    position: GeoURISchema.describe(
       'The optional geographic position of the location.',
     ).optional(),
 
     address: PhysicalAddressSchema.optional().describe('The optional address of the location.'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

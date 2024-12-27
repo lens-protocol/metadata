@@ -3,8 +3,8 @@ import { z } from 'zod';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import { PostMetadataCommon, mainContentFocus, metadataDetailsWith, postWith } from './common';
+import { Markdown, Signature, MarkdownSchema } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
-import { EncryptableMarkdown, Signature, EncryptableMarkdownSchema } from '../primitives.js';
 
 export type TextOnlyMetadataDetails = PostMetadataCommon & {
   /**
@@ -14,14 +14,14 @@ export type TextOnlyMetadataDetails = PostMetadataCommon & {
   /**
    * The content for the post as markdown.
    */
-  content: EncryptableMarkdown;
+  content: Markdown;
 };
 
 const TextOnlyMetadataDetailsSchema: z.ZodType<TextOnlyMetadataDetails, z.ZodTypeDef, object> =
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.TEXT_ONLY),
 
-    content: EncryptableMarkdownSchema,
+    content: MarkdownSchema,
   });
 
 /**

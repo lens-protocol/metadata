@@ -12,13 +12,13 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common';
-import { NftMetadata } from '../tokens/eip721.js';
 import {
-  EncryptableMarkdown,
+  Markdown,
   Signature,
   NonEmptyStringSchema,
-  EncryptableMarkdownSchema,
+  MarkdownSchema,
 } from '../primitives.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type VideoMetadataDetails = PostMetadataCommon & {
   /**
@@ -36,7 +36,7 @@ export type VideoMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -51,7 +51,7 @@ const VideoMetadataDetailsSchema: z.ZodType<VideoMetadataDetails, z.ZodTypeDef, 
 
     title: NonEmptyStringSchema.describe('The optional video title.').optional(),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

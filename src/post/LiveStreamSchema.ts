@@ -10,17 +10,17 @@ import {
   metadataDetailsWith,
   postWith,
 } from './common/index.js';
-import { NftMetadata } from '../tokens/eip721.js';
 import {
-  EncryptableDateTime,
-  EncryptableMarkdown,
-  EncryptableURI,
+  DateTime,
+  Markdown,
+  URI,
   Signature,
-  EncryptableUriSchema,
+  UriSchema,
   NonEmptyStringSchema,
-  EncryptableDateTimeSchema,
-  EncryptableMarkdownSchema,
+  DateTimeSchema,
+  MarkdownSchema,
 } from '../primitives.js';
+import { NftMetadata } from '../tokens/eip721.js';
 
 export type LiveStreamMetadataDetails = PostMetadataCommon & {
   /**
@@ -34,21 +34,21 @@ export type LiveStreamMetadataDetails = PostMetadataCommon & {
   /**
    * The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  startsAt: EncryptableDateTime;
+  startsAt: DateTime;
   /**
    * The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  endsAt?: EncryptableDateTime;
+  endsAt?: DateTime;
   /**
    * Some livestream platforms have the playback url as a separate url.
    * If not your case make sure `liveUrl` and `playbackUrl` are the same.
    */
-  playbackUrl: EncryptableURI;
+  playbackUrl: URI;
   /**
    * Some livestream platforms have the live url as a separate url.
    * If not your case make sure `liveUrl` and `playbackUrl` are the same.
    */
-  liveUrl: EncryptableURI;
+  liveUrl: URI;
   /**
    * The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.
    *
@@ -67,11 +67,11 @@ export type LiveStreamMetadataDetails = PostMetadataCommon & {
    * }
    * ```
    */
-  checkLiveAPI?: EncryptableURI;
+  checkLiveAPI?: URI;
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -84,29 +84,29 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
 
     title: NonEmptyStringSchema.optional().describe('The livestream title.'),
 
-    startsAt: EncryptableDateTimeSchema.describe(
+    startsAt: DateTimeSchema.describe(
       'The stream start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: EncryptableDateTimeSchema.describe(
+    endsAt: DateTimeSchema.describe(
       'The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)',
     ).optional(),
 
-    playbackUrl: EncryptableUriSchema.describe(
+    playbackUrl: UriSchema.describe(
       'Some livestream platforms have the playback url as a separate url. ' +
-        'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
+      'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
-    liveUrl: EncryptableUriSchema.describe(
+    liveUrl: UriSchema.describe(
       'Some livestream platforms have the live url as a separate url. ' +
-        'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
+      'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
-    checkLiveAPI: EncryptableUriSchema.describe(
+    checkLiveAPI: UriSchema.describe(
       'The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.',
     ).optional(),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

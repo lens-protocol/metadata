@@ -3,7 +3,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute';
 import { AnyMediaSchema } from '../post';
-import { EncryptableStringSchema, NonEmptyStringSchema } from '../primitives';
+import { NonEmptyStringSchema } from '../primitives';
 
 describe(`Given the zod-to-json-schema package`, () => {
   describe('when converting a schema that uses AnyMediaSchema', () => {
@@ -12,7 +12,6 @@ describe(`Given the zod-to-json-schema package`, () => {
         target: 'jsonSchema7',
         definitionPath: '$defs',
         definitions: {
-          EncryptableString: EncryptableStringSchema,
           NonEmptyString: NonEmptyStringSchema,
           MetadataAttribute: MetadataAttributeSchema,
         },

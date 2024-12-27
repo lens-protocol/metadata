@@ -14,20 +14,17 @@ import {
 } from './common';
 import {
   PhysicalAddressSchema,
-  EncryptableUriSchema,
-  EncryptableURI,
-  EncryptableString,
-  EncryptableGeoURI,
+  GeoURI,
   PhysicalAddress,
-  EncryptableDateTime,
-  EncryptableMarkdown,
+  DateTime,
   Signature,
-  EncryptableDateTimeSchema,
+  DateTimeSchema,
   NonEmptyStringSchema,
-  EncryptableMarkdownSchema,
-  EncryptableGeoURISchema,
+  GeoURISchema,
   UriSchema,
-  EncryptedStringSchema,
+  URI,
+  MarkdownSchema,
+  Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
 
@@ -56,14 +53,14 @@ export const SchedulingAdjustmentsSchema: z.ZodType<SchedulingAdjustments, z.Zod
   z.object({
     timezoneId: TimezoneIdSchema.describe(
       'Indicates a reference timezone for the event start and end times. ' +
-        'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
+      'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
     ),
     timezoneOffset: z
       .number()
       .describe(
         'Indicates the reference timezone offset with respect to UTC timezone a the time of event creation. ' +
-          'The difference in minutes between the reference timezone time and UTC time ' +
-          '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
+        'The difference in minutes between the reference timezone time and UTC time ' +
+        '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
       ),
   });
 
@@ -79,11 +76,11 @@ export type EventMetadataDetails = PostMetadataCommon & {
   /*
    * The location of the event.
    */
-  location: EncryptableURI | EncryptableString;
+  location: URI | string;
   /**
    * The geographic position of the event.
    */
-  position?: EncryptableGeoURI;
+  position?: GeoURI;
   /**
    * The address of the event.
    */
@@ -91,11 +88,11 @@ export type EventMetadataDetails = PostMetadataCommon & {
   /**
    * The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  startsAt: EncryptableDateTime;
+  startsAt: DateTime;
   /**
    * The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  endsAt: EncryptableDateTime;
+  endsAt: DateTime;
   /**
    * Captures extra criteria to recompute correctly future start and end times.
    *
@@ -105,11 +102,11 @@ export type EventMetadataDetails = PostMetadataCommon & {
   /**
    * The links you want to include with it.
    */
-  links?: EncryptableURI[];
+  links?: URI[];
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -126,33 +123,32 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
       .union([
         UriSchema.describe('A virtual location.'),
         NonEmptyStringSchema.describe('The event location (free form text).'),
-        EncryptedStringSchema.describe('The encrypted event location.'),
       ])
       .describe('The location of the event.'),
 
-    position: EncryptableGeoURISchema.describe('The geographic position of the event.').optional(),
+    position: GeoURISchema.describe('The geographic position of the event.').optional(),
 
     address: PhysicalAddressSchema.optional().describe('The address of the event.'),
 
-    startsAt: EncryptableDateTimeSchema.describe(
+    startsAt: DateTimeSchema.describe(
       'The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: EncryptableDateTimeSchema.describe(
+    endsAt: DateTimeSchema.describe(
       'The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
-        'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
+      'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: EncryptableUriSchema.array()
+    links: UriSchema.array()
       .min(1)
       .optional()
       .describe('The links you want to include with it.'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

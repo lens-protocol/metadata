@@ -11,11 +11,11 @@ import {
   postWith,
 } from './common';
 import {
-  EncryptableMarkdown,
-  EncryptableURI,
+  URI,
   Signature,
-  EncryptableUriSchema,
-  EncryptableMarkdownSchema,
+  UriSchema,
+  MarkdownSchema,
+  Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
 
@@ -27,11 +27,11 @@ export type EmbedMetadataDetails = PostMetadataCommon & {
   /**
    * The embed URL.
    */
-  embed: EncryptableURI;
+  embed: URI;
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -42,9 +42,9 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.EMBED),
 
-    embed: EncryptableUriSchema.describe('The embed URL.'),
+    embed: UriSchema.describe('The embed URL.'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

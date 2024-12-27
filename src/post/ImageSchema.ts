@@ -13,8 +13,8 @@ import {
   postWith,
 } from './common';
 import {
-  EncryptableMarkdown,
-  EncryptableMarkdownSchema,
+  Markdown,
+  MarkdownSchema,
   NonEmptyStringSchema,
   Signature,
 } from '../primitives.js';
@@ -36,7 +36,7 @@ export type ImageMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -51,7 +51,7 @@ const ImageMetadataDetailsSchema: z.ZodType<ImageMetadataDetails, z.ZodTypeDef, 
 
     title: NonEmptyStringSchema.describe('The optional image title.').optional(),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)
