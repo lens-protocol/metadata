@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.3
+
+### Patch Changes
+
+- eb7f41c: **fix:** updates engines directive.
+
 ## 2.0.0-next.2
 
 ### Patch Changes
