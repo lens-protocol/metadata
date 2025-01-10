@@ -21,7 +21,7 @@ import {
   DateTimeSchema,
   NonEmptyStringSchema,
   GeoURISchema,
-  UriSchema,
+  URISchema,
   URI,
   MarkdownSchema,
   Markdown,
@@ -121,7 +121,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
 
     location: z
       .union([
-        UriSchema.describe('A virtual location.'),
+        URISchema.describe('A virtual location.'),
         NonEmptyStringSchema.describe('The event location (free form text).'),
       ])
       .describe('The location of the event.'),
@@ -143,7 +143,7 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
       'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: UriSchema.array()
+    links: URISchema.array()
       .min(1)
       .optional()
       .describe('The links you want to include with it.'),

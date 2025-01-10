@@ -13,7 +13,7 @@ import {
 import {
   URI,
   Signature,
-  UriSchema,
+  URISchema,
   MarkdownSchema,
   Markdown,
 } from '../primitives.js';
@@ -42,7 +42,7 @@ const EmbedMetadataDetailsSchema: z.ZodType<EmbedMetadataDetails, z.ZodTypeDef, 
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.EMBED),
 
-    embed: UriSchema.describe('The embed URL.'),
+    embed: URISchema.describe('The embed URL.'),
 
     content: MarkdownSchema.describe('Optional markdown content.').optional(),
 

@@ -17,7 +17,7 @@ import {
   URI,
   MarkdownSchema,
   NonEmptyStringSchema,
-  UriSchema,
+  URISchema,
   Markdown,
 } from '../primitives.js';
 import { NftMetadata } from '../tokens/eip721.js';
@@ -61,11 +61,11 @@ export type ThreeDAsset = {
  * @internal
  */
 export const ThreeDAssetSchema: z.ZodType<ThreeDAsset, z.ZodTypeDef, object> = z.object({
-  uri: UriSchema.describe('The URI of the 3D asset zip file.'),
+  uri: URISchema.describe('The URI of the 3D asset zip file.'),
   zipPath: NonEmptyStringSchema.optional().describe(
     'Path in extracted zip. Relative. 3D start point, MUST be 3D file type.',
   ),
-  playerUrl: UriSchema.describe(
+  playerUrl: URISchema.describe(
     'The URL of the recommended web based 3D player to use to view the 3D asset.',
   ),
   format: z.nativeEnum(ThreeDFormat).describe('The 3D format of the asset.'),

@@ -148,10 +148,8 @@ describe(`Given the PostMetadataSchema`, () => {
         · "lens.id": Required
         · "lens.locale": Required
         · "lens.mainContentFocus": Invalid literal value, expected "MINT"
-        · "lens.mintLink": expected to match one of the following groups:
-        		String must contain at least 6 character(s); Should be a valid URI
-        	OR:
-        		Should be a valid encrypted value."
+        · "lens.mintLink": String must contain at least 6 character(s)
+        · "lens.mintLink": Should be a valid URI"
       `);
     });
   });

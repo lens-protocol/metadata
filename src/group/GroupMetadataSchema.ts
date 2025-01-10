@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { GroupMetadataSchemaId } from './GroupMetadataSchemaId';
-import { NonEmptyStringSchema, Signature, SignatureSchema, UriSchema } from '../primitives';
+import { NonEmptyStringSchema, Signature, SignatureSchema, URISchema } from '../primitives';
 
 export type GroupMetadataDetails = {
   /**
@@ -40,8 +40,8 @@ export const GroupMetadataDetailsSchema: z.ZodType<GroupMetadataDetails, z.ZodTy
     description: NonEmptyStringSchema.optional().describe(
       'Optional markdown formatted description of the Group.',
     ),
-    icon: UriSchema.optional().describe("Optional uri of the Group's icon."),
-    coverPicture: UriSchema.optional().describe("Optional uri of the Group's cover picture."),
+    icon: URISchema.optional().describe("Optional uri of the Group's icon."),
+    coverPicture: URISchema.optional().describe("Optional uri of the Group's cover picture."),
   });
 
 export type GroupMetadata = {

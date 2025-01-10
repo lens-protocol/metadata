@@ -13,7 +13,7 @@ import {
 import {
   URI,
   Signature,
-  UriSchema,
+  URISchema,
   Markdown,
   MarkdownSchema,
 } from '../primitives.js';
@@ -42,7 +42,7 @@ const LinkMetadataDetailsSchema: z.ZodType<LinkMetadataDetails, z.ZodTypeDef, ob
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.LINK),
 
-    sharingLink: UriSchema.describe('The sharing link url.'),
+    sharingLink: URISchema.describe('The sharing link url.'),
 
     content: MarkdownSchema.describe('Optional markdown content.').optional(),
 

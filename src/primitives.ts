@@ -170,18 +170,18 @@ export type URI = Brand<string, 'URI'>;
 /**
  * @internal
  */
-export function toUri(value: string): URI {
+function toURI(value: string): URI {
   return value as URI;
 }
 
 /**
  * @internal
  */
-export const UriSchema = z
+export const URISchema = z
   .string({ description: 'A Uniform Resource Identifier.' })
   .min(6) // [ar://.]
   .url({ message: 'Should be a valid URI' }) // reads url() but works well with URIs too and uses format: 'uri' in the JSON schema
-  .transform(toUri);
+  .transform(toURI);
 
 const geoUriRegex = /^geo:(-?\d+\.?\d*),(-?\d+\.?\d*)$/;
 

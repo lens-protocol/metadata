@@ -8,7 +8,7 @@ import {
   SignatureSchema,
   URI,
   NonEmptyStringSchema,
-  UriSchema,
+  URISchema,
   MarkdownSchema,
 } from '../primitives.js';
 
@@ -53,16 +53,16 @@ const AccountMetadataDetailsSchema: z.ZodType<AccountMetadataDetails, z.ZodTypeD
 
       bio: MarkdownSchema.describe('The Account bio as markdown.').optional(),
 
-      picture: UriSchema.describe('The Account picture.').optional(),
+      picture: URISchema.describe('The Account picture.').optional(),
 
-      coverPicture: UriSchema.describe('The Account cover picture.').optional(),
+      coverPicture: URISchema.describe('The Account cover picture.').optional(),
 
       attributes: MetadataAttributeSchema.array()
         .min(1)
         .optional()
         .describe(
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
     },
     { description: 'The Lens specific metadata details.' },

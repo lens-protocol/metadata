@@ -4,14 +4,14 @@ import { MetadataLicenseType, MetadataLicenseTypeSchema } from './license.js';
 import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import {
   URI,
-  UriSchema,
+  URISchema,
   NonEmptyStringSchema,
 } from '../../primitives.js';
 
 function mediaCommonSchema<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
   return z
     .object({
-      item: UriSchema,
+      item: URISchema,
       attributes: MetadataAttributeSchema.array()
         .min(1)
         .describe(
@@ -105,7 +105,7 @@ export type MediaAudio = {
  */
 export const MediaAudioSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio file.' }),
-  cover: UriSchema.optional(),
+  cover: URISchema.optional(),
   duration: z
     .number({ description: 'How long the the audio is in seconds.' })
     .positive()
@@ -117,7 +117,7 @@ export const MediaAudioSchema = mediaCommonSchema({
   genre: NonEmptyStringSchema.describe('The genre of the audio').optional(),
   recordLabel: NonEmptyStringSchema.describe('The record label for the audio.').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio.' }).optional(),
-  lyrics: UriSchema.optional(),
+  lyrics: URISchema.optional(),
 });
 
 /**
@@ -222,7 +222,7 @@ export type MediaVideo = {
 export const MediaVideoSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
   altTag: NonEmptyStringSchema.describe('The alt tag for accessibility').optional(),
-  cover: UriSchema.optional(),
+  cover: URISchema.optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })
     .positive()

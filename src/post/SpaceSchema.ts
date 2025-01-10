@@ -15,7 +15,7 @@ import {
   Markdown,
   URI,
   Signature,
-  UriSchema,
+  URISchema,
   DateTimeSchema,
   MarkdownSchema,
   NonEmptyStringSchema,
@@ -55,7 +55,7 @@ export const SpaceMetadataDetailsSchema: z.ZodType<SpaceMetadataDetails, z.ZodTy
 
     title: NonEmptyStringSchema.describe('The space title.'),
 
-    link: UriSchema.describe('The space join link.'),
+    link: URISchema.describe('The space join link.'),
 
     startsAt: DateTimeSchema.describe(
       'The space start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',

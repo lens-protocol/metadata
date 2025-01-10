@@ -45,7 +45,7 @@ import {
   MetadataIdSchema,
   ContentWarningSchema,
   NonEmptyStringSchema,
-  UriSchema,
+  URISchema,
   MarkdownSchema,
   ModuleMetadataSchema,
   AppMetadataSchema,
@@ -91,7 +91,7 @@ for (const [path, Schema] of schemas) {
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
       Markdown: MarkdownSchema,
-      Uri: UriSchema,
+      URI: URISchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       ChainId: ChainIdSchema,
@@ -138,7 +138,7 @@ for (const [path, Schema] of others) {
     definitionPath: '$defs',
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
-      Uri: UriSchema,
+      URI: URISchema,
       Markdown: MarkdownSchema,
       MetadataAttribute: MetadataAttributeSchema,
     },
@@ -181,7 +181,7 @@ async function generateUmbrellaSchema() {
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
       Markdown: MarkdownSchema,
-      Uri: UriSchema,
+      URI: URISchema,
       MainContentFocus: PostMainFocusSchema,
       Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,

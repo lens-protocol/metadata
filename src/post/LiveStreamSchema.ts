@@ -15,7 +15,7 @@ import {
   Markdown,
   URI,
   Signature,
-  UriSchema,
+  URISchema,
   NonEmptyStringSchema,
   DateTimeSchema,
   MarkdownSchema,
@@ -92,17 +92,17 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
       'The optional stream end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`)',
     ).optional(),
 
-    playbackUrl: UriSchema.describe(
+    playbackUrl: URISchema.describe(
       'Some livestream platforms have the playback url as a separate url. ' +
       'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
-    liveUrl: UriSchema.describe(
+    liveUrl: URISchema.describe(
       'Some livestream platforms have the live url as a separate url. ' +
       'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
-    checkLiveAPI: UriSchema.describe(
+    checkLiveAPI: URISchema.describe(
       'The data cannot be changed so you can put in an API endpoint to know if it is still live or not for clients to be able to check.',
     ).optional(),
 
