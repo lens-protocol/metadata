@@ -22,11 +22,11 @@
           "description": "Optional markdown formatted description of the Group."
         },
         "icon": {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "Optional uri of the Group's icon."
         },
         "coverPicture": {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "Optional uri of the Group's cover picture."
         }
       },
@@ -52,7 +52,7 @@
       "type": "string",
       "minLength": 1
     },
-    "Uri": {
+    "URI": {
       "type": "string",
       "minLength": 6,
       "format": "uri",

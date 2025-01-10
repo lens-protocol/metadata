@@ -14,19 +14,19 @@
       "description": "The symbol of the contract."
     },
     "image": {
-      "$ref": "#/$defs/Uri",
+      "$ref": "#/$defs/URI",
       "description": "A URI pointing to a resource with mime type image/* that represents the contract, typically displayed as a profile picture for the contract."
     },
     "banner_image": {
-      "$ref": "#/$defs/Uri",
+      "$ref": "#/$defs/URI",
       "description": "A URI pointing to a resource with mime type image/* that represents the contract, displayed as a banner image for the contract."
     },
     "featured_image": {
-      "$ref": "#/$defs/Uri",
+      "$ref": "#/$defs/URI",
       "description": "A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section."
     },
     "external_link": {
-      "$ref": "#/$defs/Uri",
+      "$ref": "#/$defs/URI",
       "description": "The external link of the contract."
     },
     "collaborators": {
@@ -77,7 +77,7 @@
       "type": "string",
       "minLength": 1
     },
-    "Uri": {
+    "URI": {
       "type": "string",
       "minLength": 6,
       "format": "uri",
