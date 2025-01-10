@@ -1,12 +1,8 @@
 import { z } from 'zod';
 
-import { MetadataLicenseType, MetadataLicenseTypeSchema } from './license.js';
-import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import {
-  URI,
-  URISchema,
-  NonEmptyStringSchema,
-} from '../../primitives.js';
+import { type MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { NonEmptyStringSchema, type URI, URISchema } from '../../primitives.js';
+import { type MetadataLicenseType, MetadataLicenseTypeSchema } from './license.js';
 
 function mediaCommonSchema<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
   return z
@@ -318,9 +314,9 @@ export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
     const result = schema.safeParse(val);
 
     if (!result.success) {
-      result.error.issues.forEach((issue) => {
+      for (const issue of result.error.issues) {
         ctx.addIssue(issue);
-      });
+      }
     }
 
     return z.NEVER;

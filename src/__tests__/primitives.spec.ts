@@ -1,22 +1,22 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
 import { expectResult } from '../__helpers__/assertions.js';
 import {
-  GeoURISchema,
   DateTimeSchema,
+  GeoURISchema,
+  LocaleSchema,
   geoPoint,
   geoUri,
-  LocaleSchema,
   nonEmptySchema,
 } from '../primitives.js';
 
-describe(`Given the primitives schemas`, () => {
+describe('Given the primitives schemas', () => {
   describe(`when parsing a string with a schema defined with ${nonEmptySchema.name} modifier`, () => {
     const Schema = nonEmptySchema(z.string());
 
     it('then it should preprocess the string trimming all "whitespace" characters', () => {
-      [
+      const whitespaces = [
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#white_space
         '\u0009',
         '\u000B',
@@ -41,13 +41,15 @@ describe(`Given the primitives schemas`, () => {
         '\u202F',
         '\u205F',
         '\u3000',
-      ].forEach((char) => {
+      ];
+
+      for (const char of whitespaces) {
         expect(Schema.parse(`${char}42${char}`)).toBe('42');
-      });
+      }
     });
 
     it('then it should preprocess the string trimming all other invisible unicode characters', () => {
-      [
+      const invisibles = [
         '\u0000', // null character
         '\u0007', // bell character
         '\u000E', // shift in
@@ -57,17 +59,21 @@ describe(`Given the primitives schemas`, () => {
         '\u200B', // zero width space
         '\u200C', // zero width non-joiner Unicode code point
         '\u200D', // zero width joiner Unicode code point
-      ].forEach((char) => {
+      ];
+
+      for (const char of invisibles) {
         expect(Schema.parse(`${char}42${char}`)).toBe('42');
-      });
+      }
     });
   });
 
-  describe(`when parsing a Locale string`, () => {
+  describe('when parsing a Locale string', () => {
     it('then it should validate typical locale strings in the format `<language>-<region>`', () => {
-      ['en', 'en-GB', 'it', 'it-IT', `es`].forEach((value) => {
+      const locales = ['en', 'en-GB', 'it', 'it-IT', 'es'];
+
+      for (const value of locales) {
         expectResult(() => LocaleSchema.safeParse(value)).toEqual(value);
-      });
+      }
     });
 
     it('then it should discard discard `region` defined as three-character', () => {
@@ -90,15 +96,15 @@ describe(`Given the primitives schemas`, () => {
     });
   });
 
-  describe(`when parsing a datetime value`, () => {
-    it(`then it should support ISO 8601 UTC datetime strings`, () => {
+  describe('when parsing a datetime value', () => {
+    it('then it should support ISO 8601 UTC datetime strings', () => {
       expectResult(() => DateTimeSchema.safeParse('2023-05-16T18:43:35Z')).toMatchInlineSnapshot(
         `"2023-05-16T18:43:35Z"`,
       );
     });
   });
 
-  describe(`when parsing a Geo URI value`, () => {
+  describe('when parsing a Geo URI value', () => {
     it(`then it should ensure it's a Geo URI in the the 'geo:lat,lng' format`, () => {
       expectResult(() => GeoURISchema.safeParse(' ')).toMatchInlineSnapshot(`
         "fix the following issues
@@ -127,7 +133,7 @@ describe(`Given the primitives schemas`, () => {
   });
 
   describe(`when using the "${geoPoint.name}" helper`, () => {
-    it(`then it should create a GeoPoint from a valid Geo URI`, () => {
+    it('then it should create a GeoPoint from a valid Geo URI', () => {
       expect(geoPoint('geo:42.42,-42.42')).toMatchInlineSnapshot(`
         {
           "lat": 42.42,
@@ -140,27 +146,27 @@ describe(`Given the primitives schemas`, () => {
   describe(`when using the "${geoUri.name}" helper`, () => {
     it('then it should throw if the latitude is out of range', () => {
       expect(() => geoUri({ lat: -90.0000001, lng: 0 })).toThrowErrorMatchingInlineSnapshot(`
-        "fix the following issues
-        · "lat": Number must be greater than or equal to -90"
+        [InvariantError: fix the following issues
+        · "lat": Number must be greater than or equal to -90]
       `);
       expect(() => geoUri({ lat: 90.0000001, lng: 0 })).toThrowErrorMatchingInlineSnapshot(`
-        "fix the following issues
-        · "lat": Number must be less than or equal to 90"
+        [InvariantError: fix the following issues
+        · "lat": Number must be less than or equal to 90]
       `);
     });
 
     it('then it should throw if the longitude is out of range', () => {
       expect(() => geoUri({ lat: 0, lng: -180.0000001 })).toThrowErrorMatchingInlineSnapshot(`
-        "fix the following issues
-        · "lng": Number must be greater than or equal to -180"
+        [InvariantError: fix the following issues
+        · "lng": Number must be greater than or equal to -180]
       `);
       expect(() => geoUri({ lat: 0, lng: 180.0000001 })).toThrowErrorMatchingInlineSnapshot(`
-        "fix the following issues
-        · "lng": Number must be less than or equal to 180"
+        [InvariantError: fix the following issues
+        · "lng": Number must be less than or equal to 180]
       `);
     });
 
-    it(`then it should return a valid Geo URI`, () => {
+    it('then it should return a valid Geo URI', () => {
       expect(geoUri({ lat: 42.42, lng: -42.42 })).toMatchInlineSnapshot(`"geo:42.42,-42.42"`);
     });
   });

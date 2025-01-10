@@ -1,11 +1,11 @@
-import { describe, it } from '@jest/globals';
+import { describe, it } from 'vitest';
 
 import { expectResult } from '../../__helpers__/assertions.js';
 import { AccountMetadataSchema } from '../AccountMetadataSchema.js';
 
-describe(`Given the AccountMetadataSchema`, () => {
-  describe(`when parsing an invalid object`, () => {
-    it(`then it should flag the missing fields`, () => {
+describe('Given the AccountMetadataSchema', () => {
+  describe('when parsing an invalid object', () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         AccountMetadataSchema.safeParse({
           $schema: 'https://json-schemas.lens.dev/account/1.0.0.json',

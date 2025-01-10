@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Given the "account" metadata builder when using it should return a valid AccountMetadata 1`] = `
+exports[`Given the "account" metadata builder > when using it > should return a valid AccountMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/account/1.0.0.json",
   "lens": {

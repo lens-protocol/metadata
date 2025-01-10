@@ -1,11 +1,11 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute';
 import { AnyMediaSchema } from '../post';
 import { NonEmptyStringSchema, URISchema } from '../primitives';
 
-describe(`Given the zod-to-json-schema package`, () => {
+describe('Given the zod-to-json-schema package', () => {
   describe('when converting a schema that uses AnyMediaSchema', () => {
     it('should avoid to cross reference media attributes but use shared definitions', () => {
       const jsonSchema = zodToJsonSchema(AnyMediaSchema, {

@@ -1,11 +1,10 @@
-/* eslint-disable no-case-declarations */
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import * as latest from '../post';
-import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
+import { LocaleSchema, type Markdown, NonEmptyStringSchema, toMarkdown } from '../primitives.js';
 import { nftMetadataSchemaWith } from '../tokens/eip721.js';
-import { Brand, hasTwoOrMore } from '../utils.js';
+import { type Brand, hasTwoOrMore } from '../utils.js';
 
 export { NftMetadataAttributeDisplayType } from '../tokens/eip721.js';
 export type { NftMetadataAttribute, NftMetadata } from '../tokens/eip721.js';
@@ -623,27 +622,29 @@ export const PublicationMetadataSchema: z.ZodType<PublicationMetadata, z.ZodType
   .passthrough()
   .transform((data, ctx) => {
     switch (data.version) {
-      case PublicationMetadataVersion.V1:
+      case PublicationMetadataVersion.V1: {
         const v1Result = PublicationMetadataV1Schema.safeParse(data);
 
         if (!v1Result.success) {
-          v1Result.error.issues.forEach((issue) => {
+          for (const issue of v1Result.error.issues) {
             ctx.addIssue(issue);
-          });
+          }
           return z.NEVER;
         }
         return v1Result.data;
+      }
 
-      case PublicationMetadataVersion.V2:
+      case PublicationMetadataVersion.V2: {
         const v2Result = PublicationMetadataV2Schema.safeParse(data);
 
         if (!v2Result.success) {
-          v2Result.error.issues.forEach((issue) => {
+          for (const issue of v2Result.error.issues) {
             ctx.addIssue(issue);
-          });
+          }
           return z.NEVER;
         }
 
         return v2Result.data;
+      }
     }
   });

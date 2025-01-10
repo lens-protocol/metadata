@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EvmAddress, EvmAddressSchema, URI, URISchema } from '../primitives';
+import { type EvmAddress, EvmAddressSchema, type URI, URISchema } from '../primitives';
 
 export type Eip7572 = {
   name: string;

@@ -1,15 +1,15 @@
 import { z } from 'zod';
 
-import { AppMetadataSchemaId } from './AppMetadataSchemaId';
 import {
-  Markdown,
-  NonEmptyStringSchema,
-  URI,
+  type Markdown,
   MarkdownSchema,
-  URISchema,
+  NonEmptyStringSchema,
+  type Signature,
   SignatureSchema,
-  Signature,
+  type URI,
+  URISchema,
 } from '../primitives';
+import { AppMetadataSchemaId } from './AppMetadataSchemaId';
 
 /**
  * The app metadata

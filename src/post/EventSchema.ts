@@ -1,32 +1,32 @@
 import { z } from 'zod';
 
+import {
+  type DateTime,
+  DateTimeSchema,
+  type GeoURI,
+  GeoURISchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type PhysicalAddress,
+  PhysicalAddressSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
-  TimezoneId,
+  type PostMetadataCommon,
+  type TimezoneId,
   TimezoneIdSchema,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  PhysicalAddressSchema,
-  GeoURI,
-  PhysicalAddress,
-  DateTime,
-  Signature,
-  DateTimeSchema,
-  NonEmptyStringSchema,
-  GeoURISchema,
-  URISchema,
-  URI,
-  MarkdownSchema,
-  Markdown,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * An object intended to help with future events scheduling adjustments.
@@ -53,14 +53,14 @@ export const SchedulingAdjustmentsSchema: z.ZodType<SchedulingAdjustments, z.Zod
   z.object({
     timezoneId: TimezoneIdSchema.describe(
       'Indicates a reference timezone for the event start and end times. ' +
-      'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
+        'If physical event, you could use the timezone of the event location. If virtual event, the timezone of the event organizer.',
     ),
     timezoneOffset: z
       .number()
       .describe(
         'Indicates the reference timezone offset with respect to UTC timezone a the time of event creation. ' +
-        'The difference in minutes between the reference timezone time and UTC time ' +
-        '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
+          'The difference in minutes between the reference timezone time and UTC time ' +
+          '(e.g. UTC+2 would be -120, UTC-5 would be 300, UTC would be 0).',
       ),
   });
 
@@ -134,19 +134,14 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
       'The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: DateTimeSchema.describe(
-      'The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
-    ),
+    endsAt: DateTimeSchema.describe('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
-      'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
+        'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: URISchema.array()
-      .min(1)
-      .optional()
-      .describe('The links you want to include with it.'),
+    links: URISchema.array().min(1).optional().describe('The links you want to include with it.'),
 
     content: MarkdownSchema.describe('Optional markdown content.').optional(),
 

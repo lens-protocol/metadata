@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
+import { NonEmptyStringSchema, type Signature, SignatureSchema, URISchema } from '../primitives';
 import { GroupMetadataSchemaId } from './GroupMetadataSchemaId';
-import { NonEmptyStringSchema, Signature, SignatureSchema, URISchema } from '../primitives';
 
 export type GroupMetadataDetails = {
   /**

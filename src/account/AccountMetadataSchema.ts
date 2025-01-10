@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
-import { AccountSchemaId } from './AccountSchemaId.js';
-import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
+import { type MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
 import {
-  Markdown,
-  Signature,
-  SignatureSchema,
-  URI,
-  NonEmptyStringSchema,
-  URISchema,
+  type Markdown,
   MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+  SignatureSchema,
+  type URI,
+  URISchema,
 } from '../primitives.js';
+import { AccountSchemaId } from './AccountSchemaId.js';
 
 export type AccountMetadataDetails = {
   /**
@@ -62,7 +62,7 @@ const AccountMetadataDetailsSchema: z.ZodType<AccountMetadataDetails, z.ZodTypeD
         .optional()
         .describe(
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
     },
     { description: 'The Lens specific metadata details.' },

@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
+import { NonEmptyStringSchema, type Signature, SignatureSchema } from '../primitives';
+import { type Eip7572, eip7572SchemaWith } from '../tokens/eip7572';
 import { UsernameMetadataSchemaId } from './UsernameMetadataSchemaId';
-import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
-import { Eip7572, eip7572SchemaWith } from '../tokens/eip7572';
 
 export type UsernameMetadataDetails = {
   /**

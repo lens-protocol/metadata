@@ -1,24 +1,24 @@
 import { z } from 'zod';
 
+import {
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  MediaVideo,
+  type MediaVideo,
   MediaVideoSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  Markdown,
-  Signature,
-  NonEmptyStringSchema,
-  MarkdownSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type VideoMetadataDetails = PostMetadataCommon & {
   /**

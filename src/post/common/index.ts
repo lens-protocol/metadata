@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
-import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { type MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import {
+  type Locale,
   LocaleSchema,
-  TagSchema,
   NonEmptyStringSchema,
   SignatureSchema,
-  Locale,
-  Tag,
+  type Tag,
+  TagSchema,
 } from '../../primitives.js';
 import { nftMetadataSchemaWith } from '../../tokens/eip721.js';
-import { PostMainFocus } from '../PostMainFocus.js';
+import type { PostMainFocus } from '../PostMainFocus.js';
 
 export * from './license.js';
 export * from './media.js';
@@ -68,8 +68,8 @@ export type PostMetadataCommon = {
 export function metadataDetailsWith<
   Augmentation extends {
     mainContentFocus:
-    | z.ZodLiteral<PostMainFocus>
-    | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
+      | z.ZodLiteral<PostMainFocus>
+      | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
   },
 >(augmentation: Augmentation) {
   return z
@@ -82,7 +82,7 @@ export function metadataDetailsWith<
         .optional()
         .describe(
           'A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. ' +
-          'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
+            'Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.',
         ),
 
       locale: LocaleSchema,
@@ -107,9 +107,9 @@ export function metadataDetailsWith<
             return z.NEVER;
           }
 
-          result.error.issues.forEach((issue) => {
+          for (const issue of result.error.issues) {
             ctx.addIssue(issue);
-          });
+          }
         })
         .transform((value) => [...value]) // type coercion
         .optional()

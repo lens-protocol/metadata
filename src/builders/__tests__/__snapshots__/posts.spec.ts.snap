@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Given the post metadata builders when using the "article" builder should return a valid TextOnlyMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "article" builder > should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/article/3.0.0.json",
   "lens": {
@@ -36,7 +36,7 @@ exports[`Given the post metadata builders when using the "article" builder shoul
 }
 `;
 
-exports[`Given the post metadata builders when using the "audio" builder should return a valid AudioMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "audio" builder > should return a valid AudioMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/audio/3.0.0.json",
   "lens": {
@@ -66,7 +66,7 @@ exports[`Given the post metadata builders when using the "audio" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "checkingIn" builder should return a valid CheckingInMetadata for Geo URI location 1`] = `
+exports[`Given the post metadata builders > when using the "checkingIn" builder > should return a valid CheckingInMetadata for Geo URI location 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/checking-in/3.0.0.json",
   "lens": {
@@ -79,7 +79,7 @@ exports[`Given the post metadata builders when using the "checkingIn" builder sh
 }
 `;
 
-exports[`Given the post metadata builders when using the "checkingIn" builder should return a valid CheckingInMetadata for PhysicalAddress 1`] = `
+exports[`Given the post metadata builders > when using the "checkingIn" builder > should return a valid CheckingInMetadata for PhysicalAddress 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/checking-in/3.0.0.json",
   "lens": {
@@ -98,7 +98,7 @@ exports[`Given the post metadata builders when using the "checkingIn" builder sh
 }
 `;
 
-exports[`Given the post metadata builders when using the "embed" builder should return a valid EmbedMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "embed" builder > should return a valid EmbedMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/embed/3.0.0.json",
   "lens": {
@@ -110,7 +110,7 @@ exports[`Given the post metadata builders when using the "embed" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "event" builder should return a valid EventMetadata for Geo URI location 1`] = `
+exports[`Given the post metadata builders > when using the "event" builder > should return a valid EventMetadata for Geo URI location 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/event/3.0.0.json",
   "lens": {
@@ -129,7 +129,7 @@ exports[`Given the post metadata builders when using the "event" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "event" builder should return a valid EventMetadata for PhysicalAddress 1`] = `
+exports[`Given the post metadata builders > when using the "event" builder > should return a valid EventMetadata for PhysicalAddress 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/event/3.0.0.json",
   "lens": {
@@ -150,7 +150,7 @@ exports[`Given the post metadata builders when using the "event" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "image" builder should return a valid ImageMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "image" builder > should return a valid ImageMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/image/3.0.0.json",
   "lens": {
@@ -182,7 +182,7 @@ exports[`Given the post metadata builders when using the "image" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "link" builder should return a valid LinkMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "link" builder > should return a valid LinkMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/link/3.0.0.json",
   "lens": {
@@ -195,7 +195,7 @@ exports[`Given the post metadata builders when using the "link" builder should r
 }
 `;
 
-exports[`Given the post metadata builders when using the "liveStream" builder should return a valid LiveStreamMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "liveStream" builder > should return a valid LiveStreamMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/livestream/3.0.0.json",
   "lens": {
@@ -210,7 +210,7 @@ exports[`Given the post metadata builders when using the "liveStream" builder sh
 }
 `;
 
-exports[`Given the post metadata builders when using the "liveStream" builder when using the "mint" builder should return a valid MintMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "liveStream" builder > when using the "mint" builder > should return a valid MintMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/mint/3.0.0.json",
   "lens": {
@@ -223,7 +223,7 @@ exports[`Given the post metadata builders when using the "liveStream" builder wh
 }
 `;
 
-exports[`Given the post metadata builders when using the "shortVideo" builder should return a valid VideoMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "shortVideo" builder > should return a valid VideoMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/video/3.0.0.json",
   "lens": {
@@ -243,7 +243,7 @@ exports[`Given the post metadata builders when using the "shortVideo" builder sh
 }
 `;
 
-exports[`Given the post metadata builders when using the "space" builder should return a valid SpaceMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "space" builder > should return a valid SpaceMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/space/3.0.0.json",
   "lens": {
@@ -257,7 +257,7 @@ exports[`Given the post metadata builders when using the "space" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "story" builder should return a valid StoryMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "story" builder > should return a valid StoryMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/story/3.0.0.json",
   "lens": {
@@ -275,7 +275,7 @@ exports[`Given the post metadata builders when using the "story" builder should 
 }
 `;
 
-exports[`Given the post metadata builders when using the "textOnly" builder should return a valid TextOnlyMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "textOnly" builder > should return a valid TextOnlyMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/text-only/3.0.0.json",
   "lens": {
@@ -287,7 +287,7 @@ exports[`Given the post metadata builders when using the "textOnly" builder shou
 }
 `;
 
-exports[`Given the post metadata builders when using the "threeD" builder should return a valid ThreeDMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "threeD" builder > should return a valid ThreeDMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/3d/3.0.0.json",
   "lens": {
@@ -311,7 +311,7 @@ exports[`Given the post metadata builders when using the "threeD" builder should
 }
 `;
 
-exports[`Given the post metadata builders when using the "transaction" builder should return a valid TransactionMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "transaction" builder > should return a valid TransactionMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/transaction/3.0.0.json",
   "lens": {
@@ -326,7 +326,7 @@ exports[`Given the post metadata builders when using the "transaction" builder s
 }
 `;
 
-exports[`Given the post metadata builders when using the "video" builder should return a valid VideoMetadata 1`] = `
+exports[`Given the post metadata builders > when using the "video" builder > should return a valid VideoMetadata 1`] = `
 {
   "$schema": "https://json-schemas.lens.dev/posts/video/3.0.0.json",
   "lens": {

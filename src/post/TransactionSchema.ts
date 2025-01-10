@@ -1,24 +1,24 @@
 import { z } from 'zod';
 
+import {
+  type ChainId,
+  ChainIdSchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  ChainId,
-  ChainIdSchema,
-  Markdown,
-  MarkdownSchema,
-  Signature,
-  NonEmptyStringSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * A way to classify the type of transaction.

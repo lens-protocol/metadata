@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { PostMainFocus, PostSchemaId, TextOnlyMetadata, TextOnlySchema } from '../index.js';
+import { PostMainFocus, PostSchemaId, type TextOnlyMetadata, TextOnlySchema } from '../index.js';
 
 export function mockTextOnlyMetadata(): TextOnlyMetadata {
   return TextOnlySchema.parse({

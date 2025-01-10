@@ -1,17 +1,17 @@
 import { z } from 'zod';
 
+import { type Markdown, MarkdownSchema, type Signature } from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import { Markdown, MarkdownSchema, Signature } from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type StoryMetadataDetails = PostMetadataCommon & {
   /**

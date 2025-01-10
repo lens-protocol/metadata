@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
+import {
+  type DateTime,
+  DateTimeSchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common/index.js';
-import {
-  DateTime,
-  Markdown,
-  URI,
-  Signature,
-  URISchema,
-  NonEmptyStringSchema,
-  DateTimeSchema,
-  MarkdownSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type LiveStreamMetadataDetails = PostMetadataCommon & {
   /**
@@ -94,12 +94,12 @@ const LiveStreamMetadataDetailsSchema: z.ZodType<LiveStreamMetadataDetails, z.Zo
 
     playbackUrl: URISchema.describe(
       'Some livestream platforms have the playback url as a separate url. ' +
-      'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
+        'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
     liveUrl: URISchema.describe(
       'Some livestream platforms have the live url as a separate url. ' +
-      'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
+        'If not your case make sure `liveUrl` and `playbackUrl` are the same.',
     ),
 
     checkLiveAPI: URISchema.describe(

@@ -1,27 +1,28 @@
-import { describe, it } from '@jest/globals';
+import { describe, it } from 'vitest';
 
 import { expectResult } from '../../__helpers__/assertions.js';
 import { PublicationMainFocus, PublicationMetadataSchema } from '../index.js';
 
-describe(`Given the PublicationMetadataSchema`, () => {
-  describe(`when parsing an empty object`, () => {
-    it(`then it should complain about the missing version`, () => {
+describe('Given the PublicationMetadataSchema', () => {
+  describe('when parsing an empty object', () => {
+    it('then it should complain about the missing version', () => {
       expectResult(() => PublicationMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Required"
       `);
     });
 
-    it(`then it should complain about invalid version`, () => {
-      expectResult(() => PublicationMetadataSchema.safeParse({ version: '42' }))
-        .toMatchInlineSnapshot(`
+    it('then it should complain about invalid version', () => {
+      expectResult(() =>
+        PublicationMetadataSchema.safeParse({ version: '42' }),
+      ).toMatchInlineSnapshot(`
         "fix the following issues
         · "version": Invalid enum value. Expected '1.0.0' | '2.0.0', received '42'"
       `);
     });
   });
 
-  describe(`when parsing an invalid v1 object`, () => {
+  describe('when parsing an invalid v1 object', () => {
     it('then it should pass on expected nullable fields', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
@@ -68,7 +69,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       });
     });
 
-    it(`then it should check at least one between content, image, and media is present`, () => {
+    it('then it should check at least one between content, image, and media is present', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '1.0.0',
@@ -145,8 +146,8 @@ describe(`Given the PublicationMetadataSchema`, () => {
     });
   });
 
-  describe(`when parsing an invalid v2 object`, () => {
-    it(`then it should complain about missing basic mandatory fields`, () => {
+  describe('when parsing an invalid v2 object', () => {
+    it('then it should complain about missing basic mandatory fields', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',
@@ -1470,7 +1471,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       });
     });
 
-    it(`then should produce metadata that pass validation against the schema`, () => {
+    it('then should produce metadata that pass validation against the schema', () => {
       const metadata = PublicationMetadataSchema.parse({
         version: '2.0.0',
         metadata_id: 'd4c19b76-736e-4d41-8d3c-4874b80fdd78',
@@ -1493,7 +1494,7 @@ describe(`Given the PublicationMetadataSchema`, () => {
       });
     });
 
-    it(`then should not cause any issue to other apps`, () => {
+    it('then should not cause any issue to other apps', () => {
       expectResult(() =>
         PublicationMetadataSchema.safeParse({
           version: '2.0.0',

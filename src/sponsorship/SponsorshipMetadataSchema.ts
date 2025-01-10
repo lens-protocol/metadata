@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
+import { NonEmptyStringSchema, type Signature, SignatureSchema } from '../primitives';
 import { SponsorshipMetadataSchemaId } from './SponsorshipMetadataSchemaId';
-import { NonEmptyStringSchema, Signature, SignatureSchema } from '../primitives';
 
 export type SponsorshipMetadataDetails = {
   /**

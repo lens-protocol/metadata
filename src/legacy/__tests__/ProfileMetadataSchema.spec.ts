@@ -1,17 +1,17 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 
 import { expectResult } from '../../__helpers__/assertions.js';
 import { ProfileMetadataSchema } from '../index.js';
 
-describe(`Given the ProfileMetadataSchema`, () => {
-  describe(`when parsing an invalid object`, () => {
-    it(`then it should default missing fields`, () => {
+describe('Given the ProfileMetadataSchema', () => {
+  describe('when parsing an invalid object', () => {
+    it('then it should default missing fields', () => {
       expectResult(() => ProfileMetadataSchema.safeParse({})).toMatchSnapshot({
         metadata_id: expect.any(String),
       });
     });
 
-    it(`then it should handle attributes in a backwards compatible way`, () => {
+    it('then it should handle attributes in a backwards compatible way', () => {
       expectResult(() =>
         ProfileMetadataSchema.safeParse({
           version: '1.0.0',

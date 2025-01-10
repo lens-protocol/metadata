@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
+import {
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  mainContentFocus,
-  PostMetadataCommon,
-  metadataDetailsWith,
-  MetadataLicenseType,
+  type MetadataLicenseType,
   MetadataLicenseTypeSchema,
+  type PostMetadataCommon,
+  mainContentFocus,
+  metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  Signature,
-  URI,
-  MarkdownSchema,
-  NonEmptyStringSchema,
-  URISchema,
-  Markdown,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * The 3D format type.

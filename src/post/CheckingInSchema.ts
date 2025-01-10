@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
+import {
+  type GeoURI,
+  GeoURISchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type PhysicalAddress,
+  PhysicalAddressSchema,
+  type Signature,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  GeoURI,
-  PhysicalAddress,
-  PhysicalAddressSchema,
-  Signature,
-  GeoURISchema,
-  NonEmptyStringSchema,
-  MarkdownSchema,
-  Markdown,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
@@ -55,9 +55,7 @@ const CheckingInMetadataDetailsSchema: z.ZodType<CheckingInMetadataDetails, z.Zo
 
     location: NonEmptyStringSchema.describe('Where you checking in from (free form text).'),
 
-    position: GeoURISchema.describe(
-      'The optional geographic position of the location.',
-    ).optional(),
+    position: GeoURISchema.describe('The optional geographic position of the location.').optional(),
 
     address: PhysicalAddressSchema.optional().describe('The optional address of the location.'),
 

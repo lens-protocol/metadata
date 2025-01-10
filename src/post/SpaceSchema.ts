@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
+import {
+  type DateTime,
+  DateTimeSchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  DateTime,
-  Markdown,
-  URI,
-  Signature,
-  URISchema,
-  DateTimeSchema,
-  MarkdownSchema,
-  NonEmptyStringSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type SpaceMetadataDetails = PostMetadataCommon & {
   /**

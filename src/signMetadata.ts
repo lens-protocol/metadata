@@ -1,7 +1,7 @@
 import stringify from 'json-stable-stringify';
 
-import { AccountMetadata } from './account';
-import { PostMetadata } from './post';
+import type { AccountMetadata } from './account';
+import type { PostMetadata } from './post';
 
 /**
  * Returns a deterministic message from the `metadata.lens` object.
