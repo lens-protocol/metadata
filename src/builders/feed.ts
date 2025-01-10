@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
+import { type FeedMetadata, FeedMetadataSchema, FeedMetadataSchemaId } from '../feed';
 import { evaluate } from './ValidationError';
-import { FeedMetadataSchemaId, FeedMetadata, FeedMetadataSchema } from '../feed';
 
 export type FeedOptions = {
   /**

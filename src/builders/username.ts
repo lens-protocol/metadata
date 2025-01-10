@@ -1,9 +1,13 @@
 import { v4 } from 'uuid';
 
+import type { Eip7572 } from '../tokens/eip7572';
+import {
+  type UsernameMetadata,
+  UsernameMetadataSchema,
+  UsernameMetadataSchemaId,
+} from '../username';
 import { evaluate } from './ValidationError';
-import { RecursiveUnbrand } from './utils';
-import { Eip7572 } from '../tokens/eip7572';
-import { UsernameMetadataSchemaId, UsernameMetadata, UsernameMetadataSchema } from '../username';
+import type { RecursiveUnbrand } from './utils';
 
 /**
  * @private

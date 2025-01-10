@@ -1,24 +1,24 @@
 import { z } from 'zod';
 
+import {
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  MediaImage,
+  type MediaImage,
   MediaImageSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  EncryptableMarkdown,
-  EncryptableMarkdownSchema,
-  NonEmptyStringSchema,
-  Signature,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type ImageMetadataDetails = PostMetadataCommon & {
   /**
@@ -36,7 +36,7 @@ export type ImageMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -51,7 +51,7 @@ const ImageMetadataDetailsSchema: z.ZodType<ImageMetadataDetails, z.ZodTypeDef, 
 
     title: NonEmptyStringSchema.describe('The optional image title.').optional(),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

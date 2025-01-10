@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
+import { type GroupMetadata, GroupMetadataSchema, GroupMetadataSchemaId } from '../group';
 import { evaluate } from './ValidationError';
-import { GroupMetadataSchemaId, GroupMetadata, GroupMetadataSchema } from '../group';
 
 export type GroupOptions = {
   /**

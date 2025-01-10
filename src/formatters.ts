@@ -1,7 +1,7 @@
 // Heavily customized and simplified version of https://www.npmjs.com/package/zod-validation-error
 import { z } from 'zod';
 
-import { NonEmptyArray, hasAtLeastOne, hasTwoOrMore } from './utils.js';
+import { type NonEmptyArray, hasAtLeastOne, hasTwoOrMore } from './utils.js';
 
 const maxIssuesInMessage = 99;
 const issueSeparator = '\n';
@@ -24,17 +24,17 @@ function formatPath(path: NonEmptyArray<string | number>): string {
   return path.reduce<string>((acc, item) => {
     // handle numeric indices
     if (typeof item === 'number') {
-      return acc + '[' + item.toString() + ']';
+      return `${acc}[${item.toString()}]`;
     }
 
     // handle quoted values
     if (item.includes('"')) {
-      return acc + '["' + escapeQuotes(item) + '"]';
+      return `${acc}["${escapeQuotes(item)}"]`;
     }
 
     // handle special characters
     if (!identifierRegex.test(item)) {
-      return acc + '["' + item + '"]';
+      return `${acc}["${item}"]`;
     }
 
     // handle normal values

@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
+import {
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  mainContentFocus,
-  PostMetadataCommon,
-  metadataDetailsWith,
-  MetadataLicenseType,
+  type MetadataLicenseType,
   MetadataLicenseTypeSchema,
+  type PostMetadataCommon,
+  mainContentFocus,
+  metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  EncryptableMarkdown,
-  Signature,
-  URI,
-  EncryptableMarkdownSchema,
-  NonEmptyStringSchema,
-  UriSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * The 3D format type.
@@ -61,11 +61,11 @@ export type ThreeDAsset = {
  * @internal
  */
 export const ThreeDAssetSchema: z.ZodType<ThreeDAsset, z.ZodTypeDef, object> = z.object({
-  uri: UriSchema.describe('The URI of the 3D asset zip file.'),
+  uri: URISchema.describe('The URI of the 3D asset zip file.'),
   zipPath: NonEmptyStringSchema.optional().describe(
     'Path in extracted zip. Relative. 3D start point, MUST be 3D file type.',
   ),
-  playerUrl: UriSchema.describe(
+  playerUrl: URISchema.describe(
     'The URL of the recommended web based 3D player to use to view the 3D asset.',
   ),
   format: z.nativeEnum(ThreeDFormat).describe('The 3D format of the asset.'),
@@ -86,7 +86,7 @@ export type ThreeDMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -98,7 +98,7 @@ const ThreeDMetadataDetailsSchema: z.ZodType<ThreeDMetadataDetails, z.ZodTypeDef
 
     assets: ThreeDAssetSchema.array().min(1).describe('The 3D items for the post'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

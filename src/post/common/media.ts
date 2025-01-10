@@ -1,18 +1,13 @@
 import { z } from 'zod';
 
-import { MetadataLicenseType, MetadataLicenseTypeSchema } from './license.js';
-import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import {
-  EncryptableString,
-  EncryptableURI,
-  EncryptableUriSchema,
-  EncryptableStringSchema,
-} from '../../primitives.js';
+import { type MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
+import { NonEmptyStringSchema, type URI, URISchema } from '../../primitives.js';
+import { type MetadataLicenseType, MetadataLicenseTypeSchema } from './license.js';
 
 function mediaCommonSchema<Augmentation extends z.ZodRawShape>(augmentation: Augmentation) {
   return z
     .object({
-      item: EncryptableUriSchema,
+      item: URISchema,
       attributes: MetadataAttributeSchema.array()
         .min(1)
         .describe(
@@ -53,7 +48,7 @@ export type MediaAudio = {
   /**
    * The location of the file.
    */
-  item: EncryptableURI;
+  item: URI;
   /**
    * A bag of attributes that can be used to store any kind
    * of metadata that is not currently supported by the standard.
@@ -66,7 +61,7 @@ export type MediaAudio = {
   /**
    * The cover image for the audio.
    */
-  cover?: EncryptableURI;
+  cover?: URI;
   /**
    * How long the the audio is in seconds.
    */
@@ -78,19 +73,19 @@ export type MediaAudio = {
   /**
    * The credits for the audio.
    */
-  credits?: EncryptableString;
+  credits?: string;
   /**
    * The name of the artist.
    */
-  artist?: EncryptableString;
+  artist?: string;
   /**
    * The genre of the audio.
    */
-  genre?: EncryptableString;
+  genre?: string;
   /**
    * The record label for the audio.
    */
-  recordLabel?: EncryptableString;
+  recordLabel?: string;
   /**
    * The type of audio.
    */
@@ -98,7 +93,7 @@ export type MediaAudio = {
   /**
    * The lyrics for the audio.
    */
-  lyrics?: EncryptableURI;
+  lyrics?: URI;
 };
 
 /**
@@ -106,19 +101,19 @@ export type MediaAudio = {
  */
 export const MediaAudioSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaAudioMimeType, { description: 'The mime type of the audio file.' }),
-  cover: EncryptableUriSchema.optional(),
+  cover: URISchema.optional(),
   duration: z
     .number({ description: 'How long the the audio is in seconds.' })
     .positive()
     .int()
     .optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the audio.'),
-  credits: EncryptableStringSchema.describe('The credits for the audio.').optional(),
-  artist: EncryptableStringSchema.describe('The name of the artist.').optional(),
-  genre: EncryptableStringSchema.describe('The genre of the audio').optional(),
-  recordLabel: EncryptableStringSchema.describe('The record label for the audio.').optional(),
+  credits: NonEmptyStringSchema.describe('The credits for the audio.').optional(),
+  artist: NonEmptyStringSchema.describe('The name of the artist.').optional(),
+  genre: NonEmptyStringSchema.describe('The genre of the audio').optional(),
+  recordLabel: NonEmptyStringSchema.describe('The record label for the audio.').optional(),
   kind: z.nativeEnum(MediaAudioKind, { description: 'The type of audio.' }).optional(),
-  lyrics: EncryptableUriSchema.optional(),
+  lyrics: URISchema.optional(),
 });
 
 /**
@@ -140,7 +135,7 @@ export type MediaImage = {
   /**
    * The location of the file.
    */
-  item: EncryptableURI;
+  item: URI;
   /**
    * A bag of attributes that can be used to store any kind
    * of metadata that is not currently supported by the standard.
@@ -153,7 +148,7 @@ export type MediaImage = {
   /**
    * The alt tag for accessibility.
    */
-  altTag?: EncryptableString;
+  altTag?: string;
   /**
    * The license for the image.
    */
@@ -165,7 +160,7 @@ export type MediaImage = {
  */
 export const MediaImageSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaImageMimeType, { description: 'The mime type of the image' }),
-  altTag: EncryptableStringSchema.describe('The alt tag for accessibility').optional(),
+  altTag: NonEmptyStringSchema.describe('The alt tag for accessibility').optional(),
   license: MetadataLicenseTypeSchema.optional().describe('The license for the image'),
 });
 
@@ -189,7 +184,7 @@ export type MediaVideo = {
   /**
    * The location of the file.
    */
-  item: EncryptableURI;
+  item: URI;
   /**
    * A bag of attributes that can be used to store any kind
    * of metadata that is not currently supported by the standard.
@@ -206,7 +201,7 @@ export type MediaVideo = {
   /**
    * The cover image for the video.
    */
-  cover?: EncryptableURI;
+  cover?: URI;
   /**
    * How long the the video is in seconds.
    */
@@ -222,8 +217,8 @@ export type MediaVideo = {
  */
 export const MediaVideoSchema = mediaCommonSchema({
   type: z.nativeEnum(MediaVideoMimeType, { description: 'The mime type of the video' }),
-  altTag: EncryptableStringSchema.describe('The alt tag for accessibility').optional(),
-  cover: EncryptableUriSchema.optional(),
+  altTag: NonEmptyStringSchema.describe('The alt tag for accessibility').optional(),
+  cover: URISchema.optional(),
   duration: z
     .number({ description: 'How long the the video is in seconds' })
     .positive()
@@ -319,9 +314,9 @@ export const AnyMediaSchema: z.ZodType<AnyMedia, z.ZodTypeDef, unknown> = z
     const result = schema.safeParse(val);
 
     if (!result.success) {
-      result.error.issues.forEach((issue) => {
+      for (const issue of result.error.issues) {
         ctx.addIssue(issue);
-      });
+      }
     }
 
     return z.NEVER;

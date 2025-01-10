@@ -1,22 +1,34 @@
-/* eslint-disable no-case-declarations */
 import { v4 } from 'uuid';
 import { z } from 'zod';
 
 import * as latest from '../post';
-import { ConditionComparisonOperator, NftContractType, ContentWarning } from '../post/common';
-import { LocaleSchema, Markdown, toMarkdown, NonEmptyStringSchema } from '../primitives.js';
+import { LocaleSchema, type Markdown, NonEmptyStringSchema, toMarkdown } from '../primitives.js';
 import { nftMetadataSchemaWith } from '../tokens/eip721.js';
-import { Brand, hasTwoOrMore } from '../utils.js';
+import { type Brand, hasTwoOrMore } from '../utils.js';
 
-// re-export under legacy namespace
-export {
-  ConditionComparisonOperator,
-  NftContractType,
-  ContentWarning as PublicationContentWarning,
-};
 export { NftMetadataAttributeDisplayType } from '../tokens/eip721.js';
 export type { NftMetadataAttribute, NftMetadata } from '../tokens/eip721.js';
 export type * from '../primitives.js';
+
+export enum ConditionComparisonOperator {
+  EQUAL = 'EQUAL',
+  NOT_EQUAL = 'NOT_EQUAL',
+  GREATER_THAN = 'GREATER_THAN',
+  GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL',
+  LESS_THAN = 'LESS_THAN',
+  LESS_THAN_OR_EQUAL = 'LESS_THAN_OR_EQUAL',
+}
+
+export enum PublicationContentWarning {
+  NSFW = 'NSFW',
+  SENSITIVE = 'SENSITIVE',
+  SPOILER = 'SPOILER',
+}
+
+export enum NftContractType {
+  ERC721 = 'ERC721',
+  ERC1155 = 'ERC1155',
+}
 
 export enum PublicationMetadataVersion {
   V1 = '1.0.0',
@@ -451,7 +463,7 @@ const PublicationMetadataV2CommonSchema = PublicationCommonSchema.extend({
   content: ContentSchema.transform(toMarkdown).optional().nullable(),
 
   contentWarning: z
-    .nativeEnum(ContentWarning, { description: 'Specify a content warning.' })
+    .nativeEnum(PublicationContentWarning, { description: 'Specify a content warning.' })
     .optional()
     .nullable()
     .catch(null),
@@ -610,27 +622,29 @@ export const PublicationMetadataSchema: z.ZodType<PublicationMetadata, z.ZodType
   .passthrough()
   .transform((data, ctx) => {
     switch (data.version) {
-      case PublicationMetadataVersion.V1:
+      case PublicationMetadataVersion.V1: {
         const v1Result = PublicationMetadataV1Schema.safeParse(data);
 
         if (!v1Result.success) {
-          v1Result.error.issues.forEach((issue) => {
+          for (const issue of v1Result.error.issues) {
             ctx.addIssue(issue);
-          });
+          }
           return z.NEVER;
         }
         return v1Result.data;
+      }
 
-      case PublicationMetadataVersion.V2:
+      case PublicationMetadataVersion.V2: {
         const v2Result = PublicationMetadataV2Schema.safeParse(data);
 
         if (!v2Result.success) {
-          v2Result.error.issues.forEach((issue) => {
+          for (const issue of v2Result.error.issues) {
             ctx.addIssue(issue);
-          });
+          }
           return z.NEVER;
         }
 
         return v2Result.data;
+      }
     }
   });

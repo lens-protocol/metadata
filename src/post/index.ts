@@ -19,22 +19,22 @@ export * from './TextOnlySchema.js';
 export * from './TransactionSchema.js';
 export * from './VideoSchema.js';
 
-import { ThreeDMetadata, ThreeDSchema } from './3D.js';
-import { ArticleMetadata, ArticleSchema } from './ArticleSchema.js';
-import { AudioMetadata, AudioSchema } from './AudioSchema.js';
-import { CheckingInMetadata, CheckingInSchema } from './CheckingInSchema.js';
-import { EmbedMetadata, EmbedSchema } from './EmbedSchema';
-import { EventMetadata, EventSchema } from './EventSchema.js';
-import { ImageMetadata, ImageSchema } from './ImageSchema.js';
-import { LinkMetadata, LinkSchema } from './LinkSchema.js';
-import { LiveStreamMetadata, LiveStreamSchema } from './LiveStreamSchema.js';
-import { MintMetadata, MintSchema } from './MintSchema.js';
-import { SpaceMetadata, SpaceSchema } from './SpaceSchema.js';
-import { StoryMetadata, StorySchema } from './StorySchema.js';
-import { TextOnlyMetadata, TextOnlySchema } from './TextOnlySchema.js';
-import { TransactionMetadata, TransactionSchema } from './TransactionSchema.js';
-import { VideoMetadata, VideoSchema } from './VideoSchema.js';
-import { ShapeCheck } from '../utils';
+import type { ShapeCheck } from '../utils';
+import { type ThreeDMetadata, ThreeDSchema } from './3D.js';
+import { type ArticleMetadata, ArticleSchema } from './ArticleSchema.js';
+import { type AudioMetadata, AudioSchema } from './AudioSchema.js';
+import { type CheckingInMetadata, CheckingInSchema } from './CheckingInSchema.js';
+import { type EmbedMetadata, EmbedSchema } from './EmbedSchema';
+import { type EventMetadata, EventSchema } from './EventSchema.js';
+import { type ImageMetadata, ImageSchema } from './ImageSchema.js';
+import { type LinkMetadata, LinkSchema } from './LinkSchema.js';
+import { type LiveStreamMetadata, LiveStreamSchema } from './LiveStreamSchema.js';
+import { type MintMetadata, MintSchema } from './MintSchema.js';
+import { type SpaceMetadata, SpaceSchema } from './SpaceSchema.js';
+import { type StoryMetadata, StorySchema } from './StorySchema.js';
+import { type TextOnlyMetadata, TextOnlySchema } from './TextOnlySchema.js';
+import { type TransactionMetadata, TransactionSchema } from './TransactionSchema.js';
+import { type VideoMetadata, VideoSchema } from './VideoSchema.js';
 
 /**
  * `PostMetadata` is a discriminated union of all possible post metadata types.

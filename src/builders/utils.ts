@@ -1,5 +1,5 @@
-import { PostMetadata } from '../post';
-import { Brand, Overwrite } from '../utils.js';
+import type { PostMetadata } from '../post';
+import type { Brand, Overwrite } from '../utils.js';
 
 /**
  * @internal

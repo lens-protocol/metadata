@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EvmAddress, EvmAddressSchema, URI, UriSchema } from '../primitives';
+import { type EvmAddress, EvmAddressSchema, type URI, URISchema } from '../primitives';
 
 export type Eip7572 = {
   name: string;
@@ -22,16 +22,16 @@ export function eip7572SchemaWith<Augmentation extends z.ZodRawShape>(augmentati
       name: z.string().describe('The name of the contract.'),
       description: z.string().optional().describe('The description of the contract.'),
       symbol: z.string().optional().describe('The symbol of the contract.'),
-      image: UriSchema.optional().describe(
+      image: URISchema.optional().describe(
         'A URI pointing to a resource with mime type image/* that represents the contract, typically displayed as a profile picture for the contract.',
       ),
-      banner_image: UriSchema.optional().describe(
+      banner_image: URISchema.optional().describe(
         'A URI pointing to a resource with mime type image/* that represents the contract, displayed as a banner image for the contract.',
       ),
-      featured_image: UriSchema.optional().describe(
+      featured_image: URISchema.optional().describe(
         'A URI pointing to a resource with mime type image/* that represents the featured image for the contract, typically used for a highlight section.',
       ),
-      external_link: UriSchema.optional().describe('The external link of the contract.'),
+      external_link: URISchema.optional().describe('The external link of the contract.'),
       collaborators: EvmAddressSchema.array()
         .optional()
         .describe(

@@ -1,23 +1,23 @@
 import { z } from 'zod';
 
+import {
+  type Markdown,
+  MarkdownSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import { NftMetadata } from '../tokens/eip721.js';
-import {
-  EncryptableMarkdown,
-  EncryptableURI,
-  Signature,
-  EncryptableUriSchema,
-  EncryptableMarkdownSchema,
-} from '../primitives.js';
 
 export type LinkMetadataDetails = PostMetadataCommon & {
   /**
@@ -27,11 +27,11 @@ export type LinkMetadataDetails = PostMetadataCommon & {
   /**
    * The sharing link url.
    */
-  sharingLink: EncryptableURI;
+  sharingLink: URI;
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -42,9 +42,9 @@ const LinkMetadataDetailsSchema: z.ZodType<LinkMetadataDetails, z.ZodTypeDef, ob
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.LINK),
 
-    sharingLink: EncryptableUriSchema.describe('The sharing link url.'),
+    sharingLink: URISchema.describe('The sharing link url.'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

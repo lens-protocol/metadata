@@ -1,5 +1,5 @@
-import { describe, expect, it } from '@jest/globals';
 import { Wallet } from 'ethers';
+import { describe, expect, it } from 'vitest';
 
 const signer = new Wallet('0xd6e6257e8cf0f321ad0f798dd0b121a7eb4fe9c7c51994e843c0a1ed05867a5f');
 

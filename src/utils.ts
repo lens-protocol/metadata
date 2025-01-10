@@ -1,4 +1,4 @@
-import { Signature } from './primitives';
+import type { Signature } from './primitives';
 
 /**
  * Branding helper type.
@@ -13,7 +13,7 @@ export type Brand<T, TBrand, ReservedName extends string = '__type__'> = T & {
  * Omits properties from an union type, preserving the union.
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never;
 
 /**
@@ -95,7 +95,6 @@ export function hasTwoOrMore<T>(items: ReadonlyArray<T>): items is TwoAtLeastArr
  */
 export type Prettify<T> = {
   [K in keyof T]: T[K];
-  // eslint-disable-next-line @typescript-eslint/ban-types
 } & {};
 
 /**

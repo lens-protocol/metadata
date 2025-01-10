@@ -1,35 +1,32 @@
 import { z } from 'zod';
 
+import {
+  type DateTime,
+  DateTimeSchema,
+  type GeoURI,
+  GeoURISchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type PhysicalAddress,
+  PhysicalAddressSchema,
+  type Signature,
+  type URI,
+  URISchema,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
-  TimezoneId,
+  type PostMetadataCommon,
+  type TimezoneId,
   TimezoneIdSchema,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  PhysicalAddressSchema,
-  EncryptableUriSchema,
-  EncryptableURI,
-  EncryptableString,
-  EncryptableGeoURI,
-  PhysicalAddress,
-  EncryptableDateTime,
-  EncryptableMarkdown,
-  Signature,
-  EncryptableDateTimeSchema,
-  NonEmptyStringSchema,
-  EncryptableMarkdownSchema,
-  EncryptableGeoURISchema,
-  UriSchema,
-  EncryptedStringSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 /**
  * An object intended to help with future events scheduling adjustments.
@@ -79,11 +76,11 @@ export type EventMetadataDetails = PostMetadataCommon & {
   /*
    * The location of the event.
    */
-  location: EncryptableURI | EncryptableString;
+  location: URI | string;
   /**
    * The geographic position of the event.
    */
-  position?: EncryptableGeoURI;
+  position?: GeoURI;
   /**
    * The address of the event.
    */
@@ -91,11 +88,11 @@ export type EventMetadataDetails = PostMetadataCommon & {
   /**
    * The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  startsAt: EncryptableDateTime;
+  startsAt: DateTime;
   /**
    * The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).
    */
-  endsAt: EncryptableDateTime;
+  endsAt: DateTime;
   /**
    * Captures extra criteria to recompute correctly future start and end times.
    *
@@ -105,11 +102,11 @@ export type EventMetadataDetails = PostMetadataCommon & {
   /**
    * The links you want to include with it.
    */
-  links?: EncryptableURI[];
+  links?: URI[];
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -124,35 +121,29 @@ const EventMetadataDetailsSchema: z.ZodType<EventMetadataDetails, z.ZodTypeDef, 
 
     location: z
       .union([
-        UriSchema.describe('A virtual location.'),
+        URISchema.describe('A virtual location.'),
         NonEmptyStringSchema.describe('The event location (free form text).'),
-        EncryptedStringSchema.describe('The encrypted event location.'),
       ])
       .describe('The location of the event.'),
 
-    position: EncryptableGeoURISchema.describe('The geographic position of the event.').optional(),
+    position: GeoURISchema.describe('The geographic position of the event.').optional(),
 
     address: PhysicalAddressSchema.optional().describe('The address of the event.'),
 
-    startsAt: EncryptableDateTimeSchema.describe(
+    startsAt: DateTimeSchema.describe(
       'The event start time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
     ),
 
-    endsAt: EncryptableDateTimeSchema.describe(
-      'The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).',
-    ),
+    endsAt: DateTimeSchema.describe('The event end time (ISO 8601 `YYYY-MM-DDTHH:mm:ss.sssZ`).'),
 
     schedulingAdjustments: SchedulingAdjustmentsSchema.optional().describe(
       'Captures extra criteria to recompute correctly future start and end times.' +
         'See: https://www.w3.org/International/wiki/WorkingWithTimeZones#Working_with_Future_and_Recurring_Events',
     ),
 
-    links: EncryptableUriSchema.array()
-      .min(1)
-      .optional()
-      .describe('The links you want to include with it.'),
+    links: URISchema.array().min(1).optional().describe('The links you want to include with it.'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

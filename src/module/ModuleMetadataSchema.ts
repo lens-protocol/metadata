@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
+import { type MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute';
+import { type Markdown, MarkdownSchema, NonEmptyStringSchema, nonEmptySchema } from '../primitives';
 import { ModuleSchemaId } from './ModuleSchemaId';
-import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute';
-import { Markdown, nonEmptySchema, NonEmptyStringSchema, MarkdownSchema } from '../primitives';
 
 function isValidJsonString(str: string) {
   try {

@@ -1,22 +1,22 @@
 import { z } from 'zod';
 
+import {
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  EncryptableMarkdown,
-  Signature,
-  EncryptableMarkdownSchema,
-  NonEmptyStringSchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type ArticleMetadataDetails = PostMetadataCommon & {
   /**
@@ -26,7 +26,7 @@ export type ArticleMetadataDetails = PostMetadataCommon & {
   /**
    * Markdown content.
    */
-  content: EncryptableMarkdown;
+  content: Markdown;
   /**
    * The optional article title.
    */
@@ -40,7 +40,7 @@ const ArticleMetadataDetailsSchema: z.ZodType<ArticleMetadataDetails, z.ZodTypeD
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.ARTICLE),
 
-    content: EncryptableMarkdownSchema,
+    content: MarkdownSchema,
 
     title: NonEmptyStringSchema.describe('The optional article title.').optional(),
 

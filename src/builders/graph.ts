@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
+import { type GraphMetadata, GraphMetadataSchema, GraphMetadataSchemaId } from '../graph';
 import { evaluate } from './ValidationError';
-import { GraphMetadataSchemaId, GraphMetadata, GraphMetadataSchema } from '../graph';
 
 export type GraphOptions = {
   /**

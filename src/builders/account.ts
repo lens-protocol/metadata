@@ -1,14 +1,14 @@
 import { v4 } from 'uuid';
 
-import { evaluate } from './ValidationError';
-import { RecursiveUnbrand } from './utils';
 import {
-  AccountMetadata,
-  AccountMetadataDetails,
+  type AccountMetadata,
+  type AccountMetadataDetails,
   AccountMetadataSchema,
   AccountSchemaId,
 } from '../account';
-import { Prettify } from '../utils.js';
+import type { Prettify } from '../utils.js';
+import { evaluate } from './ValidationError.js';
+import type { RecursiveUnbrand } from './utils.js';
 
 /**
  * @private

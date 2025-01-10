@@ -1,11 +1,11 @@
 import { v4 } from 'uuid';
 
-import { evaluate } from './ValidationError';
 import {
-  SponsorshipMetadataSchemaId,
-  SponsorshipMetadata,
+  type SponsorshipMetadata,
   SponsorshipMetadataSchema,
+  SponsorshipMetadataSchemaId,
 } from '../sponsorship';
+import { evaluate } from './ValidationError';
 
 export type SponsorshipOptions = {
   /**

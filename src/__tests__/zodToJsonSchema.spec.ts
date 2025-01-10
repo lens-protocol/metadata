@@ -1,39 +1,26 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import { MetadataAttributeSchema } from '../MetadataAttribute';
 import { AnyMediaSchema } from '../post';
-import { EncryptableStringSchema, NonEmptyStringSchema } from '../primitives';
+import { NonEmptyStringSchema, URISchema } from '../primitives';
 
-describe(`Given the zod-to-json-schema package`, () => {
+describe('Given the zod-to-json-schema package', () => {
   describe('when converting a schema that uses AnyMediaSchema', () => {
     it('should avoid to cross reference media attributes but use shared definitions', () => {
       const jsonSchema = zodToJsonSchema(AnyMediaSchema, {
         target: 'jsonSchema7',
         definitionPath: '$defs',
         definitions: {
-          EncryptableString: EncryptableStringSchema,
           NonEmptyString: NonEmptyStringSchema,
           MetadataAttribute: MetadataAttributeSchema,
+          URI: URISchema,
         },
       });
 
       expect(jsonSchema).toMatchInlineSnapshot(`
         {
           "$defs": {
-            "EncryptableString": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/NonEmptyString",
-                },
-                {
-                  "description": "An encrypted value.",
-                  "pattern": "^\\S+$",
-                  "type": "string",
-                },
-              ],
-              "description": "An encrypted value or its decrypted version.",
-            },
             "MetadataAttribute": {
               "anyOf": [
                 {
@@ -162,6 +149,12 @@ describe(`Given the zod-to-json-schema package`, () => {
               "minLength": 1,
               "type": "string",
             },
+            "URI": {
+              "description": "A Uniform Resource Identifier.",
+              "format": "uri",
+              "minLength": 6,
+              "type": "string",
+            },
           },
           "$schema": "http://json-schema.org/draft-07/schema#",
           "anyOf": [
@@ -169,7 +162,7 @@ describe(`Given the zod-to-json-schema package`, () => {
               "additionalProperties": false,
               "properties": {
                 "artist": {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The name of the artist.",
                 },
                 "attributes": {
@@ -181,10 +174,11 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "array",
                 },
                 "cover": {
-                  "$ref": "#/anyOf/0/properties/item",
+                  "$ref": "#/$defs/URI",
+                  "description": "A Uniform Resource Identifier.",
                 },
                 "credits": {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The credits for the audio.",
                 },
                 "duration": {
@@ -193,22 +187,11 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "integer",
                 },
                 "genre": {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The genre of the audio",
                 },
                 "item": {
-                  "anyOf": [
-                    {
-                      "description": "A Uniform Resource Identifier.",
-                      "format": "uri",
-                      "minLength": 6,
-                      "type": "string",
-                    },
-                    {
-                      "$ref": "#/$defs/EncryptableString/anyOf/1",
-                    },
-                  ],
-                  "description": "An encrypted value or its decrypted version.",
+                  "$ref": "#/$defs/URI",
                 },
                 "kind": {
                   "description": "The type of audio.",
@@ -265,10 +248,11 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "string",
                 },
                 "lyrics": {
-                  "$ref": "#/anyOf/0/properties/item",
+                  "$ref": "#/$defs/URI",
+                  "description": "A Uniform Resource Identifier.",
                 },
                 "recordLabel": {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The record label for the audio.",
                 },
                 "type": {
@@ -296,7 +280,7 @@ describe(`Given the zod-to-json-schema package`, () => {
               "additionalProperties": false,
               "properties": {
                 "altTag": {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The alt tag for accessibility",
                 },
                 "attributes": {
@@ -308,7 +292,7 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "array",
                 },
                 "item": {
-                  "$ref": "#/anyOf/0/properties/item",
+                  "$ref": "#/$defs/URI",
                 },
                 "license": {
                   "$ref": "#/anyOf/0/properties/license",
@@ -340,7 +324,7 @@ describe(`Given the zod-to-json-schema package`, () => {
               "additionalProperties": false,
               "properties": {
                 "altTag": {
-                  "$ref": "#/$defs/EncryptableString",
+                  "$ref": "#/$defs/NonEmptyString",
                   "description": "The alt tag for accessibility",
                 },
                 "attributes": {
@@ -352,7 +336,8 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "array",
                 },
                 "cover": {
-                  "$ref": "#/anyOf/0/properties/item",
+                  "$ref": "#/$defs/URI",
+                  "description": "A Uniform Resource Identifier.",
                 },
                 "duration": {
                   "description": "How long the the video is in seconds",
@@ -360,7 +345,7 @@ describe(`Given the zod-to-json-schema package`, () => {
                   "type": "integer",
                 },
                 "item": {
-                  "$ref": "#/anyOf/0/properties/item",
+                  "$ref": "#/$defs/URI",
                 },
                 "license": {
                   "$ref": "#/anyOf/0/properties/license",

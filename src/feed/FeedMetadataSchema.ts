@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
+import { NonEmptyStringSchema, type Signature, SignatureSchema } from '../primitives';
 import { FeedMetadataSchemaId } from './FeedMetadataSchemaId';
-import { NonEmptyStringSchema, SignatureSchema, Signature } from '../primitives';
 
 export type FeedMetadataDetails = {
   /**

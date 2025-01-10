@@ -1,27 +1,26 @@
 import { z } from 'zod';
 
+import {
+  type GeoURI,
+  GeoURISchema,
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type PhysicalAddress,
+  PhysicalAddressSchema,
+  type Signature,
+} from '../primitives.js';
+import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
 import { PostSchemaId } from './PostSchemaId.js';
 import {
-  AnyMedia,
+  type AnyMedia,
   AnyMediaSchema,
-  PostMetadataCommon,
+  type PostMetadataCommon,
   mainContentFocus,
   metadataDetailsWith,
   postWith,
 } from './common';
-import {
-  EncryptableGeoURI,
-  EncryptableMarkdown,
-  EncryptableMarkdownSchema,
-  EncryptableString,
-  PhysicalAddress,
-  PhysicalAddressSchema,
-  Signature,
-  EncryptableStringSchema,
-  EncryptableGeoURISchema,
-} from '../primitives.js';
-import { NftMetadata } from '../tokens/eip721.js';
 
 export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
@@ -31,11 +30,11 @@ export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
    * Where you checking in from (free form text).
    */
-  location: EncryptableString;
+  location: string;
   /**
    * The optional geographic position of the location.
    */
-  position?: EncryptableGeoURI;
+  position?: GeoURI;
   /**
    * The optional address of the location.
    */
@@ -43,7 +42,7 @@ export type CheckingInMetadataDetails = PostMetadataCommon & {
   /**
    * Optional markdown content.
    */
-  content?: EncryptableMarkdown;
+  content?: Markdown;
   /**
    * The other attachments you want to include with it.
    */
@@ -54,15 +53,13 @@ const CheckingInMetadataDetailsSchema: z.ZodType<CheckingInMetadataDetails, z.Zo
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.CHECKING_IN),
 
-    location: EncryptableStringSchema.describe('Where you checking in from (free form text).'),
+    location: NonEmptyStringSchema.describe('Where you checking in from (free form text).'),
 
-    position: EncryptableGeoURISchema.describe(
-      'The optional geographic position of the location.',
-    ).optional(),
+    position: GeoURISchema.describe('The optional geographic position of the location.').optional(),
 
     address: PhysicalAddressSchema.optional().describe('The optional address of the location.'),
 
-    content: EncryptableMarkdownSchema.describe('Optional markdown content.').optional(),
+    content: MarkdownSchema.describe('Optional markdown content.').optional(),
 
     attachments: AnyMediaSchema.array()
       .min(1)

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
+import { NonEmptyStringSchema, type Signature } from '../primitives';
 import { GraphMetadataSchemaId } from './GraphMetadataSchemaId';
-import { NonEmptyStringSchema, Signature } from '../primitives';
 
 export type GraphMetadataDetails = {
   /**

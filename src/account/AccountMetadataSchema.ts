@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
-import { AccountSchemaId } from './AccountSchemaId.js';
-import { MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
+import { type MetadataAttribute, MetadataAttributeSchema } from '../MetadataAttribute.js';
 import {
-  Markdown,
-  Signature,
-  SignatureSchema,
-  URI,
-  NonEmptyStringSchema,
-  UriSchema,
+  type Markdown,
   MarkdownSchema,
+  NonEmptyStringSchema,
+  type Signature,
+  SignatureSchema,
+  type URI,
+  URISchema,
 } from '../primitives.js';
+import { AccountSchemaId } from './AccountSchemaId.js';
 
 export type AccountMetadataDetails = {
   /**
@@ -53,9 +53,9 @@ const AccountMetadataDetailsSchema: z.ZodType<AccountMetadataDetails, z.ZodTypeD
 
       bio: MarkdownSchema.describe('The Account bio as markdown.').optional(),
 
-      picture: UriSchema.describe('The Account picture.').optional(),
+      picture: URISchema.describe('The Account picture.').optional(),
 
-      coverPicture: UriSchema.describe('The Account cover picture.').optional(),
+      coverPicture: URISchema.describe('The Account cover picture.').optional(),
 
       attributes: MetadataAttributeSchema.array()
         .min(1)

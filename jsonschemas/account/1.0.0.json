@@ -21,11 +21,11 @@
           "description": "The Account bio as markdown."
         },
         "picture": {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "The Account picture."
         },
         "coverPicture": {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "The Account cover picture."
         },
         "attributes": {
@@ -59,7 +59,7 @@
       "type": "string",
       "minLength": 1
     },
-    "Uri": {
+    "URI": {
       "type": "string",
       "minLength": 6,
       "format": "uri",

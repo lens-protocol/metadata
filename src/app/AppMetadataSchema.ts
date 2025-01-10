@@ -1,15 +1,15 @@
 import { z } from 'zod';
 
-import { AppMetadataSchemaId } from './AppMetadataSchemaId';
 import {
-  Markdown,
-  NonEmptyStringSchema,
-  URI,
+  type Markdown,
   MarkdownSchema,
-  UriSchema,
+  NonEmptyStringSchema,
+  type Signature,
   SignatureSchema,
-  Signature,
+  type URI,
+  URISchema,
 } from '../primitives';
+import { AppMetadataSchemaId } from './AppMetadataSchemaId';
 
 /**
  * The app metadata
@@ -82,12 +82,12 @@ const AppMetadataDetailsSchema = z.object({
   description: MarkdownSchema.optional().describe(
     'An optional short and detailed description of the app, explaining its features and purpose.',
   ),
-  logo: UriSchema.optional().describe('The Logo icon for the app.'),
-  url: UriSchema.describe('The url of the app.'),
+  logo: URISchema.optional().describe('The Logo icon for the app.'),
+  url: URISchema.describe('The url of the app.'),
   developer: NonEmptyStringSchema.describe('The Developer of the app.'),
   platforms: z.array(z.nativeEnum(Platform)).describe('The platforms supported by the app.'),
-  termsOfService: UriSchema.optional().describe('The terms of service for the app.'),
-  privacyPolicy: UriSchema.optional().describe('The privacy policy for the app.'),
+  termsOfService: URISchema.optional().describe('The terms of service for the app.'),
+  privacyPolicy: URISchema.optional().describe('The privacy policy for the app.'),
 });
 
 export const AppMetadataSchema = z.object({

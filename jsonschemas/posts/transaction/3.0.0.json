@@ -16,7 +16,7 @@
     "external_url": {
       "anyOf": [
         {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
         },
         {
@@ -39,7 +39,7 @@
     "image": {
       "anyOf": [
         {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "NFT will store any image here."
         },
         {
@@ -51,7 +51,7 @@
     "animation_url": {
       "anyOf": [
         {
-          "$ref": "#/$defs/Uri",
+          "$ref": "#/$defs/URI",
           "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
         },
         {
@@ -90,9 +90,6 @@
           "pattern": "^[a-z]{2}(?:-[a-zA-Z]{2})?$",
           "description": "A Locale Identifier in the `[language]` OR `[language]-[region]` format (e.g. `en`, `en-GB`, `it`). [language] MUST be in the ISO 639-1 format. [region], if provided, MUST be in the ISO 3166-1 alpha-2 format."
         },
-        "encryptedWith": {
-          "$ref": "#/$defs/PublicationEncryptionStrategy"
-        },
         "tags": {
           "type": "array",
           "uniqueItems": true,
@@ -117,7 +114,7 @@
           "description": "The main focus of the post."
         },
         "txHash": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The transaction hash."
         },
         "type": {
@@ -134,15 +131,7 @@
           "description": "The Chain Id."
         },
         "content": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "The content for the post as markdown."
-            },
-            {
-              "$ref": "#/$defs/EncryptedString"
-            }
-          ],
+          "$ref": "#/$defs/NonEmptyString",
           "description": "Optional markdown content."
         },
         "attachments": {
@@ -178,209 +167,11 @@
     "Markdown": {
       "$ref": "#/$defs/NonEmptyString"
     },
-    "Uri": {
+    "URI": {
       "type": "string",
       "minLength": 6,
       "format": "uri",
       "description": "A Uniform Resource Identifier."
-    },
-    "AccessCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "OR"
-        },
-        "criteria": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "const": "AND"
-                  },
-                  "criteria": {
-                    "type": "array",
-                    "items": {
-                      "anyOf": [
-                        {
-                          "$ref": "#/$defs/NftOwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/Erc20OwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/EoaOwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/ProfileOwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/FollowCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/CollectCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/AdvancedContractCondition"
-                        }
-                      ]
-                    },
-                    "maxItems": 5
-                  }
-                },
-                "required": [
-                  "type",
-                  "criteria"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "$ref": "#/$defs/CollectCondition"
-              },
-              {
-                "$ref": "#/$defs/AdvancedContractCondition"
-              },
-              {
-                "$ref": "#/$defs/EoaOwnershipCondition"
-              },
-              {
-                "$ref": "#/$defs/Erc20OwnershipCondition"
-              },
-              {
-                "$ref": "#/$defs/FollowCondition"
-              },
-              {
-                "$ref": "#/$defs/NftOwnershipCondition"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "const": "OR"
-                  },
-                  "criteria": {
-                    "type": "array",
-                    "items": {
-                      "anyOf": [
-                        {
-                          "$ref": "#/$defs/NftOwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/Erc20OwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/EoaOwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/ProfileOwnershipCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/FollowCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/CollectCondition"
-                        },
-                        {
-                          "$ref": "#/$defs/AdvancedContractCondition"
-                        }
-                      ]
-                    },
-                    "maxItems": 5
-                  }
-                },
-                "required": [
-                  "type",
-                  "criteria"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "$ref": "#/$defs/ProfileOwnershipCondition"
-              }
-            ]
-          },
-          "maxItems": 5
-        }
-      },
-      "required": [
-        "type",
-        "criteria"
-      ],
-      "additionalProperties": false
-    },
-    "AdvancedContractCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "ADVANCED_CONTRACT"
-        },
-        "contract": {
-          "type": "object",
-          "properties": {
-            "chainId": {
-              "$ref": "#/$defs/ChainId"
-            },
-            "address": {
-              "$ref": "#/$defs/EvmAddress"
-            }
-          },
-          "required": [
-            "chainId",
-            "address"
-          ],
-          "additionalProperties": false,
-          "description": "The contract address and chain id"
-        },
-        "functionName": {
-          "type": "string",
-          "minLength": 1,
-          "description": "The name of the function you want to call"
-        },
-        "abi": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The contract ABI. Has to be in human readable single string format containing the signature of the function you want to call. See https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi for more info"
-        },
-        "params": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The parameters to pass to the function. Must be exactly matching the function arguments. You *must* pass in the `:userAddress` parameter to represent the decrypter address. Any array or tuple arguments, must be stringified JSON arrays."
-        },
-        "comparison": {
-          "type": "string",
-          "enum": [
-            "EQUAL",
-            "NOT_EQUAL",
-            "GREATER_THAN",
-            "GREATER_THAN_OR_EQUAL",
-            "LESS_THAN",
-            "LESS_THAN_OR_EQUAL"
-          ],
-          "description": "The comparison operator to use. In case of boolean functions you can only use EQUAL or NOT_EQUAL"
-        },
-        "value": {
-          "type": "string",
-          "pattern": "^(true|false|\\d{1,70})$",
-          "description": "The comparison value. Accepts 'true', 'false' or a number"
-        }
-      },
-      "required": [
-        "type",
-        "contract",
-        "functionName",
-        "abi",
-        "params",
-        "comparison",
-        "value"
-      ],
-      "additionalProperties": false
     },
     "Amount": {
       "type": "object",
@@ -432,122 +223,11 @@
       "type": "number",
       "exclusiveMinimum": 0
     },
-    "CollectCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "COLLECT"
-        },
-        "publicationId": {
-          "$ref": "#/$defs/LegacyPublicationId"
-        },
-        "thisPublication": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "required": [
-        "type",
-        "publicationId"
-      ],
-      "additionalProperties": false
-    },
-    "EncryptableUri": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/Uri"
-        },
-        {
-          "$ref": "#/$defs/EncryptedString"
-        }
-      ],
-      "description": "An encrypted value or its decrypted version."
-    },
-    "EncryptedString": {
-      "type": "string",
-      "pattern": "^\\S+$",
-      "description": "An encrypted value."
-    },
-    "EncryptableString": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/NonEmptyString"
-        },
-        {
-          "$ref": "#/$defs/EncryptedString"
-        }
-      ],
-      "description": "An encrypted value or its decrypted version."
-    },
-    "EoaOwnershipCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "EOA_OWNERSHIP"
-        },
-        "address": {
-          "$ref": "#/$defs/EvmAddress"
-        }
-      },
-      "required": [
-        "type",
-        "address"
-      ],
-      "additionalProperties": false
-    },
-    "Erc20OwnershipCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "ERC20_OWNERSHIP"
-        },
-        "amount": {
-          "$ref": "#/$defs/Amount"
-        },
-        "condition": {
-          "type": "string",
-          "enum": [
-            "EQUAL",
-            "NOT_EQUAL",
-            "GREATER_THAN",
-            "GREATER_THAN_OR_EQUAL",
-            "LESS_THAN",
-            "LESS_THAN_OR_EQUAL"
-          ]
-        }
-      },
-      "required": [
-        "type",
-        "amount",
-        "condition"
-      ],
-      "additionalProperties": false
-    },
     "EvmAddress": {
       "type": "string",
       "minLength": 42,
       "maxLength": 42,
       "description": "An EVM compatible address."
-    },
-    "FollowCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "FOLLOW"
-        },
-        "follow": {
-          "$ref": "#/$defs/LegacyProfileId"
-        }
-      },
-      "required": [
-        "type",
-        "follow"
-      ],
-      "additionalProperties": false
     },
     "GeoURI": {
       "type": "string",
@@ -590,7 +270,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/EncryptableUri"
+          "$ref": "#/$defs/URI"
         },
         "attributes": {
           "type": "array",
@@ -615,7 +295,8 @@
           "description": "The mime type of the audio file."
         },
         "cover": {
-          "$ref": "#/$defs/EncryptableUri"
+          "$ref": "#/$defs/URI",
+          "description": "A Uniform Resource Identifier."
         },
         "duration": {
           "type": "integer",
@@ -627,19 +308,19 @@
           "description": "The license for the audio."
         },
         "credits": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The credits for the audio."
         },
         "artist": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the artist."
         },
         "genre": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The genre of the audio"
         },
         "recordLabel": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The record label for the audio."
         },
         "kind": {
@@ -655,7 +336,8 @@
           "description": "The type of audio."
         },
         "lyrics": {
-          "$ref": "#/$defs/EncryptableUri"
+          "$ref": "#/$defs/URI",
+          "description": "A Uniform Resource Identifier."
         }
       },
       "required": [
@@ -668,7 +350,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/EncryptableUri"
+          "$ref": "#/$defs/URI"
         },
         "attributes": {
           "type": "array",
@@ -694,7 +376,7 @@
           "description": "The mime type of the image"
         },
         "altTag": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The alt tag for accessibility"
         },
         "license": {
@@ -712,7 +394,7 @@
       "type": "object",
       "properties": {
         "item": {
-          "$ref": "#/$defs/EncryptableUri"
+          "$ref": "#/$defs/URI"
         },
         "attributes": {
           "type": "array",
@@ -739,11 +421,12 @@
           "description": "The mime type of the video"
         },
         "altTag": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The alt tag for accessibility"
         },
         "cover": {
-          "$ref": "#/$defs/EncryptableUri"
+          "$ref": "#/$defs/URI",
+          "description": "A Uniform Resource Identifier."
         },
         "duration": {
           "type": "integer",
@@ -943,65 +626,31 @@
       "additionalProperties": false,
       "description": "An EVM compatible address on a specific chain."
     },
-    "NftOwnershipCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "NFT_OWNERSHIP"
-        },
-        "contract": {
-          "$ref": "#/$defs/NetworkAddress"
-        },
-        "contractType": {
-          "type": "string",
-          "enum": [
-            "ERC721",
-            "ERC1155"
-          ]
-        },
-        "tokenIds": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          },
-          "minItems": 1,
-          "description": "A list of token IDs you want to check ownership of. The list is optional for ERC721, you MUST provide a list of token IDs for ERC1155."
-        }
-      },
-      "required": [
-        "type",
-        "contract",
-        "contractType"
-      ],
-      "additionalProperties": false
-    },
     "PhysicalAddress": {
       "type": "object",
       "properties": {
         "formatted": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The full mailing address formatted for display."
         },
         "streetAddress": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The street address including house number, street name, P.O. Box, apartment or unit number and extended multi-line address information."
         },
         "locality": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The city or locality."
         },
         "region": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The state or region."
         },
         "postalCode": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The zip or postal code."
         },
         "country": {
-          "$ref": "#/$defs/EncryptableString",
+          "$ref": "#/$defs/NonEmptyString",
           "description": "The country name component."
         }
       },
@@ -1010,61 +659,6 @@
         "country"
       ],
       "additionalProperties": false
-    },
-    "ProfileOwnershipCondition": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "PROFILE_OWNERSHIP"
-        },
-        "profileId": {
-          "$ref": "#/$defs/LegacyProfileId"
-        }
-      },
-      "required": [
-        "type",
-        "profileId"
-      ],
-      "additionalProperties": false
-    },
-    "PublicationEncryptionStrategy": {
-      "anyOf": [
-        {
-          "type": "object",
-          "properties": {
-            "provider": {
-              "type": "string",
-              "const": "LIT_PROTOCOL"
-            },
-            "encryptionKey": {
-              "type": "string",
-              "minLength": 368,
-              "maxLength": 368,
-              "description": "A symmetric encryption key."
-            },
-            "accessCondition": {
-              "$ref": "#/$defs/AccessCondition"
-            },
-            "encryptedPaths": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/NonEmptyString"
-              },
-              "minItems": 1,
-              "description": "An encrypted path is a string of keys separated by . that describe a path to a value in a JSON object (e.g. lens.attachments.0.item.url, lens.content)."
-            }
-          },
-          "required": [
-            "provider",
-            "encryptionKey",
-            "accessCondition",
-            "encryptedPaths"
-          ],
-          "additionalProperties": false,
-          "description": "Publication encryption strategy powered by the LIT Protocol."
-        }
-      ]
     },
     "Tag": {
       "type": "string",

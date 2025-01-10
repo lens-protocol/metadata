@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 
 import {
   MediaAudioMimeType,
@@ -13,24 +13,24 @@ import { geoUri } from '../../primitives.js';
 import { ValidationError } from '../ValidationError.js';
 import {
   article,
-  textOnly,
   audio,
   checkingIn,
   embed,
-  image,
   event,
+  image,
   link,
   liveStream,
   mint,
+  shortVideo,
   space,
   story,
+  textOnly,
   threeD,
   transaction,
   video,
-  shortVideo,
 } from '../posts.js';
 
-describe(`Given the post metadata builders`, () => {
+describe('Given the post metadata builders', () => {
   describe('when setting tags on any post metadata', () => {
     it('should ensure they at 20 at most', () => {
       expect(() =>

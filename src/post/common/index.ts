@@ -1,22 +1,17 @@
 import { z } from 'zod';
 
+import { type MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
 import {
-  PublicationEncryptionStrategy,
-  PublicationEncryptionStrategySchema,
-} from './encryption.js';
-import { MetadataAttribute, MetadataAttributeSchema } from '../../MetadataAttribute.js';
-import {
+  type Locale,
   LocaleSchema,
-  TagSchema,
   NonEmptyStringSchema,
   SignatureSchema,
-  Locale,
-  Tag,
+  type Tag,
+  TagSchema,
 } from '../../primitives.js';
 import { nftMetadataSchemaWith } from '../../tokens/eip721.js';
-import { PostMainFocus } from '../PostMainFocus.js';
+import type { PostMainFocus } from '../PostMainFocus.js';
 
-export * from './encryption.js';
 export * from './license.js';
 export * from './media.js';
 export * from './timezones.js';
@@ -46,12 +41,6 @@ export type PostMetadataCommon = {
    */
   id: string;
   /**
-   * Determine if the post should not be shown in any feed.
-   *
-   * @defaultValue false
-   */
-  hideFromFeed?: boolean;
-  /**
    * A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard.
    * Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged.
    */
@@ -60,12 +49,6 @@ export type PostMetadataCommon = {
    * The locale of the metadata.
    */
   locale: Locale;
-  /**
-   * The encryption strategy used to encrypt the post.
-   *
-   * If not present, the post is presumed to be unencrypted.
-   */
-  encryptedWith?: PublicationEncryptionStrategy;
   /**
    * An arbitrary list of tags.
    */
@@ -104,8 +87,6 @@ export function metadataDetailsWith<
 
       locale: LocaleSchema,
 
-      encryptedWith: PublicationEncryptionStrategySchema.optional(),
-
       tags: z
         .set(TagSchema) // z.set(...) sets uniqueItems: true in generated JSON Schemas
         .max(20)
@@ -126,9 +107,9 @@ export function metadataDetailsWith<
             return z.NEVER;
           }
 
-          result.error.issues.forEach((issue) => {
+          for (const issue of result.error.issues) {
             ctx.addIssue(issue);
-          });
+          }
         })
         .transform((value) => [...value]) // type coercion
         .optional()

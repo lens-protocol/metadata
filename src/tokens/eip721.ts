@@ -1,6 +1,12 @@
 import { z } from 'zod';
 
-import { Markdown, URI, NonEmptyStringSchema, MarkdownSchema, UriSchema } from '../primitives.js';
+import {
+  type Markdown,
+  MarkdownSchema,
+  NonEmptyStringSchema,
+  type URI,
+  URISchema,
+} from '../primitives.js';
 
 /**
  * The display type of a NFT metadata attribute.
@@ -91,7 +97,7 @@ export function nftMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
         .optional()
         .catch(null),
 
-      external_url: UriSchema.describe(
+      external_url: URISchema.describe(
         `This is the URL that will appear below the asset's image on OpenSea and others etc. ` +
           'and will allow users to leave OpenSea and view the item on the site.',
       )
@@ -108,9 +114,9 @@ export function nftMetadataSchemaWith<Augmentation extends z.ZodRawShape>(
         )
         .catch([]),
 
-      image: UriSchema.describe('NFT will store any image here.').nullable().optional().catch(null),
+      image: URISchema.describe('NFT will store any image here.').nullable().optional().catch(null),
 
-      animation_url: UriSchema.describe(
+      animation_url: URISchema.describe(
         'A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, ' +
           'and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. ' +
           'Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, ' +

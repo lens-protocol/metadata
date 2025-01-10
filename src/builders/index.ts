@@ -1,6 +1,5 @@
 export * from './account.js';
 export * from './app.js';
-export * from './encryption.js';
 export * from './feed.js';
 export * from './graph.js';
 export * from './group.js';

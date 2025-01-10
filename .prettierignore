@@ -1,5 +1,2 @@
-dist
-docs
-jsonschemas
-pnpm-lock.yaml
-.changeset
+# use biome instead
+*

@@ -1,8 +1,8 @@
+import type { MetadataAttribute } from '../MetadataAttribute';
+import { type ModuleMetadata, ModuleMetadataSchema, ModuleSchemaId } from '../module';
+import type { Prettify } from '../utils';
 import { evaluate } from './ValidationError';
-import { RecursiveUnbrand } from './utils';
-import { MetadataAttribute } from '../MetadataAttribute';
-import { ModuleMetadata, ModuleMetadataSchema, ModuleSchemaId } from '../module';
-import { Prettify } from '../utils';
+import type { RecursiveUnbrand } from './utils';
 
 /**
  * @private

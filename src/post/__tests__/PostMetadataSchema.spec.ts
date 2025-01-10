@@ -1,11 +1,11 @@
-import { describe, it } from '@jest/globals';
+import { describe, it } from 'vitest';
 
 import { expectResult } from '../../__helpers__/assertions.js';
 import { PostMetadataSchema, PostSchemaId } from '../index.js';
 
-describe(`Given the PostMetadataSchema`, () => {
-  describe(`when parsing an empty object`, () => {
-    it(`then it should complain about the missing $schema`, () => {
+describe('Given the PostMetadataSchema', () => {
+  describe('when parsing an empty object', () => {
+    it('then it should complain about the missing $schema', () => {
       expectResult(() => PostMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
         · "$schema": Invalid discriminator value. Expected 'https://json-schemas.lens.dev/posts/article/3.0.0.json' | 'https://json-schemas.lens.dev/posts/audio/3.0.0.json' | 'https://json-schemas.lens.dev/posts/checking-in/3.0.0.json' | 'https://json-schemas.lens.dev/posts/embed/3.0.0.json' | 'https://json-schemas.lens.dev/posts/event/3.0.0.json' | 'https://json-schemas.lens.dev/posts/image/3.0.0.json' | 'https://json-schemas.lens.dev/posts/link/3.0.0.json' | 'https://json-schemas.lens.dev/posts/livestream/3.0.0.json' | 'https://json-schemas.lens.dev/posts/mint/3.0.0.json' | 'https://json-schemas.lens.dev/posts/space/3.0.0.json' | 'https://json-schemas.lens.dev/posts/text-only/3.0.0.json' | 'https://json-schemas.lens.dev/posts/story/3.0.0.json' | 'https://json-schemas.lens.dev/posts/transaction/3.0.0.json' | 'https://json-schemas.lens.dev/posts/3d/3.0.0.json' | 'https://json-schemas.lens.dev/posts/video/3.0.0.json'"
@@ -14,7 +14,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.ARTICLE_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.ARTICLE_LATEST,
@@ -31,7 +31,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.AUDIO_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.AUDIO_LATEST,
@@ -48,7 +48,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.CHECKING_IN_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.CHECKING_IN_LATEST,
@@ -65,7 +65,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.EMBED_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.EMBED_LATEST,
@@ -82,7 +82,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.IMAGE_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.IMAGE_LATEST,
@@ -99,7 +99,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.LINK_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.LINK_LATEST,
@@ -116,7 +116,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.LIVESTREAM_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.LIVESTREAM_LATEST,
@@ -135,7 +135,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.MINT_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.MINT_LATEST,
@@ -148,16 +148,14 @@ describe(`Given the PostMetadataSchema`, () => {
         · "lens.id": Required
         · "lens.locale": Required
         · "lens.mainContentFocus": Invalid literal value, expected "MINT"
-        · "lens.mintLink": expected to match one of the following groups:
-        		String must contain at least 6 character(s); Should be a valid URI
-        	OR:
-        		Should be a valid encrypted value."
+        · "lens.mintLink": String must contain at least 6 character(s)
+        · "lens.mintLink": Should be a valid URI"
       `);
     });
   });
 
   describe(`when parsing an invalid ${PostSchemaId.SPACE_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.SPACE_LATEST,
@@ -176,7 +174,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.STORY_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.STORY_LATEST,
@@ -193,7 +191,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.TEXT_ONLY_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.TEXT_ONLY_LATEST,
@@ -210,7 +208,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.THREE_D_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.THREE_D_LATEST,
@@ -227,7 +225,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.TRANSACTION_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.TRANSACTION_LATEST,
@@ -246,7 +244,7 @@ describe(`Given the PostMetadataSchema`, () => {
   });
 
   describe(`when parsing an invalid ${PostSchemaId.VIDEO_LATEST}`, () => {
-    it(`then it should flag the missing fields`, () => {
+    it('then it should flag the missing fields', () => {
       expectResult(() =>
         PostMetadataSchema.safeParse({
           $schema: PostSchemaId.VIDEO_LATEST,

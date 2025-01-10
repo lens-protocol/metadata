@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 
+import { type AppMetadata, AppMetadataSchema, AppMetadataSchemaId, type Platform } from '../app';
 import { evaluate } from './ValidationError';
-import { AppMetadata, AppMetadataSchema, AppMetadataSchemaId, Platform } from '../app';
 
 export type AppOptions = {
   /**
