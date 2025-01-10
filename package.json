@@ -36,7 +36,7 @@
     "lint:biome": "biome check",
     "lint:biome:fix": "biome check --write",
     "lint:typecheck": "tsc --noEmit",
-    "prepublish": "pnpm clean:dist && pnpm lint && pnpm test && pnpm build",
+    "prepublish": "pnpm clean:dist && pnpm lint && pnpm vitest run && pnpm build",
     "test": "vitest",
     "typedoc:docs": "typedoc",
     "typedoc:debug": "typedoc --logLevel Verbose"
