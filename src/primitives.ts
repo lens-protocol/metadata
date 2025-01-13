@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BaseError, formatAbiParameters, parseAbiParameters } from 'abitype';
 import { formatZodError } from './formatters.js';
 import { type Brand, invariant, never } from './utils.js';
 
@@ -398,3 +399,104 @@ export const ChainIdSchema: z.ZodType<ChainId, z.ZodTypeDef, unknown> = z
   .number()
   .positive()
   .transform(toChainId);
+
+/**
+ * A 32 bytes long hexadecimal string.
+ */
+export type Bytes32 = Brand<string, 'Bytes32'>;
+
+function toBytes32(value: string): Bytes32 {
+  return value as Bytes32;
+}
+/**
+ * @internal
+ */
+export const Bytes32Schema: z.ZodType<Bytes32, z.ZodTypeDef, unknown> = z
+  .string()
+  .length(66)
+  .regex(/^0x[0-9a-fA-F]{64}$/, 'Should be a 32 bytes long hexadecimal string.')
+  .transform(toBytes32);
+
+/**
+ * A human-readable ABI of Solidity parameters.
+ * - address
+ * - array
+ * - bool
+ * - bytes
+ * - int
+ * - string
+ * or tuples of the above.
+ *
+ * @example
+ * ```ts
+ * 'address'
+ * 'address[]'
+ * 'address, address, uint256'
+ * 'address from, address to, uint256 amount'
+ * '(address from, address to, uint256 amount), uint256'
+ * ```
+ */
+export type SolidityParameters = Brand<string, 'SolidityParameters'>;
+
+/**
+ * @internal
+ */
+export const SolidityParametersSchema: z.ZodType<SolidityParameters, z.ZodTypeDef, string> = z
+  .string()
+  .superRefine((val, ctx): val is SolidityParameters => {
+    try {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      const formatted = formatAbiParameters(parseAbiParameters(val) as any);
+      if (formatted !== val) {
+        ctx.addIssue({
+          message: `Should be a valid Solidity ABI parameters string. Expected: \`${formatted}\`.`,
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    } catch (err) {
+      if (err instanceof BaseError && err.metaMessages) {
+        for (const message of err.metaMessages) {
+          ctx.addIssue({
+            message: message,
+            code: z.ZodIssueCode.custom,
+          });
+        }
+      } else {
+        ctx.addIssue({
+          message: String(err),
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    }
+    return z.NEVER;
+  });
+
+export type ContractKeyValuePairDescriptor = {
+  /**
+   * A unique 32 bytes long hexadecimal string key.
+   *
+   * This could be the keccak256 hash of the parameter name.
+   */
+  key: Bytes32;
+  /**
+   * The human-readable name of the parameter.
+   */
+  name: string;
+  /**
+   * The human-readable ABI description of the parameter.
+   */
+  type: SolidityParameters;
+};
+
+/**
+ * @internal
+ */
+export const ContractKeyValuePairDescriptorSchema: z.ZodType<
+  ContractKeyValuePairDescriptor,
+  z.ZodTypeDef,
+  object
+> = z.object({
+  key: Bytes32Schema.describe('A unique 32 bytes long hexadecimal string key.'),
+  name: NonEmptyStringSchema.describe('The human-readable name of the parameter.'),
+  type: SolidityParametersSchema.describe('The human-readable ABI description of the parameter.'),
+});

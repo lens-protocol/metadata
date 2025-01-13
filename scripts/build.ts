@@ -8,6 +8,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   AccountMetadataSchema,
+  ActionMetadataSchema,
   AnyMediaSchema,
   AppMetadataSchema,
   ArticleSchema,
@@ -34,7 +35,6 @@ import {
   MetadataIdSchema,
   MetadataLicenseTypeSchema,
   MintSchema,
-  ModuleMetadataSchema,
   Nft721MetadataAttributeSchema,
   NonEmptyStringSchema,
   PhysicalAddressSchema,
@@ -139,12 +139,12 @@ for (const [path, Schema] of others) {
   await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
 }
 
-// Module schema
-const openActions = new Map<string, z.ZodSchema<unknown>>([
-  ['module/1.0.0.json', ModuleMetadataSchema],
+// Modules schemas
+const modules = new Map<string, z.ZodSchema<unknown>>([
+  ['action/1.0.0.json', ActionMetadataSchema],
 ]);
 
-for (const [path, Schema] of openActions) {
+for (const [path, Schema] of modules) {
   const outputFile = join(outputDir, path);
 
   await fs.ensureFile(outputFile);
@@ -207,13 +207,13 @@ async function generateUmbrellaSchema() {
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
       AccountMetadata: AccountMetadataSchema,
-      ModuleMetadata: ModuleMetadataSchema,
       AppMetadata: AppMetadataSchema,
       GraphMetadata: GraphMetadataSchema,
       FeedMetadata: FeedMetadataSchema,
       GroupMetadata: GroupMetadataSchema,
       SponsorshipMetadata: SponsorshipMetadataSchema,
       UsernameMetadata: UsernameMetadataSchema,
+      ActionMetadata: ActionMetadataSchema,
     },
   });
 
