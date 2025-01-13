@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { type Markdown, MarkdownSchema, type Signature } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import { type PostMetadataCommon, mainContentFocus, metadataDetailsWith, postWith } from './common';
 
 export type TextOnlyMetadataDetails = PostMetadataCommon & {
@@ -33,7 +33,7 @@ export type TextOnlyMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.TEXT_ONLY_LATEST;
+  $schema: PostMetadataSchemaId.TEXT_ONLY_LATEST;
   /**
    * The metadata details.
    */
@@ -48,6 +48,6 @@ export type TextOnlyMetadata = NftMetadata & {
  * @internal
  */
 export const TextOnlySchema = postWith({
-  $schema: z.literal(PostSchemaId.TEXT_ONLY_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.TEXT_ONLY_LATEST),
   lens: TextOnlyMetadataDetailsSchema,
 });

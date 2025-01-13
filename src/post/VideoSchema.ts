@@ -8,7 +8,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -68,7 +68,7 @@ export type VideoMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.VIDEO_LATEST;
+  $schema: PostMetadataSchemaId.VIDEO_LATEST;
   /**
    * The metadata details.
    */
@@ -83,6 +83,6 @@ export type VideoMetadata = NftMetadata & {
  * @internal
  */
 export const VideoSchema = postWith({
-  $schema: z.literal(PostSchemaId.VIDEO_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.VIDEO_LATEST),
   lens: VideoMetadataDetailsSchema,
 });

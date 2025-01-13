@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { type Markdown, MarkdownSchema, type Signature } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -44,7 +44,7 @@ export type StoryMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.STORY_LATEST;
+  $schema: PostMetadataSchemaId.STORY_LATEST;
   /**
    * The metadata details.
    */
@@ -59,6 +59,6 @@ export type StoryMetadata = NftMetadata & {
  * @internal
  */
 export const StorySchema = postWith({
-  $schema: z.literal(PostSchemaId.STORY_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.STORY_LATEST),
   lens: StoryMetadataDetailsSchema,
 });

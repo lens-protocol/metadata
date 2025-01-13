@@ -1,2 +1,2 @@
 export * from './AccountMetadataSchema.js';
-export * from './AccountSchemaId.js';
+export * from './AccountMetadataSchemaId.js';

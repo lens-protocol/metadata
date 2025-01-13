@@ -16,7 +16,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -158,7 +158,7 @@ export type EventMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.EVENT_LATEST;
+  $schema: PostMetadataSchemaId.EVENT_LATEST;
   /**
    * The metadata details.
    */
@@ -173,6 +173,6 @@ export type EventMetadata = NftMetadata & {
  * @internal
  */
 export const EventSchema = postWith({
-  $schema: z.literal(PostSchemaId.EVENT_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.EVENT_LATEST),
   lens: EventMetadataDetailsSchema,
 });

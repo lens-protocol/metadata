@@ -5,7 +5,7 @@ const location = `${SchemasRoot}/posts`;
 /**
  * A list of all the post schema ids (past and present).
  */
-export enum PostSchemaId {
+export enum PostMetadataSchemaId {
   THREE_D_LATEST = `${location}/3d/3.0.0.json`,
   ARTICLE_LATEST = `${location}/article/3.0.0.json`,
   AUDIO_LATEST = `${location}/audio/3.0.0.json`,

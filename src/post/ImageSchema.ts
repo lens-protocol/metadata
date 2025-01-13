@@ -8,7 +8,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -68,7 +68,7 @@ export type ImageMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.IMAGE_LATEST;
+  $schema: PostMetadataSchemaId.IMAGE_LATEST;
   /**
    * The metadata details.
    */
@@ -83,6 +83,6 @@ export type ImageMetadata = NftMetadata & {
  * @internal
  */
 export const ImageSchema = postWith({
-  $schema: z.literal(PostSchemaId.IMAGE_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.IMAGE_LATEST),
   lens: ImageMetadataDetailsSchema,
 });

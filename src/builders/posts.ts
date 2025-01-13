@@ -29,7 +29,7 @@ import {
   type MintMetadataDetails,
   MintSchema,
   PostMainFocus,
-  PostSchemaId,
+  PostMetadataSchemaId,
   type SpaceMetadata,
   type SpaceMetadataDetails,
   SpaceSchema,
@@ -118,7 +118,7 @@ export function article({
 }: ArticleOptions): ArticleMetadata {
   return evaluate(
     ArticleSchema.safeParse({
-      $schema: PostSchemaId.ARTICLE_LATEST,
+      $schema: PostMetadataSchemaId.ARTICLE_LATEST,
       ...nft,
       lens: {
         id,
@@ -202,7 +202,7 @@ export function audio({
 }: AudioOptions): AudioMetadata {
   return evaluate(
     AudioSchema.safeParse({
-      $schema: PostSchemaId.AUDIO_LATEST,
+      $schema: PostMetadataSchemaId.AUDIO_LATEST,
       ...nft,
       lens: {
         id,
@@ -273,7 +273,7 @@ export function checkingIn({
 }: CheckingInOptions): CheckingInMetadata {
   return evaluate(
     CheckingInSchema.safeParse({
-      $schema: PostSchemaId.CHECKING_IN_LATEST,
+      $schema: PostMetadataSchemaId.CHECKING_IN_LATEST,
       ...nft,
       lens: {
         id,
@@ -323,7 +323,7 @@ export function embed({
 }: EmbedOptions): EmbedMetadata {
   return evaluate(
     EmbedSchema.safeParse({
-      $schema: PostSchemaId.EMBED_LATEST,
+      $schema: PostMetadataSchemaId.EMBED_LATEST,
       ...nft,
       lens: {
         id,
@@ -398,7 +398,7 @@ export function event({
 }: EventOptions): EventMetadata {
   return evaluate(
     EventSchema.safeParse({
-      $schema: PostSchemaId.EVENT_LATEST,
+      $schema: PostMetadataSchemaId.EVENT_LATEST,
       ...nft,
       lens: {
         id,
@@ -484,7 +484,7 @@ export function image({
 }: ImageOptions): ImageMetadata {
   return evaluate(
     ImageSchema.safeParse({
-      $schema: PostSchemaId.IMAGE_LATEST,
+      $schema: PostMetadataSchemaId.IMAGE_LATEST,
       ...nft,
       lens: {
         id,
@@ -535,7 +535,7 @@ export function link({
 }: LinkOptions): LinkMetadata {
   return evaluate(
     LinkSchema.safeParse({
-      $schema: PostSchemaId.LINK_LATEST,
+      $schema: PostMetadataSchemaId.LINK_LATEST,
       ...nft,
       lens: {
         id,
@@ -588,7 +588,7 @@ export function liveStream({
 }: LiveStreamOptions): LiveStreamMetadata {
   return evaluate(
     LiveStreamSchema.safeParse({
-      $schema: PostSchemaId.LIVESTREAM_LATEST,
+      $schema: PostMetadataSchemaId.LIVESTREAM_LATEST,
       ...nft,
       lens: {
         id,
@@ -640,7 +640,7 @@ export function mint({
 }: MintOptions): MintMetadata {
   return evaluate(
     MintSchema.safeParse({
-      $schema: PostSchemaId.MINT_LATEST,
+      $schema: PostMetadataSchemaId.MINT_LATEST,
       ...nft,
       lens: {
         id,
@@ -692,7 +692,7 @@ export function space({
 }: SpaceOptions): SpaceMetadata {
   return evaluate(
     SpaceSchema.safeParse({
-      $schema: PostSchemaId.SPACE_LATEST,
+      $schema: PostMetadataSchemaId.SPACE_LATEST,
       ...nft,
       lens: {
         id,
@@ -748,7 +748,7 @@ export function story({
 }: StoryOptions): StoryMetadata {
   return evaluate(
     StorySchema.safeParse({
-      $schema: PostSchemaId.STORY_LATEST,
+      $schema: PostMetadataSchemaId.STORY_LATEST,
       ...nft,
       lens: {
         id,
@@ -798,7 +798,7 @@ export function textOnly({
 }: TextOnlyOptions): TextOnlyMetadata {
   return evaluate(
     TextOnlySchema.safeParse({
-      $schema: PostSchemaId.TEXT_ONLY_LATEST,
+      $schema: PostMetadataSchemaId.TEXT_ONLY_LATEST,
       ...nft,
       lens: {
         id,
@@ -857,7 +857,7 @@ export function threeD({
 }: ThreeDOptions): ThreeDMetadata {
   return evaluate(
     ThreeDSchema.safeParse({
-      $schema: PostSchemaId.THREE_D_LATEST,
+      $schema: PostMetadataSchemaId.THREE_D_LATEST,
       ...nft,
       lens: {
         id,
@@ -910,7 +910,7 @@ export function transaction({
 }: TransactionOptions): TransactionMetadata {
   return evaluate(
     TransactionSchema.safeParse({
-      $schema: PostSchemaId.TRANSACTION_LATEST,
+      $schema: PostMetadataSchemaId.TRANSACTION_LATEST,
       ...nft,
       lens: {
         id,
@@ -997,7 +997,7 @@ export function video({
 }: VideoOptions): VideoMetadata {
   return evaluate(
     VideoSchema.safeParse({
-      $schema: PostSchemaId.VIDEO_LATEST,
+      $schema: PostMetadataSchemaId.VIDEO_LATEST,
       ...nft,
       lens: {
         id,
@@ -1050,7 +1050,7 @@ export function shortVideo({
 }: ShortVideoOptions): VideoMetadata {
   return evaluate(
     VideoSchema.safeParse({
-      $schema: PostSchemaId.VIDEO_LATEST,
+      $schema: PostMetadataSchemaId.VIDEO_LATEST,
       ...nft,
       lens: {
         id,

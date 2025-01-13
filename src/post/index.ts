@@ -12,7 +12,7 @@ export * from './LinkSchema.js';
 export * from './LiveStreamSchema.js';
 export * from './MintSchema.js';
 export * from './PostMainFocus.js';
-export * from './PostSchemaId.js';
+export * from './PostMetadataSchemaId.js';
 export * from './SpaceSchema.js';
 export * from './StorySchema.js';
 export * from './TextOnlySchema.js';

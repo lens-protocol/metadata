@@ -10,7 +10,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -113,7 +113,7 @@ export type ThreeDMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.THREE_D_LATEST;
+  $schema: PostMetadataSchemaId.THREE_D_LATEST;
   /**
    * The metadata details.
    */
@@ -128,7 +128,7 @@ export type ThreeDMetadata = NftMetadata & {
  * @internal
  */
 export const ThreeDSchema = postWith({
-  $schema: z.literal(PostSchemaId.THREE_D_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.THREE_D_LATEST),
 
   lens: ThreeDMetadataDetailsSchema,
 });

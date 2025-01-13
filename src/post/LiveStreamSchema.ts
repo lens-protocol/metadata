@@ -12,7 +12,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -121,7 +121,7 @@ export type LiveStreamMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.LIVESTREAM_LATEST;
+  $schema: PostMetadataSchemaId.LIVESTREAM_LATEST;
   /**
    * The metadata details.
    */
@@ -136,6 +136,6 @@ export type LiveStreamMetadata = NftMetadata & {
  * @internal
  */
 export const LiveStreamSchema = postWith({
-  $schema: z.literal(PostSchemaId.LIVESTREAM_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.LIVESTREAM_LATEST),
   lens: LiveStreamMetadataDetailsSchema,
 });
