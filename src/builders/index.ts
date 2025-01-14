@@ -5,6 +5,7 @@ export * from './feed.js';
 export * from './graph.js';
 export * from './group.js';
 export * from './posts.js';
+export * from './rules.js';
 export * from './sponsorship.js';
 export * from './username.js';
 export { ValidationError } from './ValidationError.js';

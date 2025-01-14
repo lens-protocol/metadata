@@ -16,13 +16,17 @@ import {
   ChainIdSchema,
   CheckingInSchema,
   ContentWarningSchema,
+  ContractKeyValuePairDescriptorSchema,
   EmbedSchema,
   EventSchema,
   EvmAddressSchema,
   FeedMetadataSchema,
+  FeedRuleMetadataSchema,
   GeoURISchema,
   GraphMetadataSchema,
+  GraphRuleMetadataSchema,
   GroupMetadataSchema,
+  GroupRuleMetadataSchema,
   ImageSchema,
   LinkSchema,
   LiveStreamSchema,
@@ -35,11 +39,13 @@ import {
   MetadataIdSchema,
   MetadataLicenseTypeSchema,
   MintSchema,
+  NamespaceRuleMetadataSchema,
   Nft721MetadataAttributeSchema,
   NonEmptyStringSchema,
   PhysicalAddressSchema,
   PostMainFocusSchema,
   PostMetadataSchema,
+  RuleMetadataSchema,
   SignatureSchema,
   SpaceSchema,
   SponsorshipMetadataSchema,
@@ -52,13 +58,7 @@ import {
   UsernameMetadataSchema,
   VideoSchema,
 } from '../src';
-import {
-  FeedRuleMetadataSchema,
-  GroupRuleMetadataSchema,
-  NamespaceRuleMetadataSchema,
-  RuleMetadataSchema,
-} from '../src/rule';
-import { GraphRuleMetadataSchema } from '../src/rule/GraphRuleMetadataSchema';
+import { FollowRuleMetadataSchema } from '../src/rule/FollowRuleMetadataSchema';
 import { PostRuleMetadataSchema } from '../src/rule/PostRuleMetadataSchema';
 
 const outputDir = 'jsonschemas';
@@ -151,6 +151,7 @@ for (const [path, Schema] of others) {
 const modules = new Map<string, z.ZodSchema<unknown>>([
   ['action/1.0.0.json', ActionMetadataSchema],
   ['rules/feed/1.0.0.json', FeedRuleMetadataSchema],
+  ['rules/follow/1.0.0.json', FollowRuleMetadataSchema],
   ['rules/graph/1.0.0.json', GraphRuleMetadataSchema],
   ['rules/group/1.0.0.json', GroupRuleMetadataSchema],
   ['rules/namespace/1.0.0.json', NamespaceRuleMetadataSchema],
@@ -168,6 +169,7 @@ for (const [path, Schema] of modules) {
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
       MetadataAttribute: MetadataAttributeSchema,
+      ContractKeyValuePairDescriptor: ContractKeyValuePairDescriptorSchema,
     },
   });
 
@@ -233,6 +235,7 @@ async function generateUmbrellaSchema() {
       ActionMetadata: ActionMetadataSchema,
       // Rules schemas
       RuleMetadata: RuleMetadataSchema,
+      ContractKeyValuePairDescriptor: ContractKeyValuePairDescriptorSchema,
     },
   });
 

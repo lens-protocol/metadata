@@ -6,6 +6,11 @@ import {
   FeedRuleMetadataSchema,
 } from '../rule/FeedRuleMetadataSchema.js';
 import {
+  type FollowRuleMetadata,
+  type FollowRuleMetadataDetails,
+  FollowRuleMetadataSchema,
+} from '../rule/FollowRuleMetadataSchema.js';
+import {
   type GraphRuleMetadata,
   type GraphRuleMetadataDetails,
   GraphRuleMetadataSchema,
@@ -316,6 +321,61 @@ export type PostRuleOptions = PostRuleDetails & {
 export function postRule({ id = v4(), ...others }: PostRuleOptions): PostRuleMetadata {
   return evaluate(
     PostRuleMetadataSchema.safeParse({
+      $schema: RuleMetadataSchemaId.POST_LATEST,
+      lens: {
+        id,
+        ...others,
+      },
+    }),
+  );
+}
+/**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type FollowRuleDetails = Prettify<RecursiveUnbrand<Omit<FollowRuleMetadataDetails, 'id'>>>;
+
+export type FollowRuleOptions = FollowRuleDetails & {
+  /**
+   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
+   *
+   * @defaultValue a UUID
+   */
+  id?: string;
+};
+
+/**
+ * Creates a valid FollowRuleMetadata.
+ *
+ * @category Compose
+ * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * ```ts
+ * const metadata = followRule({
+ *   name: 'MyFollowRule',
+ *   title: 'This is my Follow Rule',
+ *   description: 'Get ready for the future of social interaction!',
+ *   authors: ['awesome-dev@lens.xyz'],
+ *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   processFollowParams: [
+ *     {
+ *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
+ *       name: 'recipient',
+ *       type: 'address',
+ *     },
+ *     {
+ *       key: 'e4ddce99520beb836fc879fc2a7d0743f784ffb925f96544bb5ff27c441c8c99',
+ *       name: 'fee',
+ *       type: 'address token, uint256 value',
+ *     }
+ *   ],
+ * });
+ * ```
+ */
+export function followRule({ id = v4(), ...others }: FollowRuleOptions): FollowRuleMetadata {
+  return evaluate(
+    FollowRuleMetadataSchema.safeParse({
       $schema: RuleMetadataSchemaId.POST_LATEST,
       lens: {
         id,

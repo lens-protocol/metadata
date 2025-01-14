@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { type FeedRuleMetadata, FeedRuleMetadataSchema } from './FeedRuleMetadataSchema.js';
+import { type FollowRuleMetadata, FollowRuleMetadataSchema } from './FollowRuleMetadataSchema.js';
 import { type GraphRuleMetadata, GraphRuleMetadataSchema } from './GraphRuleMetadataSchema.js';
 import { type GroupRuleMetadata, GroupRuleMetadataSchema } from './GroupRuleMetadataSchema.js';
 import {
@@ -19,6 +20,7 @@ export * from './RuleMetadataSchemaId.js';
  */
 export type RuleMetadata =
   | FeedRuleMetadata
+  | FollowRuleMetadata
   | GraphRuleMetadata
   | GroupRuleMetadata
   | NamespaceRuleMetadata
@@ -30,6 +32,7 @@ export type RuleMetadata =
 export const RuleMetadataSchema: z.ZodType<RuleMetadata, z.ZodTypeDef, object> =
   z.discriminatedUnion('$schema', [
     FeedRuleMetadataSchema,
+    FollowRuleMetadataSchema,
     GraphRuleMetadataSchema,
     GroupRuleMetadataSchema,
     NamespaceRuleMetadataSchema,

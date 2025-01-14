@@ -42,44 +42,21 @@
         "configureParams": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string",
-                "minLength": 66,
-                "maxLength": 66,
-                "pattern": "^0x[0-9a-fA-F]{64}$",
-                "description": "A unique 32 bytes long hexadecimal string key."
-              },
-              "name": {
-                "$ref": "#/$defs/NonEmptyString",
-                "description": "The human-readable name of the parameter."
-              },
-              "type": {
-                "type": "string",
-                "description": "The human-readable ABI description of the parameter."
-              }
-            },
-            "required": [
-              "key",
-              "name",
-              "type"
-            ],
-            "additionalProperties": false
+            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
           },
           "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `configure` function."
         },
         "executeParams": {
           "type": "array",
           "items": {
-            "$ref": "#/properties/lens/properties/configureParams/items"
+            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
           },
           "description": "A list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `execute` function."
         },
         "setDisabledParams": {
           "type": "array",
           "items": {
-            "$ref": "#/properties/lens/properties/configureParams/items"
+            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
           },
           "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `setDisabledParams` function."
         }
@@ -234,6 +211,32 @@
           "additionalProperties": false
         }
       ]
+    },
+    "ContractKeyValuePairDescriptor": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 66,
+          "maxLength": 66,
+          "pattern": "^0x[0-9a-fA-F]{64}$",
+          "description": "A unique 32 bytes long hexadecimal string key."
+        },
+        "name": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The human-readable name of the parameter."
+        },
+        "type": {
+          "type": "string",
+          "description": "The human-readable ABI description of the parameter."
+        }
+      },
+      "required": [
+        "key",
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"

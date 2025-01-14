@@ -8,7 +8,7 @@
     },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/rules/namespace/1.0.0.json"
+      "const": "https://json-schemas.lens.dev/rules/follow/1.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -44,33 +44,12 @@
           "format": "uri",
           "description": "The link to the Rule source code. Typically a GitHub repository."
         },
-        "processCreationParams": {
+        "processFollowParams": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/ContractKeyValuePairDescriptor"
           },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreation` function."
-        },
-        "processRemovalParams": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
-          },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemoval` function."
-        },
-        "processAssigningParams": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
-          },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processAssigning` function."
-        },
-        "processUnassigningParams": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
-          },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processUnassigning` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollow` function."
         }
       },
       "required": [
@@ -80,10 +59,7 @@
         "description",
         "authors",
         "source",
-        "processCreationParams",
-        "processRemovalParams",
-        "processAssigningParams",
-        "processUnassigningParams"
+        "processFollowParams"
       ],
       "additionalProperties": false
     }

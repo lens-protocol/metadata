@@ -10,6 +10,7 @@ export * from './graph/index.js';
 export * from './MetadataAttribute.js';
 export * from './post/index.js';
 export * from './primitives.js';
+export * from './rule/index.js';
 export * from './signMetadata.js';
 export * from './sponsorship/index.js';
 export * from './tokens/eip721.js';
