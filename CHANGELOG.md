@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.5
+
+### Patch Changes
+
+- 5d3e6e7: **feat:** ActionMetadata, FeedRuleMetadata, GraphRuleMetadata, GroupRuleMetadata, NamespaceRuleMetadata, PostRuleMetadata, FollowRuleMetadata specs. Renames UsernameMetadata into NamespaceMetadata.
+
 ## 2.0.0-next.4
 
 ### Patch Changes
