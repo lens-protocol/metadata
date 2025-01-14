@@ -1,9 +1,14 @@
 {
   "type": "object",
   "properties": {
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A cryptographic signature of the Lens metadata."
+    },
     "$schema": {
       "type": "string",
-      "const": "https://json-schemas.lens.dev/actions/1.0.0.json"
+      "const": "https://json-schemas.lens.dev/rules/graph/1.0.0.json"
     },
     "lens": {
       "type": "object",
@@ -14,15 +19,15 @@
         },
         "name": {
           "$ref": "#/$defs/NonEmptyString",
-          "description": "A short name for the Action."
+          "description": "A short name for the Rule."
         },
         "title": {
           "$ref": "#/$defs/NonEmptyString",
-          "description": "The human-friendly title for the Action."
+          "description": "The human-friendly title for the Rule."
         },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
-          "description": "Markdown formatted description of the Action."
+          "description": "Markdown formatted description of the Rule."
         },
         "authors": {
           "type": "array",
@@ -37,9 +42,9 @@
           "type": "string",
           "minLength": 6,
           "format": "uri",
-          "description": "The link to the Action source code. Typically a GitHub repository."
+          "description": "The link to the Rule source code. Typically a GitHub repository."
         },
-        "configureParams": {
+        "processFollowParams": {
           "type": "array",
           "items": {
             "type": "object",
@@ -67,21 +72,21 @@
             ],
             "additionalProperties": false
           },
-          "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `configure` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollow` function."
         },
-        "executeParams": {
+        "processUnfollowParams": {
           "type": "array",
           "items": {
-            "$ref": "#/properties/lens/properties/configureParams/items"
+            "$ref": "#/properties/lens/properties/processFollowParams/items"
           },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `execute` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processUnfollow` function."
         },
-        "setDisabledParams": {
+        "processFollowRuleChangesParams": {
           "type": "array",
           "items": {
-            "$ref": "#/properties/lens/properties/configureParams/items"
+            "$ref": "#/properties/lens/properties/processFollowParams/items"
           },
-          "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `setDisabledParams` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollowRuleChanges` function."
         }
       },
       "required": [
@@ -91,14 +96,11 @@
         "description",
         "authors",
         "source",
-        "executeParams"
+        "processFollowParams",
+        "processUnfollowParams",
+        "processFollowRuleChangesParams"
       ],
       "additionalProperties": false
-    },
-    "signature": {
-      "type": "string",
-      "minLength": 1,
-      "description": "A cryptographic signature of the Lens metadata."
     }
   },
   "required": [

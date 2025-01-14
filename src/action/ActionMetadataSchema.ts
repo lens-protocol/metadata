@@ -43,7 +43,7 @@ export type ActionMetadataDetails = {
    */
   source: URI;
   /**
-   * An optional list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `configure` function.
+   * An optional list of {@link ContractKeyValuePairDescriptor} that describes the `params` argument of the `configure` function.
    *
    * ```sol
    * function configure(address originalMsgSender, address feed, uint256 postId, KeyValue[] calldata params)
@@ -57,7 +57,7 @@ export type ActionMetadataDetails = {
    */
   configureParams?: ContractKeyValuePairDescriptor[];
   /**
-   * A list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `execute` function.
+   * A list of {@link ContractKeyValuePairDescriptor} that describes the `params` argument of the `execute` function.
    *
    * ```sol
    * function execute(address originalMsgSender, address feed, uint256 postId, KeyValue[] calldata params)
@@ -71,7 +71,7 @@ export type ActionMetadataDetails = {
    */
   executeParams?: ContractKeyValuePairDescriptor[];
   /**
-   * An optional list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `setDisabledParams` function.
+   * An optional list of {@link ContractKeyValuePairDescriptor} that describes the `params` argument of the `setDisabledParams` function.
    *
    * ```sol
    * function setDisabled(
@@ -109,18 +109,18 @@ const ActionMetadataDetailsSchema: z.ZodType<ActionMetadataDetails, z.ZodTypeDef
       .array(ContractKeyValuePairDescriptorSchema)
       .optional()
       .describe(
-        'An optional list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `configure` function.',
+        'An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `configure` function.',
       ),
     executeParams: z
       .array(ContractKeyValuePairDescriptorSchema)
       .describe(
-        'A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `execute` function.',
+        'A list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `execute` function.',
       ),
     setDisabledParams: z
       .array(ContractKeyValuePairDescriptorSchema)
       .optional()
       .describe(
-        'An optional list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `setDisabledParams` function.',
+        'An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `setDisabledParams` function.',
       ),
   });
 

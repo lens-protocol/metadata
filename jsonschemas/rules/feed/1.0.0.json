@@ -72,28 +72,28 @@
             ],
             "additionalProperties": false
           },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processCreatePost` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreatePost` function."
         },
         "processEditPostParams": {
           "type": "array",
           "items": {
             "$ref": "#/properties/lens/properties/processCreatePostParams/items"
           },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processEditPost` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processEditPost` function."
         },
         "processRemovePostParams": {
           "type": "array",
           "items": {
             "$ref": "#/properties/lens/properties/processCreatePostParams/items"
           },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processRemovePost` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemovePost` function."
         },
         "processPostRuleChangesParams": {
           "type": "array",
           "items": {
             "$ref": "#/properties/lens/properties/processCreatePostParams/items"
           },
-          "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processPostRuleChanges` function."
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processPostRuleChanges` function."
         }
       },
       "required": [

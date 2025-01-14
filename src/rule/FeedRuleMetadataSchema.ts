@@ -43,7 +43,7 @@ export type FeedRuleMetadataDetails = {
    */
   source: URI;
   /**
-   * A list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `processCreatePost` function.
+   * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processCreatePost` function.
    *
    * ```sol
    * function processCreatePost(
@@ -61,7 +61,7 @@ export type FeedRuleMetadataDetails = {
    */
   processCreatePostParams: ContractKeyValuePairDescriptor[];
   /**
-   * A list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `processEditPost` function.
+   * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processEditPost` function.
    *
    * ```sol
    * function processEditPost(
@@ -79,7 +79,7 @@ export type FeedRuleMetadataDetails = {
    */
   processEditPostParams: ContractKeyValuePairDescriptor[];
   /**
-   * A list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `processRemovePost` function.
+   * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processRemovePost` function.
    *
    * ```sol
    * function processRemovePost(
@@ -96,7 +96,7 @@ export type FeedRuleMetadataDetails = {
    */
   processRemovePostParams: ContractKeyValuePairDescriptor[];
   /**
-   * A list of {@link ContractKeyValuePairDescriptor} that describe the `params` argument of the `processPostRuleChanges` function.
+   * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processPostRuleChanges` function.
    *
    * ```sol
    * function processPostRuleChanges(
@@ -130,22 +130,22 @@ const FeedRuleMetadataDetailsSchema: z.ZodType<FeedRuleMetadataDetails, z.ZodTyp
     processCreatePostParams: z
       .array(ContractKeyValuePairDescriptorSchema)
       .describe(
-        'A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processCreatePost` function.',
+        'A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreatePost` function.',
       ),
     processEditPostParams: z
       .array(ContractKeyValuePairDescriptorSchema)
       .describe(
-        'A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processEditPost` function.',
+        'A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processEditPost` function.',
       ),
     processRemovePostParams: z
       .array(ContractKeyValuePairDescriptorSchema)
       .describe(
-        'A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processRemovePost` function.',
+        'A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemovePost` function.',
       ),
     processPostRuleChangesParams: z
       .array(ContractKeyValuePairDescriptorSchema)
       .describe(
-        'A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processPostRuleChanges` function.',
+        'A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processPostRuleChanges` function.',
       ),
   });
 

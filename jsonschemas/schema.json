@@ -3624,21 +3624,21 @@
                 ],
                 "additionalProperties": false
               },
-              "description": "An optional list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `configure` function."
+              "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `configure` function."
             },
             "executeParams": {
               "type": "array",
               "items": {
                 "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
               },
-              "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `execute` function."
+              "description": "A list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `execute` function."
             },
             "setDisabledParams": {
               "type": "array",
               "items": {
                 "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
               },
-              "description": "An optional list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `setDisabledParams` function."
+              "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `setDisabledParams` function."
             }
           },
           "required": [
@@ -3713,28 +3713,28 @@
                   "items": {
                     "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
                   },
-                  "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processCreatePost` function."
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreatePost` function."
                 },
                 "processEditPostParams": {
                   "type": "array",
                   "items": {
                     "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
                   },
-                  "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processEditPost` function."
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processEditPost` function."
                 },
                 "processRemovePostParams": {
                   "type": "array",
                   "items": {
                     "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
                   },
-                  "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processRemovePost` function."
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemovePost` function."
                 },
                 "processPostRuleChangesParams": {
                   "type": "array",
                   "items": {
                     "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
                   },
-                  "description": "A list of `ContractKeyValuePairDescriptor` that describe the `params` argument of the `processPostRuleChanges` function."
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processPostRuleChanges` function."
                 }
               },
               "required": [
@@ -3748,6 +3748,91 @@
                 "processEditPostParams",
                 "processRemovePostParams",
                 "processPostRuleChangesParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/graph/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processFollowParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollow` function."
+                },
+                "processUnfollowParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processUnfollow` function."
+                },
+                "processFollowRuleChangesParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollowRuleChanges` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processFollowParams",
+                "processUnfollowParams",
+                "processFollowRuleChangesParams"
               ],
               "additionalProperties": false
             }
