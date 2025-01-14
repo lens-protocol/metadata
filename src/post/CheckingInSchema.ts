@@ -12,7 +12,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -74,7 +74,7 @@ export type CheckingInMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.CHECKING_IN_LATEST;
+  $schema: PostMetadataSchemaId.CHECKING_IN_LATEST;
   /**
    * The metadata details.
    */
@@ -89,6 +89,6 @@ export type CheckingInMetadata = NftMetadata & {
  * @internal
  */
 export const CheckingInSchema = postWith({
-  $schema: z.literal(PostSchemaId.CHECKING_IN_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.CHECKING_IN_LATEST),
   lens: CheckingInMetadataDetailsSchema,
 });

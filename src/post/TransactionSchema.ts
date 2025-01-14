@@ -10,7 +10,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -84,7 +84,7 @@ export type TransactionMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.TRANSACTION_LATEST;
+  $schema: PostMetadataSchemaId.TRANSACTION_LATEST;
   /**
    * The metadata details.
    */
@@ -99,6 +99,6 @@ export type TransactionMetadata = NftMetadata & {
  * @internal
  */
 export const TransactionSchema = postWith({
-  $schema: z.literal(PostSchemaId.TRANSACTION_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.TRANSACTION_LATEST),
   lens: TransactionMetadataDetailsSchema,
 });

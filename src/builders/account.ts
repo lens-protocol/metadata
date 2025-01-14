@@ -4,7 +4,7 @@ import {
   type AccountMetadata,
   type AccountMetadataDetails,
   AccountMetadataSchema,
-  AccountSchemaId,
+  AccountMetadataSchemaId,
 } from '../account';
 import type { Prettify } from '../utils.js';
 import { evaluate } from './ValidationError.js';
@@ -84,7 +84,7 @@ export type AccountOptions = AccountDetails & {
 export function account({ id = v4(), ...others }: AccountOptions): AccountMetadata {
   return evaluate(
     AccountMetadataSchema.safeParse({
-      $schema: AccountSchemaId.LATEST,
+      $schema: AccountMetadataSchemaId.LATEST,
       lens: {
         id,
         ...others,

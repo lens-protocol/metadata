@@ -10,7 +10,7 @@ import {
   type URI,
   URISchema,
 } from '../primitives.js';
-import { AccountSchemaId } from './AccountSchemaId.js';
+import { AccountMetadataSchemaId } from './AccountMetadataSchemaId.js';
 
 export type AccountMetadataDetails = {
   /**
@@ -72,7 +72,7 @@ export type AccountMetadata = {
   /**
    * The schema id.
    */
-  $schema: AccountSchemaId.LATEST;
+  $schema: AccountMetadataSchemaId.LATEST;
   /**
    * The metadata details.
    */
@@ -107,7 +107,7 @@ export type AccountMetadata = {
  * ```
  */
 export const AccountMetadataSchema: z.ZodType<AccountMetadata, z.ZodTypeDef, object> = z.object({
-  $schema: z.literal(AccountSchemaId.LATEST),
+  $schema: z.literal(AccountMetadataSchemaId.LATEST),
   lens: AccountMetadataDetailsSchema,
   signature: SignatureSchema.optional(),
 });

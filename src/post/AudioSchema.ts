@@ -8,7 +8,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -68,7 +68,7 @@ export type AudioMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.AUDIO_LATEST;
+  $schema: PostMetadataSchemaId.AUDIO_LATEST;
   /**
    * The metadata details.
    */
@@ -83,6 +83,6 @@ export type AudioMetadata = NftMetadata & {
  * @internal
  */
 export const AudioSchema = postWith({
-  $schema: z.literal(PostSchemaId.AUDIO_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.AUDIO_LATEST),
   lens: AudioMetadataDetailsSchema,
 });

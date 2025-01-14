@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { BaseError, formatAbiParameters, parseAbiParameters } from 'abitype';
 import { formatZodError } from './formatters.js';
 import { type Brand, invariant, never } from './utils.js';
 
@@ -400,179 +401,102 @@ export const ChainIdSchema: z.ZodType<ChainId, z.ZodTypeDef, unknown> = z
   .transform(toChainId);
 
 /**
- * An EVM compatible address on a specific chain.
+ * A 32 bytes long hexadecimal string.
  */
-export type NetworkAddress = {
-  /**
-   * The chain id.
-   */
-  chainId: ChainId;
-  /**
-   * The EVM address.
-   */
-  address: EvmAddress;
-};
-/**
- * @internal
- */
-export const NetworkAddressSchema: z.ZodType<NetworkAddress, z.ZodTypeDef, unknown> = z.object(
-  {
-    chainId: ChainIdSchema,
-    address: EvmAddressSchema,
-  },
-  {
-    description: 'An EVM compatible address on a specific chain.',
-  },
-);
+export type Bytes32 = Brand<string, 'Bytes32'>;
 
-/**
- * An NFT token identifier.
- */
-export type TokenId = Brand<string, 'TokenId'>;
-/**
- * @internal
- */
-export function toTokenId(value: string): TokenId {
-  return value as TokenId;
+function toBytes32(value: string): Bytes32 {
+  return value as Bytes32;
 }
 /**
  * @internal
  */
-export const TokenIdSchema: z.ZodType<TokenId, z.ZodTypeDef, unknown> = z
+export const Bytes32Schema: z.ZodType<Bytes32, z.ZodTypeDef, unknown> = z
   .string()
-  .min(1)
-  .transform(toTokenId);
+  .length(66)
+  .regex(/^0x[0-9a-fA-F]{64}$/, 'Should be a 32 bytes long hexadecimal string.')
+  .transform(toBytes32);
 
 /**
- * A Fungible Tokens. Usually an ERC20 token.
- */
-export type Asset = {
-  /**
-   * The asset contract address.
-   */
-  contract: NetworkAddress;
-  /**
-   * The number of decimals of the asset (e.g. 18 for WETH)
-   */
-  decimals: number;
-};
-/**
- * @internal
- */
-export const AssetSchema: z.ZodType<Asset, z.ZodTypeDef, unknown> = z.object({
-  contract: NetworkAddressSchema,
-  decimals: z.number({ description: 'The number of decimals of the asset.' }).int().nonnegative(),
-});
-/**
- * Creates an {@link Asset}.
+ * A human-readable ABI of Solidity parameters.
+ * - address
+ * - array
+ * - bool
+ * - bytes
+ * - int
+ * - string
+ * or tuples of the above.
  *
- * @internal
+ * @example
+ * ```ts
+ * 'address'
+ * 'address[]'
+ * 'address, address, uint256'
+ * 'address from, address to, uint256 amount'
+ * '(address from, address to, uint256 amount), uint256'
+ * ```
  */
-export function asset(contract: NetworkAddressDetails, decimals: number): Asset {
-  return AssetSchema.parse({ contract, decimals });
-}
-
-/**
- * An amount of a specific asset.
- */
-export type Amount = {
-  /**
-   * The asset.
-   *
-   * See {@link asset} helper to create one.
-   */
-  asset: Asset;
-  /**
-   * The amount in the smallest unit of the given asset (e.g. wei for ETH).
-   */
-  value: string;
-};
-/**
- * @internal
- */
-export const AmountSchema: z.ZodType<Amount, z.ZodTypeDef, unknown> = z.object(
-  {
-    asset: AssetSchema,
-    value: NonEmptyStringSchema.describe(
-      'The amount in the smallest unit of the given asset (e.g. wei for ETH).',
-    ),
-  },
-  {
-    description: 'An amount of a specific asset.',
-  },
-);
-
-export type NetworkAddressDetails = {
-  /**
-   * The chain id.
-   */
-  chainId: number;
-  /**
-   * The EVM address.
-   */
-  address: string;
-};
+export type SolidityParameters = Brand<string, 'SolidityParameters'>;
 
 /**
  * @internal
  */
-export type AmountDetails = {
-  contract: NetworkAddressDetails;
-  decimals: number;
-  value: string;
-};
-/**
- * @internal
- */
-export function amount(input: AmountDetails): Amount {
-  return AmountSchema.parse({
-    asset: asset(input.contract, input.decimals),
-    value: input.value,
+export const SolidityParametersSchema: z.ZodType<SolidityParameters, z.ZodTypeDef, string> = z
+  .string()
+  .superRefine((val, ctx): val is SolidityParameters => {
+    try {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      const formatted = formatAbiParameters(parseAbiParameters(val) as any);
+      if (formatted !== val) {
+        ctx.addIssue({
+          message: `Should be a valid Solidity ABI parameters string. Expected: \`${formatted}\`.`,
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    } catch (err) {
+      if (err instanceof BaseError && err.metaMessages) {
+        for (const message of err.metaMessages) {
+          ctx.addIssue({
+            message: message,
+            code: z.ZodIssueCode.custom,
+          });
+        }
+      } else {
+        ctx.addIssue({
+          message: String(err),
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    }
+    return z.NEVER;
   });
-}
+
+export type ContractKeyValuePairDescriptor = {
+  /**
+   * A unique 32 bytes long hexadecimal string key.
+   *
+   * This could be the keccak256 hash of the parameter name.
+   */
+  key: Bytes32;
+  /**
+   * The human-readable name of the parameter.
+   */
+  name: string;
+  /**
+   * The human-readable ABI description of the parameter.
+   */
+  type: SolidityParameters;
+};
 
 /**
- * A Legacy Lens Profile identifier.
- *
- * @example
- * ```
- * 0x01
- * ```
- */
-export type LegacyProfileId = Brand<string, 'ProfileId'>;
-/**
  * @internal
  */
-export function toProfileId(value: string): LegacyProfileId {
-  return value as LegacyProfileId;
-}
-/**
- * @internal
- */
-export const LegacyProfileIdSchema: z.ZodType<LegacyProfileId, z.ZodTypeDef, unknown> = z
-  .string()
-  .min(4)
-  .transform(toProfileId);
-
-/**
- * A Legacy on-chain Lens Publication identifier.
- *
- * @example
- * ```
- * 0x01-0x01
- * ```
- */
-export type LegacyPublicationId = Brand<string, 'PublicationId'>;
-/**
- * @internal
- */
-export function toLegacyPublicationId(value: string): LegacyPublicationId {
-  return value as LegacyPublicationId;
-}
-/**
- * @internal
- */
-export const LegacyPublicationIdSchema: z.ZodType<LegacyPublicationId, z.ZodTypeDef, unknown> = z
-  .string()
-  .min(9)
-  .transform(toLegacyPublicationId);
+export const ContractKeyValuePairDescriptorSchema: z.ZodType<
+  ContractKeyValuePairDescriptor,
+  z.ZodTypeDef,
+  object
+> = z.object({
+  key: Bytes32Schema.describe('A unique 32 bytes long hexadecimal string key.'),
+  name: NonEmptyStringSchema.describe('The human-readable name of the parameter.'),
+  type: SolidityParametersSchema.describe('The human-readable ABI description of the parameter.'),
+});

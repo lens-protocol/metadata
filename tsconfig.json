@@ -18,11 +18,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
-    "strictFunctionTypes": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictFunctionTypes": true,
     "target": "ESNext",
-    "types": ["node"]
+    "types": ["node"],
   },
   "include": ["**/*.ts"],
   "exclude": ["dist", "node_modules"]

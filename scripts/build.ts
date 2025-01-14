@@ -8,7 +8,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
   AccountMetadataSchema,
-  AmountSchema,
+  ActionMetadataSchema,
   AnyMediaSchema,
   AppMetadataSchema,
   ArticleSchema,
@@ -16,16 +16,18 @@ import {
   ChainIdSchema,
   CheckingInSchema,
   ContentWarningSchema,
+  ContractKeyValuePairDescriptorSchema,
   EmbedSchema,
   EventSchema,
   EvmAddressSchema,
   FeedMetadataSchema,
+  FeedRuleMetadataSchema,
   GeoURISchema,
   GraphMetadataSchema,
+  GraphRuleMetadataSchema,
   GroupMetadataSchema,
+  GroupRuleMetadataSchema,
   ImageSchema,
-  LegacyProfileIdSchema,
-  LegacyPublicationIdSchema,
   LinkSchema,
   LiveStreamSchema,
   LocaleSchema,
@@ -37,13 +39,14 @@ import {
   MetadataIdSchema,
   MetadataLicenseTypeSchema,
   MintSchema,
-  ModuleMetadataSchema,
-  NetworkAddressSchema,
+  NamespaceMetadataSchema,
+  NamespaceRuleMetadataSchema,
   Nft721MetadataAttributeSchema,
   NonEmptyStringSchema,
   PhysicalAddressSchema,
   PostMainFocusSchema,
   PostMetadataSchema,
+  RuleMetadataSchema,
   SignatureSchema,
   SpaceSchema,
   SponsorshipMetadataSchema,
@@ -53,9 +56,10 @@ import {
   ThreeDSchema,
   TransactionSchema,
   URISchema,
-  UsernameMetadataSchema,
   VideoSchema,
 } from '../src';
+import { FollowRuleMetadataSchema } from '../src/rule/FollowRuleMetadataSchema';
+import { PostRuleMetadataSchema } from '../src/rule/PostRuleMetadataSchema';
 
 const outputDir = 'jsonschemas';
 
@@ -92,20 +96,16 @@ for (const [path, Schema] of schemas) {
       NonEmptyString: NonEmptyStringSchema,
       Markdown: MarkdownSchema,
       URI: URISchema,
-      Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       ChainId: ChainIdSchema,
       EvmAddress: EvmAddressSchema,
       GeoURI: GeoURISchema,
-      LegacyProfileId: LegacyProfileIdSchema,
-      LegacyPublicationId: LegacyPublicationIdSchema,
       MarketplaceMetadataAttribute: Nft721MetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
       MediaImage: MediaImageSchema,
       MediaVideo: MediaVideoSchema,
       MetadataAttribute: MetadataAttributeSchema,
       MetadataLicenseType: MetadataLicenseTypeSchema,
-      NetworkAddress: NetworkAddressSchema,
       PhysicalAddress: PhysicalAddressSchema,
       Tag: TagSchema,
     },
@@ -121,11 +121,11 @@ await generateUmbrellaSchema();
 const others = new Map<string, z.ZodSchema<unknown>>([
   ['account/1.0.0.json', AccountMetadataSchema],
   ['app/1.0.0.json', AppMetadataSchema],
-  ['graph/1.0.0.json', GraphMetadataSchema],
   ['feed/1.0.0.json', FeedMetadataSchema],
+  ['graph/1.0.0.json', GraphMetadataSchema],
   ['group/1.0.0.json', GroupMetadataSchema],
+  ['namespace/1.0.0.json', NamespaceMetadataSchema],
   ['sponsorship/1.0.0.json', SponsorshipMetadataSchema],
-  ['username/1.0.0.json', UsernameMetadataSchema],
 ]);
 
 for (const [path, Schema] of others) {
@@ -147,12 +147,18 @@ for (const [path, Schema] of others) {
   await fs.writeJSON(outputFile, jsonSchema, { spaces: 2 });
 }
 
-// Module schema
-const openActions = new Map<string, z.ZodSchema<unknown>>([
-  ['module/1.0.0.json', ModuleMetadataSchema],
+// Modules schemas
+const modules = new Map<string, z.ZodSchema<unknown>>([
+  ['action/1.0.0.json', ActionMetadataSchema],
+  ['rules/feed/1.0.0.json', FeedRuleMetadataSchema],
+  ['rules/follow/1.0.0.json', FollowRuleMetadataSchema],
+  ['rules/graph/1.0.0.json', GraphRuleMetadataSchema],
+  ['rules/group/1.0.0.json', GroupRuleMetadataSchema],
+  ['rules/namespace/1.0.0.json', NamespaceRuleMetadataSchema],
+  ['rules/post/1.0.0.json', PostRuleMetadataSchema],
 ]);
 
-for (const [path, Schema] of openActions) {
+for (const [path, Schema] of modules) {
   const outputFile = join(outputDir, path);
 
   await fs.ensureFile(outputFile);
@@ -163,6 +169,7 @@ for (const [path, Schema] of openActions) {
     definitions: {
       NonEmptyString: NonEmptyStringSchema,
       MetadataAttribute: MetadataAttributeSchema,
+      ContractKeyValuePairDescriptor: ContractKeyValuePairDescriptorSchema,
     },
   });
 
@@ -183,13 +190,10 @@ async function generateUmbrellaSchema() {
       Markdown: MarkdownSchema,
       URI: URISchema,
       MainContentFocus: PostMainFocusSchema,
-      Amount: AmountSchema,
       AnyMedia: AnyMediaSchema,
       ChainId: ChainIdSchema,
       EvmAddress: EvmAddressSchema,
       GeoURI: GeoURISchema,
-      LegacyProfileId: LegacyProfileIdSchema,
-      LegacyPublicationId: LegacyPublicationIdSchema,
       Locale: LocaleSchema,
       MarketplaceMetadataAttribute: Nft721MetadataAttributeSchema,
       MediaAudio: MediaAudioSchema,
@@ -198,11 +202,11 @@ async function generateUmbrellaSchema() {
       MetadataAttribute: MetadataAttributeSchema,
       MetadataId: MetadataIdSchema,
       MetadataLicenseType: MetadataLicenseTypeSchema,
-      NetworkAddress: NetworkAddressSchema,
       PhysicalAddress: PhysicalAddressSchema,
       ContentWarning: ContentWarningSchema,
       Signature: SignatureSchema,
       Tag: TagSchema,
+      // Post schemas
       ArticleMetadata: ArticleSchema,
       AudioMetadata: AudioSchema,
       CheckingInMetadata: CheckingInSchema,
@@ -218,14 +222,20 @@ async function generateUmbrellaSchema() {
       TransactionMetadata: TransactionSchema,
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
+      // Account schemas
       AccountMetadata: AccountMetadataSchema,
-      ModuleMetadata: ModuleMetadataSchema,
+      // Primitives schemas
       AppMetadata: AppMetadataSchema,
       GraphMetadata: GraphMetadataSchema,
       FeedMetadata: FeedMetadataSchema,
       GroupMetadata: GroupMetadataSchema,
       SponsorshipMetadata: SponsorshipMetadataSchema,
-      UsernameMetadata: UsernameMetadataSchema,
+      NamespaceMetadata: NamespaceMetadataSchema,
+      // Actions schemas
+      ActionMetadata: ActionMetadataSchema,
+      // Rules schemas
+      RuleMetadata: RuleMetadataSchema,
+      ContractKeyValuePairDescriptor: ContractKeyValuePairDescriptorSchema,
     },
   });
 

@@ -173,39 +173,6 @@
       "format": "uri",
       "description": "A Uniform Resource Identifier."
     },
-    "Amount": {
-      "type": "object",
-      "properties": {
-        "asset": {
-          "type": "object",
-          "properties": {
-            "contract": {
-              "$ref": "#/$defs/NetworkAddress"
-            },
-            "decimals": {
-              "type": "integer",
-              "minimum": 0,
-              "description": "The number of decimals of the asset."
-            }
-          },
-          "required": [
-            "contract",
-            "decimals"
-          ],
-          "additionalProperties": false
-        },
-        "value": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
-        }
-      },
-      "required": [
-        "asset",
-        "value"
-      ],
-      "additionalProperties": false,
-      "description": "An amount of a specific asset."
-    },
     "AnyMedia": {
       "anyOf": [
         {
@@ -233,14 +200,6 @@
       "type": "string",
       "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
       "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
-    },
-    "LegacyProfileId": {
-      "type": "string",
-      "minLength": 4
-    },
-    "LegacyPublicationId": {
-      "type": "string",
-      "minLength": 9
     },
     "MarketplaceMetadataAttribute": {
       "type": "object",
@@ -608,23 +567,6 @@
         "TBNL-NC-DTSA-NPL-Ledger",
         "TBNL-NC-ND-NPL-Ledger"
       ]
-    },
-    "NetworkAddress": {
-      "type": "object",
-      "properties": {
-        "chainId": {
-          "$ref": "#/$defs/ChainId"
-        },
-        "address": {
-          "$ref": "#/$defs/EvmAddress"
-        }
-      },
-      "required": [
-        "chainId",
-        "address"
-      ],
-      "additionalProperties": false,
-      "description": "An EVM compatible address on a specific chain."
     },
     "PhysicalAddress": {
       "type": "object",

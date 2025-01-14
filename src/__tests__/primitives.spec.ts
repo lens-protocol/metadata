@@ -3,9 +3,11 @@ import { z } from 'zod';
 
 import { expectResult } from '../__helpers__/assertions.js';
 import {
+  Bytes32Schema,
   DateTimeSchema,
   GeoURISchema,
   LocaleSchema,
+  SolidityParametersSchema,
   geoPoint,
   geoUri,
   nonEmptySchema,
@@ -168,6 +170,89 @@ describe('Given the primitives schemas', () => {
 
     it('then it should return a valid Geo URI', () => {
       expect(geoUri({ lat: 42.42, lng: -42.42 })).toMatchInlineSnapshot(`"geo:42.42,-42.42"`);
+    });
+  });
+
+  describe('when parsing a Bytes32 string', () => {
+    it('then it should validate a string of 32 bytes', () => {
+      const valid = ['0x0ee423f45485fc56aebfc81a59082f66df211a1d77ca90757a2ee48cbe207fa1'];
+
+      for (const value of valid) {
+        expectResult(() => Bytes32Schema.safeParse(value)).toEqual(value);
+      }
+    });
+
+    it('then it should flag invalid strings', () => {
+      expectResult(() => Bytes32Schema.safeParse('nonhexstring')).toMatchInlineSnapshot(`
+        "fix the following issues
+        String must contain exactly 66 character(s)
+        Should be a 32 bytes long hexadecimal string."
+      `);
+
+      expectResult(() => Bytes32Schema.safeParse('0x')).toMatchInlineSnapshot(`
+        "fix the following issues
+        String must contain exactly 66 character(s)
+        Should be a 32 bytes long hexadecimal string."
+      `);
+
+      expectResult(() =>
+        Bytes32Schema.safeParse(
+          '0x0ee423f45485fc56aebfc81a59082f66df211a1d77ca90757a2ee48cbe207fa1a',
+        ),
+      ).toMatchInlineSnapshot(`
+        "fix the following issues
+        String must contain exactly 66 character(s)
+        Should be a 32 bytes long hexadecimal string."
+      `);
+    });
+  });
+
+  describe('when parsing an ABI parameters string', () => {
+    it('then it should validate a string containing expected human-readable ABI parameters', () => {
+      const valid = [
+        // simple
+        'address',
+        'uint256',
+        'bytes',
+        'bool',
+        'string',
+
+        // named
+        'address foo',
+        'uint256 foo',
+        'bytes foo',
+        'bool foo',
+        'string foo',
+
+        // arrays
+        'address[]',
+        'uint256[]',
+        'bytes[]',
+        'bool[]',
+        'string[]',
+
+        // named arrays
+        'address[] foo',
+        'uint256[] foo',
+        'bytes[] foo',
+        'bool[] foo',
+        'string[] foo',
+
+        // multiples
+        'address, address',
+        'address, uint256',
+        'address, bytes',
+
+        // tuples
+        '(address, address, uint256)',
+        '(address, (address, uint256))',
+        '(address source, (address addr, uint256 value) destination)',
+        '(address from, address to, uint256 amount), uint256',
+      ];
+
+      for (const value of valid) {
+        expectResult(() => SolidityParametersSchema.safeParse(value)).toEqual(value);
+      }
     });
   });
 });

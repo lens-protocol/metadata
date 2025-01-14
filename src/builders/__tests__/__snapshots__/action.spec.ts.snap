@@ -1,0 +1,53 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Given the "action" metadata builder > when using it > should return a valid ActionMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/actions/1.0.0.json",
+  "lens": {
+    "authors": [
+      "awesome-dev@lens.xyz",
+    ],
+    "configureParams": [
+      {
+        "key": "0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49",
+        "name": "account",
+        "type": "address",
+      },
+      {
+        "key": "0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49",
+        "name": "recipients",
+        "type": "address[]",
+      },
+    ],
+    "description": "Get ready for the future of social interaction!",
+    "executeParams": [
+      {
+        "key": "0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49",
+        "name": "amount",
+        "type": "uint256",
+      },
+      {
+        "key": "0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49",
+        "name": "recipients",
+        "type": "(address, uint256)[]",
+      },
+    ],
+    "id": Any<String>,
+    "name": "My Open Action",
+    "setDisabledParams": [
+      {
+        "key": "0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49",
+        "name": "amount",
+        "type": "uint256",
+      },
+      {
+        "key": "0xc8a06abcb0f2366f32dc2741bdf075c3215e3108918311ec0ac742f1ffd37f49",
+        "name": "recipients",
+        "type": "(address, uint256)[]",
+      },
+    ],
+    "source": "https://github.com/foobarbaz/my-open-action",
+    "title": "This is my Open Action",
+  },
+}
+`;

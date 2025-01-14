@@ -81,39 +81,6 @@
         "SPACE"
       ]
     },
-    "Amount": {
-      "type": "object",
-      "properties": {
-        "asset": {
-          "type": "object",
-          "properties": {
-            "contract": {
-              "$ref": "#/$defs/NetworkAddress"
-            },
-            "decimals": {
-              "type": "integer",
-              "minimum": 0,
-              "description": "The number of decimals of the asset."
-            }
-          },
-          "required": [
-            "contract",
-            "decimals"
-          ],
-          "additionalProperties": false
-        },
-        "value": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The amount in the smallest unit of the given asset (e.g. wei for ETH)."
-        }
-      },
-      "required": [
-        "asset",
-        "value"
-      ],
-      "additionalProperties": false,
-      "description": "An amount of a specific asset."
-    },
     "AnyMedia": {
       "anyOf": [
         {
@@ -141,14 +108,6 @@
       "type": "string",
       "pattern": "^geo:(-?\\d+\\.?\\d*),(-?\\d+\\.?\\d*)$",
       "description": "A Geographic coordinate as subset of Geo URI (RFC 5870). Currently only supports the `geo:lat,lng` format."
-    },
-    "LegacyProfileId": {
-      "type": "string",
-      "minLength": 4
-    },
-    "LegacyPublicationId": {
-      "type": "string",
-      "minLength": 9
     },
     "Locale": {
       "type": "string",
@@ -525,23 +484,6 @@
         "TBNL-NC-DTSA-NPL-Ledger",
         "TBNL-NC-ND-NPL-Ledger"
       ]
-    },
-    "NetworkAddress": {
-      "type": "object",
-      "properties": {
-        "chainId": {
-          "$ref": "#/$defs/ChainId"
-        },
-        "address": {
-          "$ref": "#/$defs/EvmAddress"
-        }
-      },
-      "required": [
-        "chainId",
-        "address"
-      ],
-      "additionalProperties": false,
-      "description": "An EVM compatible address on a specific chain."
     },
     "PhysicalAddress": {
       "type": "object",
@@ -3295,68 +3237,6 @@
       ],
       "additionalProperties": false
     },
-    "ModuleMetadata": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "maxLength": 200,
-          "minLength": 1,
-          "description": "The name of the module."
-        },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The human-friendly title for the module."
-        },
-        "description": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "Markdown formatted description of the module."
-        },
-        "authors": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "email"
-          },
-          "minItems": 1,
-          "description": "List of authors email addresses."
-        },
-        "initializeCalldataABI": {
-          "type": "string",
-          "description": "The Solidity JSON ABI as JSON-string describing the initialization function calldata."
-        },
-        "initializeResultDataABI": {
-          "type": "string",
-          "description": "The Solidity JSON ABI as JSON-string describing the initialization result data."
-        },
-        "processCalldataABI": {
-          "type": "string",
-          "description": "The Solidity JSON ABI as JSON-string describing the process function calldata."
-        },
-        "attributes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/MetadataAttribute"
-          },
-          "description": "An arbitrary bag of attributes."
-        },
-        "$schema": {
-          "type": "string",
-          "const": "https://json-schemas.lens.dev/modules/1.0.0.json"
-        }
-      },
-      "required": [
-        "name",
-        "title",
-        "description",
-        "authors",
-        "initializeCalldataABI",
-        "processCalldataABI",
-        "attributes",
-        "$schema"
-      ],
-      "additionalProperties": false
-    },
     "AppMetadata": {
       "type": "object",
       "properties": {
@@ -3606,7 +3486,7 @@
       ],
       "additionalProperties": false
     },
-    "UsernameMetadata": {
+    "NamespaceMetadata": {
       "type": "object",
       "properties": {
         "name": {
@@ -3657,7 +3537,7 @@
             },
             "description": {
               "$ref": "#/$defs/NonEmptyString",
-              "description": "An optional description of the Username collection."
+              "description": "An optional description of the username Namespace."
             }
           },
           "required": [
@@ -3674,6 +3554,629 @@
         "name",
         "$schema",
         "lens"
+      ],
+      "additionalProperties": false
+    },
+    "ActionMetadata": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/actions/1.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A short name for the Action."
+            },
+            "title": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "The human-friendly title for the Action."
+            },
+            "description": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "Markdown formatted description of the Action."
+            },
+            "authors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "email"
+              },
+              "minItems": 1,
+              "description": "List of authors email addresses."
+            },
+            "source": {
+              "$ref": "#/$defs/URI",
+              "description": "The link to the Action source code. Typically a GitHub repository."
+            },
+            "configureParams": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+              },
+              "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `configure` function."
+            },
+            "executeParams": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+              },
+              "description": "A list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `execute` function."
+            },
+            "setDisabledParams": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+              },
+              "description": "An optional list of `ContractKeyValuePairDescriptor` that describes the `params` argument of the `setDisabledParams` function."
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "title",
+            "description",
+            "authors",
+            "source",
+            "executeParams"
+          ],
+          "additionalProperties": false
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": false
+    },
+    "RuleMetadata": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/feed/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processCreatePostParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreatePost` function."
+                },
+                "processEditPostParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processEditPost` function."
+                },
+                "processRemovePostParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemovePost` function."
+                },
+                "processPostRuleChangesParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processPostRuleChanges` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processCreatePostParams",
+                "processEditPostParams",
+                "processRemovePostParams",
+                "processPostRuleChangesParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/follow/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processFollowParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollow` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processFollowParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/graph/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processFollowParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollow` function."
+                },
+                "processUnfollowParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processUnfollow` function."
+                },
+                "processFollowRuleChangesParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processFollowRuleChanges` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processFollowParams",
+                "processUnfollowParams",
+                "processFollowRuleChangesParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/group/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processAdditionParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processAddition` function."
+                },
+                "processRemovalParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemoval` function."
+                },
+                "processJoiningParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processJoining` function."
+                },
+                "processLeavingParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processLeaving` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processAdditionParams",
+                "processRemovalParams",
+                "processJoiningParams",
+                "processLeavingParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/namespace/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processCreationParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreation` function."
+                },
+                "processRemovalParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemoval` function."
+                },
+                "processAssigningParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processAssigning` function."
+                },
+                "processUnassigningParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processUnassigning` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processCreationParams",
+                "processRemovalParams",
+                "processAssigningParams",
+                "processUnassigningParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/post/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processCreatePostParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreatePost` function."
+                },
+                "processEditPostParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processEditPost` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processCreatePostParams",
+                "processEditPostParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ContractKeyValuePairDescriptor": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 66,
+          "maxLength": 66,
+          "pattern": "^0x[0-9a-fA-F]{64}$",
+          "description": "A unique 32 bytes long hexadecimal string key."
+        },
+        "name": {
+          "$ref": "#/$defs/NonEmptyString",
+          "description": "The human-readable name of the parameter."
+        },
+        "type": {
+          "type": "string",
+          "description": "The human-readable ABI description of the parameter."
+        }
+      },
+      "required": [
+        "key",
+        "name",
+        "type"
       ],
       "additionalProperties": false
     }

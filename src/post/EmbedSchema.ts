@@ -9,7 +9,7 @@ import {
 } from '../primitives.js';
 import type { NftMetadata } from '../tokens/eip721.js';
 import { PostMainFocus } from './PostMainFocus.js';
-import { PostSchemaId } from './PostSchemaId.js';
+import { PostMetadataSchemaId } from './PostMetadataSchemaId.js';
 import {
   type AnyMedia,
   AnyMediaSchema,
@@ -59,7 +59,7 @@ export type EmbedMetadata = NftMetadata & {
   /**
    * The schema id.
    */
-  $schema: PostSchemaId.EMBED_LATEST;
+  $schema: PostMetadataSchemaId.EMBED_LATEST;
   /**
    * The metadata details.
    */
@@ -74,6 +74,6 @@ export type EmbedMetadata = NftMetadata & {
  * @internal
  */
 export const EmbedSchema = postWith({
-  $schema: z.literal(PostSchemaId.EMBED_LATEST),
+  $schema: z.literal(PostMetadataSchemaId.EMBED_LATEST),
   lens: EmbedMetadataDetailsSchema,
 });
