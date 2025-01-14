@@ -10,9 +10,11 @@ import {
 import { type PostRuleMetadata, PostRuleMetadataSchema } from './PostRuleMetadataSchema.js';
 
 export * from './FeedRuleMetadataSchema.js';
+export * from './FollowRuleMetadataSchema.js';
 export * from './GraphRuleMetadataSchema.js';
 export * from './GroupRuleMetadataSchema.js';
 export * from './NamespaceRuleMetadataSchema.js';
+export * from './PostRuleMetadataSchema.js';
 export * from './RuleMetadataSchemaId.js';
 
 /**
