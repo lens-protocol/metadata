@@ -52,7 +52,7 @@ import {
   UsernameMetadataSchema,
   VideoSchema,
 } from '../src';
-import { FeedRuleMetadataSchema, RuleMetadataSchema } from '../src/rule';
+import { FeedRuleMetadataSchema, GroupRuleMetadataSchema, RuleMetadataSchema } from '../src/rule';
 import { GraphRuleMetadataSchema } from '../src/rule/GraphRuleMetadataSchema';
 
 const outputDir = 'jsonschemas';
@@ -146,6 +146,7 @@ const modules = new Map<string, z.ZodSchema<unknown>>([
   ['action/1.0.0.json', ActionMetadataSchema],
   ['rules/feed/1.0.0.json', FeedRuleMetadataSchema],
   ['rules/graph/1.0.0.json', GraphRuleMetadataSchema],
+  ['rules/group/1.0.0.json', GroupRuleMetadataSchema],
 ]);
 
 for (const [path, Schema] of modules) {
