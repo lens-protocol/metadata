@@ -2,38 +2,38 @@ import { z } from 'zod';
 
 import { NonEmptyStringSchema, type Signature, SignatureSchema } from '../primitives';
 import { type Eip7572, eip7572SchemaWith } from '../tokens/eip7572';
-import { UsernameMetadataSchemaId } from './UsernameMetadataSchemaId';
+import { NamespaceMetadataSchemaId } from './NamespaceMetadataSchemaId';
 
-export type UsernameMetadataDetails = {
+export type NamespaceMetadataDetails = {
   /**
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.
    */
   id: string;
   /**
-   * An optional description of the Username collection.
+   * An optional description of the username Namespace.
    */
   description?: string;
 };
 
-const UsernameMetadataDetailsSchema: z.ZodType<UsernameMetadataDetails, z.ZodTypeDef, object> =
+const NamespaceMetadataDetailsSchema: z.ZodType<NamespaceMetadataDetails, z.ZodTypeDef, object> =
   z.object({
     id: NonEmptyStringSchema.describe(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
     description: NonEmptyStringSchema.optional().describe(
-      'An optional description of the Username collection.',
+      'An optional description of the username Namespace.',
     ),
   });
 
-export type UsernameMetadata = Eip7572 & {
-  $schema: UsernameMetadataSchemaId.LATEST;
-  lens: UsernameMetadataDetails;
+export type NamespaceMetadata = Eip7572 & {
+  $schema: NamespaceMetadataSchemaId.LATEST;
+  lens: NamespaceMetadataDetails;
   signature?: Signature;
 };
 
-export const UsernameMetadataSchema: z.ZodType<UsernameMetadata, z.ZodTypeDef, object> =
+export const NamespaceMetadataSchema: z.ZodType<NamespaceMetadata, z.ZodTypeDef, object> =
   eip7572SchemaWith({
-    $schema: z.literal(UsernameMetadataSchemaId.LATEST),
-    lens: UsernameMetadataDetailsSchema,
+    $schema: z.literal(NamespaceMetadataSchemaId.LATEST),
+    lens: NamespaceMetadataDetailsSchema,
     signature: SignatureSchema.optional(),
   });

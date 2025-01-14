@@ -1,11 +1,11 @@
 import { v4 } from 'uuid';
 
-import type { Eip7572 } from '../tokens/eip7572';
 import {
-  type UsernameMetadata,
-  UsernameMetadataSchema,
-  UsernameMetadataSchemaId,
-} from '../username';
+  type NamespaceMetadata,
+  NamespaceMetadataSchema,
+  NamespaceMetadataSchemaId,
+} from '../namespace/index.js';
+import type { Eip7572 } from '../tokens/eip7572';
 import { evaluate } from './ValidationError';
 import type { RecursiveUnbrand } from './utils';
 
@@ -15,7 +15,7 @@ import type { RecursiveUnbrand } from './utils';
  */
 type CollectionDetails = RecursiveUnbrand<Eip7572>;
 
-export type UsernameOptions = {
+export type NamespaceOptions = {
   /**
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
    *
@@ -23,7 +23,7 @@ export type UsernameOptions = {
    */
   id?: string;
   /**
-   * Optional markdown formatted description of the Username.
+   * Optional markdown formatted description of the Namespace.
    */
   description?: string;
 
@@ -34,10 +34,10 @@ export type UsernameOptions = {
 };
 
 /**
- * Creates a valid UsernameMetadata.
+ * Creates a valid NamespaceMetadata.
  *
  * ```ts
- * const metadata = username({
+ * const metadata = namespace({
  *   description: 'A collection of usernames',
  * });
  * ```
@@ -45,10 +45,10 @@ export type UsernameOptions = {
  * With NFT contract-level metadata:
  *
  * ```ts
- * const metadata = username({
+ * const metadata = namespace({
  *   description: 'A collection of usernames',
  *   collection: {
- *     name: 'Lens Usernames',
+ *     name: 'Lens Namespace',
  *     description: 'The official lens/ usernames',
  *   }
  * });
@@ -58,10 +58,14 @@ export type UsernameOptions = {
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
  */
-export function username({ collection, id = v4(), ...others }: UsernameOptions): UsernameMetadata {
+export function namespace({
+  collection,
+  id = v4(),
+  ...others
+}: NamespaceOptions): NamespaceMetadata {
   return evaluate(
-    UsernameMetadataSchema.safeParse({
-      $schema: UsernameMetadataSchemaId.LATEST,
+    NamespaceMetadataSchema.safeParse({
+      $schema: NamespaceMetadataSchemaId.LATEST,
       ...collection,
       lens: {
         id,

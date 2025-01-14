@@ -39,6 +39,7 @@ import {
   MetadataIdSchema,
   MetadataLicenseTypeSchema,
   MintSchema,
+  NamespaceMetadataSchema,
   NamespaceRuleMetadataSchema,
   Nft721MetadataAttributeSchema,
   NonEmptyStringSchema,
@@ -55,7 +56,6 @@ import {
   ThreeDSchema,
   TransactionSchema,
   URISchema,
-  UsernameMetadataSchema,
   VideoSchema,
 } from '../src';
 import { FollowRuleMetadataSchema } from '../src/rule/FollowRuleMetadataSchema';
@@ -121,11 +121,11 @@ await generateUmbrellaSchema();
 const others = new Map<string, z.ZodSchema<unknown>>([
   ['account/1.0.0.json', AccountMetadataSchema],
   ['app/1.0.0.json', AppMetadataSchema],
-  ['graph/1.0.0.json', GraphMetadataSchema],
   ['feed/1.0.0.json', FeedMetadataSchema],
+  ['graph/1.0.0.json', GraphMetadataSchema],
   ['group/1.0.0.json', GroupMetadataSchema],
+  ['namespace/1.0.0.json', NamespaceMetadataSchema],
   ['sponsorship/1.0.0.json', SponsorshipMetadataSchema],
-  ['username/1.0.0.json', UsernameMetadataSchema],
 ]);
 
 for (const [path, Schema] of others) {
@@ -230,7 +230,7 @@ async function generateUmbrellaSchema() {
       FeedMetadata: FeedMetadataSchema,
       GroupMetadata: GroupMetadataSchema,
       SponsorshipMetadata: SponsorshipMetadataSchema,
-      UsernameMetadata: UsernameMetadataSchema,
+      NamespaceMetadata: NamespaceMetadataSchema,
       // Actions schemas
       ActionMetadata: ActionMetadataSchema,
       // Rules schemas

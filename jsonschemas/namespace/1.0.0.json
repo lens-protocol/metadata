@@ -52,7 +52,7 @@
         },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
-          "description": "An optional description of the Username collection."
+          "description": "An optional description of the username Namespace."
         }
       },
       "required": [

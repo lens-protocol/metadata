@@ -1,8 +1,8 @@
 import { SchemasRoot } from '../constants';
 
 /**
- * The Lens Username Metadata Schema Id.
+ * The Lens Namespace Metadata Schema Id.
  */
-export enum UsernameMetadataSchemaId {
+export enum NamespaceMetadataSchemaId {
   LATEST = `${SchemasRoot}/username/1.0.0.json`,
 }
