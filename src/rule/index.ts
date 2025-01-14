@@ -6,6 +6,7 @@ import {
   type NamespaceRuleMetadata,
   NamespaceRuleMetadataSchema,
 } from './NamespaceRuleMetadataSchema.js';
+import { type PostRuleMetadata, PostRuleMetadataSchema } from './PostRuleMetadataSchema.js';
 
 export * from './FeedRuleMetadataSchema.js';
 export * from './GraphRuleMetadataSchema.js';
@@ -20,7 +21,8 @@ export type RuleMetadata =
   | FeedRuleMetadata
   | GraphRuleMetadata
   | GroupRuleMetadata
-  | NamespaceRuleMetadata;
+  | NamespaceRuleMetadata
+  | PostRuleMetadata;
 
 /**
  * @internal
@@ -31,4 +33,5 @@ export const RuleMetadataSchema: z.ZodType<RuleMetadata, z.ZodTypeDef, object> =
     GraphRuleMetadataSchema,
     GroupRuleMetadataSchema,
     NamespaceRuleMetadataSchema,
+    PostRuleMetadataSchema,
   ]);

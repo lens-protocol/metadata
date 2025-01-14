@@ -20,6 +20,11 @@ import {
   type NamespaceRuleMetadataDetails,
   NamespaceRuleMetadataSchema,
 } from '../rule/NamespaceRuleMetadataSchema.js';
+import {
+  type PostRuleMetadata,
+  type PostRuleMetadataDetails,
+  PostRuleMetadataSchema,
+} from '../rule/PostRuleMetadataSchema.js';
 import { RuleMetadataSchemaId } from '../rule/RuleMetadataSchemaId.js';
 import type { Prettify } from '../utils.js';
 import { evaluate } from './ValidationError.js';
@@ -255,6 +260,63 @@ export function namespaceRule({
   return evaluate(
     NamespaceRuleMetadataSchema.safeParse({
       $schema: RuleMetadataSchemaId.NAMESPACE_LATEST,
+      lens: {
+        id,
+        ...others,
+      },
+    }),
+  );
+}
+
+/**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type PostRuleDetails = Prettify<RecursiveUnbrand<Omit<PostRuleMetadataDetails, 'id'>>>;
+
+export type PostRuleOptions = PostRuleDetails & {
+  /**
+   * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
+   *
+   * @defaultValue a UUID
+   */
+  id?: string;
+};
+
+/**
+ * Creates a valid PostRuleMetadata.
+ *
+ * @category Compose
+ * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * ```ts
+ * const metadata = postRule({
+ *   name: 'MyPostRule',
+ *   title: 'This is my Post Rule',
+ *   description: 'Get ready for the future of social interaction!',
+ *   authors: ['awesome-dev@lens.xyz'],
+ *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   processCreatePostParams: [
+ *     {
+ *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
+ *       name: 'recipient',
+ *       type: 'address',
+ *     },
+ *     {
+ *       key: 'e4ddce99520beb836fc879fc2a7d0743f784ffb925f96544bb5ff27c441c8c99',
+ *       name: 'fee',
+ *       type: 'address token, uint256 value',
+ *     }
+ *   ],
+ *   processEditPostParams: [],
+ * });
+ * ```
+ */
+export function postRule({ id = v4(), ...others }: PostRuleOptions): PostRuleMetadata {
+  return evaluate(
+    PostRuleMetadataSchema.safeParse({
+      $schema: RuleMetadataSchemaId.POST_LATEST,
       lens: {
         id,
         ...others,

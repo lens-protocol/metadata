@@ -59,6 +59,7 @@ import {
   RuleMetadataSchema,
 } from '../src/rule';
 import { GraphRuleMetadataSchema } from '../src/rule/GraphRuleMetadataSchema';
+import { PostRuleMetadataSchema } from '../src/rule/PostRuleMetadataSchema';
 
 const outputDir = 'jsonschemas';
 
@@ -153,6 +154,7 @@ const modules = new Map<string, z.ZodSchema<unknown>>([
   ['rules/graph/1.0.0.json', GraphRuleMetadataSchema],
   ['rules/group/1.0.0.json', GroupRuleMetadataSchema],
   ['rules/namespace/1.0.0.json', NamespaceRuleMetadataSchema],
+  ['rules/post/1.0.0.json', PostRuleMetadataSchema],
 ]);
 
 for (const [path, Schema] of modules) {
