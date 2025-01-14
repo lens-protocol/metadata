@@ -3842,6 +3842,192 @@
             "lens"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/group/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processAdditionParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processAddition` function."
+                },
+                "processRemovalParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemoval` function."
+                },
+                "processJoiningParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processJoining` function."
+                },
+                "processLeavingParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processLeaving` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processAdditionParams",
+                "processRemovalParams",
+                "processJoiningParams",
+                "processLeavingParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "signature": {
+              "$ref": "#/$defs/Signature",
+              "description": "A cryptographic signature of the Lens metadata."
+            },
+            "$schema": {
+              "type": "string",
+              "const": "https://json-schemas.lens.dev/rules/namespace/1.0.0.json"
+            },
+            "lens": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure."
+                },
+                "name": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "A short name for the Rule."
+                },
+                "title": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "The human-friendly title for the Rule."
+                },
+                "description": {
+                  "$ref": "#/$defs/NonEmptyString",
+                  "description": "Markdown formatted description of the Rule."
+                },
+                "authors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "minItems": 1,
+                  "description": "List of authors email addresses."
+                },
+                "source": {
+                  "$ref": "#/$defs/URI",
+                  "description": "The link to the Rule source code. Typically a GitHub repository."
+                },
+                "processCreationParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processCreation` function."
+                },
+                "processRemovalParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processRemoval` function."
+                },
+                "processAssigningParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processAssigning` function."
+                },
+                "processUnassigningParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ActionMetadata/properties/lens/properties/configureParams/items"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `processUnassigning` function."
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "title",
+                "description",
+                "authors",
+                "source",
+                "processCreationParams",
+                "processRemovalParams",
+                "processAssigningParams",
+                "processUnassigningParams"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "lens"
+          ],
+          "additionalProperties": false
         }
       ]
     }

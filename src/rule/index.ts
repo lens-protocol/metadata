@@ -1,19 +1,34 @@
 import { z } from 'zod';
 import { type FeedRuleMetadata, FeedRuleMetadataSchema } from './FeedRuleMetadataSchema.js';
 import { type GraphRuleMetadata, GraphRuleMetadataSchema } from './GraphRuleMetadataSchema.js';
+import { type GroupRuleMetadata, GroupRuleMetadataSchema } from './GroupRuleMetadataSchema.js';
+import {
+  type NamespaceRuleMetadata,
+  NamespaceRuleMetadataSchema,
+} from './NamespaceRuleMetadataSchema.js';
 
 export * from './FeedRuleMetadataSchema.js';
 export * from './GraphRuleMetadataSchema.js';
 export * from './GroupRuleMetadataSchema.js';
+export * from './NamespaceRuleMetadataSchema.js';
 export * from './RuleMetadataSchemaId.js';
 
 /**
  * @internal
  */
-export type RuleMetadata = FeedRuleMetadata | GraphRuleMetadata;
+export type RuleMetadata =
+  | FeedRuleMetadata
+  | GraphRuleMetadata
+  | GroupRuleMetadata
+  | NamespaceRuleMetadata;
 
 /**
  * @internal
  */
 export const RuleMetadataSchema: z.ZodType<RuleMetadata, z.ZodTypeDef, object> =
-  z.discriminatedUnion('$schema', [FeedRuleMetadataSchema, GraphRuleMetadataSchema]);
+  z.discriminatedUnion('$schema', [
+    FeedRuleMetadataSchema,
+    GraphRuleMetadataSchema,
+    GroupRuleMetadataSchema,
+    NamespaceRuleMetadataSchema,
+  ]);
