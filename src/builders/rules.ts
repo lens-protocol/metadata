@@ -1,22 +1,22 @@
 import { v4 } from 'uuid';
 
 import {
-  type ActionMetadata,
-  type ActionMetadataDetails,
-  ActionMetadataSchema,
-  ActionMetadataSchemaId,
-} from '../action/index.js';
+  type FeedRuleMetadata,
+  type FeedRuleMetadataDetails,
+  FeedRuleMetadataSchema,
+} from '../rule/FeedRuleMetadataSchema.js';
+import { RuleMetadataSchemaId } from '../rule/RuleMetadataSchemaId.js';
 import type { Prettify } from '../utils.js';
-import { evaluate } from './ValidationError';
-import type { RecursiveUnbrand } from './utils';
+import { evaluate } from './ValidationError.js';
+import type { RecursiveUnbrand } from './utils.js';
 
 /**
  * @private
  * @privateRemarks MUST stay very @private to produce usable docs
  */
-type ActionDetails = Prettify<RecursiveUnbrand<Omit<ActionMetadataDetails, 'id'>>>;
+type FeedRuleDetails = Prettify<RecursiveUnbrand<Omit<FeedRuleMetadataDetails, 'id'>>>;
 
-export type ActionOptions = ActionDetails & {
+export type FeedRuleOptions = FeedRuleDetails & {
   /**
    * A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI.
    *
@@ -26,20 +26,20 @@ export type ActionOptions = ActionDetails & {
 };
 
 /**
- * Creates a valid ActionMetadata.
+ * Creates a valid FeedRuleMetadata.
  *
  * @category Compose
  * @param input - Use your IDE suggestions for an enhanced development experience
  *
  * @example
  * ```ts
- * const metadata = action({
- *   name: 'MyPostAction',
- *   title: 'This is my Post Open',
+ * const metadata = feedRule({
+ *   name: 'MyFeedRule',
+ *   title: 'This is my Feed Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
- *   executeParams: [
+ *   processCreatePostParams: [
  *     {
  *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
  *       name: 'recipient',
@@ -47,17 +47,20 @@ export type ActionOptions = ActionDetails & {
  *     },
  *     {
  *       key: 'e4ddce99520beb836fc879fc2a7d0743f784ffb925f96544bb5ff27c441c8c99',
- *       name: 'amount',
+ *       name: 'fee',
  *       type: 'address token, uint256 value',
  *     }
- *   ]
+ *   ],
+ *   processEditPostParams: [],
+ *   processRemovePostParams: [],
+ *   processPostRuleChangesParams: [],
  * });
  * ```
  */
-export function action({ id = v4(), ...others }: ActionOptions): ActionMetadata {
+export function feedRule({ id = v4(), ...others }: FeedRuleOptions): FeedRuleMetadata {
   return evaluate(
-    ActionMetadataSchema.safeParse({
-      $schema: ActionMetadataSchemaId.LATEST,
+    FeedRuleMetadataSchema.safeParse({
+      $schema: RuleMetadataSchemaId.FEED_LATEST,
       lens: {
         id,
         ...others,

@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Given the rule metadata builders > when using the feedRule > should return a valid FeedRuleMetadata 1`] = `
+{
+  "$schema": "https://json-schemas.lens.dev/rules/feed/1.0.0.json",
+  "lens": {
+    "authors": [
+      "awesome-dev@lens.xyz",
+    ],
+    "description": "Get ready for the future of social interaction!",
+    "id": Any<String>,
+    "name": "MyFeedRule",
+    "processCreatePostParams": [
+      {
+        "key": "0x83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95",
+        "name": "recipient",
+        "type": "address",
+      },
+      {
+        "key": "0xe4ddce99520beb836fc879fc2a7d0743f784ffb925f96544bb5ff27c441c8c99",
+        "name": "fee",
+        "type": "address token, uint256 value",
+      },
+    ],
+    "processEditPostParams": [],
+    "processPostRuleChangesParams": [],
+    "processRemovePostParams": [],
+    "source": "https://github.com/foobarbaz/my-open-action",
+    "title": "This is my Feed Rule",
+  },
+}
+`;

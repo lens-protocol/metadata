@@ -19,7 +19,7 @@ export type ActionMetadataDetails = {
    */
   id: string;
   /**
-   * The name of the Action.
+   * A short name for the Action.
    */
   name: string;
   /**
@@ -66,6 +66,8 @@ export type ActionMetadataDetails = {
    * ```
    *
    * This will be used to know how to encode the calldata for the `execute` function.
+   *
+   * @see https://abitype.dev/api/human
    */
   executeParams?: ContractKeyValuePairDescriptor[];
   /**
@@ -82,6 +84,8 @@ export type ActionMetadataDetails = {
    * ```
    *
    * This will be used to know how to encode the calldata for the `setDisabled` function.
+   *
+   * @see https://abitype.dev/api/human
    */
   setDisabledParams?: ContractKeyValuePairDescriptor[];
 };
@@ -91,7 +95,7 @@ const ActionMetadataDetailsSchema: z.ZodType<ActionMetadataDetails, z.ZodTypeDef
     id: NonEmptyStringSchema.describe(
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
-    name: NonEmptyStringSchema.describe('The name of the Action.'),
+    name: NonEmptyStringSchema.describe('A short name for the Action.'),
     title: NonEmptyStringSchema.describe('The human-friendly title for the Action.'),
     description: MarkdownSchema.describe('Markdown formatted description of the Action.'),
     authors: z

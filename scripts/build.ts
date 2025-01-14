@@ -52,6 +52,7 @@ import {
   UsernameMetadataSchema,
   VideoSchema,
 } from '../src';
+import { FeedRuleMetadataSchema, RuleMetadataSchema } from '../src/rule';
 
 const outputDir = 'jsonschemas';
 
@@ -142,6 +143,7 @@ for (const [path, Schema] of others) {
 // Modules schemas
 const modules = new Map<string, z.ZodSchema<unknown>>([
   ['action/1.0.0.json', ActionMetadataSchema],
+  ['rules/feed/1.0.0.json', FeedRuleMetadataSchema],
 ]);
 
 for (const [path, Schema] of modules) {
@@ -191,6 +193,7 @@ async function generateUmbrellaSchema() {
       ContentWarning: ContentWarningSchema,
       Signature: SignatureSchema,
       Tag: TagSchema,
+      // Post schemas
       ArticleMetadata: ArticleSchema,
       AudioMetadata: AudioSchema,
       CheckingInMetadata: CheckingInSchema,
@@ -206,14 +209,19 @@ async function generateUmbrellaSchema() {
       TransactionMetadata: TransactionSchema,
       ThreeDMetadata: ThreeDSchema,
       VideoMetadata: VideoSchema,
+      // Account schemas
       AccountMetadata: AccountMetadataSchema,
+      // Primitives schemas
       AppMetadata: AppMetadataSchema,
       GraphMetadata: GraphMetadataSchema,
       FeedMetadata: FeedMetadataSchema,
       GroupMetadata: GroupMetadataSchema,
       SponsorshipMetadata: SponsorshipMetadataSchema,
       UsernameMetadata: UsernameMetadataSchema,
+      // Actions schemas
       ActionMetadata: ActionMetadataSchema,
+      // Rules schemas
+      RuleMetadata: RuleMetadataSchema,
     },
   });
 

@@ -4,7 +4,7 @@ import { action } from '../action.js';
 
 describe(`Given the "${action.name}" metadata builder`, () => {
   describe('when using it', () => {
-    it('should return a valid AccountMetadata', () => {
+    it('should return a valid ActionMetadata', () => {
       const metadata = action({
         name: 'My Open Action',
         title: 'This is my Open Action',
