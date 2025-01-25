@@ -29,9 +29,9 @@ Schema validation and TS types for [LIP-2](https://github.com/lens-protocol/LIPs
 
 ## Features
 
-- [Zod](https://zod.dev/) schema definitions
-- [JSON Schema](https://json-schema.org/) definitions
-- TypeScript type definitions
+- [Zod](https://zod.dev/) schema definitions.
+- [JSON Schema](https://json-schema.org/) definitions.
+- TypeScript type definitions.
 
 ## Installation
 
