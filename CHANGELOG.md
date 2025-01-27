@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.6
+
+### Patch Changes
+
+- a44a424: **fix:** missing `configureParams` from rule metadata spec"
+
 ## 2.0.0-next.5
 
 ### Patch Changes
