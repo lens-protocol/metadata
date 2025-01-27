@@ -11,6 +11,7 @@ describe('Given the rule metadata builders', () => {
         description: 'Get ready for the future of social interaction!',
         authors: ['awesome-dev@lens.xyz'],
         source: 'https://github.com/foobarbaz/my-open-action',
+        configureParams: [],
         processCreatePostParams: [
           {
             key: '0x83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
@@ -44,6 +45,7 @@ describe('Given the rule metadata builders', () => {
         description: 'Get ready for the future of social interaction!',
         authors: ['awesome-dev@lens.xyz'],
         source: 'https://github.com/foobarbaz/my-open-action',
+        configureParams: [],
         processFollowParams: [
           {
             key: '0x83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',

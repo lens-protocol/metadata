@@ -44,6 +44,13 @@
           "format": "uri",
           "description": "The link to the Rule source code. Typically a GitHub repository."
         },
+        "configureParams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+          },
+          "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+        },
         "processCreatePostParams": {
           "type": "array",
           "items": {
@@ -80,6 +87,7 @@
         "description",
         "authors",
         "source",
+        "configureParams",
         "processCreatePostParams",
         "processEditPostParams",
         "processRemovePostParams",

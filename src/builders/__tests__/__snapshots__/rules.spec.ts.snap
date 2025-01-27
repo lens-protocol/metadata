@@ -7,6 +7,7 @@ exports[`Given the rule metadata builders > when using the 'feedRule' > should r
     "authors": [
       "awesome-dev@lens.xyz",
     ],
+    "configureParams": [],
     "description": "Get ready for the future of social interaction!",
     "id": Any<String>,
     "name": "MyFeedRule",
@@ -38,6 +39,7 @@ exports[`Given the rule metadata builders > when using the 'graphRule' > should 
     "authors": [
       "awesome-dev@lens.xyz",
     ],
+    "configureParams": [],
     "description": "Get ready for the future of social interaction!",
     "id": Any<String>,
     "name": "MyGraphRule",

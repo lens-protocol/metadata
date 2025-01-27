@@ -64,6 +64,7 @@ export type FeedRuleOptions = FeedRuleDetails & {
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   configureParams: [],
  *   processCreatePostParams: [
  *     {
  *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
@@ -123,6 +124,7 @@ export type GraphRuleOptions = GraphRuleDetails & {
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   configureParams: [],
  *   processFollowParams: [
  *     {
  *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
@@ -181,6 +183,7 @@ export type GroupRuleOptions = GroupRuleDetails & {
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   configureParams: [],
  *   processAdditionParams: [],
  *   processRemovalParams: [],
  *   processJoiningParams: [
@@ -240,6 +243,7 @@ export type NamespaceRuleOptions = NamespaceRuleDetails & {
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   configureParams: [],
  *   processCreationParams: [
  *     {
  *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
@@ -302,6 +306,7 @@ export type PostRuleOptions = PostRuleDetails & {
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   configureParams: [],
  *   processCreatePostParams: [
  *     {
  *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',
@@ -358,6 +363,7 @@ export type FollowRuleOptions = FollowRuleDetails & {
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
+ *   configureParams: [],
  *   processFollowParams: [
  *     {
  *       key: '83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95',

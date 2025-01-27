@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>postRule | Lens Protocol Metadata Standards</title><meta name="description" content="Documentation for Lens Protocol Metadata Standards"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>FollowRuleMetadataDetails | Lens Protocol Metadata Standards</title><meta name="description" content="Documentation for Lens Protocol Metadata Standards"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,29 +13,74 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../index.html">Lens Protocol Metadata Standards</a></li>
-<li><a href="postRule.html">postRule</a></li></ul>
-<h1>Function postRule</h1></div>
-<section class="tsd-panel">
-<ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="postRule"><span class="tsd-kind-call-signature">post<wbr/>Rule</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">input</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../types/PostRuleMetadata.html" class="tsd-signature-type tsd-kind-type-alias">PostRuleMetadata</a><a href="#postRule" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a valid PostRuleMetadata.</p>
+<li><a href="FollowRuleMetadataDetails.html">FollowRuleMetadataDetails</a></li></ul>
+<h1>Type alias FollowRuleMetadataDetails</h1></div>
+<div class="tsd-signature"><span class="tsd-kind-type-alias">Follow<wbr/>Rule<wbr/>Metadata<wbr/>Details</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">authors</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">configureParams</span><span class="tsd-signature-symbol">: </span><a href="ContractKeyValuePairDescriptor.html" class="tsd-signature-type tsd-kind-type-alias">ContractKeyValuePairDescriptor</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">: </span><a href="Markdown.html" class="tsd-signature-type tsd-kind-type-alias">Markdown</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">processFollowParams</span><span class="tsd-signature-symbol">: </span><a href="ContractKeyValuePairDescriptor.html" class="tsd-signature-type tsd-kind-type-alias">ContractKeyValuePairDescriptor</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">source</span><span class="tsd-signature-symbol">: </span><a href="URI.html" class="tsd-signature-type tsd-kind-type-alias">URI</a><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div>
+<div class="tsd-type-declaration">
+<h4>Type declaration</h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">authors</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>List of authors email addresses.</p>
 </div>
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5><span class="tsd-kind-parameter">input</span>: <a href="../types/PostRuleOptions.html" class="tsd-signature-type tsd-kind-type-alias">PostRuleOptions</a></h5>
-<div class="tsd-comment tsd-typography"><p>Use your IDE suggestions for an enhanced development experience</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="../types/PostRuleMetadata.html" class="tsd-signature-type tsd-kind-type-alias">PostRuleMetadata</a></h4>
-<div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-7">const</span><span class="hl-1"> </span><span class="hl-2">metadata</span><span class="hl-1"> = </span><span class="hl-9">postRule</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;MyPostRule&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">title:</span><span class="hl-1"> </span><span class="hl-3">&#39;This is my Post Rule&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">description:</span><span class="hl-1"> </span><span class="hl-3">&#39;Get ready for the future of social interaction!&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">authors:</span><span class="hl-1"> [</span><span class="hl-3">&#39;awesome-dev@lens.xyz&#39;</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-0">source:</span><span class="hl-1"> </span><span class="hl-3">&#39;https://github.com/foobarbaz/my-open-action&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-0">configureParams:</span><span class="hl-1"> [],</span><br/><span class="hl-1">  </span><span class="hl-0">processCreatePostParams:</span><span class="hl-1"> [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">      </span><span class="hl-0">key:</span><span class="hl-1"> </span><span class="hl-3">&#39;83b03721c31435de384ca9cc3799cdfa10e19123e6a48dbf11589e36a0ef0b95&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;recipient&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">type:</span><span class="hl-1"> </span><span class="hl-3">&#39;address&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">      </span><span class="hl-0">key:</span><span class="hl-1"> </span><span class="hl-3">&#39;e4ddce99520beb836fc879fc2a7d0743f784ffb925f96544bb5ff27c441c8c99&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;fee&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">type:</span><span class="hl-1"> </span><span class="hl-3">&#39;address token, uint256 value&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">  </span><span class="hl-0">processEditPostParams:</span><span class="hl-1"> [],</span><br/><span class="hl-1">});</span>
+<div class="tsd-comment tsd-typography"></div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">configure<wbr/>Params</span><span class="tsd-signature-symbol">: </span><a href="ContractKeyValuePairDescriptor.html" class="tsd-signature-type tsd-kind-type-alias">ContractKeyValuePairDescriptor</a><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>A list of <a href="ContractKeyValuePairDescriptor.html" class="tsd-kind-type-alias">ContractKeyValuePairDescriptor</a> that describes the <code>ruleParams</code> argument of the <code>configure</code> function.</p>
+<pre><code class="language-sol">function configure(bytes32 configSalt, address account, KeyValue[] calldata ruleParams) external;
 </code><button>Copy</button></pre>
-</div><aside class="tsd-sources">
+<p>This will be used to know how to encode and decode the params for the <code>configure</code> function.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://abitype.dev/api/human">https://abitype.dev/api/human</a></p>
+</div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">: </span><a href="Markdown.html" class="tsd-signature-type tsd-kind-type-alias">Markdown</a></h5>
+<div class="tsd-comment tsd-typography"><p>Markdown formatted description of the Rule.</p>
+<p>It should explain what this Rule does, how to use it, examples just
+like you would if you were building an NPM package.
+The more detail the better to allow dApp to easily integrate it.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>A short name for the Rule.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">process<wbr/>Follow<wbr/>Params</span><span class="tsd-signature-symbol">: </span><a href="ContractKeyValuePairDescriptor.html" class="tsd-signature-type tsd-kind-type-alias">ContractKeyValuePairDescriptor</a><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>A list of <a href="ContractKeyValuePairDescriptor.html" class="tsd-kind-type-alias">ContractKeyValuePairDescriptor</a> that describes the <code>ruleParams</code> argument of the <code>processFollow</code> function.</p>
+<pre><code class="language-sol">function processFollow(
+  bytes32 configSalt,
+  address originalMsgSender,
+  address followerAccount,
+  address accountToFollow,
+  KeyValue[] calldata primitiveParams,
+  KeyValue[] calldata ruleParams
+) external;
+</code><button>Copy</button></pre>
+<p>This will be used to know how to encode and decode the params for the <code>processFollow</code> function.</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>See</h4><p><a href="https://abitype.dev/api/human">https://abitype.dev/api/human</a></p>
+</div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">source</span><span class="tsd-signature-symbol">: </span><a href="URI.html" class="tsd-signature-type tsd-kind-type-alias">URI</a></h5>
+<div class="tsd-comment tsd-typography"><p>The link to the Rule source code. Typically a GitHub repository.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The human-friendly title for the Rule.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/lens-protocol/metadata/blob/main/src/builders/rules.ts#L326">src/builders/rules.ts:326</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/lens-protocol/metadata/blob/main/src/rule/FollowRuleMetadataSchema.ts#L16">src/rule/FollowRuleMetadataSchema.ts:16</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

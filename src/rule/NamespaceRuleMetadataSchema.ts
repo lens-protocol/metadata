@@ -43,6 +43,18 @@ export type NamespaceRuleMetadataDetails = {
    */
   source: URI;
   /**
+   * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
+   *
+   * ```sol
+   * function configure(bytes32 configSalt, KeyValue[] calldata ruleParams) external;
+   * ```
+   *
+   * This will be used to know how to encode and decode the params for the `configure` function.
+   *
+   * @see https://abitype.dev/api/human
+   */
+  configureParams: ContractKeyValuePairDescriptor[];
+  /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processCreation` function.
    *
    * ```sol
@@ -135,6 +147,11 @@ const NamespaceRuleMetadataDetailsSchema: z.ZodType<
     .min(1, 'You must supply at least one author')
     .describe('List of authors email addresses.'),
   source: URISchema.describe('The link to the Rule source code. Typically a GitHub repository.'),
+  configureParams: z
+    .array(ContractKeyValuePairDescriptorSchema)
+    .describe(
+      'A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function.',
+    ),
   processCreationParams: z
     .array(ContractKeyValuePairDescriptorSchema)
     .describe(

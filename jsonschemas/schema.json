@@ -3685,6 +3685,13 @@
                   "$ref": "#/$defs/URI",
                   "description": "The link to the Rule source code. Typically a GitHub repository."
                 },
+                "configureParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+                },
                 "processCreatePostParams": {
                   "type": "array",
                   "items": {
@@ -3721,6 +3728,7 @@
                 "description",
                 "authors",
                 "source",
+                "configureParams",
                 "processCreatePostParams",
                 "processEditPostParams",
                 "processRemovePostParams",
@@ -3778,6 +3786,13 @@
                   "$ref": "#/$defs/URI",
                   "description": "The link to the Rule source code. Typically a GitHub repository."
                 },
+                "configureParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+                },
                 "processFollowParams": {
                   "type": "array",
                   "items": {
@@ -3793,6 +3808,7 @@
                 "description",
                 "authors",
                 "source",
+                "configureParams",
                 "processFollowParams"
               ],
               "additionalProperties": false
@@ -3847,6 +3863,13 @@
                   "$ref": "#/$defs/URI",
                   "description": "The link to the Rule source code. Typically a GitHub repository."
                 },
+                "configureParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+                },
                 "processFollowParams": {
                   "type": "array",
                   "items": {
@@ -3876,6 +3899,7 @@
                 "description",
                 "authors",
                 "source",
+                "configureParams",
                 "processFollowParams",
                 "processUnfollowParams",
                 "processFollowRuleChangesParams"
@@ -3932,6 +3956,13 @@
                   "$ref": "#/$defs/URI",
                   "description": "The link to the Rule source code. Typically a GitHub repository."
                 },
+                "configureParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+                },
                 "processAdditionParams": {
                   "type": "array",
                   "items": {
@@ -3968,6 +3999,7 @@
                 "description",
                 "authors",
                 "source",
+                "configureParams",
                 "processAdditionParams",
                 "processRemovalParams",
                 "processJoiningParams",
@@ -4025,6 +4057,13 @@
                   "$ref": "#/$defs/URI",
                   "description": "The link to the Rule source code. Typically a GitHub repository."
                 },
+                "configureParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+                },
                 "processCreationParams": {
                   "type": "array",
                   "items": {
@@ -4061,6 +4100,7 @@
                 "description",
                 "authors",
                 "source",
+                "configureParams",
                 "processCreationParams",
                 "processRemovalParams",
                 "processAssigningParams",
@@ -4118,6 +4158,13 @@
                   "$ref": "#/$defs/URI",
                   "description": "The link to the Rule source code. Typically a GitHub repository."
                 },
+                "configureParams": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/ContractKeyValuePairDescriptor"
+                  },
+                  "description": "A list of `ContractKeyValuePairDescriptor` that describes the `ruleParams` argument of the `configure` function."
+                },
                 "processCreatePostParams": {
                   "type": "array",
                   "items": {
@@ -4140,6 +4187,7 @@
                 "description",
                 "authors",
                 "source",
+                "configureParams",
                 "processCreatePostParams",
                 "processEditPostParams"
               ],
