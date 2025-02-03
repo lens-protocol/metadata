@@ -8,7 +8,7 @@ exports[`Given the "account" metadata builder > when using it > should return a 
       {
         "key": "twitter",
         "type": "String",
-        "value": "https://twitter.com/johndoe",
+        "value": "https://x.com/johndoe",
       },
       {
         "key": "dob",
