@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.0.0-next.7
+
+### Patch Changes
+
+- 36c6d37: **fix**: removes unnecessary 'title' from graph, feed, rules, and actions metadata specs.
+
 ## 2.0.0-next.6
 
 ### Patch Changes
