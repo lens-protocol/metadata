@@ -47,7 +47,6 @@ exports[`Given the "action" metadata builder > when using it > should return a v
       },
     ],
     "source": "https://github.com/foobarbaz/my-open-action",
-    "title": "This is my Open Action",
   },
 }
 `;

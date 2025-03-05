@@ -23,10 +23,6 @@ export type ActionMetadataDetails = {
    */
   name: string;
   /**
-   * The human-friendly title for the Action.
-   */
-  title: string;
-  /**
    * Markdown formatted description of the Action.
    *
    * It should explain what this Action does, how to use it, examples just
@@ -96,7 +92,6 @@ const ActionMetadataDetailsSchema: z.ZodType<ActionMetadataDetails, z.ZodTypeDef
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
     name: NonEmptyStringSchema.describe('A short name for the Action.'),
-    title: NonEmptyStringSchema.describe('The human-friendly title for the Action.'),
     description: MarkdownSchema.describe('Markdown formatted description of the Action.'),
     authors: z
       .array(z.string().email('Authors list should only contain valid emails'))

@@ -60,7 +60,6 @@ export type FeedRuleOptions = FeedRuleDetails & {
  * ```ts
  * const metadata = feedRule({
  *   name: 'MyFeedRule',
- *   title: 'This is my Feed Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
@@ -120,7 +119,6 @@ export type GraphRuleOptions = GraphRuleDetails & {
  * ```ts
  * const metadata = graphRule({
  *   name: 'MyGraphRule',
- *   title: 'This is my Graph Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
@@ -179,7 +177,6 @@ export type GroupRuleOptions = GroupRuleDetails & {
  * ```ts
  * const metadata = groupRule({
  *   name: 'MyGroupRule',
- *   title: 'This is my Group Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
@@ -239,7 +236,6 @@ export type NamespaceRuleOptions = NamespaceRuleDetails & {
  * ```ts
  * const metadata = namespaceRule({
  *   name: 'MyNamespaceRule',
- *   title: 'This is my Namespace Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
@@ -302,7 +298,6 @@ export type PostRuleOptions = PostRuleDetails & {
  * ```ts
  * const metadata = postRule({
  *   name: 'MyPostRule',
- *   title: 'This is my Post Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',
@@ -359,7 +354,6 @@ export type FollowRuleOptions = FollowRuleDetails & {
  * ```ts
  * const metadata = followRule({
  *   name: 'MyFollowRule',
- *   title: 'This is my Follow Rule',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',

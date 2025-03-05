@@ -7,7 +7,6 @@ describe('Given the rule metadata builders', () => {
     it('should return a valid FeedRuleMetadata', () => {
       const metadata = feedRule({
         name: 'MyFeedRule',
-        title: 'This is my Feed Rule',
         description: 'Get ready for the future of social interaction!',
         authors: ['awesome-dev@lens.xyz'],
         source: 'https://github.com/foobarbaz/my-open-action',
@@ -41,7 +40,6 @@ describe('Given the rule metadata builders', () => {
     it('should return a valid GraphRuleMetadata', () => {
       const metadata = graphRule({
         name: 'MyGraphRule',
-        title: 'This is my Graph Rule',
         description: 'Get ready for the future of social interaction!',
         authors: ['awesome-dev@lens.xyz'],
         source: 'https://github.com/foobarbaz/my-open-action',

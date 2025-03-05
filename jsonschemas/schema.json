@@ -3329,10 +3329,6 @@
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the graph."
             },
-            "title": {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "The human-friendly title for the graph."
-            },
             "description": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "Optional markdown formatted description of the graph."
@@ -3340,8 +3336,7 @@
           },
           "required": [
             "id",
-            "name",
-            "title"
+            "name"
           ],
           "additionalProperties": false
         }
@@ -3370,10 +3365,6 @@
               "$ref": "#/$defs/NonEmptyString",
               "description": "The name of the Feed."
             },
-            "title": {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "The human-friendly title for the Feed."
-            },
             "description": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "Optional markdown formatted description of the Feed."
@@ -3381,8 +3372,7 @@
           },
           "required": [
             "id",
-            "name",
-            "title"
+            "name"
           ],
           "additionalProperties": false
         },
@@ -3575,10 +3565,6 @@
               "$ref": "#/$defs/NonEmptyString",
               "description": "A short name for the Action."
             },
-            "title": {
-              "$ref": "#/$defs/NonEmptyString",
-              "description": "The human-friendly title for the Action."
-            },
             "description": {
               "$ref": "#/$defs/NonEmptyString",
               "description": "Markdown formatted description of the Action."
@@ -3621,7 +3607,6 @@
           "required": [
             "id",
             "name",
-            "title",
             "description",
             "authors",
             "source",
@@ -3663,10 +3648,6 @@
                 "name": {
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "A short name for the Rule."
-                },
-                "title": {
-                  "$ref": "#/$defs/NonEmptyString",
-                  "description": "The human-friendly title for the Rule."
                 },
                 "description": {
                   "$ref": "#/$defs/NonEmptyString",
@@ -3724,7 +3705,6 @@
               "required": [
                 "id",
                 "name",
-                "title",
                 "description",
                 "authors",
                 "source",
@@ -3765,10 +3745,6 @@
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "A short name for the Rule."
                 },
-                "title": {
-                  "$ref": "#/$defs/NonEmptyString",
-                  "description": "The human-friendly title for the Rule."
-                },
                 "description": {
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "Markdown formatted description of the Rule."
@@ -3804,7 +3780,6 @@
               "required": [
                 "id",
                 "name",
-                "title",
                 "description",
                 "authors",
                 "source",
@@ -3841,10 +3816,6 @@
                 "name": {
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "A short name for the Rule."
-                },
-                "title": {
-                  "$ref": "#/$defs/NonEmptyString",
-                  "description": "The human-friendly title for the Rule."
                 },
                 "description": {
                   "$ref": "#/$defs/NonEmptyString",
@@ -3895,7 +3866,6 @@
               "required": [
                 "id",
                 "name",
-                "title",
                 "description",
                 "authors",
                 "source",
@@ -3934,10 +3904,6 @@
                 "name": {
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "A short name for the Rule."
-                },
-                "title": {
-                  "$ref": "#/$defs/NonEmptyString",
-                  "description": "The human-friendly title for the Rule."
                 },
                 "description": {
                   "$ref": "#/$defs/NonEmptyString",
@@ -3995,7 +3961,6 @@
               "required": [
                 "id",
                 "name",
-                "title",
                 "description",
                 "authors",
                 "source",
@@ -4035,10 +4000,6 @@
                 "name": {
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "A short name for the Rule."
-                },
-                "title": {
-                  "$ref": "#/$defs/NonEmptyString",
-                  "description": "The human-friendly title for the Rule."
                 },
                 "description": {
                   "$ref": "#/$defs/NonEmptyString",
@@ -4096,7 +4057,6 @@
               "required": [
                 "id",
                 "name",
-                "title",
                 "description",
                 "authors",
                 "source",
@@ -4136,10 +4096,6 @@
                 "name": {
                   "$ref": "#/$defs/NonEmptyString",
                   "description": "A short name for the Rule."
-                },
-                "title": {
-                  "$ref": "#/$defs/NonEmptyString",
-                  "description": "The human-friendly title for the Rule."
                 },
                 "description": {
                   "$ref": "#/$defs/NonEmptyString",
@@ -4183,7 +4139,6 @@
               "required": [
                 "id",
                 "name",
-                "title",
                 "description",
                 "authors",
                 "source",

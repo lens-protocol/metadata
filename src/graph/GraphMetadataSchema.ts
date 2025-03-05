@@ -13,10 +13,6 @@ export type GraphMetadataDetails = {
    */
   name: string;
   /**
-   * The human-friendly title for the graph.
-   */
-  title: string;
-  /**
    * Optional markdown formatted description of the graph.
    */
   description?: string;
@@ -27,7 +23,6 @@ const GraphMetadataDetailsSchema: z.ZodType<GraphMetadataDetails, z.ZodTypeDef, 
     'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
   ),
   name: NonEmptyStringSchema.describe('The name of the graph.'),
-  title: NonEmptyStringSchema.describe('The human-friendly title for the graph.'),
   description: NonEmptyStringSchema.optional().describe(
     'Optional markdown formatted description of the graph.',
   ),

@@ -16,10 +16,6 @@
           "$ref": "#/$defs/NonEmptyString",
           "description": "A short name for the Action."
         },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The human-friendly title for the Action."
-        },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
           "description": "Markdown formatted description of the Action."
@@ -64,7 +60,6 @@
       "required": [
         "id",
         "name",
-        "title",
         "description",
         "authors",
         "source",

@@ -15,10 +15,6 @@ export type GraphOptions = {
    */
   name: string;
   /**
-   * The human-friendly title for the Graph.
-   */
-  title: string;
-  /**
    * Optional markdown formatted description of the Graph.
    */
   description?: string;
@@ -30,7 +26,6 @@ export type GraphOptions = {
  * ```ts
  * const metadata = graph({
  *   name: 'XYZ',
- *   title: 'Not Just Another Graph… or is it?',
  *   description: 'Bringing you one step closer to achieving absolutely nothing, but in style!',
  * });
  * ```

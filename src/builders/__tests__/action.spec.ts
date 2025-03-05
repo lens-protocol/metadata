@@ -7,7 +7,6 @@ describe(`Given the "${action.name}" metadata builder`, () => {
     it('should return a valid ActionMetadata', () => {
       const metadata = action({
         name: 'My Open Action',
-        title: 'This is my Open Action',
         description: 'Get ready for the future of social interaction!',
         authors: ['awesome-dev@lens.xyz'],
         source: 'https://github.com/foobarbaz/my-open-action',

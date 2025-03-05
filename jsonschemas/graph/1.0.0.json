@@ -16,10 +16,6 @@
           "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the graph."
         },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The human-friendly title for the graph."
-        },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
           "description": "Optional markdown formatted description of the graph."
@@ -27,8 +23,7 @@
       },
       "required": [
         "id",
-        "name",
-        "title"
+        "name"
       ],
       "additionalProperties": false
     }

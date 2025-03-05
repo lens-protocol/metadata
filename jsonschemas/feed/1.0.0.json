@@ -16,10 +16,6 @@
           "$ref": "#/$defs/NonEmptyString",
           "description": "The name of the Feed."
         },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The human-friendly title for the Feed."
-        },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
           "description": "Optional markdown formatted description of the Feed."
@@ -27,8 +23,7 @@
       },
       "required": [
         "id",
-        "name",
-        "title"
+        "name"
       ],
       "additionalProperties": false
     },

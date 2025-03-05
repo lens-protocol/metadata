@@ -15,10 +15,6 @@ export type FeedOptions = {
    */
   name: string;
   /**
-   * The human-friendly title for the Feed.
-   */
-  title: string;
-  /**
    * Optional markdown formatted description of the Feed.
    */
   description?: string;
@@ -30,7 +26,6 @@ export type FeedOptions = {
  * ```ts
  * const metadata = feed({
  *   name: 'XYZ',
- *   title: 'Not Just Another Feed… or is it?',
  *   description: 'Bringing you one step closer to achieving absolutely nothing, but in style!',
  * });
  * ```

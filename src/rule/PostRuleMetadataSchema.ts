@@ -23,10 +23,6 @@ export type PostRuleMetadataDetails = {
    */
   name: string;
   /**
-   * The human-friendly title for the Rule.
-   */
-  title: string;
-  /**
    * Markdown formatted description of the Rule.
    *
    * It should explain what this Rule does, how to use it, examples just
@@ -100,7 +96,6 @@ const PostRuleMetadataDetailsSchema: z.ZodType<PostRuleMetadataDetails, z.ZodTyp
       'A unique identifier that in storages like IPFS ensures the uniqueness of the metadata URI. Use a UUID if unsure.',
     ),
     name: NonEmptyStringSchema.describe('A short name for the Rule.'),
-    title: NonEmptyStringSchema.describe('The human-friendly title for the Rule.'),
     description: MarkdownSchema.describe('Markdown formatted description of the Rule.'),
     authors: z
       .array(z.string().email('Authors list should only contain valid emails'))

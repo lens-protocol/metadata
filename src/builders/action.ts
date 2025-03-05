@@ -35,7 +35,6 @@ export type ActionOptions = ActionDetails & {
  * ```ts
  * const metadata = action({
  *   name: 'MyPostAction',
- *   title: 'This is my Post Open',
  *   description: 'Get ready for the future of social interaction!',
  *   authors: ['awesome-dev@lens.xyz'],
  *   source: 'https://github.com/foobarbaz/my-open-action',

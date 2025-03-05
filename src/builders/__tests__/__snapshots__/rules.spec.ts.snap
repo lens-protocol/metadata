@@ -27,7 +27,6 @@ exports[`Given the rule metadata builders > when using the 'feedRule' > should r
     "processPostRuleChangesParams": [],
     "processRemovePostParams": [],
     "source": "https://github.com/foobarbaz/my-open-action",
-    "title": "This is my Feed Rule",
   },
 }
 `;
@@ -58,7 +57,6 @@ exports[`Given the rule metadata builders > when using the 'graphRule' > should 
     "processFollowRuleChangesParams": [],
     "processUnfollowParams": [],
     "source": "https://github.com/foobarbaz/my-open-action",
-    "title": "This is my Graph Rule",
   },
 }
 `;

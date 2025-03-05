@@ -21,10 +21,6 @@
           "$ref": "#/$defs/NonEmptyString",
           "description": "A short name for the Rule."
         },
-        "title": {
-          "$ref": "#/$defs/NonEmptyString",
-          "description": "The human-friendly title for the Rule."
-        },
         "description": {
           "$ref": "#/$defs/NonEmptyString",
           "description": "Markdown formatted description of the Rule."
@@ -62,7 +58,6 @@
       "required": [
         "id",
         "name",
-        "title",
         "description",
         "authors",
         "source",
