@@ -41,7 +41,7 @@ export type FollowRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(bytes32 configSalt, address account, KeyValue[] calldata ruleParams) external;
    * ```
    *
@@ -53,7 +53,7 @@ export type FollowRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processFollow` function.
    *
-   * ```sol
+   * ```solidity
    * function processFollow(
    *   bytes32 configSalt,
    *   address originalMsgSender,

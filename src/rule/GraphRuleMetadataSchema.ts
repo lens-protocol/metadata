@@ -41,7 +41,7 @@ export type GraphRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(bytes32 configSalt, KeyValue[] calldata ruleParams) external;
    * ```
    *
@@ -53,7 +53,7 @@ export type GraphRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processFollow` function.
    *
-   * ```sol
+   * ```solidity
    * function processFollow(
    *     bytes32 configSalt,
    *     address originalMsgSender,
@@ -72,7 +72,7 @@ export type GraphRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processUnfollow` function.
    *
-   * ```sol
+   * ```solidity
    * function processUnfollow(
    *     bytes32 configSalt,
    *     address originalMsgSender,
@@ -91,7 +91,7 @@ export type GraphRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processFollowRuleChanges` function.
    *
-   * ```sol
+   * ```solidity
    * function processFollowRuleChanges(
    *     bytes32 configSalt,
    *     address account,

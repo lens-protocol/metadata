@@ -41,7 +41,7 @@ export type ActionMetadataDetails = {
   /**
    * An optional list of {@link ContractKeyValuePairDescriptor} that describes the `params` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(address originalMsgSender, address feed, uint256 postId, KeyValue[] calldata params)
    *   external
    *   returns (bytes memory);
@@ -55,7 +55,7 @@ export type ActionMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `params` argument of the `execute` function.
    *
-   * ```sol
+   * ```solidity
    * function execute(address originalMsgSender, address feed, uint256 postId, KeyValue[] calldata params)
    *   external
    *   returns (bytes memory);
@@ -69,7 +69,7 @@ export type ActionMetadataDetails = {
   /**
    * An optional list of {@link ContractKeyValuePairDescriptor} that describes the `params` argument of the `setDisabledParams` function.
    *
-   * ```sol
+   * ```solidity
    * function setDisabled(
    *   address originalMsgSender,
    *   address feed,

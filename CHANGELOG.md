@@ -1,5 +1,22 @@
 # @lens-protocol/metadata
 
+## 2.0.0
+
+### Major Changes
+
+- a0dc87a: Define metadata standard for Lens v3
+
+### Patch Changes
+
+- 5d3e6e7: **feat:** ActionMetadata, FeedRuleMetadata, GraphRuleMetadata, GroupRuleMetadata, NamespaceRuleMetadata, PostRuleMetadata, FollowRuleMetadata specs. Renames UsernameMetadata into NamespaceMetadata.
+- a44a424: **fix:** missing `configureParams` from rule metadata spec"
+- c63c726: fix: adds missing builders
+- 04ff6ef: **fix:** adds missing App tagline
+- 17cfb54: **fix:** removes field-based encryption strategy
+- 7acb7d7: **fix:** removes group slug, adds group cover, adds app tagline, adds group name regexp. Fixes many optional types
+- 36c6d37: **fix**: removes unnecessary 'title' from graph, feed, rules, and actions metadata specs.
+- eb7f41c: **fix:** updates engines directive.
+
 ## 2.0.0-next.7
 
 ### Patch Changes

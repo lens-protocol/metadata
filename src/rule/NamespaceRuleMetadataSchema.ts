@@ -41,7 +41,7 @@ export type NamespaceRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(bytes32 configSalt, KeyValue[] calldata ruleParams) external;
    * ```
    *
@@ -53,7 +53,7 @@ export type NamespaceRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processCreation` function.
    *
-   * ```sol
+   * ```solidity
    * function processCreation(
    *   bytes32 configSalt,
    *   address originalMsgSender,
@@ -72,7 +72,7 @@ export type NamespaceRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processRemoval` function.
    *
-   * ```sol
+   * ```solidity
    * function processRemoval(
    *   bytes32 configSalt,
    *   address originalMsgSender,
@@ -90,7 +90,7 @@ export type NamespaceRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processAssigning` function.
    *
-   * ```sol
+   * ```solidity
    * function processAssigning(
    *   bytes32 configSalt,
    *   address originalMsgSender,
@@ -109,7 +109,7 @@ export type NamespaceRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processUnassigning` function.
    *
-   * ```sol
+   * ```solidity
    * function processUnassigning(
    *   bytes32 configSalt,
    *   address originalMsgSender,

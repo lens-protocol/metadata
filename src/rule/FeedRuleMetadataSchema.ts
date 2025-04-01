@@ -41,7 +41,7 @@ export type FeedRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(bytes32 configSalt, KeyValue[] calldata ruleParams) external;
    * ```
    *
@@ -53,7 +53,7 @@ export type FeedRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processCreatePost` function.
    *
-   * ```sol
+   * ```solidity
    * function processCreatePost(
    *   bytes32 configSalt,
    *   uint256 postId,
@@ -71,7 +71,7 @@ export type FeedRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processEditPost` function.
    *
-   * ```sol
+   * ```solidity
    * function processEditPost(
    *   bytes32 configSalt,
    *   uint256 postId,
@@ -89,7 +89,7 @@ export type FeedRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processRemovePost` function.
    *
-   * ```sol
+   * ```solidity
    * function processRemovePost(
    *   bytes32 configSalt,
    *   uint256 postId,
@@ -106,7 +106,7 @@ export type FeedRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processPostRuleChanges` function.
    *
-   * ```sol
+   * ```solidity
    * function processPostRuleChanges(
    *     bytes32 configSalt,
    *     uint256 postId,

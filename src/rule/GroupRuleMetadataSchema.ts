@@ -41,7 +41,7 @@ export type GroupRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(bytes32 configSalt, KeyValue[] calldata ruleParams) external;
    * ```
    *
@@ -53,7 +53,7 @@ export type GroupRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processAddition` function.
    *
-   * ```sol
+   * ```solidity
    * function processAddition(
    *   bytes32 configSalt,
    *   address originalMsgSender,
@@ -71,7 +71,7 @@ export type GroupRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processRemoval` function.
    *
-   * ```sol
+   * ```solidity
    * function processRemoval(
    *   bytes32 configSalt,
    *   address originalMsgSender,
@@ -89,7 +89,7 @@ export type GroupRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processJoining` function.
    *
-   * ```sol
+   * ```solidity
    * function processJoining(
    *   bytes32 configSalt,
    *   address account,
@@ -106,7 +106,7 @@ export type GroupRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processLeaving` function.
    *
-   * ```sol
+   * ```solidity
    * function processLeaving(
    *   bytes32 configSalt,
    *   address account,

@@ -41,7 +41,7 @@ export type PostRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `configure` function.
    *
-   * ```sol
+   * ```solidity
    * function configure(bytes32 configSalt, uint256 postId, KeyValue[] calldata ruleParams) external;
    * ```
    *
@@ -53,7 +53,7 @@ export type PostRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processCreatePost` function.
    *
-   * ```sol
+   * ```solidity
    * function processCreatePost(
    *   bytes32 configSalt,
    *   uint256 rootPostId,
@@ -72,7 +72,7 @@ export type PostRuleMetadataDetails = {
   /**
    * A list of {@link ContractKeyValuePairDescriptor} that describes the `ruleParams` argument of the `processEditPost` function.
    *
-   * ```sol
+   * ```solidity
    * function processEditPost(
    *   bytes32 configSalt,
    *   uint256 rootPostId,
