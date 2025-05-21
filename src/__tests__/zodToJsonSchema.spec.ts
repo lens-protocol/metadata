@@ -301,6 +301,7 @@ describe('Given the zod-to-json-schema package', () => {
                 "type": {
                   "description": "The mime type of the image",
                   "enum": [
+                    "image/avif",
                     "image/bmp",
                     "image/gif",
                     "image/heic",

@@ -306,6 +306,7 @@
         "type": {
           "type": "string",
           "enum": [
+            "image/avif",
             "image/bmp",
             "image/gif",
             "image/heic",

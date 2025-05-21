@@ -1,5 +1,11 @@
 # @lens-protocol/metadata
 
+## 2.1.0
+
+### Minor Changes
+
+- cb3712c: feat: adds support for AVIF images
+
 ## 2.0.0
 
 ### Major Changes
