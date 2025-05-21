@@ -120,6 +120,7 @@ export const MediaAudioSchema = mediaCommonSchema({
  * Image mime type.
  */
 export enum MediaImageMimeType {
+  AVIF = 'image/avif',
   BMP = 'image/bmp',
   GIF = 'image/gif',
   HEIC = 'image/heic',
