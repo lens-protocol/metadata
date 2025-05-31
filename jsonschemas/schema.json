@@ -28,6 +28,9 @@
       "$ref": "#/$defs/MintMetadata"
     },
     {
+      "$ref": "#/$defs/CustomMetadata"
+    },
+    {
       "$ref": "#/$defs/SpaceMetadata"
     },
     {
@@ -78,7 +81,8 @@
         "SHORT_VIDEO",
         "3D",
         "STORY",
-        "SPACE"
+        "SPACE",
+        "CUSTOM"
       ]
     },
     "AnyMedia": {
@@ -2305,6 +2309,9 @@
         "lens"
       ],
       "additionalProperties": true
+    },
+    "CustomMetadata": {
+      "$ref": "posts/custom/3.0.0.json"
     },
     "SpaceMetadata": {
       "type": "object",

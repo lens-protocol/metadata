@@ -21,4 +21,5 @@ export enum PostMetadataSchemaId {
   TRANSACTION_LATEST = `${location}/transaction/3.0.0.json`,
   TEXT_ONLY_LATEST = `${location}/text-only/3.0.0.json`,
   VIDEO_LATEST = `${location}/video/3.0.0.json`,
+  CUSTOM_LATEST = `${location}/custom/3.0.0.json`,
 }

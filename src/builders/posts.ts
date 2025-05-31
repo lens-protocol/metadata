@@ -28,6 +28,9 @@ import {
   type MintMetadata,
   type MintMetadataDetails,
   MintSchema,
+  type CustomMetadata,
+  type CustomMetadataDetails,
+  CustomSchema,
   PostMainFocus,
   PostMetadataSchemaId,
   type SpaceMetadata,
@@ -646,6 +649,46 @@ export function mint({
         id,
         locale,
         mainContentFocus: PostMainFocus.MINT,
+        ...others,
+      },
+    }),
+  );
+}
+
+/**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type CustomDetails = InputForPostMetadataDetails<CustomMetadataDetails>;
+/**
+ * All {@link CustomMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PostSchemaId.CUSTOM_LATEST`
+ */
+export type CustomOptions = CustomDetails & {
+  /**
+   * All the {@link NftMetadata} fields.
+   */
+  nft?: NftDetails;
+};
+/**
+ * Creates a valid CustomMetadata.
+ */
+export function custom({
+  nft,
+  locale = DEFAULT_LOCALE,
+  id = v4(),
+  ...others
+}: CustomOptions): CustomMetadata {
+  return evaluate(
+    CustomSchema.safeParse({
+      $schema: PostMetadataSchemaId.CUSTOM_LATEST,
+      ...nft,
+      lens: {
+        id,
+        locale,
+        mainContentFocus: PostMainFocus.CUSTOM,
         ...others,
       },
     }),
