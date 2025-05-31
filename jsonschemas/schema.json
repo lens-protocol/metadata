@@ -2311,7 +2311,135 @@
       "additionalProperties": true
     },
     "CustomMetadata": {
-      "$ref": "posts/custom/3.0.0.json"
+      "type": "object",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable description of the item. It could be plain text or markdown."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A human-readable description of the item. It could be plain text or markdown."
+        },
+        "external_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/URI",
+              "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "This is the URL that will appear below the asset's image on OpenSea and others etc. and will allow users to leave OpenSea and view the item on the site."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the NFT item."
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MarketplaceMetadataAttribute"
+          },
+          "description": "These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item."
+        },
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/URI",
+              "description": "NFT will store any image here."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "NFT will store any image here."
+        },
+        "animation_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/URI",
+              "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A URL to a multi-media attachment for the item. The file extensions GLTF, GLB, WEBM, MP4, M4V, OGV, and OGG are supported, along with the audio-only extensions MP3, WAV, and OGA. Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas, WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported."
+        },
+        "signature": {
+          "$ref": "#/$defs/Signature",
+          "description": "A cryptographic signature of the Lens metadata."
+        },
+        "$schema": {
+          "type": "string",
+          "const": "https://json-schemas.lens.dev/posts/custom/3.0.0.json"
+        },
+        "lens": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/MetadataId"
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/MetadataAttribute"
+              },
+              "minItems": 1,
+              "maxItems": 20,
+              "description": "A bag of attributes that can be used to store any kind of metadata that is not currently supported by the standard. Over time, common attributes will be added to the standard and their usage as arbitrary attributes will be discouraged."
+            },
+            "locale": {
+              "$ref": "#/$defs/Locale"
+            },
+            "tags": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/Tag"
+              },
+              "maxItems": 20,
+              "description": "An arbitrary list of tags."
+            },
+            "contentWarning": {
+              "$ref": "#/$defs/ContentWarning",
+              "description": "Specify a content warning."
+            },
+            "mainContentFocus": {
+              "type": "string",
+              "const": "CUSTOM",
+              "description": "The main focus of the post."
+            },
+            "name": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A human-readable name for the custom post type."
+            },
+            "value": {
+              "$ref": "#/$defs/NonEmptyString",
+              "description": "A JSON string containing any custom data."
+            }
+          },
+          "required": [
+            "id",
+            "locale",
+            "mainContentFocus",
+            "name",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "lens"
+      ],
+      "additionalProperties": true
     },
     "SpaceMetadata": {
       "type": "object",

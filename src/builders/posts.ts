@@ -674,6 +674,22 @@ export type CustomOptions = CustomDetails & {
 };
 /**
  * Creates a valid CustomMetadata.
+ *
+ * @category Compose
+ * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * ```ts
+ * const metadata = custom({
+ *   name: 'My Custom Post Type',
+ *   value: JSON.stringify({
+ *     customField1: 'value1',
+ *     customField2: 42,
+ *     customField3: ['item1', 'item2']
+ *   }),
+ *   tags: ['custom', 'special'],
+ * });
+ * ```
  */
 export function custom({
   nft,

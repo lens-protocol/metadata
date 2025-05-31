@@ -17,6 +17,10 @@ export type CustomMetadataDetails = PostMetadataCommon & {
    */
   mainContentFocus: PostMainFocus.CUSTOM;
   /**
+   * A human-readable name for the custom post type.
+   */
+  name: string;
+  /**
    * A JSON string containing any custom data.
    */
   value: string;
@@ -25,6 +29,8 @@ export type CustomMetadataDetails = PostMetadataCommon & {
 const CustomMetadataDetailsSchema: z.ZodType<CustomMetadataDetails, z.ZodTypeDef, object> =
   metadataDetailsWith({
     mainContentFocus: mainContentFocus(PostMainFocus.CUSTOM),
+
+    name: NonEmptyStringSchema.describe('A human-readable name for the custom post type.'),
 
     value: NonEmptyStringSchema.describe('A JSON string containing any custom data.'),
   });
