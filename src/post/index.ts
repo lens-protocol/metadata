@@ -11,6 +11,7 @@ export * from './ImageSchema.js';
 export * from './LinkSchema.js';
 export * from './LiveStreamSchema.js';
 export * from './MintSchema.js';
+export * from './CustomSchema.js';
 export * from './PostMainFocus.js';
 export * from './PostMetadataSchemaId.js';
 export * from './SpaceSchema.js';
@@ -30,6 +31,7 @@ import { type ImageMetadata, ImageSchema } from './ImageSchema.js';
 import { type LinkMetadata, LinkSchema } from './LinkSchema.js';
 import { type LiveStreamMetadata, LiveStreamSchema } from './LiveStreamSchema.js';
 import { type MintMetadata, MintSchema } from './MintSchema.js';
+import { type CustomMetadata, CustomSchema } from './CustomSchema.js';
 import { type SpaceMetadata, SpaceSchema } from './SpaceSchema.js';
 import { type StoryMetadata, StorySchema } from './StorySchema.js';
 import { type TextOnlyMetadata, TextOnlySchema } from './TextOnlySchema.js';
@@ -82,6 +84,7 @@ export type PostMetadata = ShapeCheck<
   | LinkMetadata
   | LiveStreamMetadata
   | MintMetadata
+  | CustomMetadata
   | SpaceMetadata
   | TextOnlyMetadata
   | StoryMetadata
@@ -124,6 +127,7 @@ export const PostMetadataSchema: z.ZodType<PostMetadata, z.ZodTypeDef, object> =
     LinkSchema,
     LiveStreamSchema,
     MintSchema,
+    CustomSchema,
     SpaceSchema,
     TextOnlySchema,
     StorySchema,
