@@ -16,6 +16,9 @@ import {
   type EventMetadata,
   type EventMetadataDetails,
   EventSchema,
+  type ExperimentalPostMetadata,
+  type ExperimentalPostMetadataDetails,
+  ExperimentalPostSchema,
   type ImageMetadata,
   type ImageMetadataDetails,
   ImageSchema,
@@ -646,6 +649,62 @@ export function mint({
         id,
         locale,
         mainContentFocus: PostMainFocus.MINT,
+        ...others,
+      },
+    }),
+  );
+}
+
+/**
+ * @private
+ * @privateRemarks MUST stay very @private to produce usable docs
+ */
+type CustomDetails = InputForPostMetadataDetails<ExperimentalPostMetadataDetails>;
+/**
+ * All {@link ExperimentalPostMetadataDetails} fields with:
+ * - `id` defaults to a UUID
+ * - `locale` defaults to `en`
+ * - `mainContentFocus` automatically set to `PostSchemaId.CUSTOM_LATEST`
+ */
+export type CustomOptions = CustomDetails & {
+  /**
+   * All the {@link NftMetadata} fields.
+   */
+  nft?: NftDetails;
+};
+/**
+ * Creates a valid CustomMetadata.
+ *
+ * @category Compose
+ * @param input - Use your IDE suggestions for an enhanced development experience
+ *
+ * @example
+ * ```ts
+ * const metadata = custom({
+ *   name: 'My Custom Post Type',
+ *   value: JSON.stringify({
+ *     customField1: 'value1',
+ *     customField2: 42,
+ *     customField3: ['item1', 'item2']
+ *   }),
+ *   tags: ['custom', 'special'],
+ * });
+ * ```
+ */
+export function custom({
+  nft,
+  locale = DEFAULT_LOCALE,
+  id = v4(),
+  ...others
+}: CustomOptions): ExperimentalPostMetadata {
+  return evaluate(
+    ExperimentalPostSchema.safeParse({
+      $schema: PostMetadataSchemaId.CUSTOM_LATEST,
+      ...nft,
+      lens: {
+        id,
+        locale,
+        mainContentFocus: PostMainFocus.CUSTOM,
         ...others,
       },
     }),

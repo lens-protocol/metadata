@@ -8,7 +8,7 @@ describe('Given the PostMetadataSchema', () => {
     it('then it should complain about the missing $schema', () => {
       expectResult(() => PostMetadataSchema.safeParse({})).toMatchInlineSnapshot(`
         "fix the following issues
-        · "$schema": Invalid discriminator value. Expected 'https://json-schemas.lens.dev/posts/article/3.0.0.json' | 'https://json-schemas.lens.dev/posts/audio/3.0.0.json' | 'https://json-schemas.lens.dev/posts/checking-in/3.0.0.json' | 'https://json-schemas.lens.dev/posts/embed/3.0.0.json' | 'https://json-schemas.lens.dev/posts/event/3.0.0.json' | 'https://json-schemas.lens.dev/posts/image/3.0.0.json' | 'https://json-schemas.lens.dev/posts/link/3.0.0.json' | 'https://json-schemas.lens.dev/posts/livestream/3.0.0.json' | 'https://json-schemas.lens.dev/posts/mint/3.0.0.json' | 'https://json-schemas.lens.dev/posts/space/3.0.0.json' | 'https://json-schemas.lens.dev/posts/text-only/3.0.0.json' | 'https://json-schemas.lens.dev/posts/story/3.0.0.json' | 'https://json-schemas.lens.dev/posts/transaction/3.0.0.json' | 'https://json-schemas.lens.dev/posts/3d/3.0.0.json' | 'https://json-schemas.lens.dev/posts/video/3.0.0.json'"
+        · "$schema": Invalid discriminator value. Expected 'https://json-schemas.lens.dev/posts/article/3.0.0.json' | 'https://json-schemas.lens.dev/posts/audio/3.0.0.json' | 'https://json-schemas.lens.dev/posts/checking-in/3.0.0.json' | 'https://json-schemas.lens.dev/posts/embed/3.0.0.json' | 'https://json-schemas.lens.dev/posts/event/3.0.0.json' | 'https://json-schemas.lens.dev/posts/image/3.0.0.json' | 'https://json-schemas.lens.dev/posts/link/3.0.0.json' | 'https://json-schemas.lens.dev/posts/livestream/3.0.0.json' | 'https://json-schemas.lens.dev/posts/mint/3.0.0.json' | 'https://json-schemas.lens.dev/posts/custom/3.0.0.json' | 'https://json-schemas.lens.dev/posts/space/3.0.0.json' | 'https://json-schemas.lens.dev/posts/text-only/3.0.0.json' | 'https://json-schemas.lens.dev/posts/story/3.0.0.json' | 'https://json-schemas.lens.dev/posts/transaction/3.0.0.json' | 'https://json-schemas.lens.dev/posts/3d/3.0.0.json' | 'https://json-schemas.lens.dev/posts/video/3.0.0.json'"
       `);
     });
   });
@@ -259,6 +259,24 @@ describe('Given the PostMetadataSchema', () => {
         	OR:
         		"lens.mainContentFocus": Invalid literal value, expected "VIDEO"
         · "lens.video": Required"
+      `);
+    });
+  });
+
+  describe(`when parsing an invalid ${PostMetadataSchemaId.CUSTOM_LATEST}`, () => {
+    it('then it should flag the missing fields', () => {
+      expectResult(() =>
+        PostMetadataSchema.safeParse({
+          $schema: PostMetadataSchemaId.CUSTOM_LATEST,
+          lens: {},
+        }),
+      ).toMatchInlineSnapshot(`
+        "fix the following issues
+        · "lens.id": Required
+        · "lens.locale": Required
+        · "lens.mainContentFocus": Invalid literal value, expected "CUSTOM"
+        · "lens.name": Required
+        · "lens.value": Required"
       `);
     });
   });

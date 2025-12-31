@@ -11,6 +11,7 @@ export * from './ImageSchema.js';
 export * from './LinkSchema.js';
 export * from './LiveStreamSchema.js';
 export * from './MintSchema.js';
+export * from './ExperimentalPostSchema.js';
 export * from './PostMainFocus.js';
 export * from './PostMetadataSchemaId.js';
 export * from './SpaceSchema.js';
@@ -26,6 +27,7 @@ import { type AudioMetadata, AudioSchema } from './AudioSchema.js';
 import { type CheckingInMetadata, CheckingInSchema } from './CheckingInSchema.js';
 import { type EmbedMetadata, EmbedSchema } from './EmbedSchema';
 import { type EventMetadata, EventSchema } from './EventSchema.js';
+import { type ExperimentalPostMetadata, ExperimentalPostSchema } from './ExperimentalPostSchema.js';
 import { type ImageMetadata, ImageSchema } from './ImageSchema.js';
 import { type LinkMetadata, LinkSchema } from './LinkSchema.js';
 import { type LiveStreamMetadata, LiveStreamSchema } from './LiveStreamSchema.js';
@@ -82,6 +84,7 @@ export type PostMetadata = ShapeCheck<
   | LinkMetadata
   | LiveStreamMetadata
   | MintMetadata
+  | ExperimentalPostMetadata
   | SpaceMetadata
   | TextOnlyMetadata
   | StoryMetadata
@@ -124,6 +127,7 @@ export const PostMetadataSchema: z.ZodType<PostMetadata, z.ZodTypeDef, object> =
     LinkSchema,
     LiveStreamSchema,
     MintSchema,
+    ExperimentalPostSchema,
     SpaceSchema,
     TextOnlySchema,
     StorySchema,

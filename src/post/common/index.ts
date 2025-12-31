@@ -69,7 +69,8 @@ export function metadataDetailsWith<
   Augmentation extends {
     mainContentFocus:
       | z.ZodLiteral<PostMainFocus>
-      | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>;
+      | z.ZodUnion<[z.ZodLiteral<PostMainFocus>, ...z.ZodLiteral<PostMainFocus>[]]>
+      | z.ZodNativeEnum<typeof PostMainFocus>;
   },
 >(augmentation: Augmentation) {
   return z
